@@ -1,0 +1,408 @@
+{% load static %}
+{% with path=request.path %}
+<aside class="sidebar" id="sidebar" aria-label="Main navigation">
+    <!-- Brand -->
+    <a href="{% if request.user.is_superuser or request.user.groups.all.0.name == 'Admin' or request.user.groups.all.1.name == 'Admin' or request.user.groups.all.0.name == 'Principal' or request.user.groups.all.1.name == 'Principal' %}{% url 'admin_panel:dashboard' %}{% elif request.user.groups.all.0.name == 'Accountant' or request.user.groups.all.1.name == 'Accountant' %}{% url 'accounts_panel:dashboard' %}{% elif request.user.groups.all.0.name == 'Teacher' or request.user.groups.all.1.name == 'Teacher' %}{% url 'teacher_panel:dashboard' %}{% elif request.user.groups.all.0.name == 'Student' or request.user.groups.all.1.name == 'Student' %}{% url 'student_portal:dashboard' %}{% elif request.user.groups.all.0.name == 'Guardian' or request.user.groups.all.1.name == 'Guardian' %}{% url 'guardian_portal:dashboard' %}{% elif request.user.groups.all.0.name == 'Registrar' or request.user.groups.all.1.name == 'Registrar' %}{% url 'registrar_panel:dashboard' %}{% else %}#{% endif %}" class="sidebar-brand d-flex align-items-center gap-2">
+        <div class="sidebar-brand-logo">
+            <img src="{% static 'images/logo.png' %}" alt="Logo" style="height: 36px; width: auto; object-fit: contain;">
+        </div>
+        <div class="sidebar-brand-text">
+            <span class="sidebar-brand-name">Iqra Academy</span>
+            <span class="sidebar-brand-sub">Enterprise Academic Management System</span>
+        </div>
+    </a>
+
+    <!-- Navigation -->
+    <nav class="sidebar-nav">
+        {% if request.user.is_superuser or request.user.groups.all.0.name == "Admin" or request.user.groups.all.1.name == "Admin" %}
+            <!-- ================= ADMIN MENU ================= -->
+            <div class="sidebar-section">Dashboard</div>
+            <a href="{% url 'admin_panel:dashboard' %}" class="sidebar-link {% if '/dashboard/' in path and '/analytics/' not in path and '/session-overview/' not in path %}active{% endif %}">
+                <span class="sidebar-icon"><i class="fa-solid fa-chart-pie"></i></span>
+                Dashboard
+            </a>
+            <a href="{% url 'admin_panel:analytics' %}" class="sidebar-link {% if '/analytics/' in path %}active{% endif %}">
+                <span class="sidebar-icon"><i class="fa-solid fa-chart-line"></i></span>
+                Analytics
+            </a>
+            <a href="{% url 'admin_panel:session_overview' %}" class="sidebar-link {% if '/session-overview/' in path %}active{% endif %}">
+                <span class="sidebar-icon"><i class="fa-solid fa-table-columns"></i></span>
+                Session Overview
+            </a>
+            <a href="{% url 'reports:dashboard' %}" class="sidebar-link {% if '/reports/' in path %}active{% endif %}">
+                <span class="sidebar-icon"><i class="fa-solid fa-file-contract"></i></span>
+                Reports & Exports
+            </a>
+
+            <div class="sidebar-section">Academic Management</div>
+            <a href="{% url 'admin_panel:add_student' %}" class="sidebar-link {% if '/add-student/' in path %}active{% endif %}">
+                <span class="sidebar-icon"><i class="fa-solid fa-user-plus"></i></span>
+                Add Student
+            </a>
+            <a href="{% url 'admin_panel:manage_students' %}" class="sidebar-link {% if '/manage-students/' in path or '/students/' in path and '/create/' not in path and '/edit/' not in path and '/delete/' not in path and '/leads/' not in path and '/enrollments/' not in path %}active{% endif %}">
+                <span class="sidebar-icon"><i class="fa-solid fa-user-graduate"></i></span>
+                Manage Students
+            </a>
+            <a href="{% url 'admin_panel:add_session' %}" class="sidebar-link {% if '/add-session/' in path %}active{% endif %}">
+                <span class="sidebar-icon"><i class="fa-solid fa-calendar-plus"></i></span>
+                Add Session
+            </a>
+            <a href="{% url 'admin_panel:session_overview' %}" class="sidebar-link {% if '/session-overview/' in path %}active{% endif %}">
+                <span class="sidebar-icon"><i class="fa-solid fa-calendar-days"></i></span>
+                Manage Sessions
+            </a>
+            <a href="{% url 'admin_panel:faculty_overview' %}" class="sidebar-link {% if '/faculty-overview/' in path %}active{% endif %}">
+                <span class="sidebar-icon"><i class="fa-solid fa-chalkboard-user"></i></span>
+                Manage Faculty
+            </a>
+            <a href="{% url 'admin_panel:exam_overview' %}" class="sidebar-link {% if '/exam-overview/' in path %}active{% endif %}">
+                <span class="sidebar-icon"><i class="fa-solid fa-file-signature"></i></span>
+                Exams
+            </a>
+            <a href="{% url 'admin_panel:exams:grade_config_list' %}" class="sidebar-link {% if '/exams/grade-config/' in path %}active{% endif %}">
+                <span class="sidebar-icon"><i class="fa-solid fa-gears"></i></span>
+                Grade Configurations
+            </a>
+            <a href="{% url 'admin_panel:timetable_overview' %}" class="sidebar-link {% if '/timetable-overview/' in path %}active{% endif %}">
+                <span class="sidebar-icon"><i class="fa-solid fa-calendar-week"></i></span>
+                Class Timetable
+            </a>
+            <a href="{% url 'admin_panel:pdf_comparison' %}" class="sidebar-link {% if '/pdf-comparison/' in path %}active{% endif %}">
+                <span class="sidebar-icon"><i class="fa-solid fa-file-pdf"></i></span>
+                PDF Comparison
+            </a>
+
+            <div class="sidebar-section">Attendance</div>
+            <a href="{% url 'admin_panel:attendance:attendance_overview' %}" class="sidebar-link {% if '/attendance/' in path and '/low-report/' not in path %}active{% endif %}">
+                <span class="sidebar-icon"><i class="fa-solid fa-calendar-check"></i></span>
+                Attendance Overview
+            </a>
+            <a href="{% url 'admin_panel:attendance:low_attendance_report' %}" class="sidebar-link {% if '/attendance/low-attendance/' in path %}active{% endif %}">
+                <span class="sidebar-icon"><i class="fa-solid fa-calendar-times"></i></span>
+                Low Attendance Report
+            </a>
+
+            <div class="sidebar-section">Admissions</div>
+            <a href="{% url 'admin_panel:admissions:admission_list' %}" class="sidebar-link {% if '/admissions/' in path and '/summary/' not in path %}active{% endif %}">
+                <span class="sidebar-icon"><i class="fa-solid fa-file-invoice"></i></span>
+                Applications
+            </a>
+            <a href="{% url 'admin_panel:admissions:admission_summary' %}" class="sidebar-link {% if '/admissions/summary/' in path %}active{% endif %}">
+                <span class="sidebar-icon"><i class="fa-solid fa-chart-bar"></i></span>
+                Summary & Metrics
+            </a>
+
+            <div class="sidebar-section">AI Engine</div>
+            <a href="{% url 'admin_panel:ai_engine:dropout_risk_dashboard' %}" class="sidebar-link {% if '/ai/dropout-risk/' in path %}active{% endif %}">
+                <span class="sidebar-icon"><i class="fa-solid fa-chart-pie"></i></span>
+                Dropout Dashboard
+            </a>
+            <a href="{% url 'admin_panel:ai_engine:prediction_list' %}" class="sidebar-link {% if '/ai/predictions/' in path %}active{% endif %}">
+                <span class="sidebar-icon"><i class="fa-solid fa-brain"></i></span>
+                Predictions List
+            </a>
+            <a href="{% url 'admin_panel:ai_engine:model_version_list' %}" class="sidebar-link {% if '/ai/models/' in path %}active{% endif %}">
+                <span class="sidebar-icon"><i class="fa-solid fa-code-branch"></i></span>
+                Model Versions
+            </a>
+
+            <div class="sidebar-section">Finance</div>
+            <a href="{% url 'admin_panel:finance:payment_list' %}" class="sidebar-link {% if '/payments/' in path %}active{% endif %}">
+                <span class="sidebar-icon"><i class="fa-solid fa-money-bill-wave"></i></span>
+                Payments
+            </a>
+            <a href="{% url 'admin_panel:finance:expense_list' %}" class="sidebar-link {% if '/expenses/' in path %}active{% endif %}">
+                <span class="sidebar-icon"><i class="fa-solid fa-receipt"></i></span>
+                Expenses
+            </a>
+            <a href="{% url 'admin_panel:finance:refund_list' %}" class="sidebar-link {% if '/refunds/' in path %}active{% endif %}">
+                <span class="sidebar-icon"><i class="fa-solid fa-arrow-rotate-left"></i></span>
+                Refund Request
+            </a>
+            <a href="{% url 'admin_panel:finance:installment_plan_list' %}" class="sidebar-link {% if '/installments/' in path %}active{% endif %}">
+                <span class="sidebar-icon"><i class="fa-solid fa-calendar-alt"></i></span>
+                Installment Plans
+            </a>
+            <a href="{% url 'admin_panel:finance:overdue_list' %}" class="sidebar-link {% if '/overdue/' in path %}active{% endif %}">
+                <span class="sidebar-icon"><i class="fa-solid fa-clock-rotate-left"></i></span>
+                Overdue Payments
+            </a>
+            <a href="{% url 'admin_panel:pending_dues' %}" class="sidebar-link {% if '/pending-dues/' in path %}active{% endif %}">
+                <span class="sidebar-icon"><i class="fa-solid fa-hourglass-half"></i></span>
+                Pending Dues
+            </a>
+
+            <div class="sidebar-section">Notifications</div>
+            <a href="{% url 'admin_panel:notifications:notification_bulk_send' %}" class="sidebar-link {% if '/bulk-send/' in path %}active{% endif %}">
+                <span class="sidebar-icon"><i class="fa-solid fa-bullhorn"></i></span>
+                Send Alert
+            </a>
+            <a href="{% url 'admin_panel:notifications:email_log_list' %}" class="sidebar-link {% if '/email-logs/' in path %}active{% endif %}">
+                <span class="sidebar-icon"><i class="fa-solid fa-envelope-open-text"></i></span>
+                Email Logs
+            </a>
+
+            <div class="sidebar-section">Automation</div>
+            <a href="{% url 'admin_panel:automation_alerts' %}" class="sidebar-link {% if '/automation/alerts/' in path %}active{% endif %}">
+                <span class="sidebar-icon"><i class="fa-solid fa-bell-slash"></i></span>
+                System Alerts
+            </a>
+            <a href="{% url 'admin_panel:automation_jobs' %}" class="sidebar-link {% if '/automation/jobs/' in path %}active{% endif %}">
+                <span class="sidebar-icon"><i class="fa-solid fa-gears"></i></span>
+                Background Jobs
+            </a>
+
+            <div class="sidebar-section">Administration</div>
+            <a href="{% url 'admin_panel:permissions' %}" class="sidebar-link {% if '/permissions/' in path %}active{% endif %}">
+                <span class="sidebar-icon"><i class="fa-solid fa-key"></i></span>
+                Permission Matrix
+            </a>
+            <a href="{% url 'admin_panel:users:user_list' %}" class="sidebar-link {% if '/users/' in path %}active{% endif %}">
+                <span class="sidebar-icon"><i class="fa-solid fa-users-cog"></i></span>
+                User Management
+            </a>
+            <a href="{% url 'admin_panel:audit:audit_log_list' %}" class="sidebar-link {% if '/audit/' in path %}active{% endif %}">
+                <span class="sidebar-icon"><i class="fa-solid fa-receipt"></i></span>
+                Audit Logs
+            </a>
+
+        {% elif request.user.groups.all.0.name == "Principal" or request.user.groups.all.1.name == "Principal" %}
+            <!-- ================= PRINCIPAL MENU ================= -->
+            <div class="sidebar-section">Dashboard</div>
+            <a href="{% url 'admin_panel:dashboard' %}" class="sidebar-link {% if '/dashboard/' in path and '/analytics/' not in path and '/session-overview/' not in path %}active{% endif %}">
+                <span class="sidebar-icon"><i class="fa-solid fa-chart-pie"></i></span>
+                Dashboard
+            </a>
+            <a href="{% url 'admin_panel:analytics' %}" class="sidebar-link {% if '/analytics/' in path %}active{% endif %}">
+                <span class="sidebar-icon"><i class="fa-solid fa-chart-line"></i></span>
+                Analytics
+            </a>
+            <a href="{% url 'admin_panel:session_overview' %}" class="sidebar-link {% if '/session-overview/' in path %}active{% endif %}">
+                <span class="sidebar-icon"><i class="fa-solid fa-table-columns"></i></span>
+                Session Overview
+            </a>
+            <a href="{% url 'reports:dashboard' %}" class="sidebar-link {% if '/reports/' in path %}active{% endif %}">
+                <span class="sidebar-icon"><i class="fa-solid fa-file-contract"></i></span>
+                Reports & Exports
+            </a>
+
+            <div class="sidebar-section">Academic Management</div>
+            <a href="{% url 'admin_panel:manage_students' %}" class="sidebar-link {% if '/manage-students/' in path or '/students/' in path %}active{% endif %}">
+                <span class="sidebar-icon"><i class="fa-solid fa-user-graduate"></i></span>
+                Manage Students
+            </a>
+            <a href="{% url 'admin_panel:session_overview' %}" class="sidebar-link {% if '/session-overview/' in path %}active{% endif %}">
+                <span class="sidebar-icon"><i class="fa-solid fa-calendar-days"></i></span>
+                Manage Sessions
+            </a>
+            <a href="{% url 'admin_panel:faculty_overview' %}" class="sidebar-link {% if '/faculty-overview/' in path %}active{% endif %}">
+                <span class="sidebar-icon"><i class="fa-solid fa-chalkboard-user"></i></span>
+                Manage Faculty
+            </a>
+            <a href="{% url 'admin_panel:exam_overview' %}" class="sidebar-link {% if '/exam-overview/' in path %}active{% endif %}">
+                <span class="sidebar-icon"><i class="fa-solid fa-file-signature"></i></span>
+                Exams
+            </a>
+            <a href="{% url 'admin_panel:exams:grade_config_list' %}" class="sidebar-link {% if '/exams/grade-config/' in path %}active{% endif %}">
+                <span class="sidebar-icon"><i class="fa-solid fa-gears"></i></span>
+                Grade Configurations
+            </a>
+            <a href="{% url 'admin_panel:timetable_overview' %}" class="sidebar-link {% if '/timetable-overview/' in path %}active{% endif %}">
+                <span class="sidebar-icon"><i class="fa-solid fa-calendar-week"></i></span>
+                Class Timetable
+            </a>
+            <a href="{% url 'admin_panel:pdf_comparison' %}" class="sidebar-link {% if '/pdf-comparison/' in path %}active{% endif %}">
+                <span class="sidebar-icon"><i class="fa-solid fa-file-pdf"></i></span>
+                PDF Comparison
+            </a>
+
+            <div class="sidebar-section">Attendance</div>
+            <a href="{% url 'admin_panel:attendance:low_attendance_report' %}" class="sidebar-link {% if '/attendance/low-attendance/' in path %}active{% endif %}">
+                <span class="sidebar-icon"><i class="fa-solid fa-calendar-times"></i></span>
+                Low Attendance Report
+            </a>
+
+            <div class="sidebar-section">AI Engine</div>
+            <a href="{% url 'admin_panel:ai_engine:dropout_risk_dashboard' %}" class="sidebar-link {% if '/ai/dropout-risk/' in path %}active{% endif %}">
+                <span class="sidebar-icon"><i class="fa-solid fa-chart-pie"></i></span>
+                Dropout Dashboard
+            </a>
+
+            <div class="sidebar-section">Finance</div>
+            <a href="{% url 'admin_panel:finance:payment_list' %}" class="sidebar-link {% if '/payments/' in path %}active{% endif %}">
+                <span class="sidebar-icon"><i class="fa-solid fa-money-bill-wave"></i></span>
+                Payments
+            </a>
+            <a href="{% url 'admin_panel:finance:overdue_list' %}" class="sidebar-link {% if '/overdue/' in path %}active{% endif %}">
+                <span class="sidebar-icon"><i class="fa-solid fa-clock-rotate-left"></i></span>
+                Overdue Payments
+            </a>
+            <a href="{% url 'admin_panel:pending_dues' %}" class="sidebar-link {% if '/pending-dues/' in path %}active{% endif %}">
+                <span class="sidebar-icon"><i class="fa-solid fa-hourglass-half"></i></span>
+                Pending Dues
+            </a>
+
+        {% elif request.user.groups.all.0.name == "Accountant" or request.user.groups.all.1.name == "Accountant" %}
+            <!-- ================= ACCOUNTANT MENU ================= -->
+            <div class="sidebar-section">Dashboard</div>
+            <a href="{% url 'accounts_panel:dashboard' %}" class="sidebar-link {% if '/dashboard/' in path and '/analytics/' not in path %}active{% endif %}">
+                <span class="sidebar-icon"><i class="fa-solid fa-chart-pie"></i></span>
+                Dashboard
+            </a>
+            <a href="{% url 'accounts_panel:reports_dashboard' %}" class="sidebar-link {% if '/reports/' in path %}active{% endif %}">
+                <span class="sidebar-icon"><i class="fa-solid fa-file-contract"></i></span>
+                Reports & Exports
+            </a>
+
+            <div class="sidebar-section">Finance</div>
+            <a href="{% url 'accounts_panel:payment_list' %}" class="sidebar-link {% if '/payments/' in path %}active{% endif %}">
+                <span class="sidebar-icon"><i class="fa-solid fa-money-bill-wave"></i></span>
+                Payments
+            </a>
+            <a href="{% url 'accounts_panel:expense_list' %}" class="sidebar-link {% if '/expenses/' in path %}active{% endif %}">
+                <span class="sidebar-icon"><i class="fa-solid fa-receipt"></i></span>
+                Expenses
+            </a>
+            <a href="{% url 'accounts_panel:refund_list' %}" class="sidebar-link {% if '/refunds/' in path %}active{% endif %}">
+                <span class="sidebar-icon"><i class="fa-solid fa-arrow-rotate-left"></i></span>
+                Refund Request
+            </a>
+            <a href="{% url 'accounts_panel:installment_plan_list' %}" class="sidebar-link {% if '/installments/' in path %}active{% endif %}">
+                <span class="sidebar-icon"><i class="fa-solid fa-calendar-alt"></i></span>
+                Installment Plans
+            </a>
+            <a href="{% url 'accounts_panel:overdue_list' %}" class="sidebar-link {% if '/overdue/' in path %}active{% endif %}">
+                <span class="sidebar-icon"><i class="fa-solid fa-clock-rotate-left"></i></span>
+                Overdue Payments
+            </a>
+            <a href="{% url 'accounts_panel:pending_dues' %}" class="sidebar-link {% if '/pending-dues/' in path %}active{% endif %}">
+                <span class="sidebar-icon"><i class="fa-solid fa-hourglass-half"></i></span>
+                Pending Dues
+            </a>
+
+        {% elif request.user.groups.all.0.name == "Teacher" or request.user.groups.all.1.name == "Teacher" %}
+            <!-- ================= TEACHER MENU ================= -->
+            <div class="sidebar-section">Dashboard</div>
+            <a href="{% url 'teacher_panel:dashboard' %}" class="sidebar-link {% if '/dashboard/' in path %}active{% endif %}">
+                <span class="sidebar-icon"><i class="fa-solid fa-chart-pie"></i></span>
+                Dashboard
+            </a>
+
+            <div class="sidebar-section">Academic Management</div>
+            <a href="{% url 'teacher_panel:my_sessions' %}" class="sidebar-link {% if '/sessions/' in path %}active{% endif %}">
+                <span class="sidebar-icon"><i class="fa-solid fa-chalkboard-user"></i></span>
+                My Sessions
+            </a>
+            <a href="{% url 'teacher_panel:my_exams' %}" class="sidebar-link {% if '/exams/' in path %}active{% endif %}">
+                <span class="sidebar-icon"><i class="fa-solid fa-file-signature"></i></span>
+                Exams
+            </a>
+            <a href="{% url 'teacher_panel:my_timetable' %}" class="sidebar-link {% if '/my-timetable/' in path %}active{% endif %}">
+                <span class="sidebar-icon"><i class="fa-solid fa-calendar-week"></i></span>
+                My Timetable
+            </a>
+
+            <div class="sidebar-section">Notifications</div>
+            <a href="{% url 'teacher_panel:notification_list' %}" class="sidebar-link {% if '/notifications/' in path %}active{% endif %}">
+                <span class="sidebar-icon"><i class="fa-solid fa-bell"></i></span>
+                Notifications
+            </a>
+
+        {% elif request.user.groups.all.0.name == "Student" or request.user.groups.all.1.name == "Student" %}
+            <!-- ================= STUDENT PORTAL MENU ================= -->
+            <div class="sidebar-section">Dashboard</div>
+            <a href="{% url 'student_portal:dashboard' %}" class="sidebar-link {% if '/dashboard/' in path %}active{% endif %}">
+                <span class="sidebar-icon"><i class="fa-solid fa-chart-pie"></i></span>
+                Dashboard
+            </a>
+
+            <div class="sidebar-section">Academic Management</div>
+            <a href="{% url 'student_portal:my_enrollment' %}" class="sidebar-link {% if '/enrollment/' in path %}active{% endif %}">
+                <span class="sidebar-icon"><i class="fa-solid fa-id-card"></i></span>
+                Enrollment
+            </a>
+            <a href="{% url 'student_portal:my_attendance' %}" class="sidebar-link {% if '/attendance/' in path %}active{% endif %}">
+                <span class="sidebar-icon"><i class="fa-solid fa-calendar-check"></i></span>
+                Attendance
+            </a>
+            <a href="{% url 'student_portal:my_exams' %}" class="sidebar-link {% if '/exams/' in path %}active{% endif %}">
+                <span class="sidebar-icon"><i class="fa-solid fa-file-signature"></i></span>
+                Exams & Grades
+            </a>
+            <a href="{% url 'student_portal:student_transcript' %}" class="sidebar-link {% if '/transcript/' in path %}active{% endif %}">
+                <span class="sidebar-icon"><i class="fa-solid fa-file-invoice"></i></span>
+                Academic Transcript
+            </a>
+            <a href="{% url 'student_portal:timetable' %}" class="sidebar-link {% if '/timetable/' in path %}active{% endif %}">
+                <span class="sidebar-icon"><i class="fa-solid fa-calendar-week"></i></span>
+                Class Timetable
+            </a>
+
+            <div class="sidebar-section">Finance</div>
+            <a href="{% url 'student_portal:my_payments' %}" class="sidebar-link {% if '/payments/' in path %}active{% endif %}">
+                <span class="sidebar-icon"><i class="fa-solid fa-credit-card"></i></span>
+                Payments
+            </a>
+
+            <div class="sidebar-section">Notifications</div>
+            <a href="{% url 'student_portal:notification_list' %}" class="sidebar-link {% if '/notifications/' in path %}active{% endif %}">
+                <span class="sidebar-icon"><i class="fa-solid fa-bell"></i></span>
+                Notifications
+            </a>
+
+        {% elif request.user.groups.all.0.name == "Guardian" or request.user.groups.all.1.name == "Guardian" %}
+            <!-- ================= GUARDIAN PORTAL MENU ================= -->
+            <div class="sidebar-section">Dashboard</div>
+            <a href="{% url 'guardian_portal:dashboard' %}" class="sidebar-link {% if '/dashboard/' in path %}active{% endif %}">
+                <span class="sidebar-icon"><i class="fa-solid fa-chart-pie"></i></span>
+                Dashboard
+            </a>
+
+            <div class="sidebar-section">Academic Management</div>
+            <a href="{% url 'guardian_portal:my_children' %}" class="sidebar-link {% if '/children/' in path %}active{% endif %}">
+                <span class="sidebar-icon"><i class="fa-solid fa-children"></i></span>
+                Children
+            </a>
+
+            <div class="sidebar-section">Notifications</div>
+            <a href="{% url 'guardian_portal:notification_list' %}" class="sidebar-link {% if '/notifications/' in path %}active{% endif %}">
+                <span class="sidebar-icon"><i class="fa-solid fa-bell"></i></span>
+                Notifications
+            </a>
+        {% elif request.user.groups.all.0.name == "Registrar" or request.user.groups.all.1.name == "Registrar" %}
+            <!-- ================= REGISTRAR MENU ================= -->
+            <div class="sidebar-section">Dashboard</div>
+            <a href="{% url 'registrar_panel:dashboard' %}" class="sidebar-link {% if '/dashboard/' in path %}active{% endif %}">
+                <span class="sidebar-icon"><i class="fa-solid fa-chart-pie"></i></span>
+                Dashboard
+            </a>
+
+            <div class="sidebar-section">Academic Management</div>
+            <a href="{% url 'registrar_panel:student_list' %}" class="sidebar-link {% if '/students/' in path and '/admissions/' not in path %}active{% endif %}">
+                <span class="sidebar-icon"><i class="fa-solid fa-user-graduate"></i></span>
+                Manage Students
+            </a>
+            <a href="{% url 'registrar_panel:lead_list' %}" class="sidebar-link {% if '/leads/' in path %}active{% endif %}">
+                <span class="sidebar-icon"><i class="fa-solid fa-user-tag"></i></span>
+                Leads
+            </a>
+
+            <div class="sidebar-section">Admissions</div>
+            <a href="{% url 'registrar_panel:admissions:admission_list' %}" class="sidebar-link {% if '/admissions/' in path and '/summary/' not in path %}active{% endif %}">
+                <span class="sidebar-icon"><i class="fa-solid fa-file-invoice"></i></span>
+                Applications
+            </a>
+            <a href="{% url 'registrar_panel:admissions:admission_summary' %}" class="sidebar-link {% if '/admissions/summary/' in path %}active{% endif %}">
+                <span class="sidebar-icon"><i class="fa-solid fa-chart-bar"></i></span>
+                Summary & Metrics
+            </a>
+        {% endif %}
+
+        <div class="sidebar-section">System</div>
+        <a href="{% url 'accounts:logout' %}" class="sidebar-link sidebar-link-danger">
+            <span class="sidebar-icon"><i class="fa-solid fa-right-from-bracket"></i></span>
+            Logout
+        </a>
+    </nav>
+</aside>
+{% endwith %}

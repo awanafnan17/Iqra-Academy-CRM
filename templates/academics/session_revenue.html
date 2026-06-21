@@ -1,0 +1,276 @@
+{% extends "layouts/panel_base.html" %}
+{% load static %}
+
+{% block title %}{{ page_title }} - Iqra Academy{% endblock %}
+
+{% block content %}
+<div class="container-fluid py-4">
+    <!-- Header Block -->
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-4">
+        <div>
+            <h4 class="fw-bold mb-1">
+                <i class="fa-solid fa-coins me-2 text-success"></i>
+                Session Revenue Dashboard
+            </h4>
+            <p class="text-secondary mb-0 small">
+                {{ session.name }} ({{ session.code }}) — 
+                <span class="badge bg-secondary-subtle text-secondary border px-2 py-0.5 rounded-pill">{{ session.status }}</span>
+            </p>
+        </div>
+        <div class="d-flex gap-2">
+            <a href="{% url 'admin_panel:academics:session_detail' session.pk %}" class="btn btn-outline-secondary rounded-3">
+                <i class="fa-solid fa-arrow-left me-2"></i>Back to Session Detail
+            </a>
+        </div>
+    </div>
+
+    <!-- Overview Stats Rows -->
+    <div class="row g-4 mb-4">
+        <div class="col-12 col-md-3">
+            <div class="card p-3 border border-light shadow-sm rounded-4 text-center h-100">
+                <div class="fw-bold fs-4 text-primary">{{ total_enrolled }}</div>
+                <div class="text-secondary small">Total Enrolled Students</div>
+            </div>
+        </div>
+        <div class="col-12 col-md-3">
+            <div class="card p-3 border border-light shadow-sm rounded-4 text-center h-100">
+                <div class="fw-bold fs-4 text-info">{{ session.session_type|title }}</div>
+                <div class="text-secondary small">Session Type</div>
+            </div>
+        </div>
+        <div class="col-12 col-md-3">
+            <div class="card p-3 border border-light shadow-sm rounded-4 text-center h-100">
+                <div class="fw-bold fs-4 text-secondary">{{ session.academic_year }}</div>
+                <div class="text-secondary small">Academic Year</div>
+            </div>
+        </div>
+        <div class="col-12 col-md-3">
+            <div class="card p-3 border border-light shadow-sm rounded-4 text-center h-100">
+                <div class="fw-bold fs-4 text-success">{{ session.batch_number|default:"N/A" }}</div>
+                <div class="text-secondary small">Batch Number</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Monthly Selector Form -->
+    <div class="card p-4 border border-light shadow-sm rounded-4 mb-4 animate-fade-in">
+        <form method="get" class="row g-3 align-items-end">
+            <div class="col-12 col-md-4">
+                <label for="year-selector" class="form-label small fw-semibold text-secondary">Select Year</label>
+                <select id="year-selector" name="year" class="form-select rounded-3">
+                    {% for y in years_range %}
+                        <option value="{{ y }}" {% if y == year %}selected{% endif %}>{{ y }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-12 col-md-4">
+                <label for="month-selector" class="form-label small fw-semibold text-secondary">Select Month</label>
+                <select id="month-selector" name="month" class="form-select rounded-3">
+                    {% for m_val, m_lbl in months_range %}
+                        <option value="{{ m_val }}" {% if m_val == month %}selected{% endif %}>{{ m_lbl }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-12 col-md-4 d-flex gap-2">
+                <button type="submit" class="btn btn-primary w-100 rounded-3">
+                    <i class="fa-solid fa-calculator me-2"></i>Calculate Monthly Revenue
+                </button>
+                <a href="?" class="btn btn-outline-secondary w-100 rounded-3">
+                    <i class="fa-solid fa-arrows-rotate me-2"></i>Reset
+                </a>
+            </div>
+        </form>
+    </div>
+
+    <!-- Monthly Revenue Cards -->
+    <div class="row g-4 mb-4">
+        <div class="col-12 col-md-4">
+            <div class="card p-4 border border-light shadow-sm rounded-4 h-100 bg-success-subtle border-success-subtle">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <span class="text-success small fw-bold">Tuition Revenue</span>
+                    <i class="fa-solid fa-graduation-cap text-success opacity-75"></i>
+                </div>
+                <h3 class="fw-bold mb-1 text-success">PKR {{ monthly_revenue.tuition_revenue|floatformat:2 }}</h3>
+                <div class="text-secondary small mt-2">Confirmed tuition collected this month.</div>
+            </div>
+        </div>
+        <div class="col-12 col-md-4">
+            <div class="card p-4 border border-light shadow-sm rounded-4 h-100 bg-warning-subtle border-warning-subtle">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <span class="text-warning-emphasis small fw-bold">Late Fee Revenue</span>
+                    <i class="fa-solid fa-clock-rotate-left text-warning opacity-75"></i>
+                </div>
+                <h3 class="fw-bold mb-1 text-warning-emphasis">PKR {{ monthly_revenue.late_fee_revenue|floatformat:2 }}</h3>
+                <div class="text-secondary small mt-2">Late fees collected this month.</div>
+            </div>
+        </div>
+        <div class="col-12 col-md-4">
+            <div class="card p-4 border border-light shadow-sm rounded-4 h-100 bg-primary-subtle border-primary-subtle">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <span class="text-primary small fw-bold">Total Revenue</span>
+                    <i class="fa-solid fa-chart-line text-primary opacity-75"></i>
+                </div>
+                <h3 class="fw-bold mb-1 text-primary">PKR {{ monthly_revenue.total_revenue|floatformat:2 }}</h3>
+                <div class="text-secondary small mt-2">Sum of tuition and late fees collected.</div>
+            </div>
+        </div>
+        <div class="col-12 col-md-6">
+            <div class="card p-4 border border-light shadow-sm rounded-4 h-100 bg-danger-subtle border-danger-subtle">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <span class="text-danger small fw-bold">Refunds Processed</span>
+                    <i class="fa-solid fa-money-bill-transfer text-danger opacity-75"></i>
+                </div>
+                <h3 class="fw-bold mb-1 text-danger">PKR {{ monthly_revenue.refunds|floatformat:2 }}</h3>
+                <div class="text-secondary small mt-2">Processed refunds issued this month.</div>
+            </div>
+        </div>
+        <div class="col-12 col-md-6">
+            <div class="card p-4 border border-light shadow-sm rounded-4 h-100 bg-info-subtle border-info-subtle">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <span class="text-info-emphasis small fw-bold">Net Revenue</span>
+                    <i class="fa-solid fa-vault text-info-emphasis opacity-75"></i>
+                </div>
+                <h3 class="fw-bold mb-1 text-info-emphasis">PKR {{ monthly_revenue.net_revenue|floatformat:2 }}</h3>
+                <div class="text-secondary small mt-2">Net collections (Total Revenue minus Refunds).</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Student Ledgers Table -->
+    <div class="card border border-light shadow-sm rounded-4 mb-4">
+        <div class="p-3.5 border-bottom card-header bg-light rounded-top-4 d-flex justify-content-between align-items-center">
+            <h6 class="mb-0 fw-bold"><i class="fa-solid fa-receipt me-2 text-primary"></i>Student Ledger Summary (Lifetime Metrics)</h6>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <thead class="bg-light-subtle">
+                    <tr>
+                        <th class="ps-4" style="width: 150px;">Roll No</th>
+                        <th>Student Name</th>
+                        <th>Status</th>
+                        <th>Expected Amount</th>
+                        <th>Paid Amount</th>
+                        <th>Refunded Amount</th>
+                        <th>Outstanding Balance</th>
+                        <th class="pe-4 text-end" style="width: 150px;">Profile</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in student_ledgers %}
+                        <tr>
+                            <td class="ps-4 fw-semibold">{{ item.student.roll_number|default:"N/A" }}</td>
+                            <td>
+                                <div class="fw-bold text-dark">{{ item.student.full_name }}</div>
+                            </td>
+                            <td>
+                                {% if item.status == 'Active' %}
+                                    <span class="badge bg-success-subtle text-success border border-success-subtle px-2 py-0.5 rounded-pill">Active</span>
+                                {% elif item.status == 'Frozen' %}
+                                    <span class="badge bg-warning-subtle text-warning border border-warning-subtle px-2 py-0.5 rounded-pill">Frozen</span>
+                                {% elif item.status == 'Completed' %}
+                                    <span class="badge bg-info-subtle text-info border border-info-subtle px-2 py-0.5 rounded-pill">Completed</span>
+                                {% elif item.status == 'Withdrawn' %}
+                                    <span class="badge bg-danger-subtle text-danger border border-danger-subtle px-2 py-0.5 rounded-pill">Withdrawn</span>
+                                {% else %}
+                                    <span class="badge bg-secondary-subtle text-secondary border border-secondary-subtle px-2 py-0.5 rounded-pill">{{ item.status }}</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if item.total_payable is not None %}
+                                    PKR {{ item.total_payable|floatformat:2 }}
+                                {% else %}
+                                    <span class="text-muted small">Clarification needed</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if item.total_paid is not None %}
+                                    PKR {{ item.total_paid|floatformat:2 }}
+                                {% else %}
+                                    <span class="text-muted small">Clarification needed</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if item.total_refunded is not None %}
+                                    PKR {{ item.total_refunded|floatformat:2 }}
+                                {% else %}
+                                    <span class="text-muted small">Clarification needed</span>
+                                {% endif %}
+                            </td>
+                            <td class="fw-bold {% if item.outstanding_balance > 0 %}text-danger{% else %}text-success{% endif %}">
+                                {% if item.outstanding_balance is not None %}
+                                    PKR {{ item.outstanding_balance|floatformat:2 }}
+                                {% else %}
+                                    <span class="text-muted small">Clarification needed</span>
+                                {% endif %}
+                            </td>
+                            <td class="pe-4 text-end">
+                                <a href="{% url 'admin_panel:students:student_detail' item.student.pk %}" class="btn btn-sm btn-outline-primary rounded-3">
+                                    <i class="fa-solid fa-user me-1"></i>View Profile
+                                </a>
+                            </td>
+                        </tr>
+                    {% empty %}
+                        <tr>
+                            <td colspan="8" class="text-center py-5 text-muted">
+                                <i class="fa-solid fa-users-slash fa-2x mb-3 text-secondary"></i>
+                                <p class="mb-0">No enrollments or financial transactions exist for this session.</p>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Pagination -->
+        {% if paginated_enrollments.has_other_pages %}
+            <div class="card-footer bg-white border-top py-3 d-flex justify-content-between align-items-center">
+                <span class="small text-secondary">Showing page {{ paginated_enrollments.number }} of {{ paginated_enrollments.paginator.num_pages }}</span>
+                <nav aria-label="Page navigation">
+                    <ul class="pagination pagination-sm mb-0">
+                        {% if paginated_enrollments.has_previous %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ paginated_enrollments.previous_page_number }}&year={{ year }}&month={{ month }}" aria-label="Previous">
+                                    <span aria-hidden="true">&laquo;</span>
+                                </a>
+                            </li>
+                        {% else %}
+                            <li class="page-item disabled"><span class="page-link">&laquo;</span></li>
+                        {% endif %}
+                        
+                        {% for num in paginated_enrollments.paginator.page_range %}
+                            {% if paginated_enrollments.number == num %}
+                                <li class="page-item active"><span class="page-link">{{ num }}</span></li>
+                            {% elif num > paginated_enrollments.number|add:'-3' and num < paginated_enrollments.number|add:'3' %}
+                                <li class="page-item">
+                                    <a class="page-link" href="?page={{ num }}&year={{ year }}&month={{ month }}">{{ num }}</a>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+                        
+                        {% if paginated_enrollments.has_next %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ paginated_enrollments.next_page_number }}&year={{ year }}&month={{ month }}" aria-label="Next">
+                                    <span aria-hidden="true">&raquo;</span>
+                                </a>
+                            </li>
+                        {% else %}
+                            <li class="page-item disabled"><span class="page-link">&raquo;</span></li>
+                        {% endif %}
+                    </ul>
+                </nav>
+            </div>
+        {% endif %}
+    </div>
+
+    <!-- Explanations and Footnotes -->
+    <div class="alert alert-secondary border border-secondary-subtle rounded-4 p-4 mb-0 animate-fade-in stagger-3">
+        <h6 class="fw-bold mb-2 text-dark"><i class="fa-solid fa-circle-info me-2 text-secondary"></i>Financial Calculations Policy</h6>
+        <ul class="mb-0 small text-secondary">
+            <li class="mb-1"><strong>Collected Revenue</strong>: Displayed in the cards above. Computed dynamically based on confirmed Payment and Refund transaction records within the selected month.</li>
+            <li class="mb-1"><strong>Expected / Outstanding Balance</strong>: Displayed in the ledger table. Calculated as <code>Base Tuition + Registration Fee - Discounts - Paid Tuition + Refunded Amounts</code> for each student enrollment.</li>
+            <li>This view is strictly read-only. No payment creation, installment modification, or ledger adjustments can be performed from this dashboard.</li>
+        </ul>
+    </div>
+</div>
+{% endblock %}

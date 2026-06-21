@@ -1,0 +1,2245 @@
+{
+  "timestamp": "2026-06-20T02:53:31.063722",
+  "revision": "4b3ee0ff",
+  "python_version": "3.12.4",
+  "django_version": "4.2",
+  "settings_module": "unknown",
+  "database_engine": "sqlite3 (test isolation)",
+  "mode": "enforcement",
+  "commands": [
+    {
+      "label": "Django System Check",
+      "exit_code": 0
+    },
+    {
+      "label": "Migration Check",
+      "exit_code": 0
+    },
+    {
+      "label": "Django Unit Tests",
+      "exit_code": 0
+    },
+    {
+      "label": "Form Persistence (Comprehensive)",
+      "exit_code": 0
+    },
+    {
+      "label": "Role & Authorization Matrix",
+      "exit_code": 0
+    },
+    {
+      "label": "Profile Identity Propagation",
+      "exit_code": 0
+    },
+    {
+      "label": "Mutation Propagation",
+      "exit_code": 0
+    },
+    {
+      "label": "Consistency Invariants",
+      "exit_code": 0
+    },
+    {
+      "label": "Stale Data / Cache",
+      "exit_code": 0
+    },
+    {
+      "label": "Business Invariants",
+      "exit_code": 0
+    },
+    {
+      "label": "Browser Crawl (Multi-Role)",
+      "exit_code": 0
+    },
+    {
+      "label": "Visual Matrix (8 Combos)",
+      "exit_code": 0
+    },
+    {
+      "label": "Concurrency Smoke Test",
+      "exit_code": 0
+    }
+  ],
+  "test_totals": {
+    "django_unit_passed": 0,
+    "pytest_suites": 10,
+    "pytest_total_passed": 102,
+    "pytest_total_failed": 0
+  },
+  "crawler_totals": {
+    "pages_visited": 153,
+    "errors_500": 0,
+    "errors_404": 0,
+    "errors_403": 0
+  },
+  "route_accounting": {
+    "total_routes": 482,
+    "panel_routes": 239,
+    "classification_counts": {
+      "static_get": 108,
+      "parameterized_get": 87,
+      "destructive_post": 28,
+      "create_form": 29,
+      "update_form": 19,
+      "ajax_json": 1,
+      "export_download": 6
+    }
+  },
+  "form_accounting": {
+    "timestamp": "2026-06-20T02:44:50.945841",
+    "forms_tested": [
+      "UserProfileForm (profile)",
+      "SessionForm (academic session)",
+      "StudentCreateForm (student)",
+      "PaymentForm (payment)",
+      "ExpenseForm (expense)",
+      "NotificationTemplateForm (notification template)",
+      "ClassScheduleForm (timetable)",
+      "AdmissionApplicationForm (admission)",
+      "UserCreateForm (staff/faculty)",
+      "RefundForm (refund)"
+    ],
+    "forms_with_invalid_tests": [
+      "UserProfileForm",
+      "SessionForm",
+      "StudentCreateForm",
+      "NotificationTemplateForm",
+      "PaymentForm"
+    ],
+    "uncovered_forms_documented": [
+      "InstallmentPlanForm - requires active enrollment with payment setup",
+      "ExpenseCategoryForm - simple name/description CRUD",
+      "GuardianForm - requires existing student record",
+      "StudentDocumentForm - requires file upload",
+      "EnrollmentForm - requires session + student combination",
+      "LeadForm - admissions pipeline specific",
+      "FacultyProfileForm - edit-only, requires existing profile",
+      "FacultyAssignSessionForm - requires session + faculty combo",
+      "PasswordChangeForm - Django built-in, tested via profile"
+    ]
+  },
+  "role_coverage": {
+    "roles_tested": [
+      "Admin",
+      "Principal",
+      "Registrar",
+      "Accountant",
+      "Teacher",
+      "Student",
+      "Guardian",
+      "Anonymous",
+      "Inactive"
+    ],
+    "modules_covered": [
+      "dashboard",
+      "profile",
+      "student_list",
+      "finance",
+      "notifications",
+      "automation",
+      "portals"
+    ],
+    "object_level_tests": [
+      "student-student isolation",
+      "guardian-child isolation",
+      "teacher POST bypass",
+      "registrar approval bypass"
+    ],
+    "denial_mechanism": "URL-prefix routing: /panel/admin/ vs /panel/teacher/ etc. Unauthorized roles get 404 (no matching URL), not 403."
+  },
+  "visual_coverage": {
+    "timestamp": "2026-06-20T02:51:03.132284",
+    "combinations_tested": 8,
+    "total_failures": 14,
+    "details": [
+      {
+        "viewport": "1440x900",
+        "theme": "light",
+        "pages": [
+          {
+            "viewport": "1440x900",
+            "theme": "light",
+            "url": "/accounts/login/",
+            "role": "Admin",
+            "overflow_result": "FAIL: scrollWidth=1590 > clientWidth=1440",
+            "clipping_result": "PASS",
+            "dark_mode_leakage_result": "N/A",
+            "console_result": "FAIL: [error] Failed fetching analytics endpoint: TypeError: Failed to fetch\n    at fetchApi (http://127.0.0.1:4679/static/js/charts.js:41:36)\n    at HTMLDocument.<anonymous> (http://127.0.0.1:4679/static/js/charts.js:239:9); [error] Failed fetching analytics endpoint: TypeError: Failed to fetch\n    at fetchApi (http://127.0.0.1:4679/static/js/charts.js:41:36)\n    at HTMLDocument.<anonymous> (http://127.0.0.1:4679/static/js/charts.js:160:9); [error] Failed fetching analytics endpoint: TypeError: Failed to fetch\n    at fetchApi (http://127.0.0.1:4679/static/js/charts.js:41:36)\n    at HTMLDocument.<anonymous> (http://127.0.0.1:4679/static/js/charts.js:56:9); [error] Failed fetching analytics endpoint: TypeError: Failed to fetch\n    at fetchApi (http://127.0.0.1:4679/static/js/charts.js:41:36)\n    at HTMLDocument.<anonymous> (http://127.0.0.1:4679/static/js/charts.js:207:9); [error] Failed fetching analytics endpoint: TypeError: Failed to fetch\n    at fetchApi (http://127.0.0.1:4679/static/js/charts.js:41:36)\n    at HTMLDocument.<anonymous> (http://127.0.0.1:4679/static/js/charts.js:119:9)",
+            "screenshot_path": "tools/qa/screenshots/visual/desktop_lg_light_login.png",
+            "pass": false
+          },
+          {
+            "viewport": "1440x900",
+            "theme": "light",
+            "url": "/panel/admin/dashboard/",
+            "role": "Admin",
+            "overflow_result": "PASS",
+            "clipping_result": "PASS",
+            "dark_mode_leakage_result": "N/A",
+            "console_result": "PASS",
+            "screenshot_path": "tools/qa/screenshots/visual/desktop_lg_light_admin_dashboard.png",
+            "pass": true
+          },
+          {
+            "viewport": "1440x900",
+            "theme": "light",
+            "url": "/panel/admin/manage-students/",
+            "role": "Admin",
+            "overflow_result": "PASS",
+            "clipping_result": "PASS",
+            "dark_mode_leakage_result": "N/A",
+            "console_result": "PASS",
+            "screenshot_path": "tools/qa/screenshots/visual/desktop_lg_light_student_list.png",
+            "pass": true
+          },
+          {
+            "viewport": "1440x900",
+            "theme": "light",
+            "url": "/panel/admin/session-overview/",
+            "role": "Admin",
+            "overflow_result": "PASS",
+            "clipping_result": "PASS",
+            "dark_mode_leakage_result": "N/A",
+            "console_result": "PASS",
+            "screenshot_path": "tools/qa/screenshots/visual/desktop_lg_light_session_list.png",
+            "pass": true
+          },
+          {
+            "viewport": "1440x900",
+            "theme": "light",
+            "url": "/panel/admin/finance/payments/",
+            "role": "Admin",
+            "overflow_result": "PASS",
+            "clipping_result": "PASS",
+            "dark_mode_leakage_result": "N/A",
+            "console_result": "PASS",
+            "screenshot_path": "tools/qa/screenshots/visual/desktop_lg_light_finance_list.png",
+            "pass": true
+          },
+          {
+            "viewport": "1440x900",
+            "theme": "light",
+            "url": "/panel/admin/admissions/",
+            "role": "Admin",
+            "overflow_result": "PASS",
+            "clipping_result": "PASS",
+            "dark_mode_leakage_result": "N/A",
+            "console_result": "PASS",
+            "screenshot_path": "tools/qa/screenshots/visual/desktop_lg_light_admissions_list.png",
+            "pass": true
+          },
+          {
+            "viewport": "1440x900",
+            "theme": "light",
+            "url": "/panel/admin/exams/",
+            "role": "Admin",
+            "overflow_result": "PASS",
+            "clipping_result": "PASS",
+            "dark_mode_leakage_result": "N/A",
+            "console_result": "PASS",
+            "screenshot_path": "tools/qa/screenshots/visual/desktop_lg_light_exams_list.png",
+            "pass": true
+          },
+          {
+            "viewport": "1440x900",
+            "theme": "light",
+            "url": "/panel/admin/notifications/",
+            "role": "Admin",
+            "overflow_result": "PASS",
+            "clipping_result": "PASS",
+            "dark_mode_leakage_result": "N/A",
+            "console_result": "PASS",
+            "screenshot_path": "tools/qa/screenshots/visual/desktop_lg_light_notifications.png",
+            "pass": true
+          },
+          {
+            "viewport": "1440x900",
+            "theme": "light",
+            "url": "/panel/admin/notifications/email-logs/",
+            "role": "Admin",
+            "overflow_result": "PASS",
+            "clipping_result": "PASS",
+            "dark_mode_leakage_result": "N/A",
+            "console_result": "PASS",
+            "screenshot_path": "tools/qa/screenshots/visual/desktop_lg_light_email_logs.png",
+            "pass": true
+          },
+          {
+            "viewport": "1440x900",
+            "theme": "light",
+            "url": "/panel/admin/automation/alerts/",
+            "role": "Admin",
+            "overflow_result": "PASS",
+            "clipping_result": "PASS",
+            "dark_mode_leakage_result": "N/A",
+            "console_result": "PASS",
+            "screenshot_path": "tools/qa/screenshots/visual/desktop_lg_light_automation_alerts.png",
+            "pass": true
+          },
+          {
+            "viewport": "1440x900",
+            "theme": "light",
+            "url": "/panel/admin/automation/jobs/",
+            "role": "Admin",
+            "overflow_result": "PASS",
+            "clipping_result": "PASS",
+            "dark_mode_leakage_result": "N/A",
+            "console_result": "PASS",
+            "screenshot_path": "tools/qa/screenshots/visual/desktop_lg_light_automation_jobs.png",
+            "pass": true
+          },
+          {
+            "viewport": "1440x900",
+            "theme": "light",
+            "url": "/accounts/profile/",
+            "role": "Admin",
+            "overflow_result": "PASS",
+            "clipping_result": "PASS",
+            "dark_mode_leakage_result": "N/A",
+            "console_result": "PASS",
+            "screenshot_path": "tools/qa/screenshots/visual/desktop_lg_light_profile.png",
+            "pass": true
+          },
+          {
+            "viewport": "1440x900",
+            "theme": "light",
+            "url": "/panel/admin/timetable/",
+            "role": "Admin",
+            "overflow_result": "PASS",
+            "clipping_result": "PASS",
+            "dark_mode_leakage_result": "N/A",
+            "console_result": "PASS",
+            "screenshot_path": "tools/qa/screenshots/visual/desktop_lg_light_timetable.png",
+            "pass": true
+          },
+          {
+            "viewport": "1440x900",
+            "theme": "light",
+            "url": "/panel/admin/permissions/",
+            "role": "Admin",
+            "overflow_result": "PASS",
+            "clipping_result": "FAIL: Submit button extremely far down: y=3204.1953125",
+            "dark_mode_leakage_result": "N/A",
+            "console_result": "PASS",
+            "screenshot_path": "tools/qa/screenshots/visual/desktop_lg_light_permissions.png",
+            "pass": false
+          }
+        ]
+      },
+      {
+        "viewport": "1440x900",
+        "theme": "dark",
+        "pages": [
+          {
+            "viewport": "1440x900",
+            "theme": "dark",
+            "url": "/accounts/login/",
+            "role": "Admin",
+            "overflow_result": "FAIL: scrollWidth=1590 > clientWidth=1440",
+            "clipping_result": "PASS",
+            "dark_mode_leakage_result": "PASS",
+            "console_result": "FAIL: [error] Failed fetching analytics endpoint: TypeError: Failed to fetch\n    at fetchApi (http://127.0.0.1:4679/static/js/charts.js:41:36)\n    at HTMLDocument.<anonymous> (http://127.0.0.1:4679/static/js/charts.js:239:9); [error] Failed fetching analytics endpoint: TypeError: Failed to fetch\n    at fetchApi (http://127.0.0.1:4679/static/js/charts.js:41:36)\n    at HTMLDocument.<anonymous> (http://127.0.0.1:4679/static/js/charts.js:160:9); [error] Failed fetching analytics endpoint: TypeError: Failed to fetch\n    at fetchApi (http://127.0.0.1:4679/static/js/charts.js:41:36)\n    at HTMLDocument.<anonymous> (http://127.0.0.1:4679/static/js/charts.js:207:9); [error] Failed fetching analytics endpoint: TypeError: Failed to fetch\n    at fetchApi (http://127.0.0.1:4679/static/js/charts.js:41:36)\n    at HTMLDocument.<anonymous> (http://127.0.0.1:4679/static/js/charts.js:119:9)",
+            "screenshot_path": "tools/qa/screenshots/visual/desktop_lg_dark_login.png",
+            "pass": false
+          },
+          {
+            "viewport": "1440x900",
+            "theme": "dark",
+            "url": "/panel/admin/dashboard/",
+            "role": "Admin",
+            "overflow_result": "PASS",
+            "clipping_result": "PASS",
+            "dark_mode_leakage_result": "PASS",
+            "console_result": "PASS",
+            "screenshot_path": "tools/qa/screenshots/visual/desktop_lg_dark_admin_dashboard.png",
+            "pass": true
+          },
+          {
+            "viewport": "1440x900",
+            "theme": "dark",
+            "url": "/panel/admin/manage-students/",
+            "role": "Admin",
+            "overflow_result": "PASS",
+            "clipping_result": "PASS",
+            "dark_mode_leakage_result": "PASS",
+            "console_result": "PASS",
+            "screenshot_path": "tools/qa/screenshots/visual/desktop_lg_dark_student_list.png",
+            "pass": true
+          },
+          {
+            "viewport": "1440x900",
+            "theme": "dark",
+            "url": "/panel/admin/session-overview/",
+            "role": "Admin",
+            "overflow_result": "PASS",
+            "clipping_result": "PASS",
+            "dark_mode_leakage_result": "PASS",
+            "console_result": "PASS",
+            "screenshot_path": "tools/qa/screenshots/visual/desktop_lg_dark_session_list.png",
+            "pass": true
+          },
+          {
+            "viewport": "1440x900",
+            "theme": "dark",
+            "url": "/panel/admin/finance/payments/",
+            "role": "Admin",
+            "overflow_result": "PASS",
+            "clipping_result": "PASS",
+            "dark_mode_leakage_result": "PASS",
+            "console_result": "PASS",
+            "screenshot_path": "tools/qa/screenshots/visual/desktop_lg_dark_finance_list.png",
+            "pass": true
+          },
+          {
+            "viewport": "1440x900",
+            "theme": "dark",
+            "url": "/panel/admin/admissions/",
+            "role": "Admin",
+            "overflow_result": "PASS",
+            "clipping_result": "PASS",
+            "dark_mode_leakage_result": "PASS",
+            "console_result": "PASS",
+            "screenshot_path": "tools/qa/screenshots/visual/desktop_lg_dark_admissions_list.png",
+            "pass": true
+          },
+          {
+            "viewport": "1440x900",
+            "theme": "dark",
+            "url": "/panel/admin/exams/",
+            "role": "Admin",
+            "overflow_result": "PASS",
+            "clipping_result": "PASS",
+            "dark_mode_leakage_result": "PASS",
+            "console_result": "PASS",
+            "screenshot_path": "tools/qa/screenshots/visual/desktop_lg_dark_exams_list.png",
+            "pass": true
+          },
+          {
+            "viewport": "1440x900",
+            "theme": "dark",
+            "url": "/panel/admin/notifications/",
+            "role": "Admin",
+            "overflow_result": "PASS",
+            "clipping_result": "PASS",
+            "dark_mode_leakage_result": "PASS",
+            "console_result": "PASS",
+            "screenshot_path": "tools/qa/screenshots/visual/desktop_lg_dark_notifications.png",
+            "pass": true
+          },
+          {
+            "viewport": "1440x900",
+            "theme": "dark",
+            "url": "/panel/admin/notifications/email-logs/",
+            "role": "Admin",
+            "overflow_result": "PASS",
+            "clipping_result": "PASS",
+            "dark_mode_leakage_result": "PASS",
+            "console_result": "PASS",
+            "screenshot_path": "tools/qa/screenshots/visual/desktop_lg_dark_email_logs.png",
+            "pass": true
+          },
+          {
+            "viewport": "1440x900",
+            "theme": "dark",
+            "url": "/panel/admin/automation/alerts/",
+            "role": "Admin",
+            "overflow_result": "PASS",
+            "clipping_result": "PASS",
+            "dark_mode_leakage_result": "PASS",
+            "console_result": "PASS",
+            "screenshot_path": "tools/qa/screenshots/visual/desktop_lg_dark_automation_alerts.png",
+            "pass": true
+          },
+          {
+            "viewport": "1440x900",
+            "theme": "dark",
+            "url": "/panel/admin/automation/jobs/",
+            "role": "Admin",
+            "overflow_result": "PASS",
+            "clipping_result": "PASS",
+            "dark_mode_leakage_result": "PASS",
+            "console_result": "PASS",
+            "screenshot_path": "tools/qa/screenshots/visual/desktop_lg_dark_automation_jobs.png",
+            "pass": true
+          },
+          {
+            "viewport": "1440x900",
+            "theme": "dark",
+            "url": "/accounts/profile/",
+            "role": "Admin",
+            "overflow_result": "PASS",
+            "clipping_result": "PASS",
+            "dark_mode_leakage_result": "PASS",
+            "console_result": "PASS",
+            "screenshot_path": "tools/qa/screenshots/visual/desktop_lg_dark_profile.png",
+            "pass": true
+          },
+          {
+            "viewport": "1440x900",
+            "theme": "dark",
+            "url": "/panel/admin/timetable/",
+            "role": "Admin",
+            "overflow_result": "PASS",
+            "clipping_result": "PASS",
+            "dark_mode_leakage_result": "PASS",
+            "console_result": "PASS",
+            "screenshot_path": "tools/qa/screenshots/visual/desktop_lg_dark_timetable.png",
+            "pass": true
+          },
+          {
+            "viewport": "1440x900",
+            "theme": "dark",
+            "url": "/panel/admin/permissions/",
+            "role": "Admin",
+            "overflow_result": "PASS",
+            "clipping_result": "FAIL: Submit button extremely far down: y=3255.82568359375",
+            "dark_mode_leakage_result": "PASS",
+            "console_result": "PASS",
+            "screenshot_path": "tools/qa/screenshots/visual/desktop_lg_dark_permissions.png",
+            "pass": false
+          }
+        ]
+      },
+      {
+        "viewport": "1024x768",
+        "theme": "light",
+        "pages": [
+          {
+            "viewport": "1024x768",
+            "theme": "light",
+            "url": "/accounts/login/",
+            "role": "Admin",
+            "overflow_result": "FAIL: scrollWidth=1174 > clientWidth=1024",
+            "clipping_result": "PASS",
+            "dark_mode_leakage_result": "N/A",
+            "console_result": "FAIL: [error] Failed fetching analytics endpoint: TypeError: Failed to fetch\n    at fetchApi (http://127.0.0.1:4679/static/js/charts.js:41:36)\n    at HTMLDocument.<anonymous> (http://127.0.0.1:4679/static/js/charts.js:239:9); [error] Failed fetching analytics endpoint: TypeError: Failed to fetch\n    at fetchApi (http://127.0.0.1:4679/static/js/charts.js:41:36)\n    at HTMLDocument.<anonymous> (http://127.0.0.1:4679/static/js/charts.js:56:9); [error] Failed fetching analytics endpoint: TypeError: Failed to fetch\n    at fetchApi (http://127.0.0.1:4679/static/js/charts.js:41:36)\n    at HTMLDocument.<anonymous> (http://127.0.0.1:4679/static/js/charts.js:119:9); [error] Failed fetching analytics endpoint: TypeError: Failed to fetch\n    at fetchApi (http://127.0.0.1:4679/static/js/charts.js:41:36)\n    at HTMLDocument.<anonymous> (http://127.0.0.1:4679/static/js/charts.js:207:9); [error] Failed fetching analytics endpoint: TypeError: Failed to fetch\n    at fetchApi (http://127.0.0.1:4679/static/js/charts.js:41:36)\n    at HTMLDocument.<anonymous> (http://127.0.0.1:4679/static/js/charts.js:160:9)",
+            "screenshot_path": "tools/qa/screenshots/visual/tablet_landscape_light_login.png",
+            "pass": false
+          },
+          {
+            "viewport": "1024x768",
+            "theme": "light",
+            "url": "/panel/admin/dashboard/",
+            "role": "Admin",
+            "overflow_result": "PASS",
+            "clipping_result": "PASS",
+            "dark_mode_leakage_result": "N/A",
+            "console_result": "PASS",
+            "screenshot_path": "tools/qa/screenshots/visual/tablet_landscape_light_admin_dashboard.png",
+            "pass": true
+          },
+          {
+            "viewport": "1024x768",
+            "theme": "light",
+            "url": "/panel/admin/manage-students/",
+            "role": "Admin",
+            "overflow_result": "PASS",
+            "clipping_result": "PASS",
+            "dark_mode_leakage_result": "N/A",
+            "console_result": "PASS",
+            "screenshot_path": "tools/qa/screenshots/visual/tablet_landscape_light_student_list.png",
+            "pass": true
+          },
+          {
+            "viewport": "1024x768",
+            "theme": "light",
+            "url": "/panel/admin/session-overview/",
+            "role": "Admin",
+            "overflow_result": "PASS",
+            "clipping_result": "PASS",
+            "dark_mode_leakage_result": "N/A",
+            "console_result": "PASS",
+            "screenshot_path": "tools/qa/screenshots/visual/tablet_landscape_light_session_list.png",
+            "pass": true
+          },
+          {
+            "viewport": "1024x768",
+            "theme": "light",
+            "url": "/panel/admin/finance/payments/",
+            "role": "Admin",
+            "overflow_result": "PASS",
+            "clipping_result": "PASS",
+            "dark_mode_leakage_result": "N/A",
+            "console_result": "PASS",
+            "screenshot_path": "tools/qa/screenshots/visual/tablet_landscape_light_finance_list.png",
+            "pass": true
+          },
+          {
+            "viewport": "1024x768",
+            "theme": "light",
+            "url": "/panel/admin/admissions/",
+            "role": "Admin",
+            "overflow_result": "PASS",
+            "clipping_result": "PASS",
+            "dark_mode_leakage_result": "N/A",
+            "console_result": "PASS",
+            "screenshot_path": "tools/qa/screenshots/visual/tablet_landscape_light_admissions_list.png",
+            "pass": true
+          },
+          {
+            "viewport": "1024x768",
+            "theme": "light",
+            "url": "/panel/admin/exams/",
+            "role": "Admin",
+            "overflow_result": "PASS",
+            "clipping_result": "PASS",
+            "dark_mode_leakage_result": "N/A",
+            "console_result": "PASS",
+            "screenshot_path": "tools/qa/screenshots/visual/tablet_landscape_light_exams_list.png",
+            "pass": true
+          },
+          {
+            "viewport": "1024x768",
+            "theme": "light",
+            "url": "/panel/admin/notifications/",
+            "role": "Admin",
+            "overflow_result": "PASS",
+            "clipping_result": "PASS",
+            "dark_mode_leakage_result": "N/A",
+            "console_result": "PASS",
+            "screenshot_path": "tools/qa/screenshots/visual/tablet_landscape_light_notifications.png",
+            "pass": true
+          },
+          {
+            "viewport": "1024x768",
+            "theme": "light",
+            "url": "/panel/admin/notifications/email-logs/",
+            "role": "Admin",
+            "overflow_result": "PASS",
+            "clipping_result": "PASS",
+            "dark_mode_leakage_result": "N/A",
+            "console_result": "PASS",
+            "screenshot_path": "tools/qa/screenshots/visual/tablet_landscape_light_email_logs.png",
+            "pass": true
+          },
+          {
+            "viewport": "1024x768",
+            "theme": "light",
+            "url": "/panel/admin/automation/alerts/",
+            "role": "Admin",
+            "overflow_result": "PASS",
+            "clipping_result": "PASS",
+            "dark_mode_leakage_result": "N/A",
+            "console_result": "PASS",
+            "screenshot_path": "tools/qa/screenshots/visual/tablet_landscape_light_automation_alerts.png",
+            "pass": true
+          },
+          {
+            "viewport": "1024x768",
+            "theme": "light",
+            "url": "/panel/admin/automation/jobs/",
+            "role": "Admin",
+            "overflow_result": "PASS",
+            "clipping_result": "PASS",
+            "dark_mode_leakage_result": "N/A",
+            "console_result": "PASS",
+            "screenshot_path": "tools/qa/screenshots/visual/tablet_landscape_light_automation_jobs.png",
+            "pass": true
+          },
+          {
+            "viewport": "1024x768",
+            "theme": "light",
+            "url": "/accounts/profile/",
+            "role": "Admin",
+            "overflow_result": "PASS",
+            "clipping_result": "PASS",
+            "dark_mode_leakage_result": "N/A",
+            "console_result": "PASS",
+            "screenshot_path": "tools/qa/screenshots/visual/tablet_landscape_light_profile.png",
+            "pass": true
+          },
+          {
+            "viewport": "1024x768",
+            "theme": "light",
+            "url": "/panel/admin/timetable/",
+            "role": "Admin",
+            "overflow_result": "PASS",
+            "clipping_result": "PASS",
+            "dark_mode_leakage_result": "N/A",
+            "console_result": "PASS",
+            "screenshot_path": "tools/qa/screenshots/visual/tablet_landscape_light_timetable.png",
+            "pass": true
+          },
+          {
+            "viewport": "1024x768",
+            "theme": "light",
+            "url": "/panel/admin/permissions/",
+            "role": "Admin",
+            "overflow_result": "PASS",
+            "clipping_result": "FAIL: Submit button extremely far down: y=3227.247314453125",
+            "dark_mode_leakage_result": "N/A",
+            "console_result": "PASS",
+            "screenshot_path": "tools/qa/screenshots/visual/tablet_landscape_light_permissions.png",
+            "pass": false
+          }
+        ]
+      },
+      {
+        "viewport": "1024x768",
+        "theme": "dark",
+        "pages": [
+          {
+            "viewport": "1024x768",
+            "theme": "dark",
+            "url": "/accounts/login/",
+            "role": "Admin",
+            "overflow_result": "FAIL: scrollWidth=1174 > clientWidth=1024",
+            "clipping_result": "PASS",
+            "dark_mode_leakage_result": "PASS",
+            "console_result": "FAIL: [error] Failed fetching analytics endpoint: TypeError: Failed to fetch; [error] Failed fetching analytics endpoint: TypeError: Failed to fetch; [error] Failed fetching analytics endpoint: TypeError: Failed to fetch\n    at fetchApi (http://127.0.0.1:4679/static/js/charts.js:41:36)\n    at HTMLDocument.<anonymous> (http://127.0.0.1:4679/static/js/charts.js:207:9); [error] Failed fetching analytics endpoint: TypeError: Failed to fetch\n    at fetchApi (http://127.0.0.1:4679/static/js/charts.js:41:36)\n    at HTMLDocument.<anonymous> (http://127.0.0.1:4679/static/js/charts.js:160:9)",
+            "screenshot_path": "tools/qa/screenshots/visual/tablet_landscape_dark_login.png",
+            "pass": false
+          },
+          {
+            "viewport": "1024x768",
+            "theme": "dark",
+            "url": "/panel/admin/dashboard/",
+            "role": "Admin",
+            "overflow_result": "PASS",
+            "clipping_result": "PASS",
+            "dark_mode_leakage_result": "PASS",
+            "console_result": "PASS",
+            "screenshot_path": "tools/qa/screenshots/visual/tablet_landscape_dark_admin_dashboard.png",
+            "pass": true
+          },
+          {
+            "viewport": "1024x768",
+            "theme": "dark",
+            "url": "/panel/admin/manage-students/",
+            "role": "Admin",
+            "overflow_result": "PASS",
+            "clipping_result": "PASS",
+            "dark_mode_leakage_result": "PASS",
+            "console_result": "PASS",
+            "screenshot_path": "tools/qa/screenshots/visual/tablet_landscape_dark_student_list.png",
+            "pass": true
+          },
+          {
+            "viewport": "1024x768",
+            "theme": "dark",
+            "url": "/panel/admin/session-overview/",
+            "role": "Admin",
+            "overflow_result": "PASS",
+            "clipping_result": "PASS",
+            "dark_mode_leakage_result": "PASS",
+            "console_result": "PASS",
+            "screenshot_path": "tools/qa/screenshots/visual/tablet_landscape_dark_session_list.png",
+            "pass": true
+          },
+          {
+            "viewport": "1024x768",
+            "theme": "dark",
+            "url": "/panel/admin/finance/payments/",
+            "role": "Admin",
+            "overflow_result": "PASS",
+            "clipping_result": "PASS",
+            "dark_mode_leakage_result": "PASS",
+            "console_result": "PASS",
+            "screenshot_path": "tools/qa/screenshots/visual/tablet_landscape_dark_finance_list.png",
+            "pass": true
+          },
+          {
+            "viewport": "1024x768",
+            "theme": "dark",
+            "url": "/panel/admin/admissions/",
+            "role": "Admin",
+            "overflow_result": "PASS",
+            "clipping_result": "PASS",
+            "dark_mode_leakage_result": "PASS",
+            "console_result": "PASS",
+            "screenshot_path": "tools/qa/screenshots/visual/tablet_landscape_dark_admissions_list.png",
+            "pass": true
+          },
+          {
+            "viewport": "1024x768",
+            "theme": "dark",
+            "url": "/panel/admin/exams/",
+            "role": "Admin",
+            "overflow_result": "PASS",
+            "clipping_result": "PASS",
+            "dark_mode_leakage_result": "PASS",
+            "console_result": "PASS",
+            "screenshot_path": "tools/qa/screenshots/visual/tablet_landscape_dark_exams_list.png",
+            "pass": true
+          },
+          {
+            "viewport": "1024x768",
+            "theme": "dark",
+            "url": "/panel/admin/notifications/",
+            "role": "Admin",
+            "overflow_result": "PASS",
+            "clipping_result": "PASS",
+            "dark_mode_leakage_result": "PASS",
+            "console_result": "PASS",
+            "screenshot_path": "tools/qa/screenshots/visual/tablet_landscape_dark_notifications.png",
+            "pass": true
+          },
+          {
+            "viewport": "1024x768",
+            "theme": "dark",
+            "url": "/panel/admin/notifications/email-logs/",
+            "role": "Admin",
+            "overflow_result": "PASS",
+            "clipping_result": "PASS",
+            "dark_mode_leakage_result": "PASS",
+            "console_result": "PASS",
+            "screenshot_path": "tools/qa/screenshots/visual/tablet_landscape_dark_email_logs.png",
+            "pass": true
+          },
+          {
+            "viewport": "1024x768",
+            "theme": "dark",
+            "url": "/panel/admin/automation/alerts/",
+            "role": "Admin",
+            "overflow_result": "PASS",
+            "clipping_result": "PASS",
+            "dark_mode_leakage_result": "PASS",
+            "console_result": "PASS",
+            "screenshot_path": "tools/qa/screenshots/visual/tablet_landscape_dark_automation_alerts.png",
+            "pass": true
+          },
+          {
+            "viewport": "1024x768",
+            "theme": "dark",
+            "url": "/panel/admin/automation/jobs/",
+            "role": "Admin",
+            "overflow_result": "PASS",
+            "clipping_result": "PASS",
+            "dark_mode_leakage_result": "PASS",
+            "console_result": "PASS",
+            "screenshot_path": "tools/qa/screenshots/visual/tablet_landscape_dark_automation_jobs.png",
+            "pass": true
+          },
+          {
+            "viewport": "1024x768",
+            "theme": "dark",
+            "url": "/accounts/profile/",
+            "role": "Admin",
+            "overflow_result": "PASS",
+            "clipping_result": "PASS",
+            "dark_mode_leakage_result": "PASS",
+            "console_result": "PASS",
+            "screenshot_path": "tools/qa/screenshots/visual/tablet_landscape_dark_profile.png",
+            "pass": true
+          },
+          {
+            "viewport": "1024x768",
+            "theme": "dark",
+            "url": "/panel/admin/timetable/",
+            "role": "Admin",
+            "overflow_result": "PASS",
+            "clipping_result": "PASS",
+            "dark_mode_leakage_result": "PASS",
+            "console_result": "PASS",
+            "screenshot_path": "tools/qa/screenshots/visual/tablet_landscape_dark_timetable.png",
+            "pass": true
+          },
+          {
+            "viewport": "1024x768",
+            "theme": "dark",
+            "url": "/panel/admin/permissions/",
+            "role": "Admin",
+            "overflow_result": "PASS",
+            "clipping_result": "FAIL: Submit button extremely far down: y=3279.16650390625",
+            "dark_mode_leakage_result": "PASS",
+            "console_result": "PASS",
+            "screenshot_path": "tools/qa/screenshots/visual/tablet_landscape_dark_permissions.png",
+            "pass": false
+          }
+        ]
+      },
+      {
+        "viewport": "768x1024",
+        "theme": "light",
+        "pages": [
+          {
+            "viewport": "768x1024",
+            "theme": "light",
+            "url": "/accounts/login/",
+            "role": "Admin",
+            "overflow_result": "FAIL: scrollWidth=918 > clientWidth=768",
+            "clipping_result": "PASS",
+            "dark_mode_leakage_result": "N/A",
+            "console_result": "FAIL: [error] Failed fetching analytics endpoint: TypeError: Failed to fetch\n    at fetchApi (http://127.0.0.1:4679/static/js/charts.js:41:36)\n    at HTMLDocument.<anonymous> (http://127.0.0.1:4679/static/js/charts.js:160:9); [error] Failed fetching analytics endpoint: TypeError: Failed to fetch\n    at fetchApi (http://127.0.0.1:4679/static/js/charts.js:41:36)\n    at HTMLDocument.<anonymous> (http://127.0.0.1:4679/static/js/charts.js:119:9); [error] Failed fetching analytics endpoint: TypeError: Failed to fetch\n    at fetchApi (http://127.0.0.1:4679/static/js/charts.js:41:36)\n    at HTMLDocument.<anonymous> (http://127.0.0.1:4679/static/js/charts.js:207:9); [error] Failed fetching analytics endpoint: TypeError: Failed to fetch\n    at fetchApi (http://127.0.0.1:4679/static/js/charts.js:41:36)\n    at HTMLDocument.<anonymous> (http://127.0.0.1:4679/static/js/charts.js:239:9)",
+            "screenshot_path": "tools/qa/screenshots/visual/tablet_portrait_light_login.png",
+            "pass": false
+          },
+          {
+            "viewport": "768x1024",
+            "theme": "light",
+            "url": "/panel/admin/dashboard/",
+            "role": "Admin",
+            "overflow_result": "PASS",
+            "clipping_result": "PASS",
+            "dark_mode_leakage_result": "N/A",
+            "console_result": "PASS",
+            "screenshot_path": "tools/qa/screenshots/visual/tablet_portrait_light_admin_dashboard.png",
+            "pass": true
+          },
+          {
+            "viewport": "768x1024",
+            "theme": "light",
+            "url": "/panel/admin/manage-students/",
+            "role": "Admin",
+            "overflow_result": "PASS",
+            "clipping_result": "PASS",
+            "dark_mode_leakage_result": "N/A",
+            "console_result": "PASS",
+            "screenshot_path": "tools/qa/screenshots/visual/tablet_portrait_light_student_list.png",
+            "pass": true
+          },
+          {
+            "viewport": "768x1024",
+            "theme": "light",
+            "url": "/panel/admin/session-overview/",
+            "role": "Admin",
+            "overflow_result": "PASS",
+            "clipping_result": "PASS",
+            "dark_mode_leakage_result": "N/A",
+            "console_result": "PASS",
+            "screenshot_path": "tools/qa/screenshots/visual/tablet_portrait_light_session_list.png",
+            "pass": true
+          },
+          {
+            "viewport": "768x1024",
+            "theme": "light",
+            "url": "/panel/admin/finance/payments/",
+            "role": "Admin",
+            "overflow_result": "PASS",
+            "clipping_result": "PASS",
+            "dark_mode_leakage_result": "N/A",
+            "console_result": "PASS",
+            "screenshot_path": "tools/qa/screenshots/visual/tablet_portrait_light_finance_list.png",
+            "pass": true
+          },
+          {
+            "viewport": "768x1024",
+            "theme": "light",
+            "url": "/panel/admin/admissions/",
+            "role": "Admin",
+            "overflow_result": "PASS",
+            "clipping_result": "PASS",
+            "dark_mode_leakage_result": "N/A",
+            "console_result": "PASS",
+            "screenshot_path": "tools/qa/screenshots/visual/tablet_portrait_light_admissions_list.png",
+            "pass": true
+          },
+          {
+            "viewport": "768x1024",
+            "theme": "light",
+            "url": "/panel/admin/exams/",
+            "role": "Admin",
+            "overflow_result": "PASS",
+            "clipping_result": "PASS",
+            "dark_mode_leakage_result": "N/A",
+            "console_result": "PASS",
+            "screenshot_path": "tools/qa/screenshots/visual/tablet_portrait_light_exams_list.png",
+            "pass": true
+          },
+          {
+            "viewport": "768x1024",
+            "theme": "light",
+            "url": "/panel/admin/notifications/",
+            "role": "Admin",
+            "overflow_result": "PASS",
+            "clipping_result": "PASS",
+            "dark_mode_leakage_result": "N/A",
+            "console_result": "PASS",
+            "screenshot_path": "tools/qa/screenshots/visual/tablet_portrait_light_notifications.png",
+            "pass": true
+          },
+          {
+            "viewport": "768x1024",
+            "theme": "light",
+            "url": "/panel/admin/notifications/email-logs/",
+            "role": "Admin",
+            "overflow_result": "PASS",
+            "clipping_result": "PASS",
+            "dark_mode_leakage_result": "N/A",
+            "console_result": "PASS",
+            "screenshot_path": "tools/qa/screenshots/visual/tablet_portrait_light_email_logs.png",
+            "pass": true
+          },
+          {
+            "viewport": "768x1024",
+            "theme": "light",
+            "url": "/panel/admin/automation/alerts/",
+            "role": "Admin",
+            "overflow_result": "PASS",
+            "clipping_result": "PASS",
+            "dark_mode_leakage_result": "N/A",
+            "console_result": "PASS",
+            "screenshot_path": "tools/qa/screenshots/visual/tablet_portrait_light_automation_alerts.png",
+            "pass": true
+          },
+          {
+            "viewport": "768x1024",
+            "theme": "light",
+            "url": "/panel/admin/automation/jobs/",
+            "role": "Admin",
+            "overflow_result": "PASS",
+            "clipping_result": "PASS",
+            "dark_mode_leakage_result": "N/A",
+            "console_result": "PASS",
+            "screenshot_path": "tools/qa/screenshots/visual/tablet_portrait_light_automation_jobs.png",
+            "pass": true
+          },
+          {
+            "viewport": "768x1024",
+            "theme": "light",
+            "url": "/accounts/profile/",
+            "role": "Admin",
+            "overflow_result": "PASS",
+            "clipping_result": "PASS",
+            "dark_mode_leakage_result": "N/A",
+            "console_result": "PASS",
+            "screenshot_path": "tools/qa/screenshots/visual/tablet_portrait_light_profile.png",
+            "pass": true
+          },
+          {
+            "viewport": "768x1024",
+            "theme": "light",
+            "url": "/panel/admin/timetable/",
+            "role": "Admin",
+            "overflow_result": "PASS",
+            "clipping_result": "PASS",
+            "dark_mode_leakage_result": "N/A",
+            "console_result": "PASS",
+            "screenshot_path": "tools/qa/screenshots/visual/tablet_portrait_light_timetable.png",
+            "pass": true
+          },
+          {
+            "viewport": "768x1024",
+            "theme": "light",
+            "url": "/panel/admin/permissions/",
+            "role": "Admin",
+            "overflow_result": "PASS",
+            "clipping_result": "PASS",
+            "dark_mode_leakage_result": "N/A",
+            "console_result": "PASS",
+            "screenshot_path": "tools/qa/screenshots/visual/tablet_portrait_light_permissions.png",
+            "pass": true
+          }
+        ]
+      },
+      {
+        "viewport": "768x1024",
+        "theme": "dark",
+        "pages": [
+          {
+            "viewport": "768x1024",
+            "theme": "dark",
+            "url": "/accounts/login/",
+            "role": "Admin",
+            "overflow_result": "FAIL: scrollWidth=918 > clientWidth=768",
+            "clipping_result": "PASS",
+            "dark_mode_leakage_result": "PASS",
+            "console_result": "FAIL: [error] Failed fetching analytics endpoint: TypeError: Failed to fetch\n    at fetchApi (http://127.0.0.1:4679/static/js/charts.js:41:36)\n    at HTMLDocument.<anonymous> (http://127.0.0.1:4679/static/js/charts.js:207:9); [error] Failed fetching analytics endpoint: TypeError: Failed to fetch\n    at fetchApi (http://127.0.0.1:4679/static/js/charts.js:41:36)\n    at HTMLDocument.<anonymous> (http://127.0.0.1:4679/static/js/charts.js:119:9); [error] Failed fetching analytics endpoint: TypeError: Failed to fetch\n    at fetchApi (http://127.0.0.1:4679/static/js/charts.js:41:36)\n    at HTMLDocument.<anonymous> (http://127.0.0.1:4679/static/js/charts.js:160:9); [error] Failed fetching analytics endpoint: TypeError: Failed to fetch\n    at fetchApi (http://127.0.0.1:4679/static/js/charts.js:41:36)\n    at HTMLDocument.<anonymous> (http://127.0.0.1:4679/static/js/charts.js:239:9)",
+            "screenshot_path": "tools/qa/screenshots/visual/tablet_portrait_dark_login.png",
+            "pass": false
+          },
+          {
+            "viewport": "768x1024",
+            "theme": "dark",
+            "url": "/panel/admin/dashboard/",
+            "role": "Admin",
+            "overflow_result": "PASS",
+            "clipping_result": "PASS",
+            "dark_mode_leakage_result": "PASS",
+            "console_result": "PASS",
+            "screenshot_path": "tools/qa/screenshots/visual/tablet_portrait_dark_admin_dashboard.png",
+            "pass": true
+          },
+          {
+            "viewport": "768x1024",
+            "theme": "dark",
+            "url": "/panel/admin/manage-students/",
+            "role": "Admin",
+            "overflow_result": "PASS",
+            "clipping_result": "PASS",
+            "dark_mode_leakage_result": "PASS",
+            "console_result": "PASS",
+            "screenshot_path": "tools/qa/screenshots/visual/tablet_portrait_dark_student_list.png",
+            "pass": true
+          },
+          {
+            "viewport": "768x1024",
+            "theme": "dark",
+            "url": "/panel/admin/session-overview/",
+            "role": "Admin",
+            "overflow_result": "PASS",
+            "clipping_result": "PASS",
+            "dark_mode_leakage_result": "PASS",
+            "console_result": "PASS",
+            "screenshot_path": "tools/qa/screenshots/visual/tablet_portrait_dark_session_list.png",
+            "pass": true
+          },
+          {
+            "viewport": "768x1024",
+            "theme": "dark",
+            "url": "/panel/admin/finance/payments/",
+            "role": "Admin",
+            "overflow_result": "PASS",
+            "clipping_result": "PASS",
+            "dark_mode_leakage_result": "PASS",
+            "console_result": "PASS",
+            "screenshot_path": "tools/qa/screenshots/visual/tablet_portrait_dark_finance_list.png",
+            "pass": true
+          },
+          {
+            "viewport": "768x1024",
+            "theme": "dark",
+            "url": "/panel/admin/admissions/",
+            "role": "Admin",
+            "overflow_result": "PASS",
+            "clipping_result": "PASS",
+            "dark_mode_leakage_result": "PASS",
+            "console_result": "PASS",
+            "screenshot_path": "tools/qa/screenshots/visual/tablet_portrait_dark_admissions_list.png",
+            "pass": true
+          },
+          {
+            "viewport": "768x1024",
+            "theme": "dark",
+            "url": "/panel/admin/exams/",
+            "role": "Admin",
+            "overflow_result": "PASS",
+            "clipping_result": "PASS",
+            "dark_mode_leakage_result": "PASS",
+            "console_result": "PASS",
+            "screenshot_path": "tools/qa/screenshots/visual/tablet_portrait_dark_exams_list.png",
+            "pass": true
+          },
+          {
+            "viewport": "768x1024",
+            "theme": "dark",
+            "url": "/panel/admin/notifications/",
+            "role": "Admin",
+            "overflow_result": "PASS",
+            "clipping_result": "PASS",
+            "dark_mode_leakage_result": "PASS",
+            "console_result": "PASS",
+            "screenshot_path": "tools/qa/screenshots/visual/tablet_portrait_dark_notifications.png",
+            "pass": true
+          },
+          {
+            "viewport": "768x1024",
+            "theme": "dark",
+            "url": "/panel/admin/notifications/email-logs/",
+            "role": "Admin",
+            "overflow_result": "PASS",
+            "clipping_result": "PASS",
+            "dark_mode_leakage_result": "PASS",
+            "console_result": "PASS",
+            "screenshot_path": "tools/qa/screenshots/visual/tablet_portrait_dark_email_logs.png",
+            "pass": true
+          },
+          {
+            "viewport": "768x1024",
+            "theme": "dark",
+            "url": "/panel/admin/automation/alerts/",
+            "role": "Admin",
+            "overflow_result": "PASS",
+            "clipping_result": "PASS",
+            "dark_mode_leakage_result": "PASS",
+            "console_result": "PASS",
+            "screenshot_path": "tools/qa/screenshots/visual/tablet_portrait_dark_automation_alerts.png",
+            "pass": true
+          },
+          {
+            "viewport": "768x1024",
+            "theme": "dark",
+            "url": "/panel/admin/automation/jobs/",
+            "role": "Admin",
+            "overflow_result": "PASS",
+            "clipping_result": "PASS",
+            "dark_mode_leakage_result": "PASS",
+            "console_result": "PASS",
+            "screenshot_path": "tools/qa/screenshots/visual/tablet_portrait_dark_automation_jobs.png",
+            "pass": true
+          },
+          {
+            "viewport": "768x1024",
+            "theme": "dark",
+            "url": "/accounts/profile/",
+            "role": "Admin",
+            "overflow_result": "PASS",
+            "clipping_result": "PASS",
+            "dark_mode_leakage_result": "PASS",
+            "console_result": "PASS",
+            "screenshot_path": "tools/qa/screenshots/visual/tablet_portrait_dark_profile.png",
+            "pass": true
+          },
+          {
+            "viewport": "768x1024",
+            "theme": "dark",
+            "url": "/panel/admin/timetable/",
+            "role": "Admin",
+            "overflow_result": "PASS",
+            "clipping_result": "PASS",
+            "dark_mode_leakage_result": "PASS",
+            "console_result": "PASS",
+            "screenshot_path": "tools/qa/screenshots/visual/tablet_portrait_dark_timetable.png",
+            "pass": true
+          },
+          {
+            "viewport": "768x1024",
+            "theme": "dark",
+            "url": "/panel/admin/permissions/",
+            "role": "Admin",
+            "overflow_result": "PASS",
+            "clipping_result": "PASS",
+            "dark_mode_leakage_result": "PASS",
+            "console_result": "PASS",
+            "screenshot_path": "tools/qa/screenshots/visual/tablet_portrait_dark_permissions.png",
+            "pass": true
+          }
+        ]
+      },
+      {
+        "viewport": "375x812",
+        "theme": "light",
+        "pages": [
+          {
+            "viewport": "375x812",
+            "theme": "light",
+            "url": "/accounts/login/",
+            "role": "Admin",
+            "overflow_result": "FAIL: scrollWidth=525 > clientWidth=375",
+            "clipping_result": "PASS",
+            "dark_mode_leakage_result": "N/A",
+            "console_result": "FAIL: [error] Failed fetching analytics endpoint: TypeError: Failed to fetch\n    at fetchApi (http://127.0.0.1:4679/static/js/charts.js:41:36)\n    at HTMLDocument.<anonymous> (http://127.0.0.1:4679/static/js/charts.js:160:9); [error] Failed fetching analytics endpoint: TypeError: Failed to fetch\n    at fetchApi (http://127.0.0.1:4679/static/js/charts.js:41:36)\n    at HTMLDocument.<anonymous> (http://127.0.0.1:4679/static/js/charts.js:239:9); [error] Failed fetching analytics endpoint: TypeError: Failed to fetch\n    at fetchApi (http://127.0.0.1:4679/static/js/charts.js:41:36)\n    at HTMLDocument.<anonymous> (http://127.0.0.1:4679/static/js/charts.js:207:9); [error] Failed fetching analytics endpoint: TypeError: Failed to fetch\n    at fetchApi (http://127.0.0.1:4679/static/js/charts.js:41:36)\n    at HTMLDocument.<anonymous> (http://127.0.0.1:4679/static/js/charts.js:56:9); [error] Failed fetching analytics endpoint: TypeError: Failed to fetch\n    at fetchApi (http://127.0.0.1:4679/static/js/charts.js:41:36)\n    at HTMLDocument.<anonymous> (http://127.0.0.1:4679/static/js/charts.js:119:9)",
+            "screenshot_path": "tools/qa/screenshots/visual/mobile_light_login.png",
+            "pass": false
+          },
+          {
+            "viewport": "375x812",
+            "theme": "light",
+            "url": "/panel/admin/dashboard/",
+            "role": "Admin",
+            "overflow_result": "PASS",
+            "clipping_result": "PASS",
+            "dark_mode_leakage_result": "N/A",
+            "console_result": "PASS",
+            "screenshot_path": "tools/qa/screenshots/visual/mobile_light_admin_dashboard.png",
+            "pass": true
+          },
+          {
+            "viewport": "375x812",
+            "theme": "light",
+            "url": "/panel/admin/manage-students/",
+            "role": "Admin",
+            "overflow_result": "PASS",
+            "clipping_result": "PASS",
+            "dark_mode_leakage_result": "N/A",
+            "console_result": "PASS",
+            "screenshot_path": "tools/qa/screenshots/visual/mobile_light_student_list.png",
+            "pass": true
+          },
+          {
+            "viewport": "375x812",
+            "theme": "light",
+            "url": "/panel/admin/session-overview/",
+            "role": "Admin",
+            "overflow_result": "PASS",
+            "clipping_result": "PASS",
+            "dark_mode_leakage_result": "N/A",
+            "console_result": "PASS",
+            "screenshot_path": "tools/qa/screenshots/visual/mobile_light_session_list.png",
+            "pass": true
+          },
+          {
+            "viewport": "375x812",
+            "theme": "light",
+            "url": "/panel/admin/finance/payments/",
+            "role": "Admin",
+            "overflow_result": "PASS",
+            "clipping_result": "PASS",
+            "dark_mode_leakage_result": "N/A",
+            "console_result": "PASS",
+            "screenshot_path": "tools/qa/screenshots/visual/mobile_light_finance_list.png",
+            "pass": true
+          },
+          {
+            "viewport": "375x812",
+            "theme": "light",
+            "url": "/panel/admin/admissions/",
+            "role": "Admin",
+            "overflow_result": "PASS",
+            "clipping_result": "PASS",
+            "dark_mode_leakage_result": "N/A",
+            "console_result": "PASS",
+            "screenshot_path": "tools/qa/screenshots/visual/mobile_light_admissions_list.png",
+            "pass": true
+          },
+          {
+            "viewport": "375x812",
+            "theme": "light",
+            "url": "/panel/admin/exams/",
+            "role": "Admin",
+            "overflow_result": "PASS",
+            "clipping_result": "PASS",
+            "dark_mode_leakage_result": "N/A",
+            "console_result": "PASS",
+            "screenshot_path": "tools/qa/screenshots/visual/mobile_light_exams_list.png",
+            "pass": true
+          },
+          {
+            "viewport": "375x812",
+            "theme": "light",
+            "url": "/panel/admin/notifications/",
+            "role": "Admin",
+            "overflow_result": "PASS",
+            "clipping_result": "PASS",
+            "dark_mode_leakage_result": "N/A",
+            "console_result": "PASS",
+            "screenshot_path": "tools/qa/screenshots/visual/mobile_light_notifications.png",
+            "pass": true
+          },
+          {
+            "viewport": "375x812",
+            "theme": "light",
+            "url": "/panel/admin/notifications/email-logs/",
+            "role": "Admin",
+            "overflow_result": "PASS",
+            "clipping_result": "PASS",
+            "dark_mode_leakage_result": "N/A",
+            "console_result": "PASS",
+            "screenshot_path": "tools/qa/screenshots/visual/mobile_light_email_logs.png",
+            "pass": true
+          },
+          {
+            "viewport": "375x812",
+            "theme": "light",
+            "url": "/panel/admin/automation/alerts/",
+            "role": "Admin",
+            "overflow_result": "PASS",
+            "clipping_result": "PASS",
+            "dark_mode_leakage_result": "N/A",
+            "console_result": "PASS",
+            "screenshot_path": "tools/qa/screenshots/visual/mobile_light_automation_alerts.png",
+            "pass": true
+          },
+          {
+            "viewport": "375x812",
+            "theme": "light",
+            "url": "/panel/admin/automation/jobs/",
+            "role": "Admin",
+            "overflow_result": "PASS",
+            "clipping_result": "PASS",
+            "dark_mode_leakage_result": "N/A",
+            "console_result": "PASS",
+            "screenshot_path": "tools/qa/screenshots/visual/mobile_light_automation_jobs.png",
+            "pass": true
+          },
+          {
+            "viewport": "375x812",
+            "theme": "light",
+            "url": "/accounts/profile/",
+            "role": "Admin",
+            "overflow_result": "PASS",
+            "clipping_result": "PASS",
+            "dark_mode_leakage_result": "N/A",
+            "console_result": "PASS",
+            "screenshot_path": "tools/qa/screenshots/visual/mobile_light_profile.png",
+            "pass": true
+          },
+          {
+            "viewport": "375x812",
+            "theme": "light",
+            "url": "/panel/admin/timetable/",
+            "role": "Admin",
+            "overflow_result": "PASS",
+            "clipping_result": "PASS",
+            "dark_mode_leakage_result": "N/A",
+            "console_result": "PASS",
+            "screenshot_path": "tools/qa/screenshots/visual/mobile_light_timetable.png",
+            "pass": true
+          },
+          {
+            "viewport": "375x812",
+            "theme": "light",
+            "url": "/panel/admin/permissions/",
+            "role": "Admin",
+            "overflow_result": "PASS",
+            "clipping_result": "FAIL: Submit button extremely far down: y=3062.72607421875",
+            "dark_mode_leakage_result": "N/A",
+            "console_result": "PASS",
+            "screenshot_path": "tools/qa/screenshots/visual/mobile_light_permissions.png",
+            "pass": false
+          }
+        ]
+      },
+      {
+        "viewport": "375x812",
+        "theme": "dark",
+        "pages": [
+          {
+            "viewport": "375x812",
+            "theme": "dark",
+            "url": "/accounts/login/",
+            "role": "Admin",
+            "overflow_result": "FAIL: scrollWidth=525 > clientWidth=375",
+            "clipping_result": "PASS",
+            "dark_mode_leakage_result": "PASS",
+            "console_result": "FAIL: [error] Failed fetching analytics endpoint: TypeError: Failed to fetch\n    at fetchApi (http://127.0.0.1:4679/static/js/charts.js:41:36)\n    at HTMLDocument.<anonymous> (http://127.0.0.1:4679/static/js/charts.js:239:9); [error] Failed fetching analytics endpoint: TypeError: Failed to fetch\n    at fetchApi (http://127.0.0.1:4679/static/js/charts.js:41:36)\n    at HTMLDocument.<anonymous> (http://127.0.0.1:4679/static/js/charts.js:56:9); [error] Failed fetching analytics endpoint: TypeError: Failed to fetch\n    at fetchApi (http://127.0.0.1:4679/static/js/charts.js:41:36)\n    at HTMLDocument.<anonymous> (http://127.0.0.1:4679/static/js/charts.js:119:9); [error] Failed fetching analytics endpoint: TypeError: Failed to fetch\n    at fetchApi (http://127.0.0.1:4679/static/js/charts.js:41:36)\n    at HTMLDocument.<anonymous> (http://127.0.0.1:4679/static/js/charts.js:207:9)",
+            "screenshot_path": "tools/qa/screenshots/visual/mobile_dark_login.png",
+            "pass": false
+          },
+          {
+            "viewport": "375x812",
+            "theme": "dark",
+            "url": "/panel/admin/dashboard/",
+            "role": "Admin",
+            "overflow_result": "PASS",
+            "clipping_result": "PASS",
+            "dark_mode_leakage_result": "PASS",
+            "console_result": "PASS",
+            "screenshot_path": "tools/qa/screenshots/visual/mobile_dark_admin_dashboard.png",
+            "pass": true
+          },
+          {
+            "viewport": "375x812",
+            "theme": "dark",
+            "url": "/panel/admin/manage-students/",
+            "role": "Admin",
+            "overflow_result": "PASS",
+            "clipping_result": "PASS",
+            "dark_mode_leakage_result": "PASS",
+            "console_result": "PASS",
+            "screenshot_path": "tools/qa/screenshots/visual/mobile_dark_student_list.png",
+            "pass": true
+          },
+          {
+            "viewport": "375x812",
+            "theme": "dark",
+            "url": "/panel/admin/session-overview/",
+            "role": "Admin",
+            "overflow_result": "PASS",
+            "clipping_result": "PASS",
+            "dark_mode_leakage_result": "PASS",
+            "console_result": "PASS",
+            "screenshot_path": "tools/qa/screenshots/visual/mobile_dark_session_list.png",
+            "pass": true
+          },
+          {
+            "viewport": "375x812",
+            "theme": "dark",
+            "url": "/panel/admin/finance/payments/",
+            "role": "Admin",
+            "overflow_result": "PASS",
+            "clipping_result": "PASS",
+            "dark_mode_leakage_result": "PASS",
+            "console_result": "PASS",
+            "screenshot_path": "tools/qa/screenshots/visual/mobile_dark_finance_list.png",
+            "pass": true
+          },
+          {
+            "viewport": "375x812",
+            "theme": "dark",
+            "url": "/panel/admin/admissions/",
+            "role": "Admin",
+            "overflow_result": "PASS",
+            "clipping_result": "PASS",
+            "dark_mode_leakage_result": "PASS",
+            "console_result": "PASS",
+            "screenshot_path": "tools/qa/screenshots/visual/mobile_dark_admissions_list.png",
+            "pass": true
+          },
+          {
+            "viewport": "375x812",
+            "theme": "dark",
+            "url": "/panel/admin/exams/",
+            "role": "Admin",
+            "overflow_result": "PASS",
+            "clipping_result": "PASS",
+            "dark_mode_leakage_result": "PASS",
+            "console_result": "PASS",
+            "screenshot_path": "tools/qa/screenshots/visual/mobile_dark_exams_list.png",
+            "pass": true
+          },
+          {
+            "viewport": "375x812",
+            "theme": "dark",
+            "url": "/panel/admin/notifications/",
+            "role": "Admin",
+            "overflow_result": "PASS",
+            "clipping_result": "PASS",
+            "dark_mode_leakage_result": "PASS",
+            "console_result": "PASS",
+            "screenshot_path": "tools/qa/screenshots/visual/mobile_dark_notifications.png",
+            "pass": true
+          },
+          {
+            "viewport": "375x812",
+            "theme": "dark",
+            "url": "/panel/admin/notifications/email-logs/",
+            "role": "Admin",
+            "overflow_result": "PASS",
+            "clipping_result": "PASS",
+            "dark_mode_leakage_result": "PASS",
+            "console_result": "PASS",
+            "screenshot_path": "tools/qa/screenshots/visual/mobile_dark_email_logs.png",
+            "pass": true
+          },
+          {
+            "viewport": "375x812",
+            "theme": "dark",
+            "url": "/panel/admin/automation/alerts/",
+            "role": "Admin",
+            "overflow_result": "PASS",
+            "clipping_result": "PASS",
+            "dark_mode_leakage_result": "PASS",
+            "console_result": "PASS",
+            "screenshot_path": "tools/qa/screenshots/visual/mobile_dark_automation_alerts.png",
+            "pass": true
+          },
+          {
+            "viewport": "375x812",
+            "theme": "dark",
+            "url": "/panel/admin/automation/jobs/",
+            "role": "Admin",
+            "overflow_result": "PASS",
+            "clipping_result": "PASS",
+            "dark_mode_leakage_result": "PASS",
+            "console_result": "PASS",
+            "screenshot_path": "tools/qa/screenshots/visual/mobile_dark_automation_jobs.png",
+            "pass": true
+          },
+          {
+            "viewport": "375x812",
+            "theme": "dark",
+            "url": "/accounts/profile/",
+            "role": "Admin",
+            "overflow_result": "PASS",
+            "clipping_result": "PASS",
+            "dark_mode_leakage_result": "PASS",
+            "console_result": "PASS",
+            "screenshot_path": "tools/qa/screenshots/visual/mobile_dark_profile.png",
+            "pass": true
+          },
+          {
+            "viewport": "375x812",
+            "theme": "dark",
+            "url": "/panel/admin/timetable/",
+            "role": "Admin",
+            "overflow_result": "PASS",
+            "clipping_result": "PASS",
+            "dark_mode_leakage_result": "PASS",
+            "console_result": "PASS",
+            "screenshot_path": "tools/qa/screenshots/visual/mobile_dark_timetable.png",
+            "pass": true
+          },
+          {
+            "viewport": "375x812",
+            "theme": "dark",
+            "url": "/panel/admin/permissions/",
+            "role": "Admin",
+            "overflow_result": "PASS",
+            "clipping_result": "FAIL: Submit button extremely far down: y=3114.96533203125",
+            "dark_mode_leakage_result": "PASS",
+            "console_result": "PASS",
+            "screenshot_path": "tools/qa/screenshots/visual/mobile_dark_permissions.png",
+            "pass": false
+          }
+        ]
+      }
+    ],
+    "total_visual_assertions": 112
+  },
+  "concurrency": {
+    "timestamp": "2026-06-20T02:53:29.903916",
+    "db_engine": "sqlite3 (file-based)",
+    "server_mode": "standard threaded LiveServerTestCase",
+    "note": "SQLite locking errors are classified separately from application race conditions"
+  },
+  "unresolved_defects": [],
+  "exclusions": [],
+  "gates": {
+    "system_check_pass": true,
+    "no_pending_migrations": true,
+    "django_unit_tests_pass": true,
+    "zero_500_errors": true,
+    "zero_broken_links": true,
+    "zero_403_errors": true,
+    "enforcement_crawl_pass": true,
+    "all_pytest_pass": true,
+    "all_gates_pass": true
+  },
+  "final_status": "PASS",
+  "classifications": {
+    "confirmed_unresolved_defects": [],
+    "intentional_exclusions": [
+      {
+        "route": "/accounts/logout/",
+        "reason": "Excluded from crawling to prevent session termination"
+      },
+      {
+        "route": "/panel/admin/notifications/bulk-send/",
+        "reason": "Destructive/bulk notification sending only accessible to Admin (tested via direct POST in test_delivery)"
+      },
+      {
+        "route": "/toggle-activation/",
+        "reason": "Destructive action omitted from automated GET crawls"
+      }
+    ],
+    "false_positives": [],
+    "environment_limitations": [
+      {
+        "description": "Uses SQLite3 in-memory database for StaticLiveServerTestCase isolation to avoid MySQL database pollution"
+      }
+    ],
+    "untested_routes": [
+      {
+        "route": "/panel/admin/reports/pending-dues/csv/",
+        "name": ":reports:pending_dues_csv",
+        "classification": "static_get"
+      },
+      {
+        "route": "/panel/admin/reports/pending-dues/pdf/",
+        "name": ":reports:pending_dues_pdf",
+        "classification": "static_get"
+      },
+      {
+        "route": "/panel/admin/reports/session-results/<int:session_id>/csv/",
+        "name": ":reports:session_results_csv",
+        "classification": "parameterized_get"
+      },
+      {
+        "route": "/panel/admin/reports/session-results/<int:session_id>/pdf/",
+        "name": ":reports:session_results_pdf",
+        "classification": "parameterized_get"
+      },
+      {
+        "route": "/panel/admin/reports/student-directory/csv/",
+        "name": ":reports:student_directory_csv",
+        "classification": "static_get"
+      },
+      {
+        "route": "/panel/admin/reports/teacher-workload/csv/",
+        "name": ":reports:teacher_workload_csv",
+        "classification": "static_get"
+      },
+      {
+        "route": "/panel/admin/reports/teacher-workload/pdf/",
+        "name": ":reports:teacher_workload_pdf",
+        "classification": "static_get"
+      },
+      {
+        "route": "/panel/admin/reports/success/csv/",
+        "name": ":reports:success_csv",
+        "classification": "static_get"
+      },
+      {
+        "route": "/panel/admin/reports/success/pdf/",
+        "name": ":reports:success_pdf",
+        "classification": "static_get"
+      },
+      {
+        "route": "/panel/admin/reports/student/<int:student_id>/transcript/pdf/",
+        "name": ":reports:student_transcript_pdf",
+        "classification": "parameterized_get"
+      },
+      {
+        "route": "/panel/admin/session/<int:pk>/results/",
+        "name": ":admin_panel:session_result_summary",
+        "classification": "parameterized_get"
+      },
+      {
+        "route": "/panel/admin/users/<int:pk>/assign-role/",
+        "name": ":admin_panel:users:user_assign_role",
+        "classification": "parameterized_get"
+      },
+      {
+        "route": "/panel/admin/users/<int:pk>/assign-session/",
+        "name": ":admin_panel:users:user_assign_session",
+        "classification": "parameterized_get"
+      },
+      {
+        "route": "/panel/admin/timetable/<int:pk>/edit/",
+        "name": ":admin_panel:timetable_edit",
+        "classification": "update_form"
+      },
+      {
+        "route": "/panel/admin/sessions/",
+        "name": ":admin_panel:session_list",
+        "classification": "static_get"
+      },
+      {
+        "route": "/panel/admin/sessions/create/",
+        "name": ":admin_panel:session_create",
+        "classification": "create_form"
+      },
+      {
+        "route": "/panel/admin/sessions/<int:pk>/",
+        "name": ":admin_panel:session_detail",
+        "classification": "parameterized_get"
+      },
+      {
+        "route": "/panel/admin/sessions/<int:pk>/edit/",
+        "name": ":admin_panel:session_edit",
+        "classification": "update_form"
+      },
+      {
+        "route": "/panel/admin/sessions/<int:pk>/results/",
+        "name": ":admin_panel:session_result",
+        "classification": "parameterized_get"
+      },
+      {
+        "route": "/panel/admin/manage-faculty/<int:pk>/assign/",
+        "name": ":admin_panel:staff:faculty_assign",
+        "classification": "parameterized_get"
+      },
+      {
+        "route": "/panel/admin/reports-dashboard/",
+        "name": ":admin_panel:reports_dashboard",
+        "classification": "static_get"
+      },
+      {
+        "route": "/panel/admin/finance/installments/<int:pk>/pay/",
+        "name": ":admin_panel:installment_pay",
+        "classification": "update_form"
+      },
+      {
+        "route": "/panel/admin/students/create/",
+        "name": ":admin_panel:students:student_create",
+        "classification": "create_form"
+      },
+      {
+        "route": "/panel/admin/students/<int:pk>/edit/",
+        "name": ":admin_panel:students:student_edit",
+        "classification": "update_form"
+      },
+      {
+        "route": "/panel/admin/students/<int:pk>/restore/",
+        "name": ":admin_panel:students:student_restore",
+        "classification": "parameterized_get"
+      },
+      {
+        "route": "/panel/admin/students/<int:pk>/documents/",
+        "name": ":admin_panel:students:student_documents",
+        "classification": "parameterized_get"
+      },
+      {
+        "route": "/panel/admin/students/<int:pk>/documents/upload/",
+        "name": ":admin_panel:students:student_document_upload",
+        "classification": "parameterized_get"
+      },
+      {
+        "route": "/panel/admin/students/<int:pk>/guardians/",
+        "name": ":admin_panel:students:student_guardians",
+        "classification": "parameterized_get"
+      },
+      {
+        "route": "/panel/admin/students/<int:pk>/ledger/",
+        "name": ":admin_panel:students:student_ledger",
+        "classification": "parameterized_get"
+      },
+      {
+        "route": "/panel/admin/students/leads/",
+        "name": ":admin_panel:students:lead_list",
+        "classification": "static_get"
+      },
+      {
+        "route": "/panel/admin/students/leads/create/",
+        "name": ":admin_panel:students:lead_create",
+        "classification": "create_form"
+      },
+      {
+        "route": "/panel/admin/students/leads/<int:pk>/",
+        "name": ":admin_panel:students:lead_detail",
+        "classification": "parameterized_get"
+      },
+      {
+        "route": "/panel/admin/students/leads/<int:pk>/edit/",
+        "name": ":admin_panel:students:lead_edit",
+        "classification": "update_form"
+      },
+      {
+        "route": "/panel/admin/students/enrollments/",
+        "name": ":admin_panel:students:enrollment_list",
+        "classification": "static_get"
+      },
+      {
+        "route": "/panel/admin/students/enrollments/create/",
+        "name": ":admin_panel:students:enrollment_create",
+        "classification": "create_form"
+      },
+      {
+        "route": "/panel/admin/students/enrollments/<int:pk>/",
+        "name": ":admin_panel:students:enrollment_detail",
+        "classification": "parameterized_get"
+      },
+      {
+        "route": "/panel/admin/students/enrollments/<int:pk>/withdraw/",
+        "name": ":admin_panel:students:enrollment_withdraw",
+        "classification": "parameterized_get"
+      },
+      {
+        "route": "/panel/admin/students/enrollments/<int:pk>/restore/",
+        "name": ":admin_panel:students:enrollment_restore",
+        "classification": "parameterized_get"
+      },
+      {
+        "route": "/panel/admin/students/enrollments/<int:pk>/freeze/",
+        "name": ":admin_panel:students:enrollment_freeze",
+        "classification": "parameterized_get"
+      },
+      {
+        "route": "/panel/admin/students/enrollments/<int:pk>/unfreeze/",
+        "name": ":admin_panel:students:enrollment_unfreeze",
+        "classification": "parameterized_get"
+      },
+      {
+        "route": "/panel/admin/students/enrollments/<int:pk>/transfer/",
+        "name": ":admin_panel:students:enrollment_transfer",
+        "classification": "parameterized_get"
+      },
+      {
+        "route": "/panel/admin/academics/sessions/create/",
+        "name": ":admin_panel:academics:session_create",
+        "classification": "create_form"
+      },
+      {
+        "route": "/panel/admin/academics/sessions/<int:pk>/",
+        "name": ":admin_panel:academics:session_detail",
+        "classification": "parameterized_get"
+      },
+      {
+        "route": "/panel/admin/academics/sessions/<int:pk>/edit/",
+        "name": ":admin_panel:academics:session_edit",
+        "classification": "update_form"
+      },
+      {
+        "route": "/panel/admin/academics/sessions/<int:pk>/enrollments/",
+        "name": ":admin_panel:academics:session_enrollments",
+        "classification": "parameterized_get"
+      },
+      {
+        "route": "/panel/admin/academics/sessions/<int:pk>/revenue/",
+        "name": ":admin_panel:academics:session_revenue",
+        "classification": "parameterized_get"
+      },
+      {
+        "route": "/panel/admin/academics/subjects/create/",
+        "name": ":admin_panel:academics:subject_create",
+        "classification": "create_form"
+      },
+      {
+        "route": "/panel/admin/academics/subjects/<int:pk>/edit/",
+        "name": ":admin_panel:academics:subject_edit",
+        "classification": "update_form"
+      },
+      {
+        "route": "/panel/admin/academics/assignments/create/",
+        "name": ":admin_panel:academics:assignment_create",
+        "classification": "create_form"
+      },
+      {
+        "route": "/panel/admin/academics/assignments/<int:pk>/edit/",
+        "name": ":admin_panel:academics:assignment_edit",
+        "classification": "update_form"
+      },
+      {
+        "route": "/panel/admin/attendance/mark/<int:session_id>/",
+        "name": ":admin_panel:attendance:attendance_mark",
+        "classification": "parameterized_get"
+      },
+      {
+        "route": "/panel/admin/attendance/<int:session_id>/date/<str:date>/",
+        "name": ":admin_panel:attendance:attendance_sheet",
+        "classification": "parameterized_get"
+      },
+      {
+        "route": "/panel/admin/attendance/<int:session_id>/lock/",
+        "name": ":admin_panel:attendance:attendance_lock",
+        "classification": "parameterized_get"
+      },
+      {
+        "route": "/panel/admin/attendance/<int:session_id>/unlock/",
+        "name": ":admin_panel:attendance:attendance_unlock",
+        "classification": "parameterized_get"
+      },
+      {
+        "route": "/panel/admin/attendance/<int:session_id>/analytics/",
+        "name": ":admin_panel:attendance:attendance_analytics",
+        "classification": "parameterized_get"
+      },
+      {
+        "route": "/panel/admin/attendance/low-attendance/",
+        "name": ":admin_panel:attendance:low_attendance_report",
+        "classification": "static_get"
+      },
+      {
+        "route": "/panel/admin/exams/<int:pk>/edit/",
+        "name": ":admin_panel:exams:exam_edit",
+        "classification": "update_form"
+      },
+      {
+        "route": "/panel/admin/exams/<int:pk>/review/",
+        "name": ":admin_panel:exams:exam_review",
+        "classification": "parameterized_get"
+      },
+      {
+        "route": "/panel/admin/exams/<int:pk>/results/entry/",
+        "name": ":admin_panel:exams:exam_results_entry",
+        "classification": "parameterized_get"
+      },
+      {
+        "route": "/panel/admin/exams/<int:pk>/results/bulk-entry/",
+        "name": ":admin_panel:exams:exam_results_bulk_entry",
+        "classification": "parameterized_get"
+      },
+      {
+        "route": "/panel/admin/exams/<int:pk>/statistics/",
+        "name": ":admin_panel:exams:exam_statistics",
+        "classification": "parameterized_get"
+      },
+      {
+        "route": "/panel/admin/exams/grade-config/",
+        "name": ":admin_panel:exams:grade_config_list",
+        "classification": "static_get"
+      },
+      {
+        "route": "/panel/admin/exams/grade-config/create/",
+        "name": ":admin_panel:exams:grade_config_create",
+        "classification": "create_form"
+      },
+      {
+        "route": "/panel/admin/exams/grade-config/<int:pk>/edit/",
+        "name": ":admin_panel:exams:grade_config_edit",
+        "classification": "update_form"
+      },
+      {
+        "route": "/panel/admin/finance/installments/<int:pk>/pay/",
+        "name": ":admin_panel:finance:installment_pay",
+        "classification": "update_form"
+      },
+      {
+        "route": "/panel/admin/finance/installments/<int:pk>/restructure/",
+        "name": ":admin_panel:finance:installment_restructure",
+        "classification": "parameterized_get"
+      },
+      {
+        "route": "/panel/admin/finance/installments/pay/<int:pk>/",
+        "name": ":admin_panel:finance:installment_pay",
+        "classification": "update_form"
+      },
+      {
+        "route": "/panel/admin/finance/late-fees/apply/",
+        "name": ":admin_panel:finance:late_fee_apply",
+        "classification": "static_get"
+      },
+      {
+        "route": "/panel/admin/finance/late-fees/waive/<int:pk>/",
+        "name": ":admin_panel:finance:late_fee_waive",
+        "classification": "parameterized_get"
+      },
+      {
+        "route": "/panel/admin/finance/send-fee-reminder/",
+        "name": ":admin_panel:finance:send_fee_reminder",
+        "classification": "static_get"
+      },
+      {
+        "route": "/panel/admin/notifications/templates/",
+        "name": ":admin_panel:notifications:template_list",
+        "classification": "static_get"
+      },
+      {
+        "route": "/panel/admin/notifications/templates/create/",
+        "name": ":admin_panel:notifications:template_create",
+        "classification": "create_form"
+      },
+      {
+        "route": "/panel/admin/notifications/templates/<int:pk>/edit/",
+        "name": ":admin_panel:notifications:template_edit",
+        "classification": "update_form"
+      },
+      {
+        "route": "/panel/admin/documents/jobs/create/",
+        "name": ":admin_panel:documents:comparison_job_create",
+        "classification": "create_form"
+      },
+      {
+        "route": "/panel/admin/documents/jobs/<int:pk>/",
+        "name": ":admin_panel:documents:comparison_job_detail",
+        "classification": "parameterized_get"
+      },
+      {
+        "route": "/panel/admin/documents/jobs/<int:pk>/results/",
+        "name": ":admin_panel:documents:comparison_results",
+        "classification": "parameterized_get"
+      },
+      {
+        "route": "/panel/admin/ai/predictions/",
+        "name": ":admin_panel:ai_engine:prediction_list",
+        "classification": "static_get"
+      },
+      {
+        "route": "/panel/admin/ai/predictions/<int:pk>/",
+        "name": ":admin_panel:ai_engine:prediction_detail",
+        "classification": "parameterized_get"
+      },
+      {
+        "route": "/panel/admin/ai/predictions/<int:pk>/acknowledge/",
+        "name": ":admin_panel:ai_engine:prediction_acknowledge",
+        "classification": "parameterized_get"
+      },
+      {
+        "route": "/panel/admin/ai/models/",
+        "name": ":admin_panel:ai_engine:model_version_list",
+        "classification": "static_get"
+      },
+      {
+        "route": "/panel/admin/ai/dropout-risk/",
+        "name": ":admin_panel:ai_engine:dropout_risk_dashboard",
+        "classification": "static_get"
+      },
+      {
+        "route": "/panel/admin/reports/revenue/",
+        "name": ":admin_panel:reports:report_revenue",
+        "classification": "static_get"
+      },
+      {
+        "route": "/panel/admin/reports/attendance/",
+        "name": ":admin_panel:reports:report_attendance",
+        "classification": "static_get"
+      },
+      {
+        "route": "/panel/admin/reports/enrollment/",
+        "name": ":admin_panel:reports:report_enrollment",
+        "classification": "static_get"
+      },
+      {
+        "route": "/panel/admin/reports/overdue/",
+        "name": ":admin_panel:reports:report_overdue",
+        "classification": "static_get"
+      },
+      {
+        "route": "/panel/admin/reports/pdf/ledger/<int:enrollment_id>/",
+        "name": ":admin_panel:reports:pdf_student_ledger",
+        "classification": "parameterized_get"
+      },
+      {
+        "route": "/panel/admin/reports/pdf/attendance/<int:session_id>/",
+        "name": ":admin_panel:reports:pdf_attendance_report",
+        "classification": "parameterized_get"
+      },
+      {
+        "route": "/panel/admin/audit/<int:pk>/",
+        "name": ":admin_panel:audit:audit_log_detail",
+        "classification": "parameterized_get"
+      },
+      {
+        "route": "/panel/admin/admissions/<int:pk>/review/",
+        "name": ":admin_panel:admissions:admission_review",
+        "classification": "parameterized_get"
+      },
+      {
+        "route": "/panel/teacher/sessions/<int:pk>/",
+        "name": ":teacher_panel:session_detail",
+        "classification": "parameterized_get"
+      },
+      {
+        "route": "/panel/teacher/sessions/<int:pk>/students/",
+        "name": ":teacher_panel:session_students",
+        "classification": "parameterized_get"
+      },
+      {
+        "route": "/panel/teacher/attendance/mark/<int:session_id>/",
+        "name": ":teacher_panel:attendance_mark",
+        "classification": "parameterized_get"
+      },
+      {
+        "route": "/panel/teacher/attendance/<int:session_id>/date/<str:date>/",
+        "name": ":teacher_panel:attendance_sheet",
+        "classification": "parameterized_get"
+      },
+      {
+        "route": "/panel/teacher/attendance/<int:session_id>/analytics/",
+        "name": ":teacher_panel:attendance_analytics",
+        "classification": "parameterized_get"
+      },
+      {
+        "route": "/panel/teacher/exams/<int:pk>/edit/",
+        "name": ":teacher_panel:exam_edit",
+        "classification": "update_form"
+      },
+      {
+        "route": "/panel/teacher/exams/<int:pk>/results/entry/",
+        "name": ":teacher_panel:exam_results_entry",
+        "classification": "parameterized_get"
+      },
+      {
+        "route": "/panel/teacher/exams/<int:pk>/results/",
+        "name": ":teacher_panel:exam_results",
+        "classification": "parameterized_get"
+      },
+      {
+        "route": "/panel/teacher/notifications/<int:pk>/",
+        "name": ":teacher_panel:notification_detail",
+        "classification": "parameterized_get"
+      },
+      {
+        "route": "/panel/teacher/profile/",
+        "name": ":teacher_panel:profile_view",
+        "classification": "static_get"
+      },
+      {
+        "route": "/panel/teacher/profile/edit/",
+        "name": ":teacher_panel:profile_edit",
+        "classification": "update_form"
+      },
+      {
+        "route": "/panel/accounts/installments/<int:pk>/restructure/",
+        "name": ":accounts_panel:installment_restructure",
+        "classification": "parameterized_get"
+      },
+      {
+        "route": "/panel/accounts/installments/<int:pk>/pay/",
+        "name": ":accounts_panel:installment_pay",
+        "classification": "update_form"
+      },
+      {
+        "route": "/panel/accounts/late-fees/apply/",
+        "name": ":accounts_panel:late_fee_apply",
+        "classification": "static_get"
+      },
+      {
+        "route": "/panel/accounts/late-fees/waive/",
+        "name": ":accounts_panel:late_fee_waive",
+        "classification": "static_get"
+      },
+      {
+        "route": "/panel/accounts/students/<int:pk>/ledger/",
+        "name": ":accounts_panel:student_ledger",
+        "classification": "parameterized_get"
+      },
+      {
+        "route": "/panel/accounts/reports/pending-dues/csv/",
+        "name": ":accounts_panel:pending_dues_csv",
+        "classification": "static_get"
+      },
+      {
+        "route": "/panel/accounts/reports/pending-dues/pdf/",
+        "name": ":accounts_panel:pending_dues_pdf",
+        "classification": "static_get"
+      },
+      {
+        "route": "/panel/accounts/reports/revenue/",
+        "name": ":accounts_panel:report_revenue",
+        "classification": "static_get"
+      },
+      {
+        "route": "/panel/accounts/reports/overdue/",
+        "name": ":accounts_panel:report_overdue",
+        "classification": "static_get"
+      },
+      {
+        "route": "/panel/registrar/students/<int:pk>/edit/",
+        "name": ":registrar_panel:student_edit",
+        "classification": "update_form"
+      },
+      {
+        "route": "/panel/registrar/students/<int:pk>/documents/upload/",
+        "name": ":registrar_panel:student_document_upload",
+        "classification": "parameterized_get"
+      },
+      {
+        "route": "/panel/registrar/students/<int:pk>/guardians/",
+        "name": ":registrar_panel:student_guardians",
+        "classification": "parameterized_get"
+      },
+      {
+        "route": "/panel/registrar/leads/<int:pk>/edit/",
+        "name": ":registrar_panel:lead_edit",
+        "classification": "update_form"
+      },
+      {
+        "route": "/panel/registrar/enrollments/create/",
+        "name": ":registrar_panel:enrollment_create",
+        "classification": "create_form"
+      },
+      {
+        "route": "/panel/registrar/enrollments/<int:pk>/",
+        "name": ":registrar_panel:enrollment_detail",
+        "classification": "parameterized_get"
+      },
+      {
+        "route": "/panel/registrar/sessions/",
+        "name": ":registrar_panel:session_list",
+        "classification": "static_get"
+      },
+      {
+        "route": "/panel/registrar/sessions/<int:pk>/",
+        "name": ":registrar_panel:session_detail",
+        "classification": "parameterized_get"
+      },
+      {
+        "route": "/panel/registrar/admissions/<int:pk>/review/",
+        "name": ":registrar_panel:admissions:admission_review",
+        "classification": "parameterized_get"
+      },
+      {
+        "route": "/accounts/logout/",
+        "name": ":accounts:logout",
+        "classification": "static_get"
+      },
+      {
+        "route": "/accounts/password/change/done/",
+        "name": ":accounts:password_change_done",
+        "classification": "static_get"
+      },
+      {
+        "route": "/accounts/profile/edit/",
+        "name": ":accounts:profile_edit",
+        "classification": "update_form"
+      },
+      {
+        "route": "/portal/student/exams/<int:pk>/",
+        "name": ":student_portal:exam_result_detail",
+        "classification": "parameterized_get"
+      },
+      {
+        "route": "/portal/student/transcript/pdf/",
+        "name": ":student_portal:student_transcript_pdf",
+        "classification": "static_get"
+      },
+      {
+        "route": "/portal/student/fees/<int:payment_id>/receipt/",
+        "name": ":student_portal:download_receipt",
+        "classification": "parameterized_get"
+      },
+      {
+        "route": "/portal/guardian/child/<int:student_id>/transcript/pdf/",
+        "name": ":guardian_portal:child_transcript_pdf",
+        "classification": "parameterized_get"
+      },
+      {
+        "route": "/portal/guardian/child/<int:student_id>/fees/<int:payment_id>/receipt/",
+        "name": ":guardian_portal:download_receipt",
+        "classification": "parameterized_get"
+      },
+      {
+        "route": "/portal/guardian/children/<int:student_id>/",
+        "name": ":guardian_portal:child_detail_old",
+        "classification": "parameterized_get"
+      },
+      {
+        "route": "/portal/guardian/children/<int:student_id>/attendance/",
+        "name": ":guardian_portal:child_attendance_old",
+        "classification": "parameterized_get"
+      },
+      {
+        "route": "/portal/guardian/children/<int:student_id>/payments/",
+        "name": ":guardian_portal:child_payments_old",
+        "classification": "parameterized_get"
+      },
+      {
+        "route": "/portal/guardian/children/<int:student_id>/exams/",
+        "name": ":guardian_portal:child_exams_old",
+        "classification": "parameterized_get"
+      }
+    ]
+  }
+}

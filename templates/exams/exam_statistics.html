@@ -1,0 +1,60 @@
+{% extends 'layouts/panel_base.html' %}
+{% load static %}
+
+{% block title %}Exam Statistics - {{ exam.name }} - Iqra Academy{% endblock %}
+
+{% block content %}
+<div class="container-fluid px-0">
+    <div class="p-4 rounded-4 mb-4 card border border-light shadow-sm animate-fade-in">
+        <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
+            <div>
+                <h3 class="fw-bold mb-1">
+                    <i class="fa-solid fa-chart-bar me-2 text-primary"></i>
+                    Statistics: {{ exam.name }}
+                </h3>
+                <p class="text-secondary mb-0">
+                    {{ exam.session.name }} &middot; {{ exam.subject.name|default:"General" }}
+                </p>
+            </div>
+            <a href="../" class="btn btn-outline-secondary rounded-3 px-4">
+                <i class="fa-solid fa-arrow-left me-2"></i> Back
+            </a>
+        </div>
+    </div>
+
+    {% if stats %}
+    <div class="row g-3 mb-4">
+        <div class="col-6 col-md-3">
+            <div class="card p-3 border rounded-4 text-center">
+                <div class="text-muted small mb-1">Average</div>
+                <div class="fw-bold fs-4 text-primary">{{ stats.average|floatformat:1 }}%</div>
+            </div>
+        </div>
+        <div class="col-6 col-md-3">
+            <div class="card p-3 border rounded-4 text-center">
+                <div class="text-muted small mb-1">Highest</div>
+                <div class="fw-bold fs-4 text-success">{{ stats.highest|floatformat:1 }}</div>
+            </div>
+        </div>
+        <div class="col-6 col-md-3">
+            <div class="card p-3 border rounded-4 text-center">
+                <div class="text-muted small mb-1">Lowest</div>
+                <div class="fw-bold fs-4 text-danger">{{ stats.lowest|floatformat:1 }}</div>
+            </div>
+        </div>
+        <div class="col-6 col-md-3">
+            <div class="card p-3 border rounded-4 text-center">
+                <div class="text-muted small mb-1">Pass Rate</div>
+                <div class="fw-bold fs-4 text-warning">{{ stats.pass_rate|floatformat:1 }}%</div>
+            </div>
+        </div>
+    </div>
+    {% else %}
+    <div class="card p-5 text-center text-muted border rounded-4">
+        <i class="fa-solid fa-chart-line fa-3x mb-3 opacity-50"></i>
+        <h5>No statistics available</h5>
+        <p>Enter exam results to view statistics.</p>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

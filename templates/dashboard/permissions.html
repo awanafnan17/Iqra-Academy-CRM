@@ -1,0 +1,141 @@
+{% extends 'layouts/panel_base.html' %}
+{% load finance_tags %}
+
+{% block extra_css %}
+<style>
+    .permissions-card .table-wrapper {
+        max-height: 480px;
+        overflow-y: auto;
+        border: 1px solid var(--border-soft);
+        border-radius: var(--radius-sm);
+        position: relative;
+    }
+    .permissions-card table thead th {
+        position: sticky;
+        top: 0;
+        background-color: var(--bg-card);
+        z-index: 10;
+        box-shadow: 0 1px 0 var(--border-soft);
+    }
+</style>
+{% endblock %}
+
+{% block title %}Enterprise Permission Matrix - Iqra Academy{% endblock %}
+
+{% block content %}
+<div class="container-fluid px-0">
+    <!-- Page Header -->
+    <div class="p-4 rounded-4 mb-4 card border border-light shadow-sm animate-fade-in">
+        <div class="d-flex justify-content-between align-items-center">
+            <div>
+                <h3 class="fw-bold mb-1">Enterprise Permission Matrix</h3>
+                <p class="text-secondary mb-0">Granular module-level access controls for Iqra Academy CRM roles.</p>
+            </div>
+            <div>
+                <span class="badge bg-primary bg-opacity-10 text-primary px-3 py-2 rounded-pill fw-semibold">
+                    <i class="fa-solid fa-shield-halved me-1"></i> Security Console
+                </span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Permission Matrix Form -->
+    <form method="POST" class="animate-fade-in stagger-1">
+        {% csrf_token %}
+        <div class="card p-4 permissions-card">
+            <div class="d-flex justify-content-between align-items-center mb-4 border-bottom border-light pb-3">
+                <h5 class="fw-bold text-primary mb-0">
+                    <i class="fa-solid fa-user-lock me-2"></i>Role/Module Access Map
+                </h5>
+                <button type="submit" class="btn btn-primary px-4 py-2 fw-semibold shadow-sm">
+                    <i class="fa-solid fa-floppy-disk me-1"></i> Save Changes
+                </button>
+            </div>
+
+            <div class="table-responsive table-wrapper">
+                <table class="table align-middle mb-0">
+                    <thead>
+                        <tr>
+                            <th class="min-width-150px">Role &amp; Module</th>
+                            <th class="text-center">View</th>
+                            <th class="text-center">Create</th>
+                            <th class="text-center">Edit</th>
+                            <th class="text-center">Delete</th>
+                            <th class="text-center">Export</th>
+                            <th class="text-center">Approve</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for role_name in roles %}
+                            <tr class="table-light-bg-header">
+                                <td colspan="7" class="fw-bold py-2 px-3 bg-light bg-opacity-50">
+                                    <i class="fa-solid fa-users me-1 text-secondary"></i> {{ role_name }} Role
+                                </td>
+                            </tr>
+                            {% for module_name in modules %}
+                                {% with matrix_row=matrix|dict_item:role_name %}
+                                    {% with perm=matrix_row|dict_item:module_name %}
+                                        <tr>
+                                            <td class="ps-4">
+                                                <span class="text-secondary font-monospace small uppercase-spacing">{{ module_name|upper }}</span>
+                                            </td>
+                                            <td class="text-center">
+                                                <div class="form-check form-switch d-inline-block">
+                                                    <input class="form-check-input" type="checkbox" role="switch"
+                                                           name="perm_{{ role_name }}_{{ module_name }}_view"
+                                                           {% if perm.can_view %}checked{% endif %}>
+                                                </div>
+                                            </td>
+                                            <td class="text-center">
+                                                <div class="form-check form-switch d-inline-block">
+                                                    <input class="form-check-input" type="checkbox" role="switch"
+                                                           name="perm_{{ role_name }}_{{ module_name }}_create"
+                                                           {% if perm.can_create %}checked{% endif %}>
+                                                </div>
+                                            </td>
+                                            <td class="text-center">
+                                                <div class="form-check form-switch d-inline-block">
+                                                    <input class="form-check-input" type="checkbox" role="switch"
+                                                           name="perm_{{ role_name }}_{{ module_name }}_edit"
+                                                           {% if perm.can_edit %}checked{% endif %}>
+                                                </div>
+                                            </td>
+                                            <td class="text-center">
+                                                <div class="form-check form-switch d-inline-block">
+                                                    <input class="form-check-input" type="checkbox" role="switch"
+                                                           name="perm_{{ role_name }}_{{ module_name }}_delete"
+                                                           {% if perm.can_delete %}checked{% endif %}>
+                                                </div>
+                                            </td>
+                                            <td class="text-center">
+                                                <div class="form-check form-switch d-inline-block">
+                                                    <input class="form-check-input" type="checkbox" role="switch"
+                                                           name="perm_{{ role_name }}_{{ module_name }}_export"
+                                                           {% if perm.can_export %}checked{% endif %}>
+                                                </div>
+                                            </td>
+                                            <td class="text-center">
+                                                <div class="form-check form-switch d-inline-block">
+                                                    <input class="form-check-input" type="checkbox" role="switch"
+                                                           name="perm_{{ role_name }}_{{ module_name }}_approve"
+                                                           {% if perm.can_approve %}checked{% endif %}>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    {% endwith %}
+                                {% endwith %}
+                            {% endfor %}
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="d-flex justify-content-end mt-4">
+                <button type="submit" class="btn btn-primary px-4 py-2 fw-semibold shadow-sm">
+                    <i class="fa-solid fa-floppy-disk me-1"></i> Save Changes
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
+{% endblock %}

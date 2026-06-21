@@ -1,0 +1,166 @@
+{% extends 'layouts/panel_base.html' %}
+
+{% block title %}Admissions Desk - Iqra Academy{% endblock %}
+
+{% block content %}
+<div class="container-fluid px-0">
+    <!-- Page Header -->
+    <div class="p-4 rounded-4 mb-4 card border border-light shadow-sm animate-fade-in">
+        <div class="d-flex justify-content-between align-items-center">
+            <div>
+                <h3 class="fw-bold mb-1">Admissions Desk</h3>
+                <p class="text-secondary mb-0">Overview of student registrations, lead conversions, and status updates for Iqra Academy.</p>
+            </div>
+            <div>
+                <span class="badge bg-primary bg-opacity-10 text-primary px-3 py-2 rounded-pill fw-semibold">
+                    <i class="fa-solid fa-address-book me-1"></i> Registrar Portal
+                </span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Metrics Cards Grid -->
+    <div class="row g-4">
+        <!-- Active Students -->
+        <div class="col-12 col-md-6 col-lg-3">
+            <div class="card metric-card h-100 animate-fade-in stagger-1">
+                <div class="card-body p-4">
+                    <div class="d-flex align-items-start justify-content-between mb-3">
+                        <div>
+                            <div class="metric-label">Active Students</div>
+                            <div
+                                class="metric-value mt-2"
+                                data-target="{{ metrics.active_students|default:0 }}"
+                                data-duration="1200"
+                                data-decimals="0">
+                                {{ metrics.active_students|default:0 }}
+                            </div>
+                        </div>
+                        <div class="metric-icon">
+                            <i class="fa-solid fa-user-graduate"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Today's Registrations -->
+        <div class="col-12 col-md-6 col-lg-3">
+            <div class="card metric-card h-100 animate-fade-in stagger-2">
+                <div class="card-body p-4">
+                    <div class="d-flex align-items-start justify-content-between mb-3">
+                        <div>
+                            <div class="metric-label">Today's Registrations</div>
+                            <div
+                                class="metric-value mt-2"
+                                data-target="{{ metrics.todays_registrations|default:0 }}"
+                                data-duration="1200"
+                                data-decimals="0">
+                                {{ metrics.todays_registrations|default:0 }}
+                            </div>
+                        </div>
+                        <div class="metric-icon">
+                            <i class="fa-solid fa-user-plus"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Active Leads -->
+        <div class="col-12 col-md-6 col-lg-3">
+            <div class="card metric-card h-100 animate-fade-in stagger-3">
+                <div class="card-body p-4">
+                    <div class="d-flex align-items-start justify-content-between mb-3">
+                        <div>
+                            <div class="metric-label">Active Leads</div>
+                            <div
+                                class="metric-value mt-2"
+                                data-target="{{ metrics.active_leads|default:0 }}"
+                                data-duration="1200"
+                                data-decimals="0">
+                                {{ metrics.active_leads|default:0 }}
+                            </div>
+                        </div>
+                        <div class="metric-icon">
+                            <i class="fa-solid fa-user-tag"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Converted Leads -->
+        <div class="col-12 col-md-6 col-lg-3">
+            <div class="card metric-card h-100 animate-fade-in stagger-4">
+                <div class="card-body p-4">
+                    <div class="d-flex align-items-start justify-content-between mb-3">
+                        <div>
+                            <div class="metric-label">Converted Leads</div>
+                            <div
+                                class="metric-value mt-2"
+                                data-target="{{ metrics.converted_leads|default:0 }}"
+                                data-duration="1200"
+                                data-decimals="0">
+                                {{ metrics.converted_leads|default:0 }}
+                            </div>
+                        </div>
+                        <div class="metric-icon">
+                            <i class="fa-solid fa-circle-check"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Secondary Row -->
+    <div class="row g-4 mt-2">
+        <!-- Suspended Students -->
+        <div class="col-12 col-md-6">
+            <div class="card metric-card h-100 animate-fade-in stagger-5">
+                <div class="card-body p-4">
+                    <div class="d-flex align-items-start justify-content-between mb-3">
+                        <div>
+                            <div class="metric-label">Suspended Students</div>
+                            <div
+                                class="metric-value mt-2"
+                                data-target="{{ metrics.suspended_students|default:0 }}"
+                                data-duration="1200"
+                                data-decimals="0">
+                                {{ metrics.suspended_students|default:0 }}
+                            </div>
+                        </div>
+                        <div class="metric-icon">
+                            <i class="fa-solid fa-user-slash"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pending Admissions -->
+        <div class="col-12 col-md-6">
+            <div class="card metric-card h-100 animate-fade-in stagger-5">
+                <div class="card-body p-4">
+                    <div class="d-flex align-items-start justify-content-between mb-3">
+                        <div>
+                            <div class="metric-label">Pending Admissions</div>
+                            <div
+                                class="metric-value mt-2"
+                                data-target="{{ metrics.pending_admissions_count|default:0 }}"
+                                data-duration="1200"
+                                data-decimals="0">
+                                {{ metrics.pending_admissions_count|default:0 }}
+                            </div>
+                        </div>
+                        <div class="metric-icon">
+                            <i class="fa-solid fa-file-invoice"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

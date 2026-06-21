@@ -1,0 +1,183 @@
+{% extends 'layouts/panel_base.html' %}
+{% load static %}
+
+{% block title %}Reporting & Export Center - Iqra Academy{% endblock %}
+
+{% block content %}
+<div class="reports-page">
+<div class="container-fluid px-0">
+    <!-- Page Header -->
+    <div class="p-4 rounded-4 mb-4 card-header-gradient border border-light shadow-sm animate-fade-in">
+        <div class="d-flex justify-content-between align-items-center">
+            <div>
+                <h3 class="fw-bold mb-1 text-primary">Reporting & Export Center</h3>
+                <p class="text-secondary mb-0">Generate, view, and export system-wide financial and academic records.</p>
+            </div>
+            <div>
+                <span class="badge bg-primary bg-opacity-10 text-primary px-3 py-2 rounded-pill fw-semibold">
+                    <i class="fa-solid fa-chart-pie me-1"></i> Reports Engine
+                </span>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-4">
+        <!-- Financial Reports Card (Visible for Admin and Accountant) -->
+        {% if is_admin or is_accountant %}
+        <div class="col-12 col-lg-6">
+            <div class="glass-card card-lift p-4 h-100 animate-fade-in stagger-1">
+                <div class="d-flex align-items-center mb-3">
+                    <div class="metric-card-icon bg-success bg-opacity-10 text-success me-3">
+                        <i class="fa-solid fa-file-invoice-dollar fa-xl"></i>
+                    </div>
+                    <div>
+                        <h5 class="fw-bold mb-0">Financial Reports</h5>
+                        <small class="text-muted">Outstanding invoices and dues</small>
+                    </div>
+                </div>
+                <hr class="my-3 text-muted opacity-25">
+
+                <div class="mb-4">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <div>
+                            <h6 class="fw-bold mb-1">Outstanding Payments (Pending Dues)</h6>
+                            <small class="text-secondary">Export active enrollments with outstanding balance > 0</small>
+                        </div>
+                    </div>
+                    <div class="d-flex gap-2">
+                        <a href="{% if is_accountant %}{% url 'accounts_panel:pending_dues_pdf' %}{% else %}{% url 'reports:pending_dues_pdf' %}{% endif %}" target="_blank" class="btn btn-outline-primary btn-sm rounded-pill px-3">
+                            <i class="fa-solid fa-file-pdf me-1"></i> Download PDF
+                        </a>
+                        <a href="{% if is_accountant %}{% url 'accounts_panel:pending_dues_csv' %}{% else %}{% url 'reports:pending_dues_csv' %}{% endif %}" class="btn btn-outline-success btn-sm rounded-pill px-3">
+                            <i class="fa-solid fa-file-csv me-1"></i> Download CSV
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
+        <!-- Academic Reports Card (Visible for Admin and Principal) -->
+        {% if is_admin or is_principal %}
+        <div class="col-12 col-lg-6">
+            <div class="glass-card card-lift p-4 h-100 animate-fade-in stagger-2">
+                <div class="d-flex align-items-center mb-3">
+                    <div class="metric-card-icon bg-primary bg-opacity-10 text-primary me-3">
+                        <i class="fa-solid fa-graduation-cap fa-xl"></i>
+                    </div>
+                    <div>
+                        <h5 class="fw-bold mb-0">Academic Reports</h5>
+                        <small class="text-muted">Enrollments, exams, and workload metrics</small>
+                    </div>
+                </div>
+                <hr class="my-3 text-muted opacity-25">
+
+                <!-- Student Directory -->
+                <div class="mb-4">
+                    <div class="mb-2">
+                        <h6 class="fw-bold mb-1">Student Directory</h6>
+                        <small class="text-secondary">Export active non-deleted student directory roster</small>
+                    </div>
+                    <a href="{% url 'reports:student_directory_csv' %}" class="btn btn-outline-success btn-sm rounded-pill px-3">
+                        <i class="fa-solid fa-file-csv me-1"></i> Download CSV
+                    </a>
+                </div>
+
+                <!-- Student Success & Selections -->
+                <div class="mb-4">
+                    <div class="mb-2">
+                        <h6 class="fw-bold mb-1">Student Success & Selections Report</h6>
+                        <small class="text-secondary">Export the list of students selected in competitive examinations (CSS, PMS, FPSC, PPSC)</small>
+                    </div>
+                    <div class="d-flex gap-2">
+                        <a href="{% url 'reports:success_pdf' %}" target="_blank" class="btn btn-outline-primary btn-sm rounded-pill px-3">
+                            <i class="fa-solid fa-file-pdf me-1"></i> Download PDF
+                        </a>
+                        <a href="{% url 'reports:success_csv' %}" class="btn btn-outline-success btn-sm rounded-pill px-3">
+                            <i class="fa-solid fa-file-csv me-1"></i> Download CSV
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Teacher Workload -->
+                <div class="mb-4">
+                    <div class="mb-2">
+                        <h6 class="fw-bold mb-1">Faculty Workload & Allocation Summary</h6>
+                        <small class="text-secondary">Export active faculty assignments, departments, and active load metrics</small>
+                    </div>
+                    <div class="d-flex gap-2">
+                        <a href="{% url 'reports:teacher_workload_pdf' %}" target="_blank" class="btn btn-outline-primary btn-sm rounded-pill px-3">
+                            <i class="fa-solid fa-file-pdf me-1"></i> Download PDF
+                        </a>
+                        <a href="{% url 'reports:teacher_workload_csv' %}" class="btn btn-outline-success btn-sm rounded-pill px-3">
+                            <i class="fa-solid fa-file-csv me-1"></i> Download CSV
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Session Results -->
+                <div class="mb-2">
+                    <h6 class="fw-bold mb-2">Academic Session Results Export</h6>
+                    <small class="text-secondary d-block mb-3">Export comprehensive grades, rankings, and marks for a specific academic session</small>
+
+                    <div class="row g-2 align-items-center">
+                        <div class="col-sm-8">
+                            <select id="sessionSelect" class="form-select rounded-pill">
+                                <option value="" selected disabled>Select an active session...</option>
+                                {% for s in sessions %}
+                                    <option value="{{ s.id }}">{{ s.name }} ({{ s.session_category }})</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-sm-4 d-flex gap-2">
+                            <button onclick="downloadSessionReport('pdf')" class="btn btn-outline-primary btn-sm rounded-pill px-3 w-50">
+                                PDF
+                            </button>
+                            <button onclick="downloadSessionReport('csv')" class="btn btn-outline-success btn-sm rounded-pill px-3 w-50">
+                                CSV
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+</div>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+.crm-app .reports-page .btn-primary {
+    color: #ffffff !important;
+}
+.crm-app .reports-page .btn-primary:hover {
+    color: #ffffff !important;
+}
+</style>
+{% endblock %}
+
+
+{% block extra_js %}
+{{ block.super }}
+<script>
+    function downloadSessionReport(format) {
+        const select = document.getElementById('sessionSelect');
+        const sessionId = select.value;
+        if (!sessionId) {
+            alert('Please select an active academic session first.');
+            return;
+        }
+
+        let url = '';
+        if (format === 'pdf') {
+            url = `/panel/admin/reports/session-results/${sessionId}/pdf/`;
+            window.open(url, '_blank');
+        } else if (format === 'csv') {
+            url = `/panel/admin/reports/session-results/${sessionId}/csv/`;
+            window.location.href = url;
+        }
+    }
+</script>
+{% endblock %}

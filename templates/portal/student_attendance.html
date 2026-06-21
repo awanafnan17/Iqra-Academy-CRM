@@ -1,0 +1,162 @@
+{% extends 'layouts/portal_base.html' %}
+{% load static %}
+
+{% block title %}My Attendance - Iqra Academy{% endblock %}
+
+{% block content %}
+<div class="container-fluid px-0">
+    <!-- Page Header -->
+    <div class="page-header animate-fade-in">
+        <div class="page-header-left">
+            <h3 class="fw-bold mb-1 text-primary">My Attendance</h3>
+            <p class="text-secondary mb-0">View daily status records and month-wise breakdown statistics.</p>
+        </div>
+        <div class="page-header-actions">
+            <span class="badge bg-primary px-3 py-2 rounded-pill fw-semibold">
+                <i class="fa-solid fa-calendar-check me-1"></i> Attendance Records
+            </span>
+        </div>
+    </div>
+
+    {% if active_enrollment %}
+        <div class="row g-4 animate-fade-in stagger-1">
+            <!-- Overall Visual Percentage -->
+            <div class="col-12 col-md-4">
+                <div class="card text-center p-4 h-100 shadow-sm d-flex flex-column justify-content-center align-items-center">
+                    <span class="text-secondary small text-uppercase fw-semibold d-block mb-3">Overall Attendance</span>
+
+                    <!-- Color Coded Visual Ring/Badge -->
+                    <div class="attendance-visual-circle border-{% if color_class == 'success' %}success{% elif color_class == 'warning' %}warning{% else %}danger{% endif %} border-5 mx-auto">
+                        <h1 class="fw-extrabold text-{% if color_class == 'success' %}success{% elif color_class == 'warning' %}warning{% else %}danger{% endif %} mb-0">{{ overall_percentage }}%</h1>
+                        <span class="text-secondary small mt-1 font-monospace">{{ color_class|upper }}</span>
+                    </div>
+
+                    {% if overall_percentage < 75.0 or student.has_low_attendance %}
+                        <div class="badge bg-danger mt-4">
+                            <i class="fa-solid fa-triangle-exclamation me-1"></i> Low Attendance Warning
+                        </div>
+                    {% else %}
+                        <div class="badge bg-success mt-4">
+                            <i class="fa-solid fa-circle-check me-1"></i> Status Satisfactory
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Attendance Chart -->
+            <div class="col-12 col-md-8">
+                <div class="card p-4 h-100 shadow-sm">
+                    <h5 class="fw-bold mb-3 text-primary"><i class="fa-solid fa-chart-column me-2"></i>Attendance Progress Chart</h5>
+                    <div class="chart-container chart-container-md">
+                        <canvas id="attendanceChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row g-4 mt-2">
+            <!-- Month-wise breakdown table -->
+            <div class="col-12 animate-fade-in stagger-2">
+                <div class="card p-0 shadow-sm">
+                    <div class="p-4 border-bottom border-soft">
+                        <h5 class="fw-bold mb-0 text-primary"><i class="fa-solid fa-table-list me-2"></i>Monthly Attendance Summary</h5>
+                    </div>
+                    <div class="table-wrapper">
+                        <table class="table align-middle mb-0">
+                            <thead>
+                                <tr>
+                                    <th class="ps-4">Month</th>
+                                    <th>Present</th>
+                                    <th>Late</th>
+                                    <th>Absent</th>
+                                    <th>Excused</th>
+                                    <th>Total Slots</th>
+                                    <th class="pe-4">Percentage</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for m in monthly_breakdown %}
+                                    <tr>
+                                        <td class="ps-4 text-primary-c"><strong>{{ m.month_name }}</strong></td>
+                                        <td><span class="badge bg-success">{{ m.present }}</span></td>
+                                        <td><span class="badge bg-warning">{{ m.late }}</span></td>
+                                        <td><span class="badge bg-danger">{{ m.absent }}</span></td>
+                                        <td><span class="badge bg-secondary">{{ m.excused }}</span></td>
+                                        <td class="fw-semibold text-primary-c">{{ m.total }}</td>
+                                        <td class="pe-4">
+                                            <strong class="text-{% if m.percentage >= 75 %}success{% elif m.percentage >= 60 %}warning{% else %}danger{% endif %}">
+                                                {{ m.percentage }}%
+                                            </strong>
+                                        </td>
+                                    </tr>
+                                {% empty %}
+                                    <tr>
+                                        <td colspan="7" class="text-center text-secondary py-5">
+                                            <i class="fa-regular fa-folder-open fa-3x mb-3 text-secondary"></i>
+                                            <p class="mb-0 fw-medium">No monthly attendance records found.</p>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% else %}
+        <div class="card p-5 text-center border rounded-4 shadow animate-fade-in stagger-1">
+            <i class="fa-solid fa-calendar-xmark fa-3x text-muted mb-3"></i>
+            <h4 class="fw-bold mb-2">No Active Enrollment Attendance Found</h4>
+            <p class="text-secondary mb-0">Please contact the registrar office to confirm your attendance schedules.</p>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}
+
+{% block extra_js %}
+{{ block.super }}
+{% if active_enrollment %}
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const ctx = document.getElementById('attendanceChart').getContext('2d');
+        const months = {{ chart_months|safe }};
+        const percentages = {{ chart_percentages|safe }};
+
+        const accentColor = getComputedStyle(document.documentElement).getPropertyValue('--accent-primary').trim() || '#C9A227';
+
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: months,
+                datasets: [{
+                    label: 'Attendance Rate (%)',
+                    data: percentages,
+                    backgroundColor: accentColor + 'C0',
+                    borderColor: accentColor,
+                    borderWidth: 1,
+                    borderRadius: 6,
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 100,
+                        ticks: {
+                            callback: function(value) { return value + "%"; }
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                }
+            }
+        });
+    });
+</script>
+{% endif %}
+{% endblock %}

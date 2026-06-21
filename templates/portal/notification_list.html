@@ -1,0 +1,80 @@
+{% extends 'layouts/portal_base.html' %}
+{% load static %}
+
+{% block title %}My Notifications - Iqra Academy{% endblock %}
+
+{% block content %}
+<div class="container-fluid px-0">
+    <!-- Page Header -->
+    <div class="page-header animate-fade-in">
+        <div class="page-header-left">
+            <h3 class="fw-bold mb-1 text-primary">Notifications</h3>
+            <p class="text-secondary mb-0">Stay updated with your latest alerts and announcements.</p>
+        </div>
+        <div class="page-header-actions">
+            <form method="post" action="{% if role == 'Student' %}{% url 'student_portal:notification_mark_read' %}{% else %}{% url 'guardian_portal:notification_mark_read' %}{% endif %}">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-secondary">
+                    <i class="fa-solid fa-check-double me-1"></i> Mark All as Read
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Filters -->
+    <div class="mb-4 d-flex gap-2 flex-wrap">
+        <a href="?" class="btn {% if not selected_category %}btn-primary{% else %}btn-secondary{% endif %}">All</a>
+        {% for cat_val, cat_name in categories %}
+            <a href="?category={{ cat_val }}" class="btn {% if selected_category == cat_val %}btn-primary{% else %}btn-secondary{% endif %}">{{ cat_name }}</a>
+        {% endfor %}
+    </div>
+
+    <!-- Notification List -->
+    <div class="row g-3">
+        {% for note in notifications %}
+            <div class="col-12 animate-fade-in stagger-{{ forloop.counter|default:1|slice:':1' }}">
+                <a href="{% if role == 'Student' %}{% url 'student_portal:notification_detail' note.id %}{% else %}{% url 'guardian_portal:notification_detail' note.id %}{% endif %}" class="text-decoration-none">
+                    <div class="card p-4 shadow-sm border-start border-4 {% if not note.is_read %}border-primary bg-primary bg-opacity-5{% else %}border-secondary{% endif %} d-flex align-items-start gap-3 transition-all hover-lift">
+                        <div class="mt-1">
+                            {% if note.category == 'Finance' %}
+                                <div class="avatar avatar-lg category-icon-finance">
+                                    <i class="fa-solid fa-file-invoice-dollar"></i>
+                                </div>
+                            {% elif note.category == 'Academic' %}
+                                <div class="avatar avatar-lg category-icon-academic">
+                                    <i class="fa-solid fa-graduation-cap"></i>
+                                </div>
+                            {% elif note.category == 'Attendance' %}
+                                <div class="avatar avatar-lg category-icon-attendance">
+                                    <i class="fa-solid fa-calendar-check"></i>
+                                </div>
+                            {% else %}
+                                <div class="avatar avatar-lg category-icon-general">
+                                    <i class="fa-solid fa-bell"></i>
+                                </div>
+                            {% endif %}
+                        </div>
+                        <div class="flex-grow-1">
+                            <div class="d-flex justify-content-between align-items-center mb-1">
+                                <h6 class="mb-0 fw-bold text-primary-c">{{ note.title }}</h6>
+                                <span class="small text-secondary">{{ note.created_at|timesince }} ago</span>
+                            </div>
+                            <p class="text-secondary mb-0 line-clamp-2">{{ note.message }}</p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        {% empty %}
+            <div class="col-12">
+                <div class="card p-5 text-center border rounded-4 shadow animate-fade-in stagger-1">
+                    <div class="text-secondary mb-3">
+                        <i class="fa-solid fa-bell-slash fa-3x"></i>
+                    </div>
+                    <h4 class="fw-bold mb-2">No Notifications Found</h4>
+                    <p class="text-secondary mb-0">You're all caught up! Check back later for new alerts.</p>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

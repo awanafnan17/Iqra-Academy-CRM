@@ -1,0 +1,104 @@
+{% extends 'layouts/panel_base.html' %}
+
+{% block title %}Notifications - Iqra Academy{% endblock %}
+
+{% block content %}
+<div class="container-fluid px-0">
+    <!-- Page Header -->
+    <div class="page-header animate-fade-in">
+        <div class="page-header-left">
+            <h3 class="fw-bold mb-1 text-primary">Notifications</h3>
+            <p class="text-secondary mb-0">System warnings, announcements, and academic updates.</p>
+        </div>
+        <div class="page-header-actions">
+            <form method="post" action="{% if '/portal/student/' in request.path %}{% url 'student_portal:notification_mark_read' %}{% elif '/portal/guardian/' in request.path %}{% url 'guardian_portal:notification_mark_read' %}{% elif '/panel/teacher/' in request.path %}{% url 'teacher_panel:notification_mark_read' %}{% elif '/panel/accounts/' in request.path %}{% url 'accounts_panel:notification_mark_read' %}{% elif '/panel/registrar/' in request.path %}{% url 'registrar_panel:notification_mark_read' %}{% else %}{% url 'admin_panel:notifications:notification_mark_read' %}{% endif %}" class="d-inline">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-outline-primary rounded-pill shadow-sm">
+                    <i class="fa-solid fa-check-double me-2"></i> Mark All as Read
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Filter Bar -->
+    <div class="filter-bar bg-elevated radius-md border border-soft p-3 mb-4 animate-fade-in stagger-1">
+        <form method="get" class="row g-3 align-items-center">
+            <div class="col-md-5">
+                <div class="search-input-wrapper">
+                    <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                    <input type="text" name="q" class="form-control" placeholder="Search messages..." value="{{ request.GET.q|default:'' }}">
+                </div>
+            </div>
+            <div class="col-md-4">
+                <select name="category" class="form-select">
+                    <option value="">Select Category</option>
+                    <option value="alert" {% if request.GET.category == 'alert' %}selected{% endif %}>System Alerts</option>
+                    <option value="attendance" {% if request.GET.category == 'attendance' %}selected{% endif %}>Attendance</option>
+                    <option value="fee" {% if request.GET.category == 'fee' %}selected{% endif %}>Fee Updates</option>
+                    <option value="general" {% if request.GET.category == 'general' %}selected{% endif %}>General Info</option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <button type="submit" class="btn btn-primary w-100 shadow-sm">
+                    <i class="fa-solid fa-filter me-2"></i> Filter
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Notifications List Card -->
+    <div class="card p-4 animate-fade-in stagger-2">
+        <div class="table-responsive p-3">
+            <table class="table align-middle mb-0">
+                <thead>
+                    <tr>
+                        <th style="width: 50px;">Status</th>
+                        <th>Category</th>
+                        <th>Title</th>
+                        <th>Message</th>
+                        <th>Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for notif in notifications %}
+                        <tr class="{% if not notif.is_read %}fw-semibold{% endif %}" style="cursor: pointer;" onclick="window.location='{% if "/portal/student/" in request.path %}{% url "student_portal:notification_detail" pk=notif.id %}{% elif "/portal/guardian/" in request.path %}{% url "guardian_portal:notification_detail" pk=notif.id %}{% elif "/panel/teacher/" in request.path %}{% url "teacher_panel:notification_detail" pk=notif.id %}{% else %}{% url "admin_panel:notifications:notification_detail" pk=notif.id %}{% endif %}'">
+                            <td>
+                                {% if notif.is_read %}
+                                    <i class="fa-regular fa-envelope-open text-muted"></i>
+                                {% else %}
+                                    <i class="fa-solid fa-envelope text-primary"></i>
+                                {% endif %}
+                            </td>
+                            <td>
+                                <span class="badge {% if not notif.is_read %}bg-danger{% elif notif.category|lower == 'alert' or notif.category|lower == 'attendance' %}bg-warning{% elif notif.category|lower == 'general' %}bg-primary{% else %}bg-secondary{% endif %}">
+                                    {{ notif.category }}
+                                </span>
+                            </td>
+                            <td class="text-primary-c">{{ notif.title }}</td>
+                            <td class="text-secondary">{{ notif.content|truncatechars:80 }}</td>
+                            <td class="text-secondary small">{{ notif.created_at|date:"M d, Y H:i" }}</td>
+                        </tr>
+                    {% empty %}
+                        <tr>
+                            <td colspan="5" class="text-center text-secondary py-4">No notifications to display.</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+{{ block.super }}
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        document.querySelectorAll("select option").forEach(opt => {
+            if (opt.textContent.includes("--")) {
+                opt.textContent = opt.textContent.replace(/-+/g, "").trim();
+            }
+        });
+    });
+</script>
+{% endblock %}

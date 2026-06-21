@@ -1,0 +1,14 @@
+<div class="table-responsive saas-table-container p-3">
+    <table class="table saas-table align-middle mb-0">
+        <thead>
+            <tr>
+                {% for header in table_headers %}
+                    <th>{{ header }}</th>
+                {% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+            {{ table_body }}
+        </tbody>
+    </table>
+</div>

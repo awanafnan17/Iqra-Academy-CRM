@@ -1,0 +1,21 @@
+{% extends "emails/base_email.html" %}
+
+{% block subject %}{{ title }}{% endblock %}
+
+{% block content %}
+<h2 style="color: #ef4444; margin-top: 0;">Low Attendance Alert</h2>
+<p>Dear Administrator,</p>
+<p>This is an automated operational alert regarding academic attendance compliance threshold breach.</p>
+
+<div style="background-color: #fef2f2; border-left: 4px solid #ef4444; padding: 15px; margin: 20px 0; border-radius: 4px;">
+    <p style="margin: 0; font-size: 15px; color: #b91c1c;">
+        <strong>Details:</strong> {{ content }}
+    </p>
+</div>
+
+<p>Please review the student's attendance history and contact their guardians to address this issue as soon as possible.</p>
+
+<div style="text-align: center; margin: 30px 0;">
+    <a href="{{ portal_url }}panel/admin/dashboard/" class="btn" style="background-color: #ef4444;">Review Attendance Dashboard</a>
+</div>
+{% endblock %}

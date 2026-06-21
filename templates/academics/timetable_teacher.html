@@ -1,0 +1,88 @@
+{% extends 'layouts/panel_base.html' %}
+{% load static %}
+
+{% block title %}My Timetable - Iqra Academy{% endblock %}
+
+{% block content %}
+<div class="container-fluid px-0">
+    <!-- Page Header -->
+    <div class="p-4 rounded-4 mb-4 card border border-light shadow-sm animate-fade-in">
+        <div class="d-flex justify-content-between align-items-center">
+            <div>
+                <h3 class="fw-bold mb-1">My Lecture Schedule</h3>
+                <p class="text-secondary mb-0">Your weekly teaching calendar. Today's day is highlighted in accent theme.</p>
+            </div>
+            <div>
+                <span class="badge bg-primary bg-opacity-10 text-primary px-3 py-2 rounded-pill fw-semibold">
+                    <i class="fa-solid fa-calendar-days me-1"></i> Weekly Grid
+                </span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Weekly Columns Grid -->
+    <div class="row g-4 animate-fade-in stagger-1">
+        {% for day, day_classes in days_map.items %}
+            <div class="col-12 col-md-6 col-lg-4 col-xl">
+                <!-- Day Card -->
+                <div class="card p-3 h-100 border rounded-4 shadow-sm day-column {% if day == today_name %}today-highlight{% endif %}">
+                    <!-- Day Header -->
+                    <div class="d-flex justify-content-between align-items-center mb-3 pb-2 border-bottom {% if day == today_name %}border-primary-subtle{% endif %}">
+                        <h6 class="fw-bold mb-0 {% if day == today_name %}text-primary{% else %}text-secondary{% endif %}">
+                            {{ day }}
+                        </h6>
+                        {% if day == today_name %}
+                            <span class="badge bg-primary px-2 py-1 rounded-pill badge-today">TODAY</span>
+                        {% endif %}
+                    </div>
+
+                    <!-- Classes List -->
+                    <div class="d-flex flex-column gap-2">
+                        {% for cls in day_classes %}
+                            <!-- Class Slot Block -->
+                            <div class="p-3 border rounded-3 hover-shadow transition-all border-light-subtle card-lift position-relative overflow-hidden timetable-slot-card">
+                                <div class="small text-muted fw-semibold mb-1">{{ cls.start_time|time:"H:i" }} - {{ cls.end_time|time:"H:i" }}</div>
+                                <h6 class="fw-bold mb-1 small">{{ cls.subject.name }}</h6>
+                                <div class="text-secondary small mb-2 text-size-xs">{{ cls.session.name }}</div>
+                                <span class="badge border text-secondary badge-classroom">
+                                    <i class="fa-solid fa-door-open me-1 text-primary"></i> {{ cls.classroom }}
+                                </span>
+                            </div>
+                        {% empty %}
+                            <div class="text-center py-4 text-secondary small empty-slot-bg rounded-3 border border-dashed">
+                                <i class="fa-solid fa-mug-hot text-muted mb-2"></i>
+                                <p class="mb-0 text-size-xs">No classes scheduled</p>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+<style>
+body.crm-app .day-column {
+    min-width: 180px;
+}
+body.crm-app .today-highlight {
+    border-color: var(--accent-primary) !important;
+    background: var(--accent-glow-xs) !important;
+}
+body.crm-app .badge-today {
+    font-size: 0.65rem;
+}
+body.crm-app .timetable-slot-card {
+    border-left: 4px solid var(--accent-primary) !important;
+}
+body.crm-app .text-size-xs {
+    font-size: 0.75rem;
+}
+body.crm-app .badge-classroom {
+    font-size: 0.7rem;
+}
+body.crm-app .empty-slot-bg {
+    background: var(--bg-hover) !important;
+}
+</style>
+{% endblock %}

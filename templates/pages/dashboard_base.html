@@ -1,0 +1,19 @@
+{% extends 'layouts/panel_base.html' %}
+
+{% block content %}
+<div class="container-fluid px-0">
+    <!-- Dashboard Top Header Section -->
+    <div class="p-4 rounded-4 mb-4 card-header-gradient border border-light shadow-sm animate-fade-in">
+        <div class="d-flex justify-content-between align-items-center">
+            <div>
+                <h3 class="fw-bold mb-1">{% block dashboard_title %}Dashboard{% endblock %}</h3>
+                <p class="text-secondary mb-0">{% block dashboard_subtitle %}System performance overview.{% endblock %}</p>
+            </div>
+            {% block dashboard_actions %}{% endblock %}
+        </div>
+    </div>
+
+    <!-- Grid Contents -->
+    {% block dashboard_content %}{% endblock %}
+</div>
+{% endblock %}

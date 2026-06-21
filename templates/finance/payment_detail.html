@@ -1,0 +1,63 @@
+{% extends 'layouts/panel_base.html' %}
+{% load finance_tags %}
+{% block title %}Payment Details | Finance{% endblock %}
+{% block content %}
+<div class="container-fluid px-0">
+    <!-- Page Header -->
+    <div class="page-header animate-fade-in">
+        <div class="page-header-left">
+            <h3 class="fw-bold mb-1 text-primary">Payment Details</h3>
+            <p class="text-secondary mb-0">Detailed summary of fee payment receipt and transaction method.</p>
+        </div>
+        <div class="page-header-actions">
+            <a href="{% finance_url 'payment_list' %}" class="btn btn-outline-primary">
+                <i class="fas fa-arrow-left me-2"></i>Back to List
+            </a>
+        </div>
+    </div>
+
+    <!-- Details Grid -->
+    <div class="card p-4 animate-fade-in stagger-1">
+        <div class="row g-4">
+            <div class="col-md-6 col-lg-3">
+                <p class="text-secondary small mb-1">Receipt Number</p>
+                <h5 class="fw-bold text-primary-c font-monospace">{{ payment.receipt_number|default:"-" }}</h5>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <p class="text-secondary small mb-1">Status</p>
+                <div>
+                    <span class="badge bg-success">{{ payment.payment_status|title }}</span>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <p class="text-secondary small mb-1">Amount</p>
+                <h4 class="text-success fw-bold mb-0">PKR {{ payment.amount }}</h4>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <p class="text-secondary small mb-1">Payment Date</p>
+                <p class="fw-semibold text-primary-c mb-0">{{ payment.payment_date }}</p>
+            </div>
+            <div class="col-md-6">
+                <p class="text-secondary small mb-1">Student</p>
+                <p class="fw-bold text-primary-c mb-0">{{ payment.enrollment.student.full_name }}</p>
+            </div>
+            <div class="col-md-6">
+                <p class="text-secondary small mb-1">Session</p>
+                <p class="fw-medium text-primary-c mb-0">{{ payment.enrollment.session.name }}</p>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <p class="text-secondary small mb-1">Payment Method</p>
+                <p class="fw-semibold text-primary-c mb-0"><span class="badge bg-secondary">{{ payment.payment_method }}</span></p>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <p class="text-secondary small mb-1">Reference Number</p>
+                <p class="fw-semibold text-primary-c mb-0 font-monospace">{{ payment.reference_number|default:"-" }}</p>
+            </div>
+            <div class="col-12 border-top border-soft pt-3">
+                <p class="text-secondary small mb-1">Notes</p>
+                <p class="text-primary-c mb-0">{{ payment.notes|default:"No notes provided." }}</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

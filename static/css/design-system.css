@@ -1,0 +1,1945 @@
+/* ============================================================
+   IICE ERP — Obsidian Gold Executive Design System v2
+   Complete rewrite — premium luxury SaaS theme
+   ============================================================ */
+
+/* ── Universal tokens (both themes) ── */
+:root {
+  --transition:       all .25s cubic-bezier(.4,0,.2,1);
+  --transition-slow:  all .45s cubic-bezier(.4,0,.2,1);
+  --transition-spring:all .35s cubic-bezier(.34,1.56,.64,1);
+  --radius-xs:  6px;
+  --radius-sm:  10px;
+  --radius-md:  16px;
+  --radius-lg:  22px;
+  --radius-xl:  30px;
+  --radius-full:9999px;
+  --shadow-sm:      0 2px 8px rgba(0,0,0,.12);
+  --shadow-card:    0 8px 32px rgba(0,0,0,.22);
+  --shadow-elevated:0 20px 60px rgba(0,0,0,.38);
+  --shadow-gold:    0 0 30px rgba(201,162,39,.22),
+                    0 4px 16px rgba(201,162,39,.12);
+  --shadow-gold-lg: 0 0 60px rgba(201,162,39,.18),
+                    0 8px 32px rgba(201,162,39,.14);
+  --font-primary: 'Inter','Segoe UI',system-ui,-apple-system,sans-serif;
+  --font-mono:    'JetBrains Mono','Fira Code','Courier New',monospace;
+  --sidebar-width: 268px;
+  --navbar-height:  64px;
+
+  /* Spacing System Custom Scales */
+  --spacing-xs: 0.25rem;
+  --spacing-sm: 0.5rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 1.5rem;
+  --spacing-xl: 2rem;
+}
+
+/* ── Dark theme ── */
+[data-theme="dark"] {
+  --bg-base:        #080C10;
+  --bg-main:        #0B0F14;
+  --bg-card:        #111720;
+  --bg-elevated:    #151D28;
+  --bg-overlay:     #1A2433;
+  --bg-sidebar:     #090D12;
+  --bg-input:       #141C28;
+  --bg-hover:       #1C2840;
+  --bg-active:      #1E2D42;
+  --accent-primary: #C9A227;
+  --accent-soft:    #DDB84A;
+  --accent-bright:  #E8C96A;
+  --accent-dim:     #9A7A1E;
+  --accent-glow:    rgba(201,162,39,.28);
+  --accent-glow-sm: rgba(201,162,39,.12);
+  --accent-glow-xs: rgba(201,162,39,.06);
+  --text-primary:   #F0F2F5;
+  --text-secondary: #8B95A3;
+  --text-muted:     #545F6D;
+  --text-disabled:  #363F4A;
+  --border-soft:    rgba(255,255,255,.055);
+  --border-medium:  rgba(255,255,255,.1);
+  --border-accent:  rgba(201,162,39,.28);
+  --border-strong:  rgba(255,255,255,.16);
+  --success:        #10B981;
+  --success-bg:     rgba(16,185,129,.12);
+  --success-border: rgba(16,185,129,.25);
+  --danger:         #EF4444;
+  --danger-bg:      rgba(239,68,68,.12);
+  --danger-border:  rgba(239,68,68,.25);
+  --warning:        #F59E0B;
+  --warning-bg:     rgba(245,158,11,.12);
+  --warning-border: rgba(245,158,11,.25);
+  --info:           #60A5FA;
+  --info-bg:        rgba(96,165,250,.12);
+  --info-border:    rgba(96,165,250,.25);
+  --scrollbar-thumb:#1E2D42;
+  --scrollbar-track:#080C10;
+}
+
+/* ── Light theme ── */
+[data-theme="light"] {
+  --bg-base:        #EEF2F7;
+  --bg-main:        #F4F7FB;
+  --bg-card:        #FFFFFF;
+  --bg-elevated:    #EEF2F7;
+  --bg-overlay:     #E4EAF2;
+  --bg-sidebar:     #12192A;
+  --bg-input:       #FFFFFF;
+  --bg-hover:       #EEF2F7;
+  --bg-active:      #E6EDF6;
+  --accent-primary: #A67C1A;
+  --accent-soft:    #C49420;
+  --accent-bright:  #D4A520;
+  --accent-dim:     #7A5C12;
+  --accent-glow:    rgba(166,124,26,.2);
+  --accent-glow-sm: rgba(166,124,26,.1);
+  --accent-glow-xs: rgba(166,124,26,.05);
+  --text-primary:   #0F172A;
+  --text-secondary: #475569;
+  --text-muted:     #94A3B8;
+  --text-disabled:  #CBD5E1;
+  --border-soft:    rgba(0,0,0,.07);
+  --border-medium:  rgba(0,0,0,.12);
+  --border-accent:  rgba(166,124,26,.3);
+  --border-strong:  rgba(0,0,0,.2);
+  --success:        #059669;
+  --success-bg:     rgba(5,150,105,.08);
+  --success-border: rgba(5,150,105,.2);
+  --danger:         #DC2626;
+  --danger-bg:      rgba(220,38,38,.08);
+  --danger-border:  rgba(220,38,38,.2);
+  --warning:        #D97706;
+  --warning-bg:     rgba(217,119,6,.08);
+  --warning-border: rgba(217,119,6,.2);
+  --info:           #2563EB;
+  --info-bg:        rgba(37,99,235,.08);
+  --info-border:    rgba(37,99,235,.2);
+  --scrollbar-thumb:#CBD5E1;
+  --scrollbar-track:#F4F7FB;
+}
+
+/* ============================================================
+   GLOBAL RESETS & BASE
+   ============================================================ */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body.crm-app {
+  background: var(--bg-main) !important;
+  color: var(--text-primary) !important;
+  font-family: var(--font-primary);
+  font-size: 15px;
+  line-height: 1.6;
+  transition:
+    background var(--transition-slow),
+    color var(--transition-slow);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ── Scrollbars ── */
+::-webkit-scrollbar        { width:5px; height:5px }
+::-webkit-scrollbar-track  { background:var(--scrollbar-track) }
+::-webkit-scrollbar-thumb  {
+  background:var(--scrollbar-thumb);
+  border-radius:99px;
+}
+::-webkit-scrollbar-thumb:hover { background:var(--accent-primary) }
+
+/* ── Selection ── */
+::selection {
+  background: var(--accent-glow);
+  color: var(--accent-bright);
+}
+
+/* ============================================================
+   TYPOGRAPHY SYSTEM
+   ============================================================ */
+
+.crm-app h1,
+.crm-app h2,
+.crm-app h3,
+.crm-app h4,
+.crm-app h5,
+.crm-app h6 {
+  color: var(--text-primary) !important;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.25;
+}
+
+.crm-app .display-title {
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  background: linear-gradient(
+    135deg,
+    var(--text-primary) 0%,
+    var(--accent-primary) 100%
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.crm-app .page-title {
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--text-primary) !important;
+  letter-spacing: -0.02em;
+}
+
+.crm-app .page-subtitle {
+  font-size: .85rem;
+  color: var(--text-muted) !important;
+  font-weight: 400;
+  letter-spacing: 0;
+  margin-top: .2rem;
+}
+
+.crm-app p {
+  color: var(--text-secondary);
+  line-height: 1.65;
+}
+
+.crm-app .text-muted    { color: var(--text-muted) !important }
+.crm-app .text-xs       { font-size: 0.65rem !important }
+.crm-app .text-secondary{ color: var(--text-secondary) !important }
+.crm-app .text-primary-c{ color: var(--text-primary) !important }
+.crm-app .text-accent   { color: var(--accent-primary) !important }
+.crm-app .text-success  { color: var(--success) !important }
+.crm-app .text-danger   { color: var(--danger) !important }
+.crm-app .text-warning  { color: var(--warning) !important }
+
+/* Override Bootstrap blue text-primary and bg-primary globally */
+.crm-app .text-primary {
+  color: var(--accent-primary) !important;
+}
+.crm-app .bg-primary {
+  background-color: var(--accent-primary) !important;
+  color: #080C10 !important;
+}
+.crm-app .border-primary {
+  border-color: var(--accent-primary) !important;
+}
+.crm-app .bg-primary-subtle {
+  background-color: var(--accent-glow-sm) !important;
+}
+
+/* Override Bootstrap text-dark */
+.crm-app .text-dark,
+.crm-app h1.text-primary,
+.crm-app h2.text-primary,
+.crm-app h3.text-primary,
+.crm-app h4.text-primary,
+.crm-app h5.text-primary,
+.crm-app h6.text-primary {
+  color: var(--text-primary) !important;
+}
+
+/* ============================================================
+   LAYOUT — SIDEBAR + MAIN
+   ============================================================ */
+
+.crm-app .sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: var(--sidebar-width);
+  height: 100vh;
+  background: var(--bg-sidebar);
+  border-right: 1px solid var(--border-soft);
+  z-index: 1040;
+  overflow-y: auto;
+  overflow-x: hidden;
+  transition: left var(--transition-slow);
+  display: flex;
+  flex-direction: column;
+}
+
+/* Sidebar: custom scrollbar */
+.crm-app .sidebar::-webkit-scrollbar { width: 3px }
+.crm-app .sidebar::-webkit-scrollbar-track {
+  background: transparent
+}
+.crm-app .sidebar::-webkit-scrollbar-thumb {
+  background: var(--border-soft);
+  border-radius: 99px;
+}
+
+/* Sidebar brand/logo area */
+.crm-app .sidebar-brand {
+  display: flex;
+  align-items: center;
+  gap: .875rem;
+  padding: 1.25rem 1.25rem 1.25rem 1.375rem;
+  border-bottom: 1px solid var(--border-soft);
+  text-decoration: none;
+  flex-shrink: 0;
+}
+
+.crm-app .sidebar-brand-icon {
+  width: 40px;
+  height: 40px;
+  background: var(--accent-glow-sm);
+  border: 1px solid var(--border-accent);
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: var(--transition);
+}
+
+.crm-app .sidebar-brand-icon i {
+  color: var(--accent-primary);
+  font-size: 1.05rem;
+}
+
+.crm-app .sidebar-brand:hover .sidebar-brand-icon {
+  background: var(--accent-glow);
+  box-shadow: var(--shadow-gold);
+}
+
+.crm-app .sidebar-brand-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.crm-app .sidebar-brand-name {
+  font-size: .95rem;
+  font-weight: 800;
+  color: var(--accent-primary);
+  letter-spacing: -.02em;
+  line-height: 1.1;
+}
+
+.crm-app .sidebar-brand-sub {
+  font-size: .65rem;
+  color: var(--text-muted);
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+/* Sidebar nav */
+.crm-app .sidebar-nav {
+  flex: 1;
+  padding: .75rem 0;
+  list-style: none;
+}
+
+.crm-app .sidebar-section {
+  padding: 1.1rem 1.25rem .3rem 1.375rem;
+  font-size: .62rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .14em;
+  color: var(--text-muted);
+  user-select: none;
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+}
+
+.crm-app .sidebar-section::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border-soft);
+  margin-left: .25rem;
+}
+
+/* Sidebar nav links */
+.crm-app .sidebar a,
+.crm-app .sidebar-link {
+  display: flex;
+  align-items: center;
+  gap: .8rem;
+  padding: .6rem 1rem .6rem 1.375rem;
+  color: var(--text-secondary);
+  text-decoration: none;
+  font-size: .875rem;
+  font-weight: 500;
+  border-left: 3px solid transparent;
+  transition: var(--transition);
+  position: relative;
+  margin: 1px .6rem 1px 0;
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+}
+
+.crm-app .sidebar a .sidebar-icon,
+.crm-app .sidebar-link .sidebar-icon {
+  width: 18px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  opacity: .65;
+  transition: var(--transition);
+}
+
+.crm-app .sidebar a .sidebar-icon i,
+.crm-app .sidebar-link .sidebar-icon i {
+  font-size: .82rem;
+}
+
+.crm-app .sidebar a:hover,
+.crm-app .sidebar-link:hover {
+  background: var(--accent-glow-xs);
+  color: var(--accent-primary);
+  border-left-color: var(--accent-dim);
+  padding-left: 1.65rem;
+}
+
+.crm-app .sidebar a:hover .sidebar-icon,
+.crm-app .sidebar-link:hover .sidebar-icon {
+  opacity: 1;
+}
+
+.crm-app .sidebar a.active,
+.crm-app .sidebar-link.active {
+  background: var(--accent-glow-sm);
+  color: var(--accent-primary);
+  border-left-color: var(--accent-primary);
+  font-weight: 600;
+}
+
+.crm-app .sidebar a.active .sidebar-icon,
+.crm-app .sidebar-link.active .sidebar-icon {
+  opacity: 1;
+}
+
+/* Logout link */
+.crm-app .sidebar a[href*="logout"],
+.crm-app .sidebar-link-danger {
+  color: var(--danger) !important;
+}
+
+.crm-app .sidebar a[href*="logout"]:hover,
+.crm-app .sidebar-link-danger:hover {
+  background: var(--danger-bg) !important;
+  border-left-color: var(--danger) !important;
+  color: var(--danger) !important;
+}
+
+/* Sidebar footer */
+.crm-app .sidebar-footer {
+  padding: .875rem 1.25rem;
+  border-top: 1px solid var(--border-soft);
+  flex-shrink: 0;
+}
+
+/* Sidebar overlay for mobile */
+.crm-app .sidebar-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.65);
+  backdrop-filter: blur(3px);
+  z-index: 1039;
+  opacity: 0;
+  transition: opacity var(--transition);
+}
+
+.crm-app .sidebar-overlay.active {
+  display: block;
+  opacity: 1;
+}
+
+/* ── Main content area ── */
+.crm-app .main-content {
+  margin-left: var(--sidebar-width);
+  min-height: 100vh;
+  transition: margin-left var(--transition-slow);
+  animation: pageEnter .4s cubic-bezier(.4,0,.2,1) both;
+}
+
+@keyframes pageEnter {
+  from { opacity:0; transform:translateY(12px) }
+  to   { opacity:1; transform:translateY(0) }
+}
+
+/* ── Navbar (top bar) ── */
+.crm-app .top-navbar,
+.crm-app .navbar {
+  height: var(--navbar-height);
+  background: var(--bg-card) !important;
+  border-bottom: 1px solid var(--border-soft);
+  box-shadow: 0 1px 0 var(--border-soft),
+              0 4px 24px rgba(0,0,0,.08);
+  position: sticky;
+  top: 0;
+  z-index: 1020;
+  display: flex;
+  align-items: center;
+  padding: 0 1.5rem;
+  gap: 1rem;
+  transition: var(--transition);
+}
+
+.crm-app .navbar-brand,
+.crm-app .top-navbar-brand {
+  color: var(--accent-primary) !important;
+  font-weight: 800;
+  font-size: 1.05rem;
+  letter-spacing: -.02em;
+  text-decoration: none;
+}
+
+.crm-app .navbar-right {
+  display: flex;
+  align-items: center;
+  gap: .625rem;
+  margin-left: auto;
+}
+
+/* ── Page content padding ── */
+.crm-app .page-content {
+  padding: 1.75rem;
+}
+
+/* ── Page header block ── */
+.crm-app .page-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1.75rem;
+  padding-bottom: 1.25rem;
+  border-bottom: 1px solid var(--border-soft);
+}
+
+.crm-app .page-header-left {
+  display: flex;
+  flex-direction: column;
+}
+
+.crm-app .page-header-actions {
+  display: flex;
+  align-items: center;
+  gap: .625rem;
+  flex-wrap: wrap;
+}
+
+/* ── Section headers inside content ── */
+.crm-app .section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.25rem;
+  flex-wrap: wrap;
+  gap: .75rem;
+}
+
+.crm-app .section-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: .625rem;
+  letter-spacing: -.01em;
+}
+
+.crm-app .section-title::before {
+  content: '';
+  display: block;
+  width: 3px;
+  height: 1.1rem;
+  background: linear-gradient(
+    to bottom,
+    var(--accent-primary),
+    var(--accent-dim)
+  );
+  border-radius: 99px;
+  flex-shrink: 0;
+}
+
+/* ============================================================
+   CARD SYSTEM
+   ============================================================ */
+
+.crm-app .card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-card);
+  transition:
+    transform var(--transition),
+    box-shadow var(--transition),
+    border-color var(--transition);
+  color: var(--text-primary);
+  overflow: hidden;
+}
+
+.crm-app .card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-elevated);
+  border-color: var(--border-accent);
+}
+
+.crm-app .card-lift {
+  transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
+}
+
+.crm-app .card-lift:hover {
+  transform: translateY(-4px) !important;
+  box-shadow: var(--shadow-elevated) !important;
+  border-color: var(--border-accent) !important;
+}
+
+.crm-app .card-header {
+  background: var(--bg-elevated);
+  border-bottom: 1px solid var(--border-soft);
+  color: var(--text-primary);
+  font-weight: 600;
+  font-size: .9rem;
+  padding: 1rem 1.25rem;
+}
+
+.crm-app .card-body {
+  color: var(--text-primary);
+  padding: 1.25rem;
+}
+
+.crm-app .card-footer {
+  background: var(--bg-elevated);
+  border-top: 1px solid var(--border-soft);
+  color: var(--text-secondary);
+  font-size: .85rem;
+  padding: .875rem 1.25rem;
+}
+
+/* ── Metric cards ── */
+.crm-app .metric-card {
+  position: relative;
+  overflow: hidden;
+  border-top: 2px solid var(--accent-primary) !important;
+}
+
+.crm-app .metric-card::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    var(--accent-dim),
+    var(--accent-bright),
+    var(--accent-dim)
+  );
+  background-size: 200% 100%;
+  animation: goldShimmer 3.5s ease infinite;
+}
+
+@keyframes goldShimmer {
+  0%   { background-position: 200% 0 }
+  100% { background-position: -200% 0 }
+}
+
+.crm-app .metric-card .metric-icon {
+  width: 46px;
+  height: 46px;
+  border-radius: var(--radius-sm);
+  background: var(--accent-glow-sm);
+  border: 1px solid var(--border-accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: var(--transition);
+}
+
+.crm-app .metric-card:hover .metric-icon {
+  background: var(--accent-glow);
+  box-shadow: var(--shadow-gold);
+}
+
+.crm-app .metric-card .metric-icon i {
+  color: var(--accent-primary);
+  font-size: 1.15rem;
+}
+
+.crm-app .metric-value {
+  font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+  font-weight: 800;
+  color: var(--text-primary);
+  letter-spacing: -.03em;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+.crm-app .metric-label {
+  font-size: .72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .1em;
+  color: var(--text-muted);
+  margin-bottom: .3rem;
+}
+
+.crm-app .metric-change {
+  display: inline-flex;
+  align-items: center;
+  gap: .25rem;
+  font-size: .75rem;
+  font-weight: 600;
+  margin-top: .5rem;
+  padding: .2rem .5rem;
+  border-radius: var(--radius-full);
+}
+
+.crm-app .metric-change.up {
+  background: var(--success-bg);
+  color: var(--success);
+}
+
+.crm-app .metric-change.down {
+  background: var(--danger-bg);
+  color: var(--danger);
+}
+
+.crm-app .metric-change.neutral {
+  background: var(--accent-glow-sm);
+  color: var(--accent-primary);
+}
+
+/* ── Glass elevated card variant ── */
+.crm-app .card-glass {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-accent);
+  border-radius: var(--radius-md);
+  backdrop-filter: blur(12px);
+  box-shadow: var(--shadow-gold);
+}
+
+/* ── Chart Containers ── */
+.crm-app .chart-container {
+  position: relative;
+  width: 100%;
+}
+.crm-app .chart-container-lg {
+  height: 320px;
+}
+.crm-app .chart-container-md {
+  height: 280px;
+}
+
+/* ============================================================
+   FILTER / SEARCH BARS
+   ============================================================ */
+
+.crm-app .filter-bar {
+  background: var(--bg-card);
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius-md);
+  padding: 1.1rem 1.25rem;
+  margin-bottom: 1.5rem;
+  box-shadow: var(--shadow-sm);
+}
+
+.crm-app .filter-bar .filter-label {
+  font-size: .72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .09em;
+  color: var(--text-muted);
+  margin-bottom: .4rem;
+  display: block;
+}
+
+.crm-app .search-box {
+  position: relative;
+}
+
+.crm-app .search-box .search-icon {
+  position: absolute;
+  left: .875rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-muted);
+  font-size: .82rem;
+  pointer-events: none;
+  transition: var(--transition);
+}
+
+.crm-app .search-box .form-control:focus ~ .search-icon,
+.crm-app .search-box:focus-within .search-icon {
+  color: var(--accent-primary);
+}
+
+.crm-app .search-box .form-control {
+  padding-left: 2.5rem;
+}
+
+.crm-app .search-input-wrapper {
+  position: relative;
+}
+
+.crm-app .search-input-wrapper .search-icon {
+  position: absolute;
+  left: .875rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-muted);
+  font-size: .82rem;
+  pointer-events: none;
+  transition: var(--transition);
+}
+
+.crm-app .search-input-wrapper .form-control:focus ~ .search-icon,
+.crm-app .search-input-wrapper:focus-within .search-icon {
+  color: var(--accent-primary);
+}
+
+.crm-app .search-input-wrapper .form-control {
+  padding-left: 2.5rem;
+}
+
+/* ============================================================
+   BUTTONS
+   ============================================================ */
+
+.crm-app .btn {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius-sm);
+  font-weight: 600;
+  font-size: .865rem;
+  letter-spacing: .01em;
+  transition: var(--transition);
+  border: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: .45rem;
+  white-space: nowrap;
+}
+
+/* Ripple */
+.crm-app .btn::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    circle at center,
+    rgba(255,255,255,.25) 0%,
+    transparent 60%
+  );
+  opacity: 0;
+  transform: scale(0);
+  transition: transform .55s ease, opacity .55s ease;
+}
+
+.crm-app .btn:active::after {
+  transform: scale(3);
+  opacity: 1;
+  transition: 0s;
+}
+
+/* Gold primary */
+.crm-app .btn-primary {
+  background: linear-gradient(
+    135deg,
+    var(--accent-primary) 0%,
+    var(--accent-soft) 100%
+  ) !important;
+  color: #060A0F !important;
+  font-weight: 700;
+  border: none !important;
+  box-shadow: 0 2px 12px var(--accent-glow-sm);
+}
+
+.crm-app .btn-primary:hover {
+  background: linear-gradient(
+    135deg,
+    var(--accent-soft) 0%,
+    var(--accent-bright) 100%
+  ) !important;
+  box-shadow: var(--shadow-gold);
+  transform: translateY(-2px);
+  color: #060A0F !important;
+}
+
+.crm-app .btn-primary:active {
+  transform: translateY(0);
+  box-shadow: none;
+}
+
+/* Gold outline */
+.crm-app .btn-outline-primary {
+  background: transparent;
+  border: 1.5px solid var(--accent-primary) !important;
+  color: var(--accent-primary) !important;
+}
+
+.crm-app .btn-outline-primary:hover {
+  background: var(--accent-glow-sm) !important;
+  border-color: var(--accent-soft) !important;
+  box-shadow: var(--shadow-gold);
+  color: var(--accent-primary) !important;
+  transform: translateY(-1px);
+}
+
+/* Secondary */
+.crm-app .btn-secondary {
+  background: var(--bg-elevated);
+  color: var(--text-primary);
+  border: 1px solid var(--border-medium);
+}
+
+.crm-app .btn-secondary:hover {
+  background: var(--bg-hover);
+  border-color: var(--border-accent);
+  color: var(--text-primary);
+}
+
+/* Success */
+.crm-app .btn-success {
+  background: linear-gradient(135deg, #059669, #047857);
+  color: #fff;
+  box-shadow: 0 2px 12px rgba(5,150,105,.2);
+}
+
+.crm-app .btn-success:hover {
+  background: linear-gradient(135deg, #047857, #065F46);
+  box-shadow: 0 4px 20px rgba(5,150,105,.3);
+  transform: translateY(-2px);
+  color: #fff;
+}
+
+/* Danger */
+.crm-app .btn-danger {
+  background: linear-gradient(135deg, #DC2626, #B91C1C);
+  color: #fff;
+  box-shadow: 0 2px 12px rgba(220,38,38,.2);
+}
+
+.crm-app .btn-danger:hover {
+  background: linear-gradient(135deg, #B91C1C, #991B1B);
+  box-shadow: 0 4px 20px rgba(220,38,38,.3);
+  transform: translateY(-2px);
+  color: #fff;
+}
+
+/* Icon-only button */
+.crm-app .btn-icon {
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-sm);
+}
+
+/* ============================================================
+   FORMS
+   ============================================================ */
+
+.crm-app .form-label {
+  font-size: .78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .07em;
+  color: var(--text-muted);
+  margin-bottom: .45rem;
+  display: block;
+}
+
+.crm-app .form-control,
+.crm-app .form-select,
+.crm-app input[type="text"],
+.crm-app input[type="password"],
+.crm-app input[type="email"],
+.crm-app input[type="tel"],
+.crm-app input[type="number"],
+.crm-app select {
+  background: var(--bg-input) !important;
+  border: 1.5px solid var(--border-soft) !important;
+  color: var(--text-primary) !important;
+  border-radius: var(--radius-sm);
+  font-size: .9rem;
+  transition: var(--transition);
+  padding: .6rem .875rem;
+}
+
+.crm-app .form-control:focus,
+.crm-app .form-select:focus,
+.crm-app input[type="text"]:focus,
+.crm-app input[type="password"]:focus,
+.crm-app input[type="email"]:focus,
+.crm-app input[type="tel"]:focus,
+.crm-app input[type="number"]:focus,
+.crm-app select:focus {
+  background: var(--bg-input) !important;
+  border-color: var(--accent-primary) !important;
+  box-shadow: 0 0 0 3.5px var(--accent-glow-sm) !important;
+  color: var(--text-primary) !important;
+  outline: none;
+}
+
+.crm-app .form-control::placeholder {
+  color: var(--text-muted);
+  font-size: .875rem;
+}
+
+/* Input autofill fix */
+.crm-app .form-control:-webkit-autofill,
+.crm-app .form-control:-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0 1000px var(--bg-input) inset !important;
+  -webkit-text-fill-color: var(--text-primary) !important;
+  caret-color: var(--text-primary);
+}
+
+.crm-app .form-text {
+  color: var(--text-muted);
+  font-size: .78rem;
+  margin-top: .3rem;
+}
+
+/* Select options */
+.crm-app select option {
+  background: var(--bg-input);
+  color: var(--text-primary);
+}
+
+/* Validation */
+@keyframes shakeInput {
+  0%,100%{ transform:translateX(0) }
+  20%    { transform:translateX(-7px) }
+  40%    { transform:translateX(7px) }
+  60%    { transform:translateX(-4px) }
+  80%    { transform:translateX(4px) }
+}
+
+.crm-app .form-control.is-invalid {
+  border-color: var(--danger);
+  box-shadow: 0 0 0 3px var(--danger-bg);
+  animation: shakeInput .4s ease;
+}
+
+.crm-app .invalid-feedback {
+  color: var(--danger);
+  font-size: .78rem;
+  margin-top: .3rem;
+}
+
+.crm-app .form-check-input:checked {
+  background-color: var(--accent-primary);
+  border-color: var(--accent-primary);
+}
+
+/* ============================================================
+   TABLES
+   ============================================================ */
+
+.crm-app .table-wrapper {
+  background: var(--bg-card);
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+}
+
+.crm-app .table-responsive {
+  border-radius: var(--radius-md);
+  overflow-x: auto;
+  border: 1px solid var(--border-soft);
+}
+
+.crm-app .table {
+  color: var(--text-primary);
+  margin-bottom: 0;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.crm-app .table thead tr {
+  border-bottom: 1px solid var(--border-medium);
+}
+
+.crm-app .table thead th {
+  background: var(--bg-elevated) !important;
+  color: var(--text-muted) !important;
+  font-size: .7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .1em;
+  padding: .875rem 1.1rem;
+  white-space: nowrap;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  border-bottom: 1px solid var(--border-soft);
+}
+
+.crm-app .table tbody td {
+  background: var(--bg-card) !important;
+  border-color: var(--border-soft) !important;
+  vertical-align: middle;
+  padding: .875rem 1.1rem;
+  color: var(--text-primary) !important;
+  font-size: .875rem;
+  transition: background var(--transition);
+  border-bottom: 1px solid var(--border-soft) !important;
+}
+
+.crm-app .table tbody tr:hover td {
+  background: var(--bg-hover) !important;
+}
+
+.crm-app .table tbody tr:last-child td {
+  border-bottom: none !important;
+}
+
+/* Avatar in tables */
+.crm-app .avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--accent-glow-sm);
+  border: 1.5px solid var(--border-accent);
+  color: var(--accent-primary);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: .72rem;
+  font-weight: 800;
+  letter-spacing: .01em;
+  flex-shrink: 0;
+  text-transform: uppercase;
+}
+
+.crm-app .avatar-sm {
+  width: 30px;
+  height: 30px;
+  font-size: .65rem;
+}
+
+.crm-app .avatar-lg {
+  width: 48px;
+  height: 48px;
+  font-size: .875rem;
+}
+
+.crm-app .category-icon-finance {
+  background: var(--success-bg) !important;
+  color: var(--success) !important;
+  border: 1px solid var(--success-border) !important;
+}
+.crm-app .category-icon-academic {
+  background: var(--info-bg) !important;
+  color: var(--info) !important;
+  border: 1px solid var(--info-border) !important;
+}
+.crm-app .category-icon-attendance {
+  background: var(--warning-bg) !important;
+  color: var(--warning) !important;
+  border: 1px solid var(--warning-border) !important;
+}
+.crm-app .category-icon-general {
+  background: var(--accent-glow-sm) !important;
+  color: var(--accent-primary) !important;
+  border: 1px solid var(--border-accent) !important;
+}
+
+/* User info cell */
+.crm-app .user-cell {
+  display: flex;
+  align-items: center;
+  gap: .75rem;
+}
+
+.crm-app .user-cell-info .user-name {
+  font-size: .875rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  line-height: 1.2;
+}
+
+.crm-app .user-cell-info .user-meta {
+  font-size: .75rem;
+  color: var(--text-muted);
+  margin-top: .1rem;
+}
+
+/* ============================================================
+   BADGES
+   ============================================================ */
+
+.crm-app .badge {
+  display: inline-flex;
+  align-items: center;
+  gap: .3rem;
+  border-radius: var(--radius-full);
+  font-weight: 600;
+  font-size: .7rem;
+  letter-spacing: .04em;
+  padding: .28em .75em;
+  text-transform: uppercase;
+}
+
+.crm-app .badge.bg-success,
+.crm-app .badge-success {
+  background: var(--success-bg) !important;
+  color: var(--success) !important;
+  border: 1px solid var(--success-border) !important;
+}
+
+.crm-app .badge.bg-danger,
+.crm-app .badge-danger {
+  background: var(--danger-bg) !important;
+  color: var(--danger) !important;
+  border: 1px solid var(--danger-border) !important;
+}
+
+.crm-app .badge.bg-warning,
+.crm-app .badge-warning {
+  background: var(--warning-bg) !important;
+  color: var(--warning) !important;
+  border: 1px solid var(--warning-border) !important;
+}
+
+.crm-app .badge.bg-primary,
+.crm-app .badge-gold {
+  background: var(--accent-glow-sm) !important;
+  color: var(--accent-primary) !important;
+  border: 1px solid var(--border-accent) !important;
+}
+
+.crm-app .badge.bg-info,
+.crm-app .badge-info {
+  background: var(--info-bg) !important;
+  color: var(--info) !important;
+  border: 1px solid var(--info-border) !important;
+}
+
+.crm-app .badge.bg-secondary,
+.crm-app .badge-neutral {
+  background: rgba(107,114,128,.1) !important;
+  color: var(--text-muted) !important;
+  border: 1px solid var(--border-soft) !important;
+}
+
+/* Status dot badge */
+.crm-app .status-dot {
+  display: inline-flex;
+  align-items: center;
+  gap: .4rem;
+  font-size: .8rem;
+  font-weight: 500;
+}
+
+.crm-app .status-dot::before {
+  content: '';
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.crm-app .status-dot.active::before  { background: var(--success) }
+.crm-app .status-dot.inactive::before{ background: var(--text-muted) }
+.crm-app .status-dot.pending::before  { background: var(--warning) }
+.crm-app .status-dot.danger::before   { background: var(--danger) }
+
+/* ============================================================
+   MODALS
+   ============================================================ */
+
+.crm-app .modal-content {
+  background: var(--bg-elevated) !important;
+  border: 1px solid var(--border-medium) !important;
+  border-radius: var(--radius-lg) !important;
+  box-shadow: var(--shadow-elevated) !important;
+  color: var(--text-primary) !important;
+}
+
+.crm-app .modal-header {
+  border-bottom: 1px solid var(--border-soft) !important;
+  padding: 1.25rem 1.5rem;
+  background: var(--bg-overlay) !important;
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0 !important;
+}
+
+.crm-app .modal-title {
+  color: var(--text-primary) !important;
+  font-weight: 700;
+  font-size: 1rem;
+}
+
+.crm-app .modal-body {
+  padding: 1.5rem;
+  color: var(--text-primary) !important;
+}
+
+.crm-app .modal-footer {
+  border-top: 1px solid var(--border-soft) !important;
+  padding: 1rem 1.5rem;
+  gap: .625rem;
+  background: var(--bg-overlay) !important;
+}
+
+.crm-app .modal.fade .modal-dialog {
+  transform: scale(.93) translateY(-16px);
+  transition: transform var(--transition), opacity var(--transition);
+}
+
+.crm-app .modal.show .modal-dialog {
+  transform: scale(1) translateY(0);
+}
+
+.crm-app .modal-backdrop {
+  backdrop-filter: blur(8px);
+  background: rgba(0,0,0,.65);
+}
+
+.crm-app .btn-close {
+  filter: invert(1) opacity(.5);
+  transition: var(--transition);
+  border-radius: var(--radius-sm);
+}
+
+.crm-app .btn-close:hover {
+  filter: invert(1) opacity(.9);
+  transform: rotate(90deg);
+  background: var(--bg-hover);
+}
+
+/* ============================================================
+   ALERTS & MESSAGES
+   ============================================================ */
+
+.crm-app .alert {
+  border-radius: var(--radius-md) !important;
+  font-size: .875rem;
+  padding: .875rem 1.1rem;
+  display: flex;
+  align-items: flex-start;
+  gap: .75rem;
+  border: 1px solid transparent !important;
+}
+
+.crm-app .alert-success {
+  background: var(--success-bg) !important;
+  border-color: var(--success-border) !important;
+  color: var(--success) !important;
+}
+
+.crm-app .alert-danger,
+.crm-app .alert-error {
+  background: var(--danger-bg) !important;
+  border-color: var(--danger-border) !important;
+  color: var(--danger) !important;
+}
+
+.crm-app .alert-warning {
+  background: var(--warning-bg) !important;
+  border-color: var(--warning-border) !important;
+  color: var(--warning) !important;
+}
+
+.crm-app .alert-info {
+  background: var(--info-bg) !important;
+  border-color: var(--info-border) !important;
+  color: var(--info) !important;
+}
+
+/* Django messages tag fix */
+.crm-app .alert-error { /* Django uses 'error' not 'danger' */
+  background: var(--danger-bg) !important;
+  border-color: var(--danger-border) !important;
+  color: var(--danger) !important;
+}
+
+/* ============================================================
+   TABS
+   ============================================================ */
+
+.crm-app .nav-tabs {
+  border-bottom: 1px solid var(--border-soft);
+  gap: .25rem;
+  padding: 0 .25rem;
+}
+
+.crm-app .nav-tabs .nav-link {
+  color: var(--text-muted) !important;
+  border: none;
+  border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+  padding: .65rem 1.1rem;
+  font-size: .85rem;
+  font-weight: 600;
+  transition: var(--transition);
+  background: transparent;
+  position: relative;
+}
+
+.crm-app .nav-tabs .nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--accent-primary);
+  border-radius: 2px 2px 0 0;
+  transform: scaleX(0);
+  transition: transform var(--transition);
+}
+
+.crm-app .nav-tabs .nav-link:hover {
+  color: var(--text-secondary) !important;
+  background: var(--bg-hover);
+}
+
+.crm-app .nav-tabs .nav-link.active {
+  color: var(--accent-primary) !important;
+  background: transparent;
+  font-weight: 700;
+}
+
+.crm-app .nav-tabs .nav-link.active::after {
+  transform: scaleX(1);
+}
+
+.crm-app .tab-content {
+  padding-top: 1.5rem;
+}
+
+/* ============================================================
+   PAGINATION
+   ============================================================ */
+
+.crm-app .pagination {
+  gap: .3rem;
+}
+
+.crm-app .pagination .page-link {
+  background: var(--bg-elevated) !important;
+  border: 1px solid var(--border-soft) !important;
+  color: var(--text-secondary) !important;
+  transition: var(--transition);
+  border-radius: var(--radius-sm) !important;
+  padding: .45rem .875rem;
+  font-size: .85rem;
+  font-weight: 500;
+}
+
+.crm-app .pagination .page-link:hover {
+  background: var(--accent-glow-sm) !important;
+  border-color: var(--border-accent) !important;
+  color: var(--accent-primary) !important;
+}
+
+.crm-app .pagination .page-item.active .page-link {
+  background: var(--accent-primary) !important;
+  border-color: var(--accent-primary) !important;
+  color: #060A0F !important;
+  font-weight: 700;
+}
+
+/* ============================================================
+   DROPDOWNS
+   ============================================================ */
+
+.crm-app .dropdown-menu {
+  background: var(--bg-elevated) !important;
+  border: 1px solid var(--border-medium) !important;
+  border-radius: var(--radius-md) !important;
+  box-shadow: var(--shadow-elevated) !important;
+  padding: .5rem;
+  animation: dropIn .2s cubic-bezier(.4,0,.2,1);
+}
+
+@keyframes dropIn {
+  from { opacity:0; transform:translateY(-8px) }
+  to   { opacity:1; transform:translateY(0) }
+}
+
+.crm-app .dropdown-item {
+  color: var(--text-secondary) !important;
+  border-radius: var(--radius-xs);
+  padding: .55rem 1rem;
+  font-size: .875rem;
+  font-weight: 500;
+  transition: var(--transition);
+  display: flex;
+  align-items: center;
+  gap: .625rem;
+}
+
+.crm-app .dropdown-item:hover {
+  background: var(--accent-glow-sm) !important;
+  color: var(--accent-primary) !important;
+}
+
+.crm-app .dropdown-divider {
+  border-color: var(--border-soft) !important;
+  margin: .4rem 0;
+}
+
+/* ============================================================
+   THEME TOGGLE
+   ============================================================ */
+
+.crm-app .theme-toggle,
+.theme-toggle-fixed {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-soft);
+  color: var(--text-muted);
+  border-radius: 50%;
+  width: 38px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: var(--transition-spring);
+  padding: 0;
+  flex-shrink: 0;
+}
+
+.crm-app .theme-toggle:hover,
+.theme-toggle-fixed:hover {
+  background: var(--accent-glow-sm);
+  border-color: var(--border-accent);
+  color: var(--accent-primary);
+  transform: rotate(22deg) scale(1.08);
+}
+
+/* Mobile hamburger */
+.crm-app .sidebar-toggle-btn {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-soft);
+  color: var(--text-secondary);
+  border-radius: var(--radius-sm);
+  width: 38px;
+  height: 38px;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: var(--transition);
+  padding: 0;
+  flex-shrink: 0;
+}
+
+.crm-app .sidebar-toggle-btn:hover {
+  background: var(--accent-glow-sm);
+  color: var(--accent-primary);
+  border-color: var(--border-accent);
+}
+
+/* ============================================================
+   TOAST / NOTIFICATIONS
+   ============================================================ */
+
+.crm-app .toast {
+  background: var(--bg-elevated) !important;
+  border: 1px solid var(--border-medium) !important;
+  border-radius: var(--radius-md) !important;
+  color: var(--text-primary) !important;
+  box-shadow: var(--shadow-elevated) !important;
+}
+
+.crm-app .toast-header {
+  background: transparent !important;
+  border-bottom: 1px solid var(--border-soft) !important;
+  color: var(--text-secondary) !important;
+  font-weight: 600;
+  font-size: .85rem;
+}
+
+/* ============================================================
+   SKELETON LOADERS
+   ============================================================ */
+
+@keyframes skeletonPulse {
+  0%,100%{ opacity:.5 }
+  50%    { opacity:.2 }
+}
+
+.crm-app .skeleton {
+  background: var(--bg-elevated);
+  border-radius: var(--radius-sm);
+  animation: skeletonPulse 1.8s ease infinite;
+}
+
+/* ============================================================
+   UTILITY OVERRIDES
+   ============================================================ */
+
+/* Kill all Bootstrap white backgrounds */
+.crm-app .bg-white    { background:var(--bg-card) !important }
+.crm-app .bg-light    { background:var(--bg-elevated) !important }
+.crm-app .bg-body     { background:var(--bg-main) !important }
+.crm-app .text-dark   { color:var(--text-primary) !important }
+.crm-app .border      { border-color:var(--border-soft) !important }
+.crm-app .border-bottom { border-bottom-color:var(--border-soft) !important }
+.crm-app hr { border-color:var(--border-soft); opacity:1 }
+
+/* Kill all inline white styles */
+.crm-app [style*="background: white"],
+.crm-app [style*="background:white"],
+.crm-app [style*="background-color: white"],
+.crm-app [style*="background-color:#fff"],
+.crm-app [style*="background-color: #fff"],
+.crm-app [style*="background-color:#ffffff"],
+.crm-app [style*="background-color: #ffffff"] {
+  background: var(--bg-card) !important;
+}
+
+/* List groups */
+.crm-app .list-group-item {
+  background: var(--bg-card) !important;
+  border-color: var(--border-soft) !important;
+  color: var(--text-primary) !important;
+}
+
+/* Accordion */
+.crm-app .accordion-button,
+.crm-app .accordion-body,
+.crm-app .accordion-item {
+  background: var(--bg-card) !important;
+  color: var(--text-primary) !important;
+  border-color: var(--border-soft) !important;
+}
+
+/* Tables — Bootstrap override */
+.crm-app .table > :not(caption) > * > * {
+  background-color: transparent;
+  color: var(--text-primary);
+  border-color: var(--border-soft);
+}
+
+/* ============================================================
+   RESPONSIVE LAYOUT
+   ============================================================ */
+
+@media (max-width: 992px) {
+  .crm-app .sidebar {
+    left: calc(-1 * var(--sidebar-width));
+  }
+  .crm-app .sidebar.mobile-open {
+    left: 0;
+    box-shadow: 6px 0 40px rgba(0,0,0,.55);
+  }
+  .crm-app .main-content {
+    margin-left: 0 !important;
+  }
+  .crm-app .sidebar-toggle-btn {
+    display: flex;
+  }
+}
+
+@media (max-width: 768px) {
+  .crm-app .page-content { padding: 1.25rem }
+  .crm-app .page-header  { flex-direction: column; align-items: flex-start }
+  .crm-app .filter-bar   { padding: .875rem 1rem }
+  .crm-app .card-body    { padding: 1rem }
+  .crm-app .table thead th,
+  .crm-app .table tbody td { padding:.65rem .875rem; font-size:.8rem }
+}
+
+@media (max-width: 576px) {
+  .crm-app .page-content { padding: 1rem }
+  .crm-app .btn          { font-size:.82rem }
+  .crm-app .metric-value { font-size:1.6rem }
+  .crm-app .page-header-actions { width:100% }
+  .crm-app .page-header-actions .btn { flex:1; justify-content:center }
+}
+
+/* ============================================================
+   LIGHT MODE SPECIFIC OVERRIDES
+   ============================================================ */
+
+[data-theme="light"] .crm-app .top-navbar,
+[data-theme="light"] .crm-app .navbar {
+  background: #FFFFFF !important;
+  box-shadow: 0 1px 0 rgba(0,0,0,.08),
+              0 4px 16px rgba(0,0,0,.05) !important;
+}
+
+[data-theme="light"] .crm-app .card {
+  box-shadow: 0 2px 16px rgba(0,0,0,.06),
+              0 1px 4px rgba(0,0,0,.04);
+}
+
+[data-theme="light"] .crm-app .card:hover {
+  box-shadow: 0 12px 40px rgba(0,0,0,.1),
+              0 4px 16px rgba(0,0,0,.06);
+}
+
+[data-theme="light"] .crm-app .table thead th {
+  background: #EEF2F7 !important;
+  color: #64748B !important;
+}
+
+[data-theme="light"] .crm-app .table tbody td {
+  background: #FFFFFF !important;
+}
+
+[data-theme="light"] .crm-app .table tbody tr:hover td {
+  background: #F4F7FB !important;
+}
+
+[data-theme="light"] .crm-app .form-control,
+[data-theme="light"] .crm-app .form-select {
+  background: #FFFFFF !important;
+  color: #0F172A !important;
+  border-color: rgba(0,0,0,.12) !important;
+}
+
+[data-theme="light"] .crm-app .dropdown-menu {
+  background: #FFFFFF !important;
+  box-shadow: 0 8px 40px rgba(0,0,0,.12);
+}
+
+/* ============================================================
+   Milestone 3 - Additional utility classes
+   ============================================================ */
+.crm-app .height-6px {
+  height: 6px !important;
+}
+.crm-app .min-width-60px {
+  min-width: 60px !important;
+}
+.crm-app .max-width-120px {
+  max-width: 120px !important;
+}
+.crm-app .table-max-height-250px {
+  max-height: 250px !important;
+  overflow-y: auto !important;
+}
+.crm-app .badge-text-0-75rem {
+  font-size: 0.75rem !important;
+}
+.crm-app .min-width-150px {
+  min-width: 150px !important;
+}
+.crm-app .progress-width-60px {
+  width: 60px !important;
+}
+.crm-app .progress {
+  background-color: var(--bg-elevated) !important;
+  border-radius: var(--radius-full) !important;
+  border: 1px solid var(--border-soft) !important;
+  overflow: hidden;
+}
+.crm-app .progress-bar {
+  border-radius: var(--radius-full) !important;
+  transition: width 0.6s ease;
+}
+.crm-app .progress-height-sm {
+  height: 6px !important;
+}
+.crm-app .progress-height-md {
+  height: 10px !important;
+}
+
+/* ============================================================
+   ANIMATION & MOTION EFFECTS
+   ============================================================ */
+.crm-app .animate-fade-in {
+  animation: fadeIn 0.5s cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.crm-app .stagger-1 { animation-delay: 0.05s !important; }
+.crm-app .stagger-2 { animation-delay: 0.10s !important; }
+.crm-app .stagger-3 { animation-delay: 0.15s !important; }
+.crm-app .stagger-4 { animation-delay: 0.20s !important; }
+.crm-app .stagger-5 { animation-delay: 0.25s !important; }
+.crm-app .stagger-6 { animation-delay: 0.30s !important; }
+.crm-app .stagger-7 { animation-delay: 0.35s !important; }
+.crm-app .stagger-8 { animation-delay: 0.40s !important; }
+
+/* Custom state borders & backgrounds */
+.crm-app .card-state-danger {
+  border-color: var(--danger-border) !important;
+  box-shadow:
+    0 0 0 1px var(--danger-border),
+    var(--shadow-card) !important;
+}
+
+.crm-app .card-state-warning {
+  border-color: var(--warning-border) !important;
+  box-shadow:
+    0 0 0 1px var(--warning-border),
+    var(--shadow-card) !important;
+}
+
+.crm-app .card-state-success {
+  border-color: var(--success-border) !important;
+}
+
+.crm-app .bg-elevated {
+  background-color: var(--bg-elevated) !important;
+  color: var(--text-primary) !important;
+}
+
+/* ============================================================
+   §20 PORTAL SOFT EXECUTIVE VARIANT (Milestone 5)
+   ============================================================ */
+.crm-app.portal-variant {
+  --shadow-card: 0 4px 18px rgba(0,0,0,.15);
+  --shadow-elevated: 0 12px 36px rgba(0,0,0,.22);
+}
+
+.crm-app.portal-variant .page-content {
+  padding: 2rem;
+}
+
+/* De-intensify metric card shimmer & border highlights */
+.crm-app.portal-variant .metric-card::after {
+  animation: none !important;
+  opacity: 0.15 !important;
+}
+
+/* Softer hover scale/effects */
+.crm-app.portal-variant .card:hover {
+  transform: translateY(-1.5px) !important;
+  box-shadow: var(--shadow-card) !important;
+}
+
+/* Slightly larger readable badges */
+.crm-app.portal-variant .badge {
+  font-size: .75rem !important;
+  padding: .35em .8em !important;
+}
+
+/* Larger table cell padding in portals */
+.crm-app.portal-variant .table tbody td,
+.crm-app.portal-variant .table thead th {
+  padding: 1.1rem 1.25rem !important;
+}
+
+/* Increased vertical rhythm spacing */
+.crm-app.portal-variant .card + .card,
+.crm-app.portal-variant .row + .row,
+.crm-app.portal-variant .card-gap-vertical {
+  margin-top: 1.5rem;
+}
+
+/* Custom reusable portal elements */
+.crm-app.portal-variant .timeline-dot-custom {
+  width: 12px;
+  height: 12px;
+  margin-left: -17px;
+  top: 6px;
+  border-radius: 50%;
+  background-color: var(--accent-primary);
+  border: 1px solid var(--border-soft);
+  box-shadow: var(--shadow-sm);
+  position: absolute;
+  left: 0;
+  transform: translateX(-50%);
+}
+.crm-app.portal-variant .attendance-visual-circle {
+  width: 150px;
+  height: 150px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  border: 5px solid;
+  background: var(--bg-input);
+  box-shadow: var(--shadow-sm);
+}
+.crm-app.portal-variant .profile-avatar-custom {
+  width: 120px;
+  height: 120px;
+  font-size: 3rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--accent-glow-sm);
+  border: 1.5px solid var(--border-accent);
+  color: var(--accent-primary);
+  text-transform: uppercase;
+}
+.crm-app.portal-variant .profile-avatar-sm {
+  width: 80px;
+  height: 80px;
+  font-size: 2rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--accent-glow-sm);
+  border: 1.5px solid var(--border-accent);
+  color: var(--accent-primary);
+  text-transform: uppercase;
+}
+.crm-app.portal-variant .roll-number-container {
+  background: var(--accent-glow-xs);
+  border: 1px solid var(--border-accent);
+  border-radius: var(--radius-md);
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+/* Mobile responsive adjustments */
+@media (max-width: 991.98px) {
+  .crm-app.portal-variant .sidebar {
+    left: -268px !important;
+  }
+  .crm-app.portal-variant .main-content {
+    margin-left: 0 !important;
+  }
+  .crm-app.portal-variant .sidebar.mobile-open {
+    left: 0 !important;
+  }
+}
+
+@media (max-width: 767.98px) {
+  .crm-app.portal-variant .page-content {
+    padding: 1.5rem;
+  }
+  
+  /* Buttons tap target scaling */
+  .crm-app.portal-variant .btn {
+    min-height: 44px;
+    padding: .75rem 1.25rem;
+    font-size: .9rem;
+  }
+  
+  /* Force vertical stacking on filter grids */
+  .crm-app.portal-variant .filter-bar .row > [class*="col-"] {
+    margin-bottom: 1rem;
+  }
+  .crm-app.portal-variant .filter-bar .row > [class*="col-"]:last-child {
+    margin-bottom: 0;
+  }
+}
+
+/* ============================================================
+   END OF DESIGN SYSTEM v2 WITH PORTAL VARIANT
+   ============================================================ */

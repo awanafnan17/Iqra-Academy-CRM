@@ -1,0 +1,207 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" data-theme="dark" class="theme-dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign In - Iqra Academy CRM</title>
+    <!-- CDN Packages -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="{% static 'css/design-system.css' %}" rel="stylesheet">
+
+    <script>
+    (function() {
+      var saved = localStorage.getItem('iqra-theme') || 'dark';
+      document.documentElement.setAttribute('data-theme', saved);
+      document.documentElement.className = 'theme-' + saved;
+    })();
+    </script>
+
+    <style>
+        body.crm-app {
+            background: var(--bg-base) !important;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            margin: 0;
+            padding: 0;
+        }
+        .glow-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+            z-index: 0;
+            pointer-events: none;
+        }
+        .glow-overlay-1 {
+            position: absolute;
+            top: -150px;
+            right: -150px;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
+            z-index: 0;
+            pointer-events: none;
+        }
+        .glow-overlay-2 {
+            position: absolute;
+            bottom: -150px;
+            left: -150px;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
+            z-index: 0;
+            pointer-events: none;
+        }
+        .login-card-container {
+            width: 100%;
+            max-width: 400px;
+            z-index: 10;
+            animation: formEntrance 0.5s cubic-bezier(.4,0,.2,1) both;
+        }
+        .login-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-soft);
+            border-top: 3px solid var(--accent-primary) !important;
+            box-shadow: var(--shadow-elevated);
+            border-radius: var(--radius-md);
+            overflow: hidden;
+        }
+        .input-icon-wrapper {
+            position: relative;
+        }
+        .input-icon-wrapper i {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--accent-primary);
+            z-index: 5;
+        }
+        .input-icon-wrapper input,
+        .input-icon-wrapper .form-control {
+            padding-left: 2.75rem !important;
+        }
+        @keyframes formEntrance {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .theme-toggle-fixed {
+            background: var(--bg-elevated);
+            border: 1px solid var(--border-soft);
+            color: var(--text-muted);
+            border-radius: 50%;
+            width: 38px;
+            height: 38px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition-spring);
+            padding: 0;
+            z-index: 1050;
+        }
+        .theme-toggle-fixed:hover {
+            background: var(--accent-glow-sm);
+            border-color: var(--border-accent);
+            color: var(--accent-primary);
+            transform: rotate(22deg) scale(1.08);
+        }
+    </style>
+</head>
+<body class="crm-app">
+    <div class="glow-container">
+        <div class="glow-overlay-1"></div>
+        <div class="glow-overlay-2"></div>
+    </div>
+
+    <!-- Theme Toggle Fixed -->
+    <button id="themeToggle" class="theme-toggle-fixed position-fixed" style="top:1.5rem; right:1.5rem;" aria-label="Toggle theme">
+        <i class="fas fa-moon" id="themeIcon"></i>
+    </button>
+
+    <div class="login-card-container px-3">
+        <div class="card login-card p-4">
+            <div class="text-center mb-4">
+                <img src="{% static 'images/logo.png' %}" alt="Iqra Academy Logo" class="mb-3 animate-fade-in" style="max-height: 80px; width: auto; object-fit: contain;">
+                <h2 class="display-title mb-1">Iqra Academy CRM</h2>
+                <div class="page-subtitle text-muted">Iqra Academy</div>
+            </div>
+
+            {% if form.non_field_errors %}
+                <div class="alert alert-danger mb-3" role="alert">
+                    {% for error in form.non_field_errors %}
+                        <div><i class="fas fa-triangle-exclamation me-2"></i>{{ error }}</div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            <form method="post" novalidate>
+                {% csrf_token %}
+                {% for field in form %}
+                    <div class="mb-3">
+                        <label class="form-label" for="{{ field.id_for_label }}">{{ field.label }}</label>
+                        <div class="input-icon-wrapper">
+                            {% if field.name == 'username' %}
+                                <i class="fas fa-user"></i>
+                            {% else %}
+                                <i class="fas fa-lock"></i>
+                            {% endif %}
+                            <!-- Add form-control class to input field programmatically via CSS override or fallback -->
+                            {{ field }}
+                        </div>
+                        {% if field.errors %}
+                            {% for error in field.errors %}
+                                <div class="invalid-feedback d-block mt-1"><i class="fas fa-circle-exclamation me-1"></i>{{ error }}</div>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                {% endfor %}
+
+                <button type="submit" class="btn btn-primary w-100 py-2.5 mt-3">
+                    Sign In <i class="fas fa-arrow-right ms-2"></i>
+                </button>
+            </form>
+
+            <div class="text-center mt-4">
+                <span class="text-muted small">Secure Portal - Iqra Academy</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- CDNs and Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+    (function() {
+      var themeKey = 'iqra-theme';
+      var toggle = document.getElementById('themeToggle');
+      var icon = document.getElementById('themeIcon');
+
+      function applyTheme(theme) {
+        document.documentElement.setAttribute('data-theme', theme);
+        document.documentElement.className = 'theme-' + theme;
+        if (icon) {
+          icon.className = theme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+        }
+        localStorage.setItem(themeKey, theme);
+      }
+
+      applyTheme(localStorage.getItem(themeKey) || 'dark');
+
+      if (toggle) {
+        toggle.addEventListener('click', function() {
+          var current = document.documentElement.getAttribute('data-theme');
+          applyTheme(current === 'dark' ? 'light' : 'dark');
+        });
+      }
+    })();
+    </script>
+</body>
+</html>

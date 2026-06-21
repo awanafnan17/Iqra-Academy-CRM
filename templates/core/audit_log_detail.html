@@ -1,0 +1,124 @@
+{% extends 'layouts/panel_base.html' %}
+{% load static %}
+
+{% block title %}Audit Log Detail - Iqra Academy{% endblock %}
+
+{% block content %}
+<div class="container-fluid px-0">
+    <!-- Page Header -->
+    <div class="p-4 rounded-4 mb-4 card border border-light shadow-sm animate-fade-in">
+        <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
+            <div>
+                <h3 class="fw-bold mb-1">
+                    <i class="fa-solid fa-circle-info me-2 text-primary"></i>
+                    Audit Log Detail
+                </h3>
+                <p class="text-secondary mb-0">
+                    Detailed record of the audited event (ID: {{ log.pk }}).
+                </p>
+            </div>
+            <div>
+                <a href="{% url 'admin_panel:audit:audit_log_list' %}" class="btn btn-outline-secondary rounded-3 px-4">
+                    <i class="fa-solid fa-arrow-left me-2"></i> Back to Audit Logs
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Metadata Details Card -->
+    <div class="row g-4 mb-4 animate-fade-in stagger-1">
+        <div class="col-12 col-lg-5">
+            <div class="card p-4 border border-light shadow rounded-4 h-100">
+                <h5 class="fw-bold border-bottom pb-2 mb-3 text-dark">Event Metadata</h5>
+                
+                <div class="mb-3">
+                    <label class="fw-semibold text-secondary small d-block mb-1">Timestamp</label>
+                    <span class="text-dark fw-medium" data-testid="detail-timestamp">{{ log.timestamp|date:"Y-m-d H:i:s" }}</span>
+                </div>
+
+                <div class="mb-3">
+                    <label class="fw-semibold text-secondary small d-block mb-1">Performing User</label>
+                    {% if log.user %}
+                    <span class="text-dark fw-medium" data-testid="detail-user">{{ log.user.username }}</span>
+                    <span class="text-muted small d-block">{{ log.user.email }}</span>
+                    {% else %}
+                    <span class="text-muted small fw-medium" data-testid="detail-user-none">System / Anonymous</span>
+                    {% endif %}
+                </div>
+
+                <div class="mb-3">
+                    <label class="fw-semibold text-secondary small d-block mb-1">Action Type</label>
+                    <span class="badge bg-primary bg-opacity-10 text-primary border border-primary-subtle px-3 py-1 fw-bold" data-testid="detail-action">
+                        {{ log.get_action_display }}
+                    </span>
+                </div>
+
+                <div class="mb-3">
+                    <label class="fw-semibold text-secondary small d-block mb-1">Target Model Type</label>
+                    <code class="text-secondary small fw-bold" data-testid="detail-model-name">{{ log.model_name }}</code>
+                </div>
+
+                <div class="mb-3">
+                    <label class="fw-semibold text-secondary small d-block mb-1">Object Identifier</label>
+                    <span class="text-dark fw-medium" data-testid="detail-object-id">{{ log.object_id|default:"-" }}</span>
+                </div>
+
+                <div class="mb-3">
+                    <label class="fw-semibold text-secondary small d-block mb-1">IP Address</label>
+                    <span class="text-dark fw-medium" data-testid="detail-ip">{{ log.ip_address|default:"-" }}</span>
+                </div>
+
+                <div class="mb-0">
+                    <label class="fw-semibold text-secondary small d-block mb-1">Browser User Agent</label>
+                    <span class="text-secondary small fw-medium" data-testid="detail-user-agent">{{ log.user_agent|default:"-" }}</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Changes Block -->
+        <div class="col-12 col-lg-7">
+            <div class="card p-4 border border-light shadow rounded-4 h-100">
+                <h5 class="fw-bold border-bottom pb-2 mb-3 text-dark">Audited Changes / Payload</h5>
+
+                {% if log.changes %}
+                    {% if parsed_changes.items %}
+                        <!-- Structured Changes Table -->
+                        <div class="table-responsive">
+                            <table class="table table-bordered align-middle mb-0" data-testid="detail-changes-table">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>Field</th>
+                                        <th>Old Value</th>
+                                        <th>New Value</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for key, val in parsed_changes.items %}
+                                    <tr>
+                                        <td class="fw-bold text-secondary"><code class="text-dark">{{ key }}</code></td>
+                                        {% if val|length == 2 and not val.capitalize and val.0 is not None or val.1 is not None %}
+                                            <td class="text-danger bg-danger bg-opacity-10">{{ val.0|default:"(None)" }}</td>
+                                            <td class="text-success bg-success bg-opacity-10">{{ val.1|default:"(None)" }}</td>
+                                        {% else %}
+                                            <td colspan="2" class="text-dark bg-light">{{ val|default:"(None)" }}</td>
+                                        {% endif %}
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    {% else %}
+                        <!-- Raw Changes string fallback -->
+                        <pre class="bg-light p-3 rounded-3 text-dark overflow-auto border border-light-subtle" style="max-height: 400px;" data-testid="detail-changes-raw"><code>{{ log.changes }}</code></pre>
+                    {% endif %}
+                {% else %}
+                    <div class="text-center py-5 text-muted" data-testid="detail-changes-empty">
+                        <i class="fa-solid fa-folder-open fa-2x text-light-subtle mb-3"></i>
+                        <h6>No changes recorded for this action.</h6>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

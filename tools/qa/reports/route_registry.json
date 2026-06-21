@@ -1,0 +1,2242 @@
+{
+  "timestamp": "2026-06-20T02:44:40.227566",
+  "total_registered": 482,
+  "panel_routes": 239,
+  "account_routes": 7,
+  "portal_routes": 32,
+  "routes": [
+    {
+      "pattern": "/panel/admin/reports/",
+      "name": ":reports:dashboard",
+      "namespace": ":reports",
+      "has_params": false,
+      "view_name": "view",
+      "classification": "static_get"
+    },
+    {
+      "pattern": "/panel/admin/reports/pending-dues/csv/",
+      "name": ":reports:pending_dues_csv",
+      "namespace": ":reports",
+      "has_params": false,
+      "view_name": "view",
+      "classification": "static_get"
+    },
+    {
+      "pattern": "/panel/admin/reports/pending-dues/pdf/",
+      "name": ":reports:pending_dues_pdf",
+      "namespace": ":reports",
+      "has_params": false,
+      "view_name": "view",
+      "classification": "static_get"
+    },
+    {
+      "pattern": "/panel/admin/reports/session-results/<int:session_id>/csv/",
+      "name": ":reports:session_results_csv",
+      "namespace": ":reports",
+      "has_params": true,
+      "view_name": "view",
+      "classification": "parameterized_get"
+    },
+    {
+      "pattern": "/panel/admin/reports/session-results/<int:session_id>/pdf/",
+      "name": ":reports:session_results_pdf",
+      "namespace": ":reports",
+      "has_params": true,
+      "view_name": "view",
+      "classification": "parameterized_get"
+    },
+    {
+      "pattern": "/panel/admin/reports/student-directory/csv/",
+      "name": ":reports:student_directory_csv",
+      "namespace": ":reports",
+      "has_params": false,
+      "view_name": "view",
+      "classification": "static_get"
+    },
+    {
+      "pattern": "/panel/admin/reports/teacher-workload/csv/",
+      "name": ":reports:teacher_workload_csv",
+      "namespace": ":reports",
+      "has_params": false,
+      "view_name": "view",
+      "classification": "static_get"
+    },
+    {
+      "pattern": "/panel/admin/reports/teacher-workload/pdf/",
+      "name": ":reports:teacher_workload_pdf",
+      "namespace": ":reports",
+      "has_params": false,
+      "view_name": "view",
+      "classification": "static_get"
+    },
+    {
+      "pattern": "/panel/admin/reports/success/csv/",
+      "name": ":reports:success_csv",
+      "namespace": ":reports",
+      "has_params": false,
+      "view_name": "view",
+      "classification": "static_get"
+    },
+    {
+      "pattern": "/panel/admin/reports/success/pdf/",
+      "name": ":reports:success_pdf",
+      "namespace": ":reports",
+      "has_params": false,
+      "view_name": "view",
+      "classification": "static_get"
+    },
+    {
+      "pattern": "/panel/admin/reports/student/<int:student_id>/transcript/pdf/",
+      "name": ":reports:student_transcript_pdf",
+      "namespace": ":reports",
+      "has_params": true,
+      "view_name": "view",
+      "classification": "parameterized_get"
+    },
+    {
+      "pattern": "/panel/admin/dashboard/",
+      "name": ":admin_panel:dashboard",
+      "namespace": ":admin_panel",
+      "has_params": false,
+      "view_name": "admin_dashboard",
+      "classification": "static_get"
+    },
+    {
+      "pattern": "/panel/admin/permissions/",
+      "name": ":admin_panel:permissions",
+      "namespace": ":admin_panel",
+      "has_params": false,
+      "view_name": "permission_matrix",
+      "classification": "static_get"
+    },
+    {
+      "pattern": "/panel/admin/session-overview/",
+      "name": ":admin_panel:session_overview",
+      "namespace": ":admin_panel",
+      "has_params": false,
+      "view_name": "session_overview",
+      "classification": "static_get"
+    },
+    {
+      "pattern": "/panel/admin/faculty-overview/",
+      "name": ":admin_panel:faculty_overview",
+      "namespace": ":admin_panel",
+      "has_params": false,
+      "view_name": "faculty_overview",
+      "classification": "static_get"
+    },
+    {
+      "pattern": "/panel/admin/timetable-overview/",
+      "name": ":admin_panel:timetable_overview",
+      "namespace": ":admin_panel",
+      "has_params": false,
+      "view_name": "timetable_overview",
+      "classification": "static_get"
+    },
+    {
+      "pattern": "/panel/admin/exam-overview/",
+      "name": ":admin_panel:exam_overview",
+      "namespace": ":admin_panel",
+      "has_params": false,
+      "view_name": "exam_overview",
+      "classification": "static_get"
+    },
+    {
+      "pattern": "/panel/admin/success/",
+      "name": ":admin_panel:success_dashboard",
+      "namespace": ":admin_panel",
+      "has_params": false,
+      "view_name": "view",
+      "classification": "static_get"
+    },
+    {
+      "pattern": "/panel/admin/session/<int:pk>/results/",
+      "name": ":admin_panel:session_result_summary",
+      "namespace": ":admin_panel",
+      "has_params": true,
+      "view_name": "session_result_summary",
+      "classification": "parameterized_get"
+    },
+    {
+      "pattern": "/panel/admin/pending-dues/",
+      "name": ":admin_panel:pending_dues",
+      "namespace": ":admin_panel",
+      "has_params": false,
+      "view_name": "view",
+      "classification": "static_get"
+    },
+    {
+      "pattern": "/panel/admin/users/",
+      "name": ":admin_panel:users:user_list",
+      "namespace": ":admin_panel:users",
+      "has_params": false,
+      "view_name": "user_list",
+      "classification": "static_get"
+    },
+    {
+      "pattern": "/panel/admin/users/<int:pk>/toggle-activation/",
+      "name": ":admin_panel:users:user_toggle_activation",
+      "namespace": ":admin_panel:users",
+      "has_params": true,
+      "view_name": "user_toggle_activation",
+      "classification": "destructive_post"
+    },
+    {
+      "pattern": "/panel/admin/users/<int:pk>/toggle-lock/",
+      "name": ":admin_panel:users:user_toggle_lock",
+      "namespace": ":admin_panel:users",
+      "has_params": true,
+      "view_name": "user_toggle_lock",
+      "classification": "destructive_post"
+    },
+    {
+      "pattern": "/panel/admin/users/<int:pk>/reset-password/",
+      "name": ":admin_panel:users:user_reset_password",
+      "namespace": ":admin_panel:users",
+      "has_params": true,
+      "view_name": "user_reset_password",
+      "classification": "destructive_post"
+    },
+    {
+      "pattern": "/panel/admin/users/<int:pk>/assign-role/",
+      "name": ":admin_panel:users:user_assign_role",
+      "namespace": ":admin_panel:users",
+      "has_params": true,
+      "view_name": "user_assign_role",
+      "classification": "parameterized_get"
+    },
+    {
+      "pattern": "/panel/admin/users/<int:pk>/assign-session/",
+      "name": ":admin_panel:users:user_assign_session",
+      "namespace": ":admin_panel:users",
+      "has_params": true,
+      "view_name": "user_assign_session",
+      "classification": "parameterized_get"
+    },
+    {
+      "pattern": "/panel/admin/timetable/",
+      "name": ":admin_panel:timetable_list",
+      "namespace": ":admin_panel",
+      "has_params": false,
+      "view_name": "timetable_list",
+      "classification": "static_get"
+    },
+    {
+      "pattern": "/panel/admin/timetable/create/",
+      "name": ":admin_panel:timetable_create",
+      "namespace": ":admin_panel",
+      "has_params": false,
+      "view_name": "timetable_create",
+      "classification": "create_form"
+    },
+    {
+      "pattern": "/panel/admin/timetable/<int:pk>/edit/",
+      "name": ":admin_panel:timetable_edit",
+      "namespace": ":admin_panel",
+      "has_params": true,
+      "view_name": "timetable_edit",
+      "classification": "update_form"
+    },
+    {
+      "pattern": "/panel/admin/timetable/<int:pk>/toggle-status/",
+      "name": ":admin_panel:timetable_toggle_status",
+      "namespace": ":admin_panel",
+      "has_params": true,
+      "view_name": "timetable_toggle_status",
+      "classification": "destructive_post"
+    },
+    {
+      "pattern": "/panel/admin/students/<int:pk>/reset-password/",
+      "name": ":admin_panel:student_reset_password",
+      "namespace": ":admin_panel",
+      "has_params": true,
+      "view_name": "student_reset_password",
+      "classification": "destructive_post"
+    },
+    {
+      "pattern": "/panel/admin/students/<int:pk>/create-login/",
+      "name": ":admin_panel:student_create_login",
+      "namespace": ":admin_panel",
+      "has_params": true,
+      "view_name": "student_create_login",
+      "classification": "destructive_post"
+    },
+    {
+      "pattern": "/panel/admin/add-student/",
+      "name": ":admin_panel:add_student",
+      "namespace": ":admin_panel",
+      "has_params": false,
+      "view_name": "student_create",
+      "classification": "create_form"
+    },
+    {
+      "pattern": "/panel/admin/manage-students/",
+      "name": ":admin_panel:manage_students",
+      "namespace": ":admin_panel",
+      "has_params": false,
+      "view_name": "student_list",
+      "classification": "static_get"
+    },
+    {
+      "pattern": "/panel/admin/add-session/",
+      "name": ":admin_panel:add_session",
+      "namespace": ":admin_panel",
+      "has_params": false,
+      "view_name": "session_create",
+      "classification": "create_form"
+    },
+    {
+      "pattern": "/panel/admin/sessions/",
+      "name": ":admin_panel:session_list",
+      "namespace": ":admin_panel",
+      "has_params": false,
+      "view_name": "session_overview",
+      "classification": "static_get"
+    },
+    {
+      "pattern": "/panel/admin/sessions/create/",
+      "name": ":admin_panel:session_create",
+      "namespace": ":admin_panel",
+      "has_params": false,
+      "view_name": "session_create",
+      "classification": "create_form"
+    },
+    {
+      "pattern": "/panel/admin/sessions/<int:pk>/",
+      "name": ":admin_panel:session_detail",
+      "namespace": ":admin_panel",
+      "has_params": true,
+      "view_name": "session_detail",
+      "classification": "parameterized_get"
+    },
+    {
+      "pattern": "/panel/admin/sessions/<int:pk>/edit/",
+      "name": ":admin_panel:session_edit",
+      "namespace": ":admin_panel",
+      "has_params": true,
+      "view_name": "session_edit",
+      "classification": "update_form"
+    },
+    {
+      "pattern": "/panel/admin/sessions/<int:pk>/results/",
+      "name": ":admin_panel:session_result",
+      "namespace": ":admin_panel",
+      "has_params": true,
+      "view_name": "session_result_summary",
+      "classification": "parameterized_get"
+    },
+    {
+      "pattern": "/panel/admin/manage-faculty/",
+      "name": ":admin_panel:staff:faculty_list",
+      "namespace": ":admin_panel:staff",
+      "has_params": false,
+      "view_name": "view",
+      "classification": "static_get"
+    },
+    {
+      "pattern": "/panel/admin/manage-faculty/create/",
+      "name": ":admin_panel:staff:faculty_create",
+      "namespace": ":admin_panel:staff",
+      "has_params": false,
+      "view_name": "view",
+      "classification": "create_form"
+    },
+    {
+      "pattern": "/panel/admin/manage-faculty/<int:pk>/assign/",
+      "name": ":admin_panel:staff:faculty_assign",
+      "namespace": ":admin_panel:staff",
+      "has_params": true,
+      "view_name": "view",
+      "classification": "parameterized_get"
+    },
+    {
+      "pattern": "/panel/admin/analytics/",
+      "name": ":admin_panel:analytics",
+      "namespace": ":admin_panel",
+      "has_params": false,
+      "view_name": "view",
+      "classification": "static_get"
+    },
+    {
+      "pattern": "/panel/admin/automation/alerts/",
+      "name": ":admin_panel:automation_alerts",
+      "namespace": ":admin_panel",
+      "has_params": false,
+      "view_name": "view",
+      "classification": "static_get"
+    },
+    {
+      "pattern": "/panel/admin/automation/jobs/",
+      "name": ":admin_panel:automation_jobs",
+      "namespace": ":admin_panel",
+      "has_params": false,
+      "view_name": "view",
+      "classification": "static_get"
+    },
+    {
+      "pattern": "/panel/admin/reports-dashboard/",
+      "name": ":admin_panel:reports_dashboard",
+      "namespace": ":admin_panel",
+      "has_params": false,
+      "view_name": "reports_dashboard_proxy",
+      "classification": "static_get"
+    },
+    {
+      "pattern": "/panel/admin/finance/installments/<int:pk>/pay/",
+      "name": ":admin_panel:installment_pay",
+      "namespace": ":admin_panel",
+      "has_params": true,
+      "view_name": "view",
+      "classification": "update_form"
+    },
+    {
+      "pattern": "/panel/admin/students/",
+      "name": ":admin_panel:students:student_list",
+      "namespace": ":admin_panel:students",
+      "has_params": false,
+      "view_name": "student_list",
+      "classification": "static_get"
+    },
+    {
+      "pattern": "/panel/admin/students/create/",
+      "name": ":admin_panel:students:student_create",
+      "namespace": ":admin_panel:students",
+      "has_params": false,
+      "view_name": "student_create",
+      "classification": "create_form"
+    },
+    {
+      "pattern": "/panel/admin/students/<int:pk>/",
+      "name": ":admin_panel:students:student_detail",
+      "namespace": ":admin_panel:students",
+      "has_params": true,
+      "view_name": "student_detail",
+      "classification": "parameterized_get"
+    },
+    {
+      "pattern": "/panel/admin/students/<int:pk>/edit/",
+      "name": ":admin_panel:students:student_edit",
+      "namespace": ":admin_panel:students",
+      "has_params": true,
+      "view_name": "student_edit",
+      "classification": "update_form"
+    },
+    {
+      "pattern": "/panel/admin/students/<int:pk>/delete/",
+      "name": ":admin_panel:students:student_delete",
+      "namespace": ":admin_panel:students",
+      "has_params": true,
+      "view_name": "student_delete",
+      "classification": "destructive_post"
+    },
+    {
+      "pattern": "/panel/admin/students/<int:pk>/restore/",
+      "name": ":admin_panel:students:student_restore",
+      "namespace": ":admin_panel:students",
+      "has_params": true,
+      "view_name": "student_restore",
+      "classification": "parameterized_get"
+    },
+    {
+      "pattern": "/panel/admin/students/<int:pk>/documents/",
+      "name": ":admin_panel:students:student_documents",
+      "namespace": ":admin_panel:students",
+      "has_params": true,
+      "view_name": "student_documents",
+      "classification": "parameterized_get"
+    },
+    {
+      "pattern": "/panel/admin/students/<int:pk>/documents/upload/",
+      "name": ":admin_panel:students:student_document_upload",
+      "namespace": ":admin_panel:students",
+      "has_params": true,
+      "view_name": "student_document_upload",
+      "classification": "parameterized_get"
+    },
+    {
+      "pattern": "/panel/admin/students/<int:pk>/guardians/",
+      "name": ":admin_panel:students:student_guardians",
+      "namespace": ":admin_panel:students",
+      "has_params": true,
+      "view_name": "student_guardians",
+      "classification": "parameterized_get"
+    },
+    {
+      "pattern": "/panel/admin/students/<int:pk>/ledger/",
+      "name": ":admin_panel:students:student_ledger",
+      "namespace": ":admin_panel:students",
+      "has_params": true,
+      "view_name": "student_ledger",
+      "classification": "parameterized_get"
+    },
+    {
+      "pattern": "/panel/admin/students/leads/",
+      "name": ":admin_panel:students:lead_list",
+      "namespace": ":admin_panel:students",
+      "has_params": false,
+      "view_name": "lead_list",
+      "classification": "static_get"
+    },
+    {
+      "pattern": "/panel/admin/students/leads/create/",
+      "name": ":admin_panel:students:lead_create",
+      "namespace": ":admin_panel:students",
+      "has_params": false,
+      "view_name": "lead_create",
+      "classification": "create_form"
+    },
+    {
+      "pattern": "/panel/admin/students/leads/<int:pk>/",
+      "name": ":admin_panel:students:lead_detail",
+      "namespace": ":admin_panel:students",
+      "has_params": true,
+      "view_name": "lead_detail",
+      "classification": "parameterized_get"
+    },
+    {
+      "pattern": "/panel/admin/students/leads/<int:pk>/edit/",
+      "name": ":admin_panel:students:lead_edit",
+      "namespace": ":admin_panel:students",
+      "has_params": true,
+      "view_name": "lead_edit",
+      "classification": "update_form"
+    },
+    {
+      "pattern": "/panel/admin/students/leads/<int:pk>/convert/",
+      "name": ":admin_panel:students:lead_convert",
+      "namespace": ":admin_panel:students",
+      "has_params": true,
+      "view_name": "lead_convert",
+      "classification": "destructive_post"
+    },
+    {
+      "pattern": "/panel/admin/students/enrollments/",
+      "name": ":admin_panel:students:enrollment_list",
+      "namespace": ":admin_panel:students",
+      "has_params": false,
+      "view_name": "enrollment_list",
+      "classification": "static_get"
+    },
+    {
+      "pattern": "/panel/admin/students/enrollments/create/",
+      "name": ":admin_panel:students:enrollment_create",
+      "namespace": ":admin_panel:students",
+      "has_params": false,
+      "view_name": "enrollment_create",
+      "classification": "create_form"
+    },
+    {
+      "pattern": "/panel/admin/students/enrollments/<int:pk>/",
+      "name": ":admin_panel:students:enrollment_detail",
+      "namespace": ":admin_panel:students",
+      "has_params": true,
+      "view_name": "enrollment_detail",
+      "classification": "parameterized_get"
+    },
+    {
+      "pattern": "/panel/admin/students/enrollments/<int:pk>/withdraw/",
+      "name": ":admin_panel:students:enrollment_withdraw",
+      "namespace": ":admin_panel:students",
+      "has_params": true,
+      "view_name": "enrollment_withdraw",
+      "classification": "parameterized_get"
+    },
+    {
+      "pattern": "/panel/admin/students/enrollments/<int:pk>/restore/",
+      "name": ":admin_panel:students:enrollment_restore",
+      "namespace": ":admin_panel:students",
+      "has_params": true,
+      "view_name": "enrollment_restore",
+      "classification": "parameterized_get"
+    },
+    {
+      "pattern": "/panel/admin/students/enrollments/<int:pk>/freeze/",
+      "name": ":admin_panel:students:enrollment_freeze",
+      "namespace": ":admin_panel:students",
+      "has_params": true,
+      "view_name": "enrollment_freeze",
+      "classification": "parameterized_get"
+    },
+    {
+      "pattern": "/panel/admin/students/enrollments/<int:pk>/unfreeze/",
+      "name": ":admin_panel:students:enrollment_unfreeze",
+      "namespace": ":admin_panel:students",
+      "has_params": true,
+      "view_name": "enrollment_unfreeze",
+      "classification": "parameterized_get"
+    },
+    {
+      "pattern": "/panel/admin/students/enrollments/<int:pk>/transfer/",
+      "name": ":admin_panel:students:enrollment_transfer",
+      "namespace": ":admin_panel:students",
+      "has_params": true,
+      "view_name": "enrollment_transfer",
+      "classification": "parameterized_get"
+    },
+    {
+      "pattern": "/panel/admin/academics/sessions/create/",
+      "name": ":admin_panel:academics:session_create",
+      "namespace": ":admin_panel:academics",
+      "has_params": false,
+      "view_name": "session_create",
+      "classification": "create_form"
+    },
+    {
+      "pattern": "/panel/admin/academics/sessions/<int:pk>/",
+      "name": ":admin_panel:academics:session_detail",
+      "namespace": ":admin_panel:academics",
+      "has_params": true,
+      "view_name": "session_detail",
+      "classification": "parameterized_get"
+    },
+    {
+      "pattern": "/panel/admin/academics/sessions/<int:pk>/edit/",
+      "name": ":admin_panel:academics:session_edit",
+      "namespace": ":admin_panel:academics",
+      "has_params": true,
+      "view_name": "session_edit",
+      "classification": "update_form"
+    },
+    {
+      "pattern": "/panel/admin/academics/sessions/<int:pk>/toggle-status/",
+      "name": ":admin_panel:academics:session_toggle_status",
+      "namespace": ":admin_panel:academics",
+      "has_params": true,
+      "view_name": "session_toggle_status",
+      "classification": "destructive_post"
+    },
+    {
+      "pattern": "/panel/admin/academics/sessions/<int:pk>/delete/",
+      "name": ":admin_panel:academics:session_delete",
+      "namespace": ":admin_panel:academics",
+      "has_params": true,
+      "view_name": "session_delete",
+      "classification": "destructive_post"
+    },
+    {
+      "pattern": "/panel/admin/academics/sessions/<int:pk>/enrollments/",
+      "name": ":admin_panel:academics:session_enrollments",
+      "namespace": ":admin_panel:academics",
+      "has_params": true,
+      "view_name": "session_enrollments",
+      "classification": "parameterized_get"
+    },
+    {
+      "pattern": "/panel/admin/academics/sessions/<int:pk>/revenue/",
+      "name": ":admin_panel:academics:session_revenue",
+      "namespace": ":admin_panel:academics",
+      "has_params": true,
+      "view_name": "session_revenue",
+      "classification": "parameterized_get"
+    },
+    {
+      "pattern": "/panel/admin/academics/subjects/create/",
+      "name": ":admin_panel:academics:subject_create",
+      "namespace": ":admin_panel:academics",
+      "has_params": false,
+      "view_name": "subject_create",
+      "classification": "create_form"
+    },
+    {
+      "pattern": "/panel/admin/academics/subjects/<int:pk>/edit/",
+      "name": ":admin_panel:academics:subject_edit",
+      "namespace": ":admin_panel:academics",
+      "has_params": true,
+      "view_name": "subject_edit",
+      "classification": "update_form"
+    },
+    {
+      "pattern": "/panel/admin/academics/assignments/create/",
+      "name": ":admin_panel:academics:assignment_create",
+      "namespace": ":admin_panel:academics",
+      "has_params": false,
+      "view_name": "assignment_create",
+      "classification": "create_form"
+    },
+    {
+      "pattern": "/panel/admin/academics/assignments/<int:pk>/edit/",
+      "name": ":admin_panel:academics:assignment_edit",
+      "namespace": ":admin_panel:academics",
+      "has_params": true,
+      "view_name": "assignment_edit",
+      "classification": "update_form"
+    },
+    {
+      "pattern": "/panel/admin/academics/assignments/<int:pk>/delete/",
+      "name": ":admin_panel:academics:assignment_delete",
+      "namespace": ":admin_panel:academics",
+      "has_params": true,
+      "view_name": "assignment_delete",
+      "classification": "destructive_post"
+    },
+    {
+      "pattern": "/panel/admin/attendance/",
+      "name": ":admin_panel:attendance:attendance_overview",
+      "namespace": ":admin_panel:attendance",
+      "has_params": false,
+      "view_name": "attendance_overview",
+      "classification": "static_get"
+    },
+    {
+      "pattern": "/panel/admin/attendance/mark/<int:session_id>/",
+      "name": ":admin_panel:attendance:attendance_mark",
+      "namespace": ":admin_panel:attendance",
+      "has_params": true,
+      "view_name": "attendance_mark",
+      "classification": "parameterized_get"
+    },
+    {
+      "pattern": "/panel/admin/attendance/<int:session_id>/date/<str:date>/",
+      "name": ":admin_panel:attendance:attendance_sheet",
+      "namespace": ":admin_panel:attendance",
+      "has_params": true,
+      "view_name": "attendance_sheet",
+      "classification": "parameterized_get"
+    },
+    {
+      "pattern": "/panel/admin/attendance/<int:session_id>/lock/",
+      "name": ":admin_panel:attendance:attendance_lock",
+      "namespace": ":admin_panel:attendance",
+      "has_params": true,
+      "view_name": "attendance_lock",
+      "classification": "parameterized_get"
+    },
+    {
+      "pattern": "/panel/admin/attendance/<int:session_id>/unlock/",
+      "name": ":admin_panel:attendance:attendance_unlock",
+      "namespace": ":admin_panel:attendance",
+      "has_params": true,
+      "view_name": "attendance_unlock",
+      "classification": "parameterized_get"
+    },
+    {
+      "pattern": "/panel/admin/attendance/<int:session_id>/analytics/",
+      "name": ":admin_panel:attendance:attendance_analytics",
+      "namespace": ":admin_panel:attendance",
+      "has_params": true,
+      "view_name": "attendance_analytics",
+      "classification": "parameterized_get"
+    },
+    {
+      "pattern": "/panel/admin/attendance/low-attendance/",
+      "name": ":admin_panel:attendance:low_attendance_report",
+      "namespace": ":admin_panel:attendance",
+      "has_params": false,
+      "view_name": "low_attendance_report",
+      "classification": "static_get"
+    },
+    {
+      "pattern": "/panel/admin/exams/",
+      "name": ":admin_panel:exams:exam_list",
+      "namespace": ":admin_panel:exams",
+      "has_params": false,
+      "view_name": "view",
+      "classification": "static_get"
+    },
+    {
+      "pattern": "/panel/admin/exams/create/",
+      "name": ":admin_panel:exams:exam_create",
+      "namespace": ":admin_panel:exams",
+      "has_params": false,
+      "view_name": "view",
+      "classification": "create_form"
+    },
+    {
+      "pattern": "/panel/admin/exams/<int:pk>/",
+      "name": ":admin_panel:exams:exam_detail",
+      "namespace": ":admin_panel:exams",
+      "has_params": true,
+      "view_name": "view",
+      "classification": "parameterized_get"
+    },
+    {
+      "pattern": "/panel/admin/exams/<int:pk>/edit/",
+      "name": ":admin_panel:exams:exam_edit",
+      "namespace": ":admin_panel:exams",
+      "has_params": true,
+      "view_name": "view",
+      "classification": "update_form"
+    },
+    {
+      "pattern": "/panel/admin/exams/<int:pk>/review/",
+      "name": ":admin_panel:exams:exam_review",
+      "namespace": ":admin_panel:exams",
+      "has_params": true,
+      "view_name": "view",
+      "classification": "parameterized_get"
+    },
+    {
+      "pattern": "/panel/admin/exams/<int:pk>/publish/",
+      "name": ":admin_panel:exams:exam_publish",
+      "namespace": ":admin_panel:exams",
+      "has_params": true,
+      "view_name": "view",
+      "classification": "destructive_post"
+    },
+    {
+      "pattern": "/panel/admin/exams/<int:pk>/results/entry/",
+      "name": ":admin_panel:exams:exam_results_entry",
+      "namespace": ":admin_panel:exams",
+      "has_params": true,
+      "view_name": "view",
+      "classification": "parameterized_get"
+    },
+    {
+      "pattern": "/panel/admin/exams/<int:pk>/results/bulk-entry/",
+      "name": ":admin_panel:exams:exam_results_bulk_entry",
+      "namespace": ":admin_panel:exams",
+      "has_params": true,
+      "view_name": "view",
+      "classification": "parameterized_get"
+    },
+    {
+      "pattern": "/panel/admin/exams/<int:pk>/statistics/",
+      "name": ":admin_panel:exams:exam_statistics",
+      "namespace": ":admin_panel:exams",
+      "has_params": true,
+      "view_name": "view",
+      "classification": "parameterized_get"
+    },
+    {
+      "pattern": "/panel/admin/exams/grade-config/",
+      "name": ":admin_panel:exams:grade_config_list",
+      "namespace": ":admin_panel:exams",
+      "has_params": false,
+      "view_name": "grade_config_list",
+      "classification": "static_get"
+    },
+    {
+      "pattern": "/panel/admin/exams/grade-config/create/",
+      "name": ":admin_panel:exams:grade_config_create",
+      "namespace": ":admin_panel:exams",
+      "has_params": false,
+      "view_name": "grade_config_create",
+      "classification": "create_form"
+    },
+    {
+      "pattern": "/panel/admin/exams/grade-config/<int:pk>/edit/",
+      "name": ":admin_panel:exams:grade_config_edit",
+      "namespace": ":admin_panel:exams",
+      "has_params": true,
+      "view_name": "grade_config_edit",
+      "classification": "update_form"
+    },
+    {
+      "pattern": "/panel/admin/finance/payments/",
+      "name": ":admin_panel:finance:payment_list",
+      "namespace": ":admin_panel:finance",
+      "has_params": false,
+      "view_name": "payment_list",
+      "classification": "static_get"
+    },
+    {
+      "pattern": "/panel/admin/finance/payments/create/",
+      "name": ":admin_panel:finance:payment_create",
+      "namespace": ":admin_panel:finance",
+      "has_params": false,
+      "view_name": "payment_create",
+      "classification": "create_form"
+    },
+    {
+      "pattern": "/panel/admin/finance/payments/<int:pk>/",
+      "name": ":admin_panel:finance:payment_detail",
+      "namespace": ":admin_panel:finance",
+      "has_params": true,
+      "view_name": "payment_detail",
+      "classification": "parameterized_get"
+    },
+    {
+      "pattern": "/panel/admin/finance/payments/<int:pk>/delete/",
+      "name": ":admin_panel:finance:payment_delete",
+      "namespace": ":admin_panel:finance",
+      "has_params": true,
+      "view_name": "payment_delete",
+      "classification": "destructive_post"
+    },
+    {
+      "pattern": "/panel/admin/finance/installments/<int:pk>/pay/",
+      "name": ":admin_panel:finance:installment_pay",
+      "namespace": ":admin_panel:finance",
+      "has_params": true,
+      "view_name": "installment_pay",
+      "classification": "update_form"
+    },
+    {
+      "pattern": "/panel/admin/finance/expenses/",
+      "name": ":admin_panel:finance:expense_list",
+      "namespace": ":admin_panel:finance",
+      "has_params": false,
+      "view_name": "expense_list",
+      "classification": "static_get"
+    },
+    {
+      "pattern": "/panel/admin/finance/expenses/create/",
+      "name": ":admin_panel:finance:expense_create",
+      "namespace": ":admin_panel:finance",
+      "has_params": false,
+      "view_name": "expense_create",
+      "classification": "create_form"
+    },
+    {
+      "pattern": "/panel/admin/finance/expenses/categories/",
+      "name": ":admin_panel:finance:expense_category_list",
+      "namespace": ":admin_panel:finance",
+      "has_params": false,
+      "view_name": "expense_category_list",
+      "classification": "static_get"
+    },
+    {
+      "pattern": "/panel/admin/finance/expenses/categories/create/",
+      "name": ":admin_panel:finance:expense_category_create",
+      "namespace": ":admin_panel:finance",
+      "has_params": false,
+      "view_name": "expense_category_create",
+      "classification": "create_form"
+    },
+    {
+      "pattern": "/panel/admin/finance/expenses/<int:pk>/",
+      "name": ":admin_panel:finance:expense_detail",
+      "namespace": ":admin_panel:finance",
+      "has_params": true,
+      "view_name": "expense_detail",
+      "classification": "parameterized_get"
+    },
+    {
+      "pattern": "/panel/admin/finance/expenses/<int:pk>/approve/",
+      "name": ":admin_panel:finance:expense_approve",
+      "namespace": ":admin_panel:finance",
+      "has_params": true,
+      "view_name": "expense_approve",
+      "classification": "destructive_post"
+    },
+    {
+      "pattern": "/panel/admin/finance/expenses/<int:pk>/reject/",
+      "name": ":admin_panel:finance:expense_reject",
+      "namespace": ":admin_panel:finance",
+      "has_params": true,
+      "view_name": "expense_reject",
+      "classification": "destructive_post"
+    },
+    {
+      "pattern": "/panel/admin/finance/refunds/",
+      "name": ":admin_panel:finance:refund_list",
+      "namespace": ":admin_panel:finance",
+      "has_params": false,
+      "view_name": "refund_list",
+      "classification": "static_get"
+    },
+    {
+      "pattern": "/panel/admin/finance/refunds/create/",
+      "name": ":admin_panel:finance:refund_create",
+      "namespace": ":admin_panel:finance",
+      "has_params": false,
+      "view_name": "refund_create",
+      "classification": "create_form"
+    },
+    {
+      "pattern": "/panel/admin/finance/installments/",
+      "name": ":admin_panel:finance:installment_plan_list",
+      "namespace": ":admin_panel:finance",
+      "has_params": false,
+      "view_name": "installment_plan_list",
+      "classification": "static_get"
+    },
+    {
+      "pattern": "/panel/admin/finance/installments/create/",
+      "name": ":admin_panel:finance:installment_plan_create",
+      "namespace": ":admin_panel:finance",
+      "has_params": false,
+      "view_name": "installment_plan_create",
+      "classification": "create_form"
+    },
+    {
+      "pattern": "/panel/admin/finance/installments/<int:pk>/",
+      "name": ":admin_panel:finance:installment_plan_detail",
+      "namespace": ":admin_panel:finance",
+      "has_params": true,
+      "view_name": "installment_plan_detail",
+      "classification": "parameterized_get"
+    },
+    {
+      "pattern": "/panel/admin/finance/installments/<int:pk>/restructure/",
+      "name": ":admin_panel:finance:installment_restructure",
+      "namespace": ":admin_panel:finance",
+      "has_params": true,
+      "view_name": "installment_restructure",
+      "classification": "parameterized_get"
+    },
+    {
+      "pattern": "/panel/admin/finance/installments/pay/<int:pk>/",
+      "name": ":admin_panel:finance:installment_pay",
+      "namespace": ":admin_panel:finance",
+      "has_params": true,
+      "view_name": "installment_pay",
+      "classification": "update_form"
+    },
+    {
+      "pattern": "/panel/admin/finance/overdue/",
+      "name": ":admin_panel:finance:overdue_list",
+      "namespace": ":admin_panel:finance",
+      "has_params": false,
+      "view_name": "overdue_list",
+      "classification": "static_get"
+    },
+    {
+      "pattern": "/panel/admin/finance/late-fees/apply/",
+      "name": ":admin_panel:finance:late_fee_apply",
+      "namespace": ":admin_panel:finance",
+      "has_params": false,
+      "view_name": "late_fee_apply",
+      "classification": "static_get"
+    },
+    {
+      "pattern": "/panel/admin/finance/late-fees/waive/<int:pk>/",
+      "name": ":admin_panel:finance:late_fee_waive",
+      "namespace": ":admin_panel:finance",
+      "has_params": true,
+      "view_name": "late_fee_waive",
+      "classification": "parameterized_get"
+    },
+    {
+      "pattern": "/panel/admin/finance/send-fee-reminder/",
+      "name": ":admin_panel:finance:send_fee_reminder",
+      "namespace": ":admin_panel:finance",
+      "has_params": false,
+      "view_name": "send_fee_reminder",
+      "classification": "static_get"
+    },
+    {
+      "pattern": "/panel/admin/notifications/",
+      "name": ":admin_panel:notifications:notification_list",
+      "namespace": ":admin_panel:notifications",
+      "has_params": false,
+      "view_name": "view",
+      "classification": "static_get"
+    },
+    {
+      "pattern": "/panel/admin/notifications/<int:pk>/",
+      "name": ":admin_panel:notifications:notification_detail",
+      "namespace": ":admin_panel:notifications",
+      "has_params": true,
+      "view_name": "view",
+      "classification": "parameterized_get"
+    },
+    {
+      "pattern": "/panel/admin/notifications/mark-read/",
+      "name": ":admin_panel:notifications:notification_mark_read",
+      "namespace": ":admin_panel:notifications",
+      "has_params": false,
+      "view_name": "view",
+      "classification": "destructive_post"
+    },
+    {
+      "pattern": "/panel/admin/notifications/unread-count/",
+      "name": ":admin_panel:notifications:unread_count_api",
+      "namespace": ":admin_panel:notifications",
+      "has_params": false,
+      "view_name": "view",
+      "classification": "ajax_json"
+    },
+    {
+      "pattern": "/panel/admin/notifications/bulk-send/",
+      "name": ":admin_panel:notifications:notification_bulk_send",
+      "namespace": ":admin_panel:notifications",
+      "has_params": false,
+      "view_name": "view",
+      "classification": "static_get"
+    },
+    {
+      "pattern": "/panel/admin/notifications/templates/",
+      "name": ":admin_panel:notifications:template_list",
+      "namespace": ":admin_panel:notifications",
+      "has_params": false,
+      "view_name": "template_list",
+      "classification": "static_get"
+    },
+    {
+      "pattern": "/panel/admin/notifications/templates/create/",
+      "name": ":admin_panel:notifications:template_create",
+      "namespace": ":admin_panel:notifications",
+      "has_params": false,
+      "view_name": "template_create",
+      "classification": "create_form"
+    },
+    {
+      "pattern": "/panel/admin/notifications/templates/<int:pk>/edit/",
+      "name": ":admin_panel:notifications:template_edit",
+      "namespace": ":admin_panel:notifications",
+      "has_params": true,
+      "view_name": "template_edit",
+      "classification": "update_form"
+    },
+    {
+      "pattern": "/panel/admin/notifications/email-logs/",
+      "name": ":admin_panel:notifications:email_log_list",
+      "namespace": ":admin_panel:notifications",
+      "has_params": false,
+      "view_name": "email_log_list",
+      "classification": "static_get"
+    },
+    {
+      "pattern": "/panel/admin/documents/",
+      "name": "",
+      "namespace": ":admin_panel:documents",
+      "has_params": false,
+      "view_name": "view",
+      "classification": "static_get"
+    },
+    {
+      "pattern": "/panel/admin/documents/jobs/",
+      "name": ":admin_panel:documents:comparison_job_list",
+      "namespace": ":admin_panel:documents",
+      "has_params": false,
+      "view_name": "pdf_comparison",
+      "classification": "static_get"
+    },
+    {
+      "pattern": "/panel/admin/documents/jobs/create/",
+      "name": ":admin_panel:documents:comparison_job_create",
+      "namespace": ":admin_panel:documents",
+      "has_params": false,
+      "view_name": "pdf_comparison",
+      "classification": "create_form"
+    },
+    {
+      "pattern": "/panel/admin/documents/jobs/<int:pk>/",
+      "name": ":admin_panel:documents:comparison_job_detail",
+      "namespace": ":admin_panel:documents",
+      "has_params": true,
+      "view_name": "pdf_comparison",
+      "classification": "parameterized_get"
+    },
+    {
+      "pattern": "/panel/admin/documents/jobs/<int:pk>/results/",
+      "name": ":admin_panel:documents:comparison_results",
+      "namespace": ":admin_panel:documents",
+      "has_params": true,
+      "view_name": "pdf_comparison",
+      "classification": "parameterized_get"
+    },
+    {
+      "pattern": "/panel/admin/ai/predictions/",
+      "name": ":admin_panel:ai_engine:prediction_list",
+      "namespace": ":admin_panel:ai_engine",
+      "has_params": false,
+      "view_name": "prediction_list",
+      "classification": "static_get"
+    },
+    {
+      "pattern": "/panel/admin/ai/predictions/<int:pk>/",
+      "name": ":admin_panel:ai_engine:prediction_detail",
+      "namespace": ":admin_panel:ai_engine",
+      "has_params": true,
+      "view_name": "prediction_detail",
+      "classification": "parameterized_get"
+    },
+    {
+      "pattern": "/panel/admin/ai/predictions/<int:pk>/acknowledge/",
+      "name": ":admin_panel:ai_engine:prediction_acknowledge",
+      "namespace": ":admin_panel:ai_engine",
+      "has_params": true,
+      "view_name": "prediction_acknowledge",
+      "classification": "parameterized_get"
+    },
+    {
+      "pattern": "/panel/admin/ai/models/",
+      "name": ":admin_panel:ai_engine:model_version_list",
+      "namespace": ":admin_panel:ai_engine",
+      "has_params": false,
+      "view_name": "model_version_list",
+      "classification": "static_get"
+    },
+    {
+      "pattern": "/panel/admin/ai/dropout-risk/",
+      "name": ":admin_panel:ai_engine:dropout_risk_dashboard",
+      "namespace": ":admin_panel:ai_engine",
+      "has_params": false,
+      "view_name": "dropout_risk_dashboard",
+      "classification": "static_get"
+    },
+    {
+      "pattern": "/panel/admin/reports/revenue/",
+      "name": ":admin_panel:reports:report_revenue",
+      "namespace": ":admin_panel:reports",
+      "has_params": false,
+      "view_name": "report_revenue",
+      "classification": "static_get"
+    },
+    {
+      "pattern": "/panel/admin/reports/attendance/",
+      "name": ":admin_panel:reports:report_attendance",
+      "namespace": ":admin_panel:reports",
+      "has_params": false,
+      "view_name": "report_attendance",
+      "classification": "static_get"
+    },
+    {
+      "pattern": "/panel/admin/reports/enrollment/",
+      "name": ":admin_panel:reports:report_enrollment",
+      "namespace": ":admin_panel:reports",
+      "has_params": false,
+      "view_name": "report_enrollment",
+      "classification": "static_get"
+    },
+    {
+      "pattern": "/panel/admin/reports/overdue/",
+      "name": ":admin_panel:reports:report_overdue",
+      "namespace": ":admin_panel:reports",
+      "has_params": false,
+      "view_name": "report_overdue",
+      "classification": "static_get"
+    },
+    {
+      "pattern": "/panel/admin/reports/export/students/",
+      "name": ":admin_panel:reports:export_students_csv",
+      "namespace": ":admin_panel:reports",
+      "has_params": false,
+      "view_name": "export_students_csv",
+      "classification": "export_download"
+    },
+    {
+      "pattern": "/panel/admin/reports/export/payments/",
+      "name": ":admin_panel:reports:export_payments_csv",
+      "namespace": ":admin_panel:reports",
+      "has_params": false,
+      "view_name": "export_payments_csv",
+      "classification": "export_download"
+    },
+    {
+      "pattern": "/panel/admin/reports/export/attendance/",
+      "name": ":admin_panel:reports:export_attendance_csv",
+      "namespace": ":admin_panel:reports",
+      "has_params": false,
+      "view_name": "export_attendance_csv",
+      "classification": "export_download"
+    },
+    {
+      "pattern": "/panel/admin/reports/pdf/ledger/<int:enrollment_id>/",
+      "name": ":admin_panel:reports:pdf_student_ledger",
+      "namespace": ":admin_panel:reports",
+      "has_params": true,
+      "view_name": "pdf_student_ledger",
+      "classification": "parameterized_get"
+    },
+    {
+      "pattern": "/panel/admin/reports/pdf/attendance/<int:session_id>/",
+      "name": ":admin_panel:reports:pdf_attendance_report",
+      "namespace": ":admin_panel:reports",
+      "has_params": true,
+      "view_name": "pdf_attendance_report",
+      "classification": "parameterized_get"
+    },
+    {
+      "pattern": "/panel/admin/audit/",
+      "name": ":admin_panel:audit:audit_log_list",
+      "namespace": ":admin_panel:audit",
+      "has_params": false,
+      "view_name": "audit_log_list",
+      "classification": "static_get"
+    },
+    {
+      "pattern": "/panel/admin/audit/<int:pk>/",
+      "name": ":admin_panel:audit:audit_log_detail",
+      "namespace": ":admin_panel:audit",
+      "has_params": true,
+      "view_name": "audit_log_detail",
+      "classification": "parameterized_get"
+    },
+    {
+      "pattern": "/panel/admin/pdf-comparison/",
+      "name": ":admin_panel:pdf_comparison",
+      "namespace": ":admin_panel",
+      "has_params": false,
+      "view_name": "pdf_comparison",
+      "classification": "static_get"
+    },
+    {
+      "pattern": "/panel/admin/pdf-comparison/export/<int:job_id>/",
+      "name": ":admin_panel:export_comparison_csv",
+      "namespace": ":admin_panel",
+      "has_params": true,
+      "view_name": "export_comparison_csv",
+      "classification": "export_download"
+    },
+    {
+      "pattern": "/panel/admin/admissions/",
+      "name": ":admin_panel:admissions:admission_list",
+      "namespace": ":admin_panel:admissions",
+      "has_params": false,
+      "view_name": "view",
+      "classification": "static_get"
+    },
+    {
+      "pattern": "/panel/admin/admissions/<int:pk>/",
+      "name": ":admin_panel:admissions:admission_detail",
+      "namespace": ":admin_panel:admissions",
+      "has_params": true,
+      "view_name": "view",
+      "classification": "parameterized_get"
+    },
+    {
+      "pattern": "/panel/admin/admissions/<int:pk>/review/",
+      "name": ":admin_panel:admissions:admission_review",
+      "namespace": ":admin_panel:admissions",
+      "has_params": true,
+      "view_name": "view",
+      "classification": "parameterized_get"
+    },
+    {
+      "pattern": "/panel/admin/admissions/<int:pk>/approve/",
+      "name": ":admin_panel:admissions:admission_approve",
+      "namespace": ":admin_panel:admissions",
+      "has_params": true,
+      "view_name": "view",
+      "classification": "destructive_post"
+    },
+    {
+      "pattern": "/panel/admin/admissions/<int:pk>/reject/",
+      "name": ":admin_panel:admissions:admission_reject",
+      "namespace": ":admin_panel:admissions",
+      "has_params": true,
+      "view_name": "view",
+      "classification": "destructive_post"
+    },
+    {
+      "pattern": "/panel/admin/admissions/<int:pk>/convert/",
+      "name": ":admin_panel:admissions:admission_convert",
+      "namespace": ":admin_panel:admissions",
+      "has_params": true,
+      "view_name": "view",
+      "classification": "destructive_post"
+    },
+    {
+      "pattern": "/panel/admin/admissions/summary/",
+      "name": ":admin_panel:admissions:admission_summary",
+      "namespace": ":admin_panel:admissions",
+      "has_params": false,
+      "view_name": "view",
+      "classification": "static_get"
+    },
+    {
+      "pattern": "/panel/admin/admissions/export/",
+      "name": ":admin_panel:admissions:admission_export",
+      "namespace": ":admin_panel:admissions",
+      "has_params": false,
+      "view_name": "view",
+      "classification": "export_download"
+    },
+    {
+      "pattern": "/panel/principal/dashboard/",
+      "name": ":principal_panel:dashboard",
+      "namespace": ":principal_panel",
+      "has_params": false,
+      "view_name": "view",
+      "classification": "static_get"
+    },
+    {
+      "pattern": "/panel/teacher/dashboard/",
+      "name": ":teacher_panel:dashboard",
+      "namespace": ":teacher_panel",
+      "has_params": false,
+      "view_name": "view",
+      "classification": "static_get"
+    },
+    {
+      "pattern": "/panel/teacher/my-timetable/",
+      "name": ":teacher_panel:my_timetable",
+      "namespace": ":teacher_panel",
+      "has_params": false,
+      "view_name": "timetable_teacher",
+      "classification": "static_get"
+    },
+    {
+      "pattern": "/panel/teacher/sessions/",
+      "name": ":teacher_panel:my_sessions",
+      "namespace": ":teacher_panel",
+      "has_params": false,
+      "view_name": "my_sessions",
+      "classification": "static_get"
+    },
+    {
+      "pattern": "/panel/teacher/sessions/<int:pk>/",
+      "name": ":teacher_panel:session_detail",
+      "namespace": ":teacher_panel",
+      "has_params": true,
+      "view_name": "teacher_session_detail",
+      "classification": "parameterized_get"
+    },
+    {
+      "pattern": "/panel/teacher/sessions/<int:pk>/students/",
+      "name": ":teacher_panel:session_students",
+      "namespace": ":teacher_panel",
+      "has_params": true,
+      "view_name": "teacher_session_students",
+      "classification": "parameterized_get"
+    },
+    {
+      "pattern": "/panel/teacher/attendance/mark/<int:session_id>/",
+      "name": ":teacher_panel:attendance_mark",
+      "namespace": ":teacher_panel",
+      "has_params": true,
+      "view_name": "attendance_mark",
+      "classification": "parameterized_get"
+    },
+    {
+      "pattern": "/panel/teacher/attendance/<int:session_id>/date/<str:date>/",
+      "name": ":teacher_panel:attendance_sheet",
+      "namespace": ":teacher_panel",
+      "has_params": true,
+      "view_name": "attendance_sheet",
+      "classification": "parameterized_get"
+    },
+    {
+      "pattern": "/panel/teacher/attendance/<int:session_id>/analytics/",
+      "name": ":teacher_panel:attendance_analytics",
+      "namespace": ":teacher_panel",
+      "has_params": true,
+      "view_name": "attendance_analytics",
+      "classification": "parameterized_get"
+    },
+    {
+      "pattern": "/panel/teacher/exams/",
+      "name": ":teacher_panel:my_exams",
+      "namespace": ":teacher_panel",
+      "has_params": false,
+      "view_name": "view",
+      "classification": "static_get"
+    },
+    {
+      "pattern": "/panel/teacher/exams/create/",
+      "name": ":teacher_panel:exam_create",
+      "namespace": ":teacher_panel",
+      "has_params": false,
+      "view_name": "view",
+      "classification": "create_form"
+    },
+    {
+      "pattern": "/panel/teacher/exams/<int:pk>/",
+      "name": ":teacher_panel:exam_detail",
+      "namespace": ":teacher_panel",
+      "has_params": true,
+      "view_name": "view",
+      "classification": "parameterized_get"
+    },
+    {
+      "pattern": "/panel/teacher/exams/<int:pk>/edit/",
+      "name": ":teacher_panel:exam_edit",
+      "namespace": ":teacher_panel",
+      "has_params": true,
+      "view_name": "view",
+      "classification": "update_form"
+    },
+    {
+      "pattern": "/panel/teacher/exams/<int:pk>/results/entry/",
+      "name": ":teacher_panel:exam_results_entry",
+      "namespace": ":teacher_panel",
+      "has_params": true,
+      "view_name": "view",
+      "classification": "parameterized_get"
+    },
+    {
+      "pattern": "/panel/teacher/exams/<int:pk>/results/",
+      "name": ":teacher_panel:exam_results",
+      "namespace": ":teacher_panel",
+      "has_params": true,
+      "view_name": "view",
+      "classification": "parameterized_get"
+    },
+    {
+      "pattern": "/panel/teacher/notifications/",
+      "name": ":teacher_panel:notification_list",
+      "namespace": ":teacher_panel",
+      "has_params": false,
+      "view_name": "view",
+      "classification": "static_get"
+    },
+    {
+      "pattern": "/panel/teacher/notifications/<int:pk>/",
+      "name": ":teacher_panel:notification_detail",
+      "namespace": ":teacher_panel",
+      "has_params": true,
+      "view_name": "view",
+      "classification": "parameterized_get"
+    },
+    {
+      "pattern": "/panel/teacher/notifications/mark-read/",
+      "name": ":teacher_panel:notification_mark_read",
+      "namespace": ":teacher_panel",
+      "has_params": false,
+      "view_name": "view",
+      "classification": "destructive_post"
+    },
+    {
+      "pattern": "/panel/teacher/profile/",
+      "name": ":teacher_panel:profile_view",
+      "namespace": ":teacher_panel",
+      "has_params": false,
+      "view_name": "teacher_profile_view",
+      "classification": "static_get"
+    },
+    {
+      "pattern": "/panel/teacher/profile/edit/",
+      "name": ":teacher_panel:profile_edit",
+      "namespace": ":teacher_panel",
+      "has_params": false,
+      "view_name": "teacher_profile_edit",
+      "classification": "update_form"
+    },
+    {
+      "pattern": "/panel/accounts/dashboard/",
+      "name": ":accounts_panel:dashboard",
+      "namespace": ":accounts_panel",
+      "has_params": false,
+      "view_name": "view",
+      "classification": "static_get"
+    },
+    {
+      "pattern": "/panel/accounts/pending-dues/",
+      "name": ":accounts_panel:pending_dues",
+      "namespace": ":accounts_panel",
+      "has_params": false,
+      "view_name": "view",
+      "classification": "static_get"
+    },
+    {
+      "pattern": "/panel/accounts/payments/",
+      "name": ":accounts_panel:payment_list",
+      "namespace": ":accounts_panel",
+      "has_params": false,
+      "view_name": "payment_list",
+      "classification": "static_get"
+    },
+    {
+      "pattern": "/panel/accounts/payments/create/",
+      "name": ":accounts_panel:payment_create",
+      "namespace": ":accounts_panel",
+      "has_params": false,
+      "view_name": "payment_create",
+      "classification": "create_form"
+    },
+    {
+      "pattern": "/panel/accounts/payments/<int:pk>/",
+      "name": ":accounts_panel:payment_detail",
+      "namespace": ":accounts_panel",
+      "has_params": true,
+      "view_name": "payment_detail",
+      "classification": "parameterized_get"
+    },
+    {
+      "pattern": "/panel/accounts/expenses/",
+      "name": ":accounts_panel:expense_list",
+      "namespace": ":accounts_panel",
+      "has_params": false,
+      "view_name": "expense_list",
+      "classification": "static_get"
+    },
+    {
+      "pattern": "/panel/accounts/expenses/create/",
+      "name": ":accounts_panel:expense_create",
+      "namespace": ":accounts_panel",
+      "has_params": false,
+      "view_name": "expense_create",
+      "classification": "create_form"
+    },
+    {
+      "pattern": "/panel/accounts/expenses/<int:pk>/",
+      "name": ":accounts_panel:expense_detail",
+      "namespace": ":accounts_panel",
+      "has_params": true,
+      "view_name": "expense_detail",
+      "classification": "parameterized_get"
+    },
+    {
+      "pattern": "/panel/accounts/refunds/",
+      "name": ":accounts_panel:refund_list",
+      "namespace": ":accounts_panel",
+      "has_params": false,
+      "view_name": "refund_list",
+      "classification": "static_get"
+    },
+    {
+      "pattern": "/panel/accounts/refunds/create/",
+      "name": ":accounts_panel:refund_create",
+      "namespace": ":accounts_panel",
+      "has_params": false,
+      "view_name": "refund_create",
+      "classification": "create_form"
+    },
+    {
+      "pattern": "/panel/accounts/installments/",
+      "name": ":accounts_panel:installment_plan_list",
+      "namespace": ":accounts_panel",
+      "has_params": false,
+      "view_name": "installment_plan_list",
+      "classification": "static_get"
+    },
+    {
+      "pattern": "/panel/accounts/installments/create/",
+      "name": ":accounts_panel:installment_plan_create",
+      "namespace": ":accounts_panel",
+      "has_params": false,
+      "view_name": "installment_plan_create",
+      "classification": "create_form"
+    },
+    {
+      "pattern": "/panel/accounts/installments/<int:pk>/",
+      "name": ":accounts_panel:installment_plan_detail",
+      "namespace": ":accounts_panel",
+      "has_params": true,
+      "view_name": "installment_plan_detail",
+      "classification": "parameterized_get"
+    },
+    {
+      "pattern": "/panel/accounts/installments/<int:pk>/restructure/",
+      "name": ":accounts_panel:installment_restructure",
+      "namespace": ":accounts_panel",
+      "has_params": true,
+      "view_name": "installment_restructure",
+      "classification": "parameterized_get"
+    },
+    {
+      "pattern": "/panel/accounts/installments/<int:pk>/pay/",
+      "name": ":accounts_panel:installment_pay",
+      "namespace": ":accounts_panel",
+      "has_params": true,
+      "view_name": "installment_pay",
+      "classification": "update_form"
+    },
+    {
+      "pattern": "/panel/accounts/overdue/",
+      "name": ":accounts_panel:overdue_list",
+      "namespace": ":accounts_panel",
+      "has_params": false,
+      "view_name": "overdue_list",
+      "classification": "static_get"
+    },
+    {
+      "pattern": "/panel/accounts/late-fees/apply/",
+      "name": ":accounts_panel:late_fee_apply",
+      "namespace": ":accounts_panel",
+      "has_params": false,
+      "view_name": "late_fee_apply",
+      "classification": "static_get"
+    },
+    {
+      "pattern": "/panel/accounts/late-fees/waive/",
+      "name": ":accounts_panel:late_fee_waive",
+      "namespace": ":accounts_panel",
+      "has_params": false,
+      "view_name": "late_fee_waive",
+      "classification": "static_get"
+    },
+    {
+      "pattern": "/panel/accounts/categories/",
+      "name": ":accounts_panel:expense_category_list",
+      "namespace": ":accounts_panel",
+      "has_params": false,
+      "view_name": "expense_category_list",
+      "classification": "static_get"
+    },
+    {
+      "pattern": "/panel/accounts/categories/create/",
+      "name": ":accounts_panel:expense_category_create",
+      "namespace": ":accounts_panel",
+      "has_params": false,
+      "view_name": "expense_category_create",
+      "classification": "create_form"
+    },
+    {
+      "pattern": "/panel/accounts/students/<int:pk>/ledger/",
+      "name": ":accounts_panel:student_ledger",
+      "namespace": ":accounts_panel",
+      "has_params": true,
+      "view_name": "student_ledger",
+      "classification": "parameterized_get"
+    },
+    {
+      "pattern": "/panel/accounts/reports/",
+      "name": ":accounts_panel:reports_dashboard",
+      "namespace": ":accounts_panel",
+      "has_params": false,
+      "view_name": "view",
+      "classification": "static_get"
+    },
+    {
+      "pattern": "/panel/accounts/reports/pending-dues/csv/",
+      "name": ":accounts_panel:pending_dues_csv",
+      "namespace": ":accounts_panel",
+      "has_params": false,
+      "view_name": "view",
+      "classification": "static_get"
+    },
+    {
+      "pattern": "/panel/accounts/reports/pending-dues/pdf/",
+      "name": ":accounts_panel:pending_dues_pdf",
+      "namespace": ":accounts_panel",
+      "has_params": false,
+      "view_name": "view",
+      "classification": "static_get"
+    },
+    {
+      "pattern": "/panel/accounts/reports/revenue/",
+      "name": ":accounts_panel:report_revenue",
+      "namespace": ":accounts_panel",
+      "has_params": false,
+      "view_name": "report_revenue",
+      "classification": "static_get"
+    },
+    {
+      "pattern": "/panel/accounts/reports/overdue/",
+      "name": ":accounts_panel:report_overdue",
+      "namespace": ":accounts_panel",
+      "has_params": false,
+      "view_name": "report_overdue",
+      "classification": "static_get"
+    },
+    {
+      "pattern": "/panel/accounts/notifications/",
+      "name": ":accounts_panel:notification_list",
+      "namespace": ":accounts_panel",
+      "has_params": false,
+      "view_name": "view",
+      "classification": "static_get"
+    },
+    {
+      "pattern": "/panel/accounts/notifications/mark-read/",
+      "name": ":accounts_panel:notification_mark_read",
+      "namespace": ":accounts_panel",
+      "has_params": false,
+      "view_name": "view",
+      "classification": "destructive_post"
+    },
+    {
+      "pattern": "/panel/registrar/dashboard/",
+      "name": ":registrar_panel:dashboard",
+      "namespace": ":registrar_panel",
+      "has_params": false,
+      "view_name": "view",
+      "classification": "static_get"
+    },
+    {
+      "pattern": "/panel/registrar/students/",
+      "name": ":registrar_panel:student_list",
+      "namespace": ":registrar_panel",
+      "has_params": false,
+      "view_name": "student_list",
+      "classification": "static_get"
+    },
+    {
+      "pattern": "/panel/registrar/students/create/",
+      "name": ":registrar_panel:student_create",
+      "namespace": ":registrar_panel",
+      "has_params": false,
+      "view_name": "student_create",
+      "classification": "create_form"
+    },
+    {
+      "pattern": "/panel/registrar/students/<int:pk>/",
+      "name": ":registrar_panel:student_detail",
+      "namespace": ":registrar_panel",
+      "has_params": true,
+      "view_name": "student_detail",
+      "classification": "parameterized_get"
+    },
+    {
+      "pattern": "/panel/registrar/students/<int:pk>/edit/",
+      "name": ":registrar_panel:student_edit",
+      "namespace": ":registrar_panel",
+      "has_params": true,
+      "view_name": "student_edit",
+      "classification": "update_form"
+    },
+    {
+      "pattern": "/panel/registrar/students/<int:pk>/documents/upload/",
+      "name": ":registrar_panel:student_document_upload",
+      "namespace": ":registrar_panel",
+      "has_params": true,
+      "view_name": "student_document_upload",
+      "classification": "parameterized_get"
+    },
+    {
+      "pattern": "/panel/registrar/students/<int:pk>/guardians/",
+      "name": ":registrar_panel:student_guardians",
+      "namespace": ":registrar_panel",
+      "has_params": true,
+      "view_name": "student_guardians",
+      "classification": "parameterized_get"
+    },
+    {
+      "pattern": "/panel/registrar/leads/",
+      "name": ":registrar_panel:lead_list",
+      "namespace": ":registrar_panel",
+      "has_params": false,
+      "view_name": "lead_list",
+      "classification": "static_get"
+    },
+    {
+      "pattern": "/panel/registrar/leads/create/",
+      "name": ":registrar_panel:lead_create",
+      "namespace": ":registrar_panel",
+      "has_params": false,
+      "view_name": "lead_create",
+      "classification": "create_form"
+    },
+    {
+      "pattern": "/panel/registrar/leads/<int:pk>/",
+      "name": ":registrar_panel:lead_detail",
+      "namespace": ":registrar_panel",
+      "has_params": true,
+      "view_name": "lead_detail",
+      "classification": "parameterized_get"
+    },
+    {
+      "pattern": "/panel/registrar/leads/<int:pk>/edit/",
+      "name": ":registrar_panel:lead_edit",
+      "namespace": ":registrar_panel",
+      "has_params": true,
+      "view_name": "lead_edit",
+      "classification": "update_form"
+    },
+    {
+      "pattern": "/panel/registrar/leads/<int:pk>/convert/",
+      "name": ":registrar_panel:lead_convert",
+      "namespace": ":registrar_panel",
+      "has_params": true,
+      "view_name": "lead_convert",
+      "classification": "destructive_post"
+    },
+    {
+      "pattern": "/panel/registrar/enrollments/create/",
+      "name": ":registrar_panel:enrollment_create",
+      "namespace": ":registrar_panel",
+      "has_params": false,
+      "view_name": "enrollment_create",
+      "classification": "create_form"
+    },
+    {
+      "pattern": "/panel/registrar/enrollments/<int:pk>/",
+      "name": ":registrar_panel:enrollment_detail",
+      "namespace": ":registrar_panel",
+      "has_params": true,
+      "view_name": "enrollment_detail",
+      "classification": "parameterized_get"
+    },
+    {
+      "pattern": "/panel/registrar/sessions/",
+      "name": ":registrar_panel:session_list",
+      "namespace": ":registrar_panel",
+      "has_params": false,
+      "view_name": "session_overview",
+      "classification": "static_get"
+    },
+    {
+      "pattern": "/panel/registrar/sessions/<int:pk>/",
+      "name": ":registrar_panel:session_detail",
+      "namespace": ":registrar_panel",
+      "has_params": true,
+      "view_name": "session_detail",
+      "classification": "parameterized_get"
+    },
+    {
+      "pattern": "/panel/registrar/notifications/",
+      "name": ":registrar_panel:notification_list",
+      "namespace": ":registrar_panel",
+      "has_params": false,
+      "view_name": "view",
+      "classification": "static_get"
+    },
+    {
+      "pattern": "/panel/registrar/notifications/mark-read/",
+      "name": ":registrar_panel:notification_mark_read",
+      "namespace": ":registrar_panel",
+      "has_params": false,
+      "view_name": "view",
+      "classification": "destructive_post"
+    },
+    {
+      "pattern": "/panel/registrar/admissions/",
+      "name": ":registrar_panel:admissions:admission_list",
+      "namespace": ":registrar_panel:admissions",
+      "has_params": false,
+      "view_name": "view",
+      "classification": "static_get"
+    },
+    {
+      "pattern": "/panel/registrar/admissions/<int:pk>/",
+      "name": ":registrar_panel:admissions:admission_detail",
+      "namespace": ":registrar_panel:admissions",
+      "has_params": true,
+      "view_name": "view",
+      "classification": "parameterized_get"
+    },
+    {
+      "pattern": "/panel/registrar/admissions/<int:pk>/review/",
+      "name": ":registrar_panel:admissions:admission_review",
+      "namespace": ":registrar_panel:admissions",
+      "has_params": true,
+      "view_name": "view",
+      "classification": "parameterized_get"
+    },
+    {
+      "pattern": "/panel/registrar/admissions/<int:pk>/approve/",
+      "name": ":registrar_panel:admissions:admission_approve",
+      "namespace": ":registrar_panel:admissions",
+      "has_params": true,
+      "view_name": "view",
+      "classification": "destructive_post"
+    },
+    {
+      "pattern": "/panel/registrar/admissions/<int:pk>/reject/",
+      "name": ":registrar_panel:admissions:admission_reject",
+      "namespace": ":registrar_panel:admissions",
+      "has_params": true,
+      "view_name": "view",
+      "classification": "destructive_post"
+    },
+    {
+      "pattern": "/panel/registrar/admissions/<int:pk>/convert/",
+      "name": ":registrar_panel:admissions:admission_convert",
+      "namespace": ":registrar_panel:admissions",
+      "has_params": true,
+      "view_name": "view",
+      "classification": "destructive_post"
+    },
+    {
+      "pattern": "/panel/registrar/admissions/summary/",
+      "name": ":registrar_panel:admissions:admission_summary",
+      "namespace": ":registrar_panel:admissions",
+      "has_params": false,
+      "view_name": "view",
+      "classification": "static_get"
+    },
+    {
+      "pattern": "/panel/registrar/admissions/export/",
+      "name": ":registrar_panel:admissions:admission_export",
+      "namespace": ":registrar_panel:admissions",
+      "has_params": false,
+      "view_name": "view",
+      "classification": "export_download"
+    },
+    {
+      "pattern": "/accounts/login/",
+      "name": ":accounts:login",
+      "namespace": ":accounts",
+      "has_params": false,
+      "view_name": "view",
+      "classification": "static_get"
+    },
+    {
+      "pattern": "/accounts/logout/",
+      "name": ":accounts:logout",
+      "namespace": ":accounts",
+      "has_params": false,
+      "view_name": "view",
+      "classification": "static_get"
+    },
+    {
+      "pattern": "/accounts/post-login/",
+      "name": ":accounts:post_login_redirect",
+      "namespace": ":accounts",
+      "has_params": false,
+      "view_name": "post_login_redirect",
+      "classification": "static_get"
+    },
+    {
+      "pattern": "/accounts/password/change/",
+      "name": ":accounts:password_change",
+      "namespace": ":accounts",
+      "has_params": false,
+      "view_name": "view",
+      "classification": "static_get"
+    },
+    {
+      "pattern": "/accounts/password/change/done/",
+      "name": ":accounts:password_change_done",
+      "namespace": ":accounts",
+      "has_params": false,
+      "view_name": "view",
+      "classification": "static_get"
+    },
+    {
+      "pattern": "/accounts/profile/",
+      "name": ":accounts:profile_view",
+      "namespace": ":accounts",
+      "has_params": false,
+      "view_name": "profile_view",
+      "classification": "static_get"
+    },
+    {
+      "pattern": "/accounts/profile/edit/",
+      "name": ":accounts:profile_edit",
+      "namespace": ":accounts",
+      "has_params": false,
+      "view_name": "profile_edit",
+      "classification": "update_form"
+    },
+    {
+      "pattern": "/portal/student/dashboard/",
+      "name": ":student_portal:dashboard",
+      "namespace": ":student_portal",
+      "has_params": false,
+      "view_name": "view",
+      "classification": "static_get"
+    },
+    {
+      "pattern": "/portal/student/profile/",
+      "name": ":student_portal:profile_view",
+      "namespace": ":student_portal",
+      "has_params": false,
+      "view_name": "view",
+      "classification": "static_get"
+    },
+    {
+      "pattern": "/portal/student/enrollment/",
+      "name": ":student_portal:my_enrollment",
+      "namespace": ":student_portal",
+      "has_params": false,
+      "view_name": "my_enrollment",
+      "classification": "static_get"
+    },
+    {
+      "pattern": "/portal/student/attendance/",
+      "name": ":student_portal:my_attendance",
+      "namespace": ":student_portal",
+      "has_params": false,
+      "view_name": "view",
+      "classification": "static_get"
+    },
+    {
+      "pattern": "/portal/student/exams/",
+      "name": ":student_portal:my_exams",
+      "namespace": ":student_portal",
+      "has_params": false,
+      "view_name": "view",
+      "classification": "static_get"
+    },
+    {
+      "pattern": "/portal/student/exams/<int:pk>/",
+      "name": ":student_portal:exam_result_detail",
+      "namespace": ":student_portal",
+      "has_params": true,
+      "view_name": "exam_result_detail",
+      "classification": "parameterized_get"
+    },
+    {
+      "pattern": "/portal/student/transcript/",
+      "name": ":student_portal:student_transcript",
+      "namespace": ":student_portal",
+      "has_params": false,
+      "view_name": "student_transcript",
+      "classification": "static_get"
+    },
+    {
+      "pattern": "/portal/student/transcript/pdf/",
+      "name": ":student_portal:student_transcript_pdf",
+      "namespace": ":student_portal",
+      "has_params": false,
+      "view_name": "view",
+      "classification": "static_get"
+    },
+    {
+      "pattern": "/portal/student/payments/",
+      "name": ":student_portal:my_payments",
+      "namespace": ":student_portal",
+      "has_params": false,
+      "view_name": "view",
+      "classification": "static_get"
+    },
+    {
+      "pattern": "/portal/student/fees/",
+      "name": ":student_portal:my_fees",
+      "namespace": ":student_portal",
+      "has_params": false,
+      "view_name": "view",
+      "classification": "static_get"
+    },
+    {
+      "pattern": "/portal/student/fees/<int:payment_id>/receipt/",
+      "name": ":student_portal:download_receipt",
+      "namespace": ":student_portal",
+      "has_params": true,
+      "view_name": "view",
+      "classification": "parameterized_get"
+    },
+    {
+      "pattern": "/portal/student/timetable/",
+      "name": ":student_portal:timetable",
+      "namespace": ":student_portal",
+      "has_params": false,
+      "view_name": "student_timetable",
+      "classification": "static_get"
+    },
+    {
+      "pattern": "/portal/student/notifications/",
+      "name": ":student_portal:notification_list",
+      "namespace": ":student_portal",
+      "has_params": false,
+      "view_name": "view",
+      "classification": "static_get"
+    },
+    {
+      "pattern": "/portal/student/notifications/<int:pk>/",
+      "name": ":student_portal:notification_detail",
+      "namespace": ":student_portal",
+      "has_params": true,
+      "view_name": "view",
+      "classification": "parameterized_get"
+    },
+    {
+      "pattern": "/portal/student/notifications/mark-read/",
+      "name": ":student_portal:notification_mark_read",
+      "namespace": ":student_portal",
+      "has_params": false,
+      "view_name": "view",
+      "classification": "destructive_post"
+    },
+    {
+      "pattern": "/portal/student/password/",
+      "name": ":student_portal:password_change",
+      "namespace": ":student_portal",
+      "has_params": false,
+      "view_name": "view",
+      "classification": "static_get"
+    },
+    {
+      "pattern": "/portal/guardian/dashboard/",
+      "name": ":guardian_portal:dashboard",
+      "namespace": ":guardian_portal",
+      "has_params": false,
+      "view_name": "view",
+      "classification": "static_get"
+    },
+    {
+      "pattern": "/portal/guardian/children/",
+      "name": ":guardian_portal:my_children",
+      "namespace": ":guardian_portal",
+      "has_params": false,
+      "view_name": "view",
+      "classification": "static_get"
+    },
+    {
+      "pattern": "/portal/guardian/child/<int:student_id>/profile/",
+      "name": ":guardian_portal:child_detail",
+      "namespace": ":guardian_portal",
+      "has_params": true,
+      "view_name": "view",
+      "classification": "parameterized_get"
+    },
+    {
+      "pattern": "/portal/guardian/child/<int:student_id>/attendance/",
+      "name": ":guardian_portal:child_attendance",
+      "namespace": ":guardian_portal",
+      "has_params": true,
+      "view_name": "view",
+      "classification": "parameterized_get"
+    },
+    {
+      "pattern": "/portal/guardian/child/<int:student_id>/fees/",
+      "name": ":guardian_portal:child_payments",
+      "namespace": ":guardian_portal",
+      "has_params": true,
+      "view_name": "view",
+      "classification": "parameterized_get"
+    },
+    {
+      "pattern": "/portal/guardian/child/<int:student_id>/exams/",
+      "name": ":guardian_portal:child_exams",
+      "namespace": ":guardian_portal",
+      "has_params": true,
+      "view_name": "view",
+      "classification": "parameterized_get"
+    },
+    {
+      "pattern": "/portal/guardian/child/<int:student_id>/transcript/",
+      "name": ":guardian_portal:child_transcript",
+      "namespace": ":guardian_portal",
+      "has_params": true,
+      "view_name": "child_transcript",
+      "classification": "parameterized_get"
+    },
+    {
+      "pattern": "/portal/guardian/child/<int:student_id>/transcript/pdf/",
+      "name": ":guardian_portal:child_transcript_pdf",
+      "namespace": ":guardian_portal",
+      "has_params": true,
+      "view_name": "view",
+      "classification": "parameterized_get"
+    },
+    {
+      "pattern": "/portal/guardian/child/<int:student_id>/fees/<int:payment_id>/receipt/",
+      "name": ":guardian_portal:download_receipt",
+      "namespace": ":guardian_portal",
+      "has_params": true,
+      "view_name": "view",
+      "classification": "parameterized_get"
+    },
+    {
+      "pattern": "/portal/guardian/children/<int:student_id>/",
+      "name": ":guardian_portal:child_detail_old",
+      "namespace": ":guardian_portal",
+      "has_params": true,
+      "view_name": "view",
+      "classification": "parameterized_get"
+    },
+    {
+      "pattern": "/portal/guardian/children/<int:student_id>/attendance/",
+      "name": ":guardian_portal:child_attendance_old",
+      "namespace": ":guardian_portal",
+      "has_params": true,
+      "view_name": "view",
+      "classification": "parameterized_get"
+    },
+    {
+      "pattern": "/portal/guardian/children/<int:student_id>/payments/",
+      "name": ":guardian_portal:child_payments_old",
+      "namespace": ":guardian_portal",
+      "has_params": true,
+      "view_name": "view",
+      "classification": "parameterized_get"
+    },
+    {
+      "pattern": "/portal/guardian/children/<int:student_id>/exams/",
+      "name": ":guardian_portal:child_exams_old",
+      "namespace": ":guardian_portal",
+      "has_params": true,
+      "view_name": "view",
+      "classification": "parameterized_get"
+    },
+    {
+      "pattern": "/portal/guardian/notifications/",
+      "name": ":guardian_portal:notification_list",
+      "namespace": ":guardian_portal",
+      "has_params": false,
+      "view_name": "view",
+      "classification": "static_get"
+    },
+    {
+      "pattern": "/portal/guardian/notifications/<int:pk>/",
+      "name": ":guardian_portal:notification_detail",
+      "namespace": ":guardian_portal",
+      "has_params": true,
+      "view_name": "view",
+      "classification": "parameterized_get"
+    },
+    {
+      "pattern": "/portal/guardian/notifications/mark-read/",
+      "name": ":guardian_portal:notification_mark_read",
+      "namespace": ":guardian_portal",
+      "has_params": false,
+      "view_name": "view",
+      "classification": "destructive_post"
+    }
+  ],
+  "classification_counts": {
+    "static_get": 108,
+    "parameterized_get": 87,
+    "destructive_post": 28,
+    "create_form": 29,
+    "update_form": 19,
+    "ajax_json": 1,
+    "export_download": 6
+  }
+}

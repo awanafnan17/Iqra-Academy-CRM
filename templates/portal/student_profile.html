@@ -1,0 +1,187 @@
+{% extends 'layouts/portal_base.html' %}
+{% load static %}
+
+{% block title %}My Profile - Iqra Academy{% endblock %}
+
+{% block content %}
+<div class="container-fluid px-0">
+    <!-- Page Header -->
+    <div class="page-header animate-fade-in">
+        <div class="page-header-left">
+            <h3 class="fw-bold mb-1 text-primary">My Profile</h3>
+            <p class="text-secondary mb-0">View and manage your contact details.</p>
+        </div>
+        <div class="page-header-actions">
+            <span class="badge bg-primary px-3 py-2 rounded-pill fw-semibold">
+                <i class="fa-regular fa-user me-1"></i> Personal Account
+            </span>
+        </div>
+    </div>
+
+    <!-- Main Profile Card & Edit Form -->
+    <div class="row g-4 animate-fade-in stagger-1">
+        <!-- Profile Details Card -->
+        <div class="col-12 col-lg-5">
+            <div class="card p-4 text-center h-100 shadow-sm">
+                <!-- Avatar / Photo Placeholder -->
+                <div class="profile-avatar-custom mx-auto mb-4">
+                    {{ student.full_name|slice:":2"|upper }}
+                </div>
+
+                <h3 class="fw-bold text-primary-c mb-1">{{ student.full_name }}</h3>
+                <p class="text-secondary small mb-3">Student Account</p>
+
+                <!-- Prominent Roll Number -->
+                <div class="roll-number-container mb-4">
+                    <span class="text-secondary small text-uppercase fw-semibold d-block">Roll Number</span>
+                    <h2 class="fw-extrabold text-primary mb-0 mt-1">{{ student.roll_number|default:"No Roll#" }}</h2>
+                </div>
+
+                <!-- Badges Row -->
+                <div class="d-flex justify-content-center gap-2 mb-4 flex-wrap">
+                    <span class="badge bg-secondary">
+                        <i class="fa-solid fa-graduation-cap me-1"></i> {{ active_enrollment.session.session_category|default:"General" }}
+                    </span>
+                    <span class="badge bg-success">
+                        Academic Score: {{ academic_score }}
+                    </span>
+                    <span class="badge {% if student.status == 'Active' %}bg-success{% else %}bg-danger{% endif %}">
+                        {{ student.status }}
+                    </span>
+                    {% if student.student_achievements.exists %}
+                        {% for ach in student.student_achievements.all %}
+                            <span class="badge bg-warning">
+                                <i class="fa-solid fa-trophy text-warning me-1"></i> Selected in {{ ach.exam_type }} {{ ach.year }}
+                            </span>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+
+                <!-- Secondary Info Details List -->
+                <div class="text-start border-top border-soft pt-4">
+                    <div class="row g-3">
+                         <div class="col-6">
+                             <span class="text-secondary small d-block">Father's Name</span>
+                             <span class="fw-bold text-primary-c">{{ student.father_name|default:"-" }}</span>
+                         </div>
+                         <div class="col-6">
+                             <span class="text-secondary small d-block">CNIC / B-Form</span>
+                             <span class="fw-bold text-primary-c">{{ student.cnic|default:"-" }}</span>
+                         </div>
+                         <div class="col-6">
+                             <span class="text-secondary small d-block">Date of Birth</span>
+                             <span class="fw-bold text-primary-c">{{ student.date_of_birth|date:"F j, Y"|default:"-" }}</span>
+                         </div>
+                         <div class="col-6">
+                             <span class="text-secondary small d-block">Session</span>
+                             <span class="fw-bold text-primary-c">{{ active_enrollment.session.name|default:"None" }}</span>
+                         </div>
+                     </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Edit Form Card -->
+        <div class="col-12 col-lg-7">
+            <div class="card p-0 h-100 shadow-sm">
+                <div class="p-4 border-bottom border-soft">
+                    <h5 class="fw-bold text-primary mb-0">
+                        <i class="fa-solid fa-pen-to-square me-2"></i>Update Contact Information
+                    </h5>
+                </div>
+
+                <div class="p-4">
+                    <form method="post" action="{% url 'student_portal:profile_view' %}" id="profileForm">
+                        {% csrf_token %}
+
+                        {% if form.non_field_errors %}
+                            <div class="alert alert-danger rounded-3 p-3 mb-4">
+                                {% for error in form.non_field_errors %}
+                                    <p class="mb-0 small">{{ error }}</p>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+
+                        <!-- Phone Input -->
+                        <div class="mb-3">
+                            <label class="form-label text-secondary small fw-semibold" for="{{ form.phone.id_for_label }}">Primary Phone Number</label>
+                            {{ form.phone }}
+                            {% if form.phone.errors %}
+                                <div class="text-danger small mt-1">{% for error in form.phone.errors %}{{ error }}{% endfor %}</div>
+                            {% endif %}
+                        </div>
+
+                        <!-- Email Input -->
+                        <div class="mb-3">
+                            <label class="form-label text-secondary small fw-semibold" for="{{ form.email.id_for_label }}">Email Address</label>
+                            {{ form.email }}
+                            {% if form.email.errors %}
+                                <div class="text-danger small mt-1">{% for error in form.email.errors %}{{ error }}{% endfor %}</div>
+                            {% endif %}
+                        </div>
+
+                        <!-- Confirm Email Input -->
+                        <div class="mb-3">
+                            <label class="form-label text-secondary small fw-semibold" for="{{ form.confirm_email.id_for_label }}">Confirm Email Address</label>
+                            {{ form.confirm_email }}
+                            {% if form.confirm_email.errors %}
+                                <div class="text-danger small mt-1">{% for error in form.confirm_email.errors %}{{ error }}{% endfor %}</div>
+                            {% endif %}
+                        </div>
+
+                        <!-- Address Input -->
+                        <div class="mb-4">
+                            <label class="form-label text-secondary small fw-semibold" for="{{ form.address.id_for_label }}">Residential Address</label>
+                            {{ form.address }}
+                            {% if form.address.errors %}
+                                <div class="text-danger small mt-1">{% for error in form.address.errors %}{{ error }}{% endfor %}</div>
+                            {% endif %}
+                        </div>
+
+                        <!-- Actions -->
+                        <div class="d-flex justify-content-end gap-2">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fa-solid fa-floppy-disk me-2"></i>Save Changes
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const inputs = document.querySelectorAll('#profileForm input, #profileForm textarea');
+        inputs.forEach(el => {
+            if (el.type !== 'checkbox' && el.type !== 'radio' && el.type !== 'file') {
+                el.classList.add('form-control');
+            }
+            if (el.placeholder) {
+                let ph = el.placeholder;
+                ph = ph.replace(/John\s+Doe/gi, "Ahmed Khan");
+                ph = ph.replace(/Jane\s+Doe/gi, "Fatima Noor");
+                ph = ph.replace(/New\s+York/gi, "Lahore");
+                ph = ph.replace(/123\s+Main\s+St/gi, "House 12, Street 3, G-11, Islamabad");
+                ph = ph.replace(/123-456-7890/gi, "0300-1234567");
+                el.placeholder = ph;
+            }
+        });
+        const selects = document.querySelectorAll('#profileForm select');
+        selects.forEach(el => {
+            el.classList.add('form-select');
+            el.querySelectorAll('option').forEach(opt => {
+                if (opt.textContent.includes('--')) {
+                    opt.textContent = opt.textContent.replace(/\-\-\s*/g, '').trim();
+                }
+                if (opt.textContent.includes('---------')) {
+                    opt.textContent = "Select Option";
+                }
+            });
+        });
+    });
+</script>
+{% endblock %}

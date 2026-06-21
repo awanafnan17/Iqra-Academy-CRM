@@ -1,0 +1,569 @@
+{
+  "role": "Admin",
+  "mode": "enforcement",
+  "timestamp": "2026-06-20T02:47:16.375944",
+  "pages_visited": [
+    {
+      "url": "/panel/admin/dashboard/",
+      "status": 200,
+      "load_time_ms": 218,
+      "final_url": "/panel/admin/dashboard/",
+      "title": "System Overview - Iqra Academy",
+      "source_url": "seed",
+      "link_source": "seed"
+    },
+    {
+      "url": "/accounts/profile/",
+      "status": 200,
+      "load_time_ms": 149,
+      "final_url": "/accounts/profile/",
+      "title": "My Profile - Iqra Academy",
+      "source_url": "/panel/admin/dashboard/",
+      "link_source": "navbar"
+    },
+    {
+      "url": "/panel/admin/manage-students/",
+      "status": 200,
+      "load_time_ms": 84,
+      "final_url": "/panel/admin/manage-students/",
+      "title": "Manage Students - Iqra Academy",
+      "source_url": "/accounts/profile/",
+      "link_source": "sidebar"
+    },
+    {
+      "url": "/panel/admin/session-overview/",
+      "status": 200,
+      "load_time_ms": 42,
+      "final_url": "/panel/admin/session-overview/",
+      "title": "Session Overview",
+      "source_url": "/panel/admin/manage-students/",
+      "link_source": "sidebar"
+    },
+    {
+      "url": "/panel/admin/manage-faculty/",
+      "status": 200,
+      "load_time_ms": 80,
+      "final_url": "/panel/admin/manage-faculty/",
+      "title": "Faculty Directory - Iqra Academy",
+      "source_url": "seed",
+      "link_source": "seed"
+    },
+    {
+      "url": "/panel/admin/admissions/",
+      "status": 200,
+      "load_time_ms": 78,
+      "final_url": "/panel/admin/admissions/",
+      "title": "Admissions Registry - Iqra Academy",
+      "source_url": "/panel/admin/manage-faculty/",
+      "link_source": "sidebar"
+    },
+    {
+      "url": "/panel/admin/finance/payments/",
+      "status": 200,
+      "load_time_ms": 43,
+      "final_url": "/panel/admin/finance/payments/",
+      "title": "Payments | Finance",
+      "source_url": "/panel/admin/admissions/",
+      "link_source": "sidebar"
+    },
+    {
+      "url": "/panel/admin/exams/",
+      "status": 200,
+      "load_time_ms": 118,
+      "final_url": "/panel/admin/exams/",
+      "title": "Exams - Iqra Academy",
+      "source_url": "seed",
+      "link_source": "seed"
+    },
+    {
+      "url": "/panel/admin/attendance/",
+      "status": 200,
+      "load_time_ms": 23,
+      "final_url": "/panel/admin/attendance/",
+      "title": "",
+      "source_url": "seed",
+      "link_source": "seed"
+    },
+    {
+      "url": "/panel/admin/notifications/",
+      "status": 200,
+      "load_time_ms": 43,
+      "final_url": "/panel/admin/notifications/",
+      "title": "Notifications - Iqra Academy",
+      "source_url": "/panel/admin/exams/",
+      "link_source": "navbar"
+    },
+    {
+      "url": "/panel/admin/notifications/email-logs/",
+      "status": 200,
+      "load_time_ms": 96,
+      "final_url": "/panel/admin/notifications/email-logs/",
+      "title": "Email Logs - Iqra Academy",
+      "source_url": "/panel/admin/notifications/",
+      "link_source": "sidebar"
+    },
+    {
+      "url": "/panel/admin/reports/",
+      "status": 200,
+      "load_time_ms": 44,
+      "final_url": "/panel/admin/reports/",
+      "title": "Reporting & Export Center - IICE",
+      "source_url": "/panel/admin/notifications/email-logs/",
+      "link_source": "sidebar"
+    },
+    {
+      "url": "/panel/admin/timetable/",
+      "status": 200,
+      "load_time_ms": 44,
+      "final_url": "/panel/admin/timetable/",
+      "title": "Manage Timetable - Iqra Academy",
+      "source_url": "seed",
+      "link_source": "seed"
+    },
+    {
+      "url": "/panel/admin/timetable-overview/",
+      "status": 200,
+      "load_time_ms": 74,
+      "final_url": "/panel/admin/timetable-overview/",
+      "title": "Timetable Overview",
+      "source_url": "/panel/admin/timetable/",
+      "link_source": "sidebar"
+    },
+    {
+      "url": "/panel/admin/success/",
+      "status": 200,
+      "load_time_ms": 103,
+      "final_url": "/panel/admin/success/",
+      "title": "Success Tracking & Selections - Iqra Academy",
+      "source_url": "seed",
+      "link_source": "seed"
+    },
+    {
+      "url": "/panel/admin/permissions/",
+      "status": 200,
+      "load_time_ms": 65,
+      "final_url": "/panel/admin/permissions/",
+      "title": "Enterprise Permission Matrix - Iqra Academy",
+      "source_url": "/panel/admin/success/",
+      "link_source": "sidebar"
+    },
+    {
+      "url": "/panel/admin/analytics/",
+      "status": 200,
+      "load_time_ms": 147,
+      "final_url": "/panel/admin/analytics/",
+      "title": "Executive Analytics - Iqra Academy",
+      "source_url": "/panel/admin/permissions/",
+      "link_source": "sidebar"
+    },
+    {
+      "url": "/panel/admin/documents/",
+      "status": 200,
+      "load_time_ms": 66,
+      "final_url": "/panel/admin/documents/jobs/",
+      "title": "Iqra Academy",
+      "source_url": "seed",
+      "link_source": "seed"
+    },
+    {
+      "url": "/panel/admin/automation/alerts/",
+      "status": 200,
+      "load_time_ms": 46,
+      "final_url": "/panel/admin/automation/alerts/",
+      "title": "System Alerts - Iqra Academy",
+      "source_url": "/panel/admin/documents/",
+      "link_source": "sidebar"
+    },
+    {
+      "url": "/panel/admin/automation/jobs/",
+      "status": 200,
+      "load_time_ms": 77,
+      "final_url": "/panel/admin/automation/jobs/",
+      "title": "Background Jobs - Iqra Academy",
+      "source_url": "/panel/admin/automation/alerts/",
+      "link_source": "sidebar"
+    },
+    {
+      "url": "/panel/admin/users/",
+      "status": 200,
+      "load_time_ms": 72,
+      "final_url": "/panel/admin/users/",
+      "title": "User Management - Iqra Academy",
+      "source_url": "/panel/admin/automation/jobs/",
+      "link_source": "sidebar"
+    },
+    {
+      "url": "/panel/admin/audit/",
+      "status": 200,
+      "load_time_ms": 24,
+      "final_url": "/panel/admin/audit/",
+      "title": "",
+      "source_url": "seed",
+      "link_source": "seed"
+    },
+    {
+      "url": "/panel/admin/add-student/",
+      "status": 200,
+      "load_time_ms": 76,
+      "final_url": "/panel/admin/add-student/",
+      "title": "Register New Student",
+      "source_url": "/panel/admin/users/",
+      "link_source": "sidebar"
+    },
+    {
+      "url": "/panel/admin/add-session/",
+      "status": 200,
+      "load_time_ms": 69,
+      "final_url": "/panel/admin/add-session/",
+      "title": "Create Session - Iqra Academy",
+      "source_url": "/panel/admin/add-student/",
+      "link_source": "sidebar"
+    },
+    {
+      "url": "/panel/admin/faculty-overview/",
+      "status": 200,
+      "load_time_ms": 76,
+      "final_url": "/panel/admin/faculty-overview/",
+      "title": "Faculty Overview",
+      "source_url": "/panel/admin/add-session/",
+      "link_source": "sidebar"
+    },
+    {
+      "url": "/panel/admin/exam-overview/",
+      "status": 200,
+      "load_time_ms": 74,
+      "final_url": "/panel/admin/exam-overview/",
+      "title": "Exam Overview",
+      "source_url": "/panel/admin/faculty-overview/",
+      "link_source": "sidebar"
+    },
+    {
+      "url": "/panel/admin/pdf-comparison/",
+      "status": 200,
+      "load_time_ms": 98,
+      "final_url": "/panel/admin/pdf-comparison/",
+      "title": "Iqra Academy",
+      "source_url": "/panel/admin/exam-overview/",
+      "link_source": "sidebar"
+    },
+    {
+      "url": "/panel/admin/admissions/summary/",
+      "status": 200,
+      "load_time_ms": 69,
+      "final_url": "/panel/admin/admissions/summary/",
+      "title": "Admissions Summary & Analytics - Iqra Academy",
+      "source_url": "/panel/admin/pdf-comparison/",
+      "link_source": "sidebar"
+    },
+    {
+      "url": "/panel/admin/finance/expenses/",
+      "status": 200,
+      "load_time_ms": 45,
+      "final_url": "/panel/admin/finance/expenses/",
+      "title": "Expenses | Finance",
+      "source_url": "/panel/admin/admissions/summary/",
+      "link_source": "sidebar"
+    },
+    {
+      "url": "/panel/admin/finance/refunds/",
+      "status": 200,
+      "load_time_ms": 43,
+      "final_url": "/panel/admin/finance/refunds/",
+      "title": "Refunds | Finance",
+      "source_url": "/panel/admin/finance/expenses/",
+      "link_source": "sidebar"
+    },
+    {
+      "url": "/panel/admin/finance/installments/",
+      "status": 200,
+      "load_time_ms": 66,
+      "final_url": "/panel/admin/finance/installments/",
+      "title": "Installment Plans | Finance",
+      "source_url": "/panel/admin/finance/refunds/",
+      "link_source": "sidebar"
+    },
+    {
+      "url": "/panel/admin/finance/overdue/",
+      "status": 200,
+      "load_time_ms": 71,
+      "final_url": "/panel/admin/finance/overdue/",
+      "title": "Overdue Enrollments | Finance",
+      "source_url": "/panel/admin/finance/installments/",
+      "link_source": "sidebar"
+    },
+    {
+      "url": "/panel/admin/pending-dues/",
+      "status": 200,
+      "load_time_ms": 178,
+      "final_url": "/panel/admin/pending-dues/",
+      "title": "Pending Dues - Iqra Academy",
+      "source_url": "/panel/admin/finance/overdue/",
+      "link_source": "sidebar"
+    },
+    {
+      "url": "/panel/admin/notifications/bulk-send/",
+      "status": 200,
+      "load_time_ms": 76,
+      "final_url": "/panel/admin/notifications/bulk-send/",
+      "title": "Send Bulk Notification - Iqra Academy",
+      "source_url": "/panel/admin/pending-dues/",
+      "link_source": "sidebar"
+    },
+    {
+      "url": "/accounts/password/change/",
+      "status": 200,
+      "load_time_ms": 66,
+      "final_url": "/accounts/password/change/",
+      "title": "Change Password - Iqra Academy",
+      "source_url": "/panel/admin/notifications/bulk-send/",
+      "link_source": "navbar"
+    },
+    {
+      "url": "/accounts/post-login/",
+      "status": 200,
+      "load_time_ms": 86,
+      "final_url": "/panel/admin/dashboard/",
+      "title": "System Overview - Iqra Academy",
+      "source_url": "/accounts/password/change/",
+      "link_source": "navigation"
+    },
+    {
+      "url": "/panel/admin/students/2/",
+      "status": 200,
+      "load_time_ms": 93,
+      "final_url": "/panel/admin/students/2/",
+      "title": "TestStudent QA - Profile - Iqra Academy",
+      "source_url": "/panel/admin/manage-students/",
+      "link_source": "navigation"
+    },
+    {
+      "url": "/panel/admin/manage-faculty/create/",
+      "status": 200,
+      "load_time_ms": 125,
+      "final_url": "/panel/admin/manage-faculty/create/",
+      "title": "Register Faculty Member - Iqra Academy",
+      "source_url": "/panel/admin/faculty-overview/",
+      "link_source": "navigation"
+    },
+    {
+      "url": "/panel/admin/finance/payments/create/",
+      "status": 200,
+      "load_time_ms": 46,
+      "final_url": "/panel/admin/finance/payments/create/",
+      "title": "Record Payment | Finance",
+      "source_url": "/panel/admin/finance/payments/",
+      "link_source": "navigation"
+    },
+    {
+      "url": "/panel/admin/exams/create/",
+      "status": 200,
+      "load_time_ms": 86,
+      "final_url": "/panel/admin/exams/create/",
+      "title": "Create Exam - Iqra Academy",
+      "source_url": "/panel/admin/exam-overview/",
+      "link_source": "navigation"
+    },
+    {
+      "url": "/panel/admin/timetable/create/",
+      "status": 200,
+      "load_time_ms": 134,
+      "final_url": "/panel/admin/timetable/create/",
+      "title": "Add Class Schedule - Iqra Academy",
+      "source_url": "/panel/admin/timetable-overview/",
+      "link_source": "navigation"
+    },
+    {
+      "url": "/panel/admin/students/",
+      "status": 200,
+      "load_time_ms": 65,
+      "final_url": "/panel/admin/students/",
+      "title": "Manage Students - Iqra Academy",
+      "source_url": "/panel/admin/add-student/",
+      "link_source": "navigation"
+    },
+    {
+      "url": "/panel/admin/finance/expenses/categories/",
+      "status": 200,
+      "load_time_ms": 60,
+      "final_url": "/panel/admin/finance/expenses/categories/",
+      "title": "Expense Categories | Finance",
+      "source_url": "/panel/admin/finance/expenses/",
+      "link_source": "navigation"
+    },
+    {
+      "url": "/panel/admin/finance/expenses/create/",
+      "status": 200,
+      "load_time_ms": 58,
+      "final_url": "/panel/admin/finance/expenses/create/",
+      "title": "Record Expense | Finance",
+      "source_url": "/panel/admin/finance/expenses/",
+      "link_source": "navigation"
+    },
+    {
+      "url": "/panel/admin/finance/refunds/create/",
+      "status": 200,
+      "load_time_ms": 40,
+      "final_url": "/panel/admin/finance/refunds/create/",
+      "title": "Process Refund | Finance",
+      "source_url": "/panel/admin/finance/refunds/",
+      "link_source": "navigation"
+    },
+    {
+      "url": "/panel/admin/finance/installments/create/",
+      "status": 200,
+      "load_time_ms": 77,
+      "final_url": "/panel/admin/finance/installments/create/",
+      "title": "New Installment Plan | Finance",
+      "source_url": "/panel/admin/finance/installments/",
+      "link_source": "navigation"
+    },
+    {
+      "url": "/panel/admin/finance/expenses/categories/create/",
+      "status": 200,
+      "load_time_ms": 83,
+      "final_url": "/panel/admin/finance/expenses/categories/create/",
+      "title": "New Expense Category | Finance",
+      "source_url": "/panel/admin/finance/expenses/categories/",
+      "link_source": "navigation"
+    }
+  ],
+  "errors_500": [],
+  "errors_404": [],
+  "errors_403": [],
+  "console_errors": [
+    {
+      "type": "error",
+      "text": "Failed fetching analytics endpoint: TypeError: Failed to fetch\n    at fetchApi (http://127.0.0.1:4082/static/js/charts.js:41:36)\n    at HTMLDocument.<anonymous> (http://127.0.0.1:4082/static/js/charts.js:160:9)",
+      "url": "http://127.0.0.1:4082/panel/admin/dashboard/"
+    },
+    {
+      "type": "error",
+      "text": "Failed fetching analytics endpoint: TypeError: Failed to fetch\n    at fetchApi (http://127.0.0.1:4082/static/js/charts.js:41:36)\n    at HTMLDocument.<anonymous> (http://127.0.0.1:4082/static/js/charts.js:239:9)",
+      "url": "http://127.0.0.1:4082/panel/admin/dashboard/"
+    },
+    {
+      "type": "error",
+      "text": "Failed fetching analytics endpoint: TypeError: Failed to fetch\n    at fetchApi (http://127.0.0.1:4082/static/js/charts.js:41:36)\n    at HTMLDocument.<anonymous> (http://127.0.0.1:4082/static/js/charts.js:207:9)",
+      "url": "http://127.0.0.1:4082/panel/admin/dashboard/"
+    }
+  ],
+  "redirect_loops": [
+    {
+      "url": "/panel/admin/documents/",
+      "final_url": "/panel/admin/documents/jobs/"
+    }
+  ],
+  "slow_pages": [],
+  "empty_pages": [
+    {
+      "url": "/panel/admin/attendance/",
+      "body_length": 33
+    },
+    {
+      "url": "/panel/admin/audit/",
+      "body_length": 28
+    }
+  ],
+  "redirects": [
+    {
+      "from": "/panel/admin/documents/",
+      "to": "/panel/admin/documents/jobs/",
+      "status": 200
+    },
+    {
+      "from": "/accounts/post-login/",
+      "to": "/panel/admin/dashboard/",
+      "status": 200
+    }
+  ],
+  "all_errors": [
+    {
+      "url": "/panel/admin/reports/teacher-workload/pdf/",
+      "source_url": "/panel/admin/reports/",
+      "link_source": "navigation",
+      "status": 0,
+      "expected_status": 200,
+      "error": "Page.goto: Download is starting\nCall log:\n  - navigating to \"http://127.0.0.1:4082/panel/admin/reports/teacher-workload/pdf/\", waiting until \"domcontentloaded\"\n",
+      "role": "Admin",
+      "severity": "Critical",
+      "category": "exception"
+    },
+    {
+      "url": "/panel/admin/reports/teacher-workload/csv/",
+      "source_url": "/panel/admin/reports/",
+      "link_source": "navigation",
+      "status": 0,
+      "expected_status": 200,
+      "error": "Page.goto: Download is starting\nCall log:\n  - navigating to \"http://127.0.0.1:4082/panel/admin/reports/teacher-workload/csv/\", waiting until \"domcontentloaded\"\n",
+      "role": "Admin",
+      "severity": "Critical",
+      "category": "exception"
+    },
+    {
+      "url": "/panel/admin/reports/pending-dues/pdf/",
+      "source_url": "/panel/admin/pending-dues/",
+      "link_source": "navigation",
+      "status": 0,
+      "expected_status": 200,
+      "error": "Page.goto: Download is starting\nCall log:\n  - navigating to \"http://127.0.0.1:4082/panel/admin/reports/pending-dues/pdf/\", waiting until \"domcontentloaded\"\n",
+      "role": "Admin",
+      "severity": "Critical",
+      "category": "exception"
+    },
+    {
+      "url": "/panel/admin/reports/pending-dues/csv/",
+      "source_url": "/panel/admin/pending-dues/",
+      "link_source": "navigation",
+      "status": 0,
+      "expected_status": 200,
+      "error": "Page.goto: Download is starting\nCall log:\n  - navigating to \"http://127.0.0.1:4082/panel/admin/reports/pending-dues/csv/\", waiting until \"domcontentloaded\"\n",
+      "role": "Admin",
+      "severity": "Critical",
+      "category": "exception"
+    },
+    {
+      "url": "/panel/admin/reports/student-directory/csv/",
+      "source_url": "/panel/admin/reports/",
+      "link_source": "navigation",
+      "status": 0,
+      "expected_status": 200,
+      "error": "Page.goto: Download is starting\nCall log:\n  - navigating to \"http://127.0.0.1:4082/panel/admin/reports/student-directory/csv/\", waiting until \"domcontentloaded\"\n",
+      "role": "Admin",
+      "severity": "Critical",
+      "category": "exception"
+    },
+    {
+      "url": "/panel/admin/reports/success/pdf/",
+      "source_url": "/panel/admin/success/",
+      "link_source": "navigation",
+      "status": 0,
+      "expected_status": 200,
+      "error": "Page.goto: Download is starting\nCall log:\n  - navigating to \"http://127.0.0.1:4082/panel/admin/reports/success/pdf/\", waiting until \"domcontentloaded\"\n",
+      "role": "Admin",
+      "severity": "Critical",
+      "category": "exception"
+    },
+    {
+      "url": "/panel/admin/reports/success/csv/",
+      "source_url": "/panel/admin/success/",
+      "link_source": "navigation",
+      "status": 0,
+      "expected_status": 200,
+      "error": "Page.goto: Download is starting\nCall log:\n  - navigating to \"http://127.0.0.1:4082/panel/admin/reports/success/csv/\", waiting until \"domcontentloaded\"\n",
+      "role": "Admin",
+      "severity": "Critical",
+      "category": "exception"
+    },
+    {
+      "url": "/panel/admin/reports/student/2/transcript/pdf/",
+      "source_url": "/panel/admin/students/2/",
+      "link_source": "navigation",
+      "status": 0,
+      "expected_status": 200,
+      "error": "Page.goto: Download is starting\nCall log:\n  - navigating to \"http://127.0.0.1:4082/panel/admin/reports/student/2/transcript/pdf/\", waiting until \"domcontentloaded\"\n",
+      "role": "Admin",
+      "severity": "Critical",
+      "category": "exception"
+    }
+  ]
+}

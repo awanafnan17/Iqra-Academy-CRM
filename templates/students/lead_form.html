@@ -1,0 +1,58 @@
+{% extends 'layouts/panel_base.html' %}
+{% load static %}
+{% load student_tags %}
+
+{% block title %}{% if lead %}Edit Lead: {{ lead.name }}{% else %}Create Lead{% endif %} - Iqra Academy{% endblock %}
+
+{% block content %}
+<div class="container-fluid px-0">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            <div class="card p-4 shadow border border-light rounded-4 animate-fade-in">
+                <div class="mb-4">
+                    <h4 class="fw-bold text-primary mb-1">
+                        <i class="fa-solid {% if lead %}fa-user-pen{% else %}fa-user-plus{% endif %} me-2"></i>
+                        {% if lead %}Edit Lead: {{ lead.name }}{% else %}Create New Lead{% endif %}
+                    </h4>
+                    <p class="text-secondary small mb-0">Record prospect information and set follow-up schedules.</p>
+                </div>
+                <form method="post" id="leadForm">
+                    {% csrf_token %}
+                    {% for field in form %}
+                    <div class="mb-3">
+                        <label class="form-label text-secondary small fw-semibold" for="{{ field.id_for_label }}">{{ field.label }}</label>
+                        {{ field }}
+                        {% if field.errors %}
+                        <div class="text-danger small mt-1">{{ field.errors.0 }}</div>
+                        {% endif %}
+                    </div>
+                    {% endfor %}
+                    <div class="d-flex justify-content-end gap-2 mt-4">
+                        <a href="{% lead_url 'lead_list' %}" class="btn btn-outline-primary px-4 py-2 rounded-3">Cancel</a>
+                        <button type="submit" class="btn btn-primary px-4 py-2 rounded-3 shadow-sm">
+                            <i class="fa-solid fa-floppy-disk me-2"></i> Save Lead
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const inputs = document.querySelectorAll('#leadForm input, #leadForm textarea');
+        inputs.forEach(el => {
+            if (el.type !== 'checkbox' && el.type !== 'radio' && el.type !== 'file') {
+                el.classList.add('form-control');
+            }
+        });
+        const selects = document.querySelectorAll('#leadForm select');
+        selects.forEach(el => {
+            el.classList.add('form-select');
+        });
+    });
+</script>
+{% endblock %}

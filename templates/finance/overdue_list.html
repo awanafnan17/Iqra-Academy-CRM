@@ -1,0 +1,96 @@
+{% extends 'layouts/panel_base.html' %}
+{% load finance_tags %}
+{% block title %}Overdue Enrollments | Finance{% endblock %}
+{% block content %}
+<div class="container-fluid px-0">
+    <!-- Page Header -->
+    <div class="page-header animate-fade-in">
+        <div class="page-header-left">
+            <h3 class="fw-bold mb-1 text-primary">Overdue Enrollments</h3>
+            <p class="text-secondary mb-0">Monitor enrollments with overdue balances and apply late payment penalties.</p>
+        </div>
+    </div>
+
+    <!-- Table Section -->
+    <div class="card p-0 animate-fade-in stagger-1">
+        <div class="table-wrapper">
+            <table class="table align-middle mb-0">
+                <thead>
+                    <tr>
+                        <th class="ps-4">Student</th>
+                        <th>Session</th>
+                        <th>Due Date</th>
+                        <th>Outstanding</th>
+                        <th>Late Fees</th>
+                        <th class="text-end pe-4">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in overdue_data %}
+                    <tr>
+                        <td class="fw-bold ps-4 text-primary-c">
+                            <div class="d-flex align-items-center">
+                                <div class="avatar me-3">
+                                    {{ item.enrollment.student.full_name|slice:":1"|upper }}
+                                </div>
+                                {{ item.enrollment.student.full_name }}
+                            </div>
+                        </td>
+                        <td>{{ item.enrollment.session.name }}</td>
+                        <td class="text-danger fw-semibold">{{ item.due_date }}</td>
+                        <td class="fw-bold text-danger">PKR {{ item.outstanding }}</td>
+                        <td class="text-secondary">PKR {{ item.late_fees_unpaid }}</td>
+                        <td class="text-end pe-4">
+                            <button class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#lateFeeModal{{ item.enrollment.id }}">
+                                <i class="fas fa-plus me-1"></i> Late Fee
+                            </button>
+
+                            <!-- Late Fee Modal -->
+                            <div class="modal fade" id="lateFeeModal{{ item.enrollment.id }}" tabindex="-1">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title">Apply Late Fee</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                        </div>
+                                        <form action="{% finance_url 'late_fee_apply' %}" method="post">
+                                            {% csrf_token %}
+                                            <input type="hidden" name="enrollment_id" value="{{ item.enrollment.id }}">
+                                            <div class="modal-body text-start">
+                                                <div class="mb-3">
+                                                    <label class="form-label text-secondary">Amount</label>
+                                                    <input type="number" step="0.01" class="form-control" name="amount" required placeholder="e.g. 500">
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label class="form-label text-secondary">Month (Optional)</label>
+                                                    <input type="text" class="form-control" name="month" placeholder="e.g. 2026-06">
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label class="form-label text-secondary">Notes</label>
+                                                    <textarea class="form-control" name="notes" rows="2" placeholder="Describe reason for late fee..."></textarea>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-outline-primary" data-bs-dismiss="modal">Cancel</button>
+                                                <button type="submit" class="btn btn-warning">Apply Fee</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="6" class="text-center py-5 text-secondary">
+                            <i class="fa-regular fa-circle-check fa-3x mb-3 text-success"></i>
+                            <p class="mb-0 fw-medium">No overdue enrollments found. Excellent!</p>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,92 @@
+{
+  "metadata": {
+    "run_id": "e7586812-3531-4961-b8a7-9963cf879463",
+    "timestamp": "2026-06-21T04:38:08.943592",
+    "settings_module": "config.settings.test",
+    "database_engine": "django.db.backends.sqlite3",
+    "database_name": "file:memorydb_default?mode=memory&cache=shared",
+    "git_tree_id": "working_tree",
+    "source_evidence": [
+      "form_inventory.json"
+    ]
+  },
+  "form_counts": {
+    "all_form_classes": 19,
+    "active_create_forms": 2,
+    "active_update_forms": 0,
+    "formsets": 0,
+    "manual_post_workflows": 12,
+    "json_ajax_mutations": 3,
+    "search_filter_only_forms": 0,
+    "unused_forms": 17
+  },
+  "details": {
+    "all_form_classes": [
+      "academics.ClassScheduleForm",
+      "academics.SessionForm",
+      "accounts.UserProfileForm",
+      "admissions.AdmissionApplicationForm",
+      "finance.ExpenseCategoryForm",
+      "finance.ExpenseForm",
+      "finance.InstallmentPlanForm",
+      "finance.PaymentForm",
+      "finance.RefundForm",
+      "notifications.NotificationTemplateForm",
+      "staff.FacultyAssignSessionForm",
+      "staff.FacultyProfileForm",
+      "staff.UserCreateForm",
+      "students.EnrollmentForm",
+      "students.GuardianForm",
+      "students.LeadForm",
+      "students.StudentCreateForm",
+      "students.StudentDocumentForm",
+      "students.StudentForm"
+    ],
+    "active_create_forms": [
+      "staff.UserCreateForm",
+      "students.StudentCreateForm"
+    ],
+    "active_update_forms": [],
+    "formsets": [],
+    "manual_post_workflows": [
+      "academics.views.py",
+      "accounts.views.py",
+      "accounts.views_admin.py",
+      "admissions.views.py",
+      "dashboard.views.py",
+      "documents.views.py",
+      "exams.views.py",
+      "finance.views.py",
+      "notifications.views.py",
+      "portals.views_student.py",
+      "staff.views.py",
+      "students.views.py"
+    ],
+    "json_ajax_mutations": [
+      "exams.views.py",
+      "finance.views.py",
+      "notifications.views.py"
+    ],
+    "search_filter_only_forms": [],
+    "unused_forms": [
+      "academics.ClassScheduleForm",
+      "academics.SessionForm",
+      "accounts.UserProfileForm",
+      "admissions.AdmissionApplicationForm",
+      "finance.ExpenseCategoryForm",
+      "finance.ExpenseForm",
+      "finance.InstallmentPlanForm",
+      "finance.PaymentForm",
+      "finance.RefundForm",
+      "notifications.NotificationTemplateForm",
+      "staff.FacultyAssignSessionForm",
+      "staff.FacultyProfileForm",
+      "students.EnrollmentForm",
+      "students.GuardianForm",
+      "students.LeadForm",
+      "students.StudentDocumentForm",
+      "students.StudentForm"
+    ]
+  },
+  "explanation_diff_old_vs_new": "The new inventory dynamically scans all python modules under apps/ for BaseForm subclasses and inspects all view files for POST, AJAX, and formsets, resolving past omissions of manual workflows and class views."
+}

@@ -1,0 +1,118 @@
+{% extends 'layouts/panel_base.html' %}
+{% load static %}
+
+{% block title %}Manage Timetable - Iqra Academy{% endblock %}
+
+{% block content %}
+<div class="container-fluid px-0">
+    <!-- Page Header -->
+    <div class="p-4 rounded-4 mb-4 card border border-light shadow-sm animate-fade-in">
+        <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
+            <div>
+                <h3 class="fw-bold mb-1">Class Timetables</h3>
+                <p class="text-secondary mb-0">Define, schedule, and resolve class timings, faculty availability, and classroom reservations.</p>
+            </div>
+            <div>
+                <a href="{% url 'admin_panel:timetable_create' %}" class="btn btn-primary rounded-3 shadow-sm px-4">
+                    <i class="fa-solid fa-plus me-2"></i> Add Class Schedule
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Filters Panel -->
+    <div class="card p-4 mb-4 border border-light shadow rounded-4 animate-fade-in stagger-1">
+        <form method="get" class="row g-3 align-items-end">
+            <div class="col-12 col-md-6 col-lg-4">
+                <label for="session-filter" class="form-label small fw-semibold text-secondary">Filter by Session</label>
+                <select name="session" id="session-filter" class="form-select">
+                    <option value="">All Sessions</option>
+                    {% for sess in sessions %}
+                        <option value="{{ sess.id }}" {% if selected_session_id == sess.id %}selected{% endif %}>
+                            {{ sess.name }} ({{ sess.roll_prefix }})
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-12 col-md-6 col-lg-2">
+                <button type="submit" class="btn btn-primary w-100 rounded-3">
+                    <i class="fa-solid fa-filter me-2"></i> Filter
+                </button>
+            </div>
+            {% if selected_session_id %}
+                <div class="col-12 col-md-6 col-lg-2">
+                    <a href="{% url 'admin_panel:timetable_list' %}" class="btn btn-outline-secondary w-100 rounded-3">
+                        Clear Filter
+                    </a>
+                </div>
+            {% endif %}
+        </form>
+    </div>
+
+    <!-- Timetable List Table -->
+    <div class="card p-4 border border-light shadow rounded-4 animate-fade-in stagger-2">
+        <div class="table-responsive saas-table-container">
+            <table class="table saas-table align-middle mb-0">
+                <thead>
+                    <tr>
+                        <th>Session</th>
+                        <th>Subject</th>
+                        <th>Faculty</th>
+                        <th>Day of Week</th>
+                        <th>Time Slot</th>
+                        <th>Classroom</th>
+                        <th>Status</th>
+                        <th class="text-end">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for schedule in schedules %}
+                        <tr class="{% if not schedule.is_active %}text-muted opacity-50{% endif %}">
+                            <td><strong>{{ schedule.session.name }}</strong></td>
+                            <td>{{ schedule.subject.name }}</td>
+                            <td>{{ schedule.faculty.user.full_name }}</td>
+                            <td>
+                                <span class="badge bg-secondary bg-opacity-10 text-secondary px-3 py-1 rounded-pill fw-semibold">
+                                    {{ schedule.day_of_week }}
+                                </span>
+                            </td>
+                            <td>
+                                <strong class="text-primary">{{ schedule.start_time|time:"H:i" }} - {{ schedule.end_time|time:"H:i" }}</strong>
+                            </td>
+                            <td>
+                                <span class="badge bg-primary bg-opacity-10 text-primary px-3 py-1 border border-primary-subtle">
+                                    <i class="fa-solid fa-door-open me-1"></i> {{ schedule.classroom }}
+                                </span>
+                            </td>
+                            <td>
+                                {% if schedule.is_active %}
+                                    <span class="badge bg-success bg-opacity-10 text-success border border-success-subtle px-3 py-1">Active</span>
+                                {% else %}
+                                    <span class="badge bg-danger bg-opacity-10 text-danger border border-danger-subtle px-3 py-1">Inactive</span>
+                                {% endif %}
+                            </td>
+                            <td class="text-end">
+                                <div class="d-flex justify-content-end gap-2">
+                                    <a href="{% url 'admin_panel:timetable_toggle_status' schedule.pk %}" class="btn btn-sm {% if schedule.is_active %}btn-outline-warning{% else %}btn-outline-success{% endif %} rounded-2" title="Toggle Status">
+                                        <i class="fa-solid {% if schedule.is_active %}fa-ban{% else %}fa-check{% endif %}"></i>
+                                    </a>
+                                    <a href="{% url 'admin_panel:timetable_edit' schedule.pk %}" class="btn btn-sm btn-outline-primary rounded-2" title="Edit Schedule">
+                                        <i class="fa-solid fa-pen-to-square"></i>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    {% empty %}
+                        <tr>
+                            <td colspan="8" class="text-center text-secondary py-5">
+                                <i class="fa-solid fa-calendar-xmark fa-2x mb-3 text-muted"></i>
+                                <p class="mb-0">No class schedules found. Click "Add Class Schedule" to create one.</p>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

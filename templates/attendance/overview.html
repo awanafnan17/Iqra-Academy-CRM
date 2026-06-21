@@ -1,0 +1,67 @@
+{% extends "layouts/panel_base.html" %}
+{% load static %}
+
+{% block title %}Attendance Overview - Iqra Academy{% endblock %}
+
+{% block content %}
+<div class="container-fluid py-4">
+    <!-- Page Header -->
+    <div class="d-flex justify-content-between align-items-center mb-4 card p-4 border border-light shadow-sm rounded-4 animate-fade-in">
+        <div>
+            <h4 class="fw-bold mb-1">
+                <i class="fa-solid fa-clipboard-user me-2 text-primary"></i>Attendance Overview
+            </h4>
+            <p class="text-secondary mb-0">Select an active session to record daily student attendance or view logs.</p>
+        </div>
+    </div>
+
+    <!-- Active Sessions Grid -->
+    <div class="row g-4">
+        {% for session in sessions %}
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="card h-100 border border-light shadow-sm rounded-4 animate-fade-in stagger-{{ forloop.counter }}">
+                    <div class="card-body d-flex flex-column p-4">
+                        <div class="d-flex justify-content-between align-items-start mb-3">
+                            <div>
+                                <h5 class="fw-bold text-dark mb-1">{{ session.name }}</h5>
+                                <span class="badge bg-light border text-secondary small">{{ session.code }}</span>
+                            </div>
+                            <span class="badge bg-success-subtle text-success border border-success-subtle rounded-pill px-2.5">Active</span>
+                        </div>
+                        
+                        <div class="text-secondary small mb-4 flex-grow-1">
+                            <div class="d-flex align-items-center mb-2">
+                                <i class="fa-solid fa-users text-primary me-2.5" style="width: 16px;"></i>
+                                <span><strong>{{ session.student_count|default:"0" }}</strong> Enrolled Students</span>
+                            </div>
+                            <div class="d-flex align-items-center mb-2">
+                                <i class="fa-solid fa-calendar-days text-primary me-2.5" style="width: 16px;"></i>
+                                <span>{{ session.start_date|date:"M d, Y" }} – {{ session.end_date|date:"M d, Y"|default:"Ongoing" }}</span>
+                            </div>
+                        </div>
+
+                        <div class="d-flex gap-2 pt-3 border-top mt-auto">
+                            <a href="{% url 'admin_panel:attendance:attendance_mark' session.pk %}?date={{ today_str }}" class="btn btn-primary flex-grow-1 rounded-3">
+                                <i class="fa-solid fa-pen-to-square me-2"></i>Mark Today
+                            </a>
+                            <a href="{% url 'admin_panel:attendance:attendance_sheet' session.pk today_str %}" class="btn btn-outline-primary rounded-3" title="View Today's Log">
+                                <i class="fa-solid fa-eye"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% empty %}
+            <div class="col-12">
+                <div class="card p-5 text-center border border-light shadow-sm rounded-4">
+                    <div class="py-4">
+                        <i class="fa-solid fa-circle-exclamation fa-3x text-muted mb-3"></i>
+                        <h5 class="fw-bold text-dark">No Active Sessions Found</h5>
+                        <p class="text-secondary mb-0">There are currently no active sessions to mark attendance for.</p>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

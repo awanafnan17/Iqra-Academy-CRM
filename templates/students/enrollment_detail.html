@@ -1,0 +1,108 @@
+{% extends 'layouts/panel_base.html' %}
+{% load static %}
+{% load student_tags %}
+
+{% block title %}{{ page_title }} - Iqra Academy{% endblock %}
+
+{% block content %}
+<div class="container-fluid px-0">
+    <!-- Page Header -->
+    <div class="p-4 rounded-4 mb-4 card border border-light shadow-sm animate-fade-in">
+        <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
+            <div>
+                <h3 class="fw-bold mb-1">{{ page_title }}</h3>
+                <p class="text-secondary mb-0">Enrollment profile and session settings for {{ enrollment.student.full_name }}.</p>
+            </div>
+            <div class="d-flex gap-2">
+                <a href="{% student_url 'student_detail' enrollment.student.pk %}" class="btn btn-outline-primary px-3 py-2 rounded-3">
+                    <i class="fa-solid fa-arrow-left me-1"></i> Back to Student
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-4">
+        <!-- Details Card -->
+        <div class="col-md-8">
+            <div class="card p-4 border border-soft shadow rounded-4 mb-4">
+                <h5 class="fw-bold border-bottom pb-2 mb-3">
+                    <i class="fa-solid fa-graduation-cap text-primary me-2"></i> Session Enrollment Details
+                </h5>
+                <div class="row g-3 mb-4">
+                    <div class="col-md-6">
+                        <span class="text-secondary small d-block">Student Name</span>
+                        <a href="{% student_url 'student_detail' enrollment.student.pk %}" class="fw-semibold text-primary fs-5">{{ enrollment.student.full_name }}</a>
+                    </div>
+                    <div class="col-md-6">
+                        <span class="text-secondary small d-block">Roll Number</span>
+                        <span class="fw-semibold fs-5">{{ enrollment.student.roll_number|default:"Not Enrolled" }}</span>
+                    </div>
+                    <div class="col-md-6">
+                        <span class="text-secondary small d-block">Target Academic Session</span>
+                        <span class="fw-semibold">{{ enrollment.session.name }}</span>
+                    </div>
+                    <div class="col-md-6">
+                        <span class="text-secondary small d-block">Registration Date</span>
+                        <span class="fw-semibold">{{ enrollment.registration_date|date:"d M, Y" }}</span>
+                    </div>
+                </div>
+
+                <h5 class="fw-bold border-bottom pb-2 mb-3">
+                    <i class="fa-solid fa-calculator text-primary me-2"></i> Financial Allocation
+                </h5>
+                <div class="row g-3">
+                    <div class="col-md-4">
+                        <span class="text-secondary small d-block">Base Tuition Fee</span>
+                        <span class="fw-semibold">PKR {{ enrollment.fee|floatformat:2 }}</span>
+                    </div>
+                    <div class="col-md-4">
+                        <span class="text-secondary small d-block">Registration Fee</span>
+                        <span class="fw-semibold">PKR {{ enrollment.registration_fee|floatformat:2 }}</span>
+                    </div>
+                    <div class="col-md-4">
+                        <span class="text-secondary small d-block">Assigned Discount</span>
+                        <span class="fw-semibold text-success">PKR {{ enrollment.discount|floatformat:2 }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Controls Sidebar -->
+        <div class="col-md-4">
+            <div class="card p-4 border border-soft shadow rounded-4 mb-4">
+                <h5 class="fw-bold border-bottom pb-2 mb-3 text-secondary">Enrollment Status</h5>
+                <div class="mb-4">
+                    {% if enrollment.status == 'Active' %}
+                    <span class="badge bg-success bg-opacity-10 text-success border border-success-subtle rounded-pill px-4 py-2 fw-bold d-inline-block">Active</span>
+                    {% elif enrollment.status == 'Withdrawn' %}
+                    <span class="badge bg-danger bg-opacity-10 text-danger border border-danger-subtle rounded-pill px-4 py-2 fw-bold d-inline-block">Withdrawn</span>
+                    {% else %}
+                    <span class="badge bg-secondary bg-opacity-10 text-secondary border px-4 py-2 rounded-pill fw-bold d-inline-block">{{ enrollment.status }}</span>
+                    {% endif %}
+                </div>
+
+                {% if request.user.is_superuser or request.user.groups.all.0.name in 'Admin,Registrar' or request.user.groups.all.1.name in 'Admin,Registrar' %}
+                <h6 class="fw-bold mb-2">Management Controls</h6>
+                <div class="d-grid gap-2">
+                    {% if enrollment.status == 'Active' %}
+                    <form method="post" action="{% student_url 'enrollment_withdraw' enrollment.pk %}">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-outline-danger w-100 rounded-3">
+                            <i class="fa-solid fa-ban me-1"></i> Withdraw Student
+                        </button>
+                    </form>
+                    {% elif enrollment.status == 'Withdrawn' %}
+                    <form method="post" action="{% student_url 'enrollment_restore' enrollment.pk %}">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-success w-100 rounded-3">
+                            <i class="fa-solid fa-check me-1"></i> Restore Enrollment
+                        </button>
+                    </form>
+                    {% endif %}
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

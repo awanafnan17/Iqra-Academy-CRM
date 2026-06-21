@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Payment Receipt - {{ payment.receipt }}</title>
+    <style>
+        body {
+            font-family: Helvetica, Arial, sans-serif;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            font-size: 14px;
+        }
+        .container {
+            width: 100%;
+            padding: 20px;
+        }
+        .header {
+            text-align: center;
+            border-bottom: 2px solid #0d6efd;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+        .header h1 {
+
+            margin: 0 0 5px 0;
+            font-size: 28px;
+            text-transform: uppercase;
+        }
+        .header p {
+            margin: 0;
+            color: #666;
+            font-size: 12px;
+        }
+        .receipt-info {
+            width: 100%;
+            margin-bottom: 30px;
+        }
+        .receipt-info td {
+            vertical-align: top;
+            padding: 5px;
+        }
+        .receipt-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 15px;
+        }
+        .info-box {
+            background-color: #f8f9fa;
+            border: 1px solid #e9ecef;
+            padding: 15px;
+            border-radius: 5px;
+        }
+        .info-box strong {
+            display: inline-block;
+            width: 100px;
+            color: #555;
+        }
+        .payment-details {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 40px;
+        }
+        .payment-details th {
+            background-
+            color: #fff;
+            padding: 10px;
+            text-align: left;
+            font-weight: bold;
+        }
+        .payment-details td {
+            padding: 10px;
+            border-bottom: 1px solid #dee2e6;
+        }
+        .payment-details tr:nth-child(even) td {
+            background-color: #f8f9fa;
+        }
+        .amount-col {
+            text-align: right;
+            font-weight: bold;
+            font-size: 16px;
+        }
+        .footer {
+            text-align: center;
+            color: #888;
+            font-size: 11px;
+            border-top: 1px solid #ddd;
+            padding-top: 15px;
+            margin-top: 50px;
+        }
+        .badge-success {
+            color: #fff;
+            background-color: #198754;
+            padding: 5px 10px;
+            border-radius: 3px;
+            font-size: 12px;
+            font-weight: bold;
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Iqra Academy</h1>
+            <p>123 Education Street, Knowledge City</p>
+            <p>Phone: (555) 123-4567 | Email: info@iqraacademy.com</p>
+        </div>
+
+        <table class="receipt-info">
+            <tr>
+                <td style="width: 50%;">
+                    <div class="receipt-title">Official Fee Receipt</div>
+                    <div class="info-box">
+                        <div style="margin-bottom: 5px;"><strong>Receipt No:</strong> {{ payment.receipt|default:"N/A" }}</div>
+                        <div style="margin-bottom: 5px;"><strong>Date:</strong> {{ payment.date|date:"F d, Y" }}</div>
+                        <div style="margin-bottom: 5px;"><strong>Status:</strong> <span class="badge-success">Confirmed</span></div>
+                    </div>
+                </td>
+                <td style="width: 50%;">
+                    <div class="info-box" style="margin-top: 35px;">
+                        <div style="margin-bottom: 5px;"><strong>Student Name:</strong> {{ student.user.get_full_name }}</div>
+                        <div style="margin-bottom: 5px;"><strong>Roll No:</strong> {{ student.roll_number }}</div>
+                        <div style="margin-bottom: 5px;"><strong>Session:</strong> {{ student.current_session.name|default:"N/A" }}</div>
+                    </div>
+                </td>
+            </tr>
+        </table>
+
+        <table class="payment-details">
+            <thead>
+                <tr>
+                    <th>Description</th>
+                    <th>Payment Method</th>
+                    <th style="text-align: right;">Amount Paid</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Tuition / Enrollment Fee Payment</td>
+                    <td>{{ payment.method|title }}</td>
+                    <td class="amount-col">PKR {{ payment.amount|floatformat:2 }}</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div style="text-align: right; margin-bottom: 40px;">
+            <p style="font-size: 16px;"><strong>Total Amount:</strong> <span style="font-size: 20px; " class="text-secondary">PKR {{ payment.amount|floatformat:2 }}</span></p>
+        </div>
+
+        <div class="footer">
+            <p>This is a computer-generated document. No signature is required.</p>
+            <p>&copy; {% now "Y" %} Iqra Academy. All rights reserved.</p>
+        </div>
+    </div>
+</body>
+</html>

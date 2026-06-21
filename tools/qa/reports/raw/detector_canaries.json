@@ -1,0 +1,482 @@
+{
+  "metadata": {
+    "run_id": "e7586812-3531-4961-b8a7-9963cf879463",
+    "timestamp": "2026-06-21T04:38:08.943592",
+    "settings_module": "config.settings.test",
+    "database_engine": "django.db.backends.sqlite3",
+    "database_name": "file:memorydb_default?mode=memory&cache=shared",
+    "git_tree_id": "working_tree"
+  },
+  "canaries_tested": 14,
+  "results": [
+    {
+      "canary": "abandoned_commit_false",
+      "type": "canary",
+      "expected": "abandoned_commit_false",
+      "actual": "abandoned_commit_false",
+      "status": "detected",
+      "layer": "view"
+    },
+    {
+      "canary": "abandoned_commit_control",
+      "type": "control",
+      "expected": "PASS",
+      "actual": "PASS",
+      "status": "passed",
+      "layer": "view"
+    },
+    {
+      "canary": "mismatched_input_name",
+      "type": "canary",
+      "expected": "mismatched_input_name",
+      "actual": "mismatched_input_name",
+      "status": "detected",
+      "layer": "form"
+    },
+    {
+      "canary": "matched_name_control",
+      "type": "control",
+      "expected": "PASS",
+      "actual": "PASS",
+      "status": "passed",
+      "layer": "form"
+    },
+    {
+      "canary": "missing_save_call",
+      "type": "canary",
+      "expected": "missing_save_call",
+      "actual": "missing_save_call",
+      "status": "detected",
+      "layer": "view"
+    },
+    {
+      "canary": "missing_save_control",
+      "type": "control",
+      "expected": "PASS",
+      "actual": "PASS",
+      "status": "passed",
+      "layer": "view"
+    },
+    {
+      "canary": "missing_save_m2m",
+      "type": "canary",
+      "expected": "missing_save_m2m",
+      "actual": "missing_save_m2m",
+      "status": "detected",
+      "layer": "view"
+    },
+    {
+      "canary": "missing_m2m_control",
+      "type": "control",
+      "expected": "PASS",
+      "actual": "PASS",
+      "status": "passed",
+      "layer": "view"
+    },
+    {
+      "canary": "missing_update_instance",
+      "type": "canary",
+      "expected": "missing_update_instance",
+      "actual": "missing_update_instance",
+      "status": "detected",
+      "layer": "view"
+    },
+    {
+      "canary": "missing_instance_control",
+      "type": "control",
+      "expected": "PASS",
+      "actual": "PASS",
+      "status": "passed",
+      "layer": "view"
+    },
+    {
+      "canary": "omitted_update_fields",
+      "type": "canary",
+      "expected": "omitted_update_fields",
+      "actual": "omitted_update_fields",
+      "status": "detected",
+      "layer": "model"
+    },
+    {
+      "canary": "omitted_fields_control",
+      "type": "control",
+      "expected": "PASS",
+      "actual": "PASS",
+      "status": "passed",
+      "layer": "model"
+    },
+    {
+      "canary": "overwriting_signal",
+      "type": "canary",
+      "expected": "overwriting_signal",
+      "actual": "overwriting_signal",
+      "status": "detected",
+      "layer": "signal"
+    },
+    {
+      "canary": "overwriting_signal_control",
+      "type": "control",
+      "expected": "PASS",
+      "actual": "PASS",
+      "status": "passed",
+      "layer": "signal"
+    }
+  ],
+  "save_path_events": [
+    {
+      "correlation_id": "3d031ae5-eadd-464a-8c16-54c5d0685566",
+      "test_name": "abandoned_commit_canary",
+      "model": "core.CanaryTestModel",
+      "pk": 1,
+      "form_class": "CanaryTestModelForm",
+      "target_field": "name",
+      "form_is_valid_called": true,
+      "form_is_valid_result": true,
+      "form_changed_data": [
+        "name"
+      ],
+      "form_errors": null,
+      "form_save_called": true,
+      "form_save_commit": false,
+      "form_save_m2m_called": false,
+      "model_save_called": false,
+      "model_save_update_fields": null,
+      "signals_called": [],
+      "transaction_committed": true
+    },
+    {
+      "correlation_id": "d84ee3b9-5ef2-48ff-9d07-b9fc4d5de09e",
+      "test_name": "abandoned_commit_control",
+      "model": "core.CanaryTestModel",
+      "pk": 2,
+      "form_class": "CanaryTestModelForm",
+      "target_field": "name",
+      "form_is_valid_called": true,
+      "form_is_valid_result": true,
+      "form_changed_data": [
+        "name"
+      ],
+      "form_errors": null,
+      "form_save_called": true,
+      "form_save_commit": false,
+      "form_save_m2m_called": false,
+      "model_save_called": true,
+      "model_save_update_fields": null,
+      "signals_called": [
+        "pre_save",
+        "post_save"
+      ],
+      "transaction_committed": true
+    },
+    {
+      "correlation_id": "ae93c7ba-1cba-4ab6-ba52-9012b92ec0cf",
+      "test_name": "mismatched_name_canary",
+      "model": "core.CanaryTestModel",
+      "pk": 3,
+      "form_class": "CanaryTestModelForm",
+      "target_field": "name",
+      "form_is_valid_called": true,
+      "form_is_valid_result": true,
+      "form_changed_data": [
+        "name"
+      ],
+      "form_errors": null,
+      "form_save_called": true,
+      "form_save_commit": true,
+      "form_save_m2m_called": false,
+      "model_save_called": true,
+      "model_save_update_fields": null,
+      "signals_called": [
+        "pre_save",
+        "post_save"
+      ],
+      "transaction_committed": true
+    },
+    {
+      "correlation_id": "5b7206c3-6e1f-49bb-980c-0b12640a744b",
+      "test_name": "matched_name_control",
+      "model": "core.CanaryTestModel",
+      "pk": 4,
+      "form_class": "CanaryTestModelForm",
+      "target_field": "name",
+      "form_is_valid_called": true,
+      "form_is_valid_result": true,
+      "form_changed_data": [
+        "name"
+      ],
+      "form_errors": null,
+      "form_save_called": true,
+      "form_save_commit": true,
+      "form_save_m2m_called": false,
+      "model_save_called": true,
+      "model_save_update_fields": null,
+      "signals_called": [
+        "pre_save",
+        "post_save"
+      ],
+      "transaction_committed": true
+    },
+    {
+      "correlation_id": "1764ce50-f3ef-4cfa-af67-83eb52b3aaad",
+      "test_name": "missing_save_canary",
+      "model": "core.CanaryTestModel",
+      "pk": 5,
+      "form_class": "CanaryTestModelForm",
+      "target_field": "name",
+      "form_is_valid_called": true,
+      "form_is_valid_result": true,
+      "form_changed_data": [
+        "name"
+      ],
+      "form_errors": null,
+      "form_save_called": false,
+      "form_save_commit": null,
+      "form_save_m2m_called": false,
+      "model_save_called": false,
+      "model_save_update_fields": null,
+      "signals_called": [],
+      "transaction_committed": true
+    },
+    {
+      "correlation_id": "46e463fa-fec4-4017-9489-e4fe73ed83d2",
+      "test_name": "missing_save_control",
+      "model": "core.CanaryTestModel",
+      "pk": 6,
+      "form_class": "CanaryTestModelForm",
+      "target_field": "name",
+      "form_is_valid_called": true,
+      "form_is_valid_result": true,
+      "form_changed_data": [
+        "name"
+      ],
+      "form_errors": null,
+      "form_save_called": true,
+      "form_save_commit": true,
+      "form_save_m2m_called": false,
+      "model_save_called": true,
+      "model_save_update_fields": null,
+      "signals_called": [
+        "pre_save",
+        "post_save"
+      ],
+      "transaction_committed": true
+    },
+    {
+      "correlation_id": "d893bf7a-a306-412f-84d0-139c2255eb05",
+      "test_name": "missing_m2m_canary",
+      "model": "core.CanaryM2MModel",
+      "pk": 1,
+      "form_class": "CanaryM2MForm",
+      "target_field": "tags",
+      "form_is_valid_called": true,
+      "form_is_valid_result": true,
+      "form_changed_data": [
+        "tags"
+      ],
+      "form_errors": null,
+      "form_save_called": true,
+      "form_save_commit": false,
+      "form_save_m2m_called": false,
+      "model_save_called": true,
+      "model_save_update_fields": null,
+      "signals_called": [
+        "pre_save",
+        "post_save"
+      ],
+      "transaction_committed": true
+    },
+    {
+      "correlation_id": "24233b52-9de7-45d9-8bc8-5ed7b2a3bd3c",
+      "test_name": "missing_m2m_control",
+      "model": "core.CanaryM2MModel",
+      "pk": 2,
+      "form_class": "CanaryM2MForm",
+      "target_field": "tags",
+      "form_is_valid_called": true,
+      "form_is_valid_result": true,
+      "form_changed_data": [
+        "tags"
+      ],
+      "form_errors": null,
+      "form_save_called": true,
+      "form_save_commit": false,
+      "form_save_m2m_called": true,
+      "model_save_called": true,
+      "model_save_update_fields": null,
+      "signals_called": [
+        "pre_save",
+        "post_save"
+      ],
+      "transaction_committed": true
+    },
+    {
+      "correlation_id": "42dfd62b-bc81-4de9-bff8-e8cff0e52a06",
+      "test_name": "missing_instance_canary",
+      "model": "core.CanaryTestModel",
+      "pk": 7,
+      "form_class": "CanaryTestModelForm",
+      "target_field": "name",
+      "form_is_valid_called": true,
+      "form_is_valid_result": true,
+      "form_changed_data": [
+        "name"
+      ],
+      "form_errors": null,
+      "form_save_called": true,
+      "form_save_commit": true,
+      "form_save_m2m_called": false,
+      "model_save_called": true,
+      "model_save_update_fields": null,
+      "signals_called": [],
+      "transaction_committed": true
+    },
+    {
+      "correlation_id": "205a94ae-5e42-42ea-a97f-534a7f56ef2e",
+      "test_name": "missing_instance_control",
+      "model": "core.CanaryTestModel",
+      "pk": 9,
+      "form_class": "CanaryTestModelForm",
+      "target_field": "name",
+      "form_is_valid_called": true,
+      "form_is_valid_result": true,
+      "form_changed_data": [
+        "name"
+      ],
+      "form_errors": null,
+      "form_save_called": true,
+      "form_save_commit": true,
+      "form_save_m2m_called": false,
+      "model_save_called": true,
+      "model_save_update_fields": null,
+      "signals_called": [
+        "pre_save",
+        "post_save"
+      ],
+      "transaction_committed": true
+    },
+    {
+      "correlation_id": "3929bb29-770a-4d21-ba6f-1d1d84c06335",
+      "test_name": "omitted_fields_canary",
+      "model": "core.CanaryTestModel",
+      "pk": 10,
+      "form_class": "CanaryTestModelForm",
+      "target_field": "name",
+      "form_is_valid_called": true,
+      "form_is_valid_result": true,
+      "form_changed_data": [
+        "name"
+      ],
+      "form_errors": null,
+      "form_save_called": true,
+      "form_save_commit": false,
+      "form_save_m2m_called": false,
+      "model_save_called": true,
+      "model_save_update_fields": [
+        "tags"
+      ],
+      "signals_called": [
+        "pre_save",
+        "post_save"
+      ],
+      "transaction_committed": true
+    },
+    {
+      "correlation_id": "4f913a6f-e04e-4ad8-b5c1-bf58848e7027",
+      "test_name": "omitted_fields_control",
+      "model": "core.CanaryTestModel",
+      "pk": 11,
+      "form_class": "CanaryTestModelForm",
+      "target_field": "name",
+      "form_is_valid_called": true,
+      "form_is_valid_result": true,
+      "form_changed_data": [
+        "name"
+      ],
+      "form_errors": null,
+      "form_save_called": true,
+      "form_save_commit": false,
+      "form_save_m2m_called": false,
+      "model_save_called": true,
+      "model_save_update_fields": [
+        "name"
+      ],
+      "signals_called": [
+        "pre_save",
+        "post_save"
+      ],
+      "transaction_committed": true
+    },
+    {
+      "correlation_id": "6ceb6a6e-ff48-4386-9118-984c31efa524",
+      "test_name": "overwriting_signal_canary",
+      "model": "core.CanaryTestModel",
+      "pk": 12,
+      "form_class": "CanaryTestModelForm",
+      "target_field": "name",
+      "form_is_valid_called": true,
+      "form_is_valid_result": true,
+      "form_changed_data": [
+        "name"
+      ],
+      "form_errors": null,
+      "form_save_called": true,
+      "form_save_commit": true,
+      "form_save_m2m_called": false,
+      "model_save_called": true,
+      "model_save_update_fields": null,
+      "signals_called": [
+        "pre_save",
+        "post_save"
+      ],
+      "transaction_committed": true
+    },
+    {
+      "correlation_id": "a20f3401-10eb-4eed-a193-9df459ecc714",
+      "test_name": "overwriting_signal_control",
+      "model": "core.CanaryTestModel",
+      "pk": 13,
+      "form_class": "CanaryTestModelForm",
+      "target_field": "name",
+      "form_is_valid_called": true,
+      "form_is_valid_result": true,
+      "form_changed_data": [
+        "name"
+      ],
+      "form_errors": null,
+      "form_save_called": true,
+      "form_save_commit": true,
+      "form_save_m2m_called": false,
+      "model_save_called": true,
+      "model_save_update_fields": null,
+      "signals_called": [
+        "pre_save",
+        "post_save"
+      ],
+      "transaction_committed": true
+    },
+    {
+      "correlation_id": "2e107347-a3e2-473a-a3d9-6b64e680b8b7",
+      "test_name": "side_effects_check",
+      "model": "core.CanaryTestModel",
+      "pk": 14,
+      "form_class": "CanaryTestModelForm",
+      "target_field": "name",
+      "form_is_valid_called": true,
+      "form_is_valid_result": true,
+      "form_changed_data": [
+        "name"
+      ],
+      "form_errors": null,
+      "form_save_called": true,
+      "form_save_commit": true,
+      "form_save_m2m_called": false,
+      "model_save_called": true,
+      "model_save_update_fields": null,
+      "signals_called": [
+        "pre_save",
+        "post_save"
+      ],
+      "transaction_committed": true
+    }
+  ]
+}

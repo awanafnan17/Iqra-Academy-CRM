@@ -1,0 +1,193 @@
+{% extends 'layouts/panel_base.html' %}
+{% load static %}
+
+{% block title %}ML Models - Iqra Academy{% endblock %}
+
+{% block content %}
+<div class="container-fluid px-0">
+    <!-- Page Header -->
+    <div class="p-4 rounded-4 mb-4 card border border-light shadow-sm animate-fade-in">
+        <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
+            <div>
+                <h3 class="fw-bold mb-1">
+                    <i class="fa-solid fa-code-branch me-2 text-primary"></i>
+                    ML Model Versions
+                </h3>
+                <p class="text-secondary mb-0">
+                    Track parameters, evaluation metrics, and active states of trained predictive models.
+                </p>
+            </div>
+            <div>
+                <a href="{% url 'admin_panel:ai_engine:prediction_list' %}" class="btn btn-outline-primary px-3 py-2 rounded-3">
+                    <i class="fa-solid fa-brain me-1"></i> Predictions List
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Filters -->
+    <div class="card p-3 border border-light shadow rounded-4 mb-4 animate-fade-in stagger-1">
+        <form method="get" class="row g-3 align-items-end">
+            <div class="col-12 col-md-5">
+                <label class="form-label text-secondary small fw-semibold">Model Type</label>
+                <select name="model_type" class="form-select">
+                    <option value="">All Models</option>
+                    {% for val, label in model_types %}
+                    <option value="{{ val }}" {% if selected_model_type == val %}selected{% endif %}>{{ label }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-12 col-md-4">
+                <label class="form-label text-secondary small fw-semibold">Status</label>
+                <select name="is_active" class="form-select">
+                    <option value="">All States</option>
+                    <option value="true" {% if selected_is_active == "true" %}selected{% endif %}>Active Only</option>
+                    <option value="false" {% if selected_is_active == "false" %}selected{% endif %}>Inactive Only</option>
+                </select>
+            </div>
+            <div class="col-12 col-md-3">
+                <button type="submit" class="btn btn-primary w-100 rounded-3">
+                    <i class="fa-solid fa-filter me-1"></i> Filter
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Models List -->
+    <div class="card border border-light shadow rounded-4 animate-fade-in stagger-2">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0" data-testid="model-version-table">
+                <thead class="table-light">
+                    <tr>
+                        <th class="ps-4">Model Type</th>
+                        <th>Version</th>
+                        <th>Active</th>
+                        <th>Accuracy</th>
+                        <th>Precision</th>
+                        <th>Recall</th>
+                        <th>Trained Samples</th>
+                        <th>Trained Date</th>
+                        <th class="pe-4">Notes</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for m in page_obj %}
+                    <tr data-testid="model-row-{{ m.pk }}">
+                        <td class="ps-4">
+                            <span class="fw-semibold text-primary">{{ m.get_model_type_display }}</span>
+                        </td>
+                        <td>
+                            <code class="text-dark fw-bold">v{{ m.version }}</code>
+                        </td>
+                        <td>
+                            {% if m.is_active %}
+                                <span class="badge bg-success bg-opacity-10 text-success border border-success-subtle rounded-pill px-2.5 py-1">
+                                    <i class="fa-solid fa-circle-play me-1"></i> Active
+                                </span>
+                            {% else %}
+                                <span class="badge bg-secondary bg-opacity-10 text-secondary border rounded-pill px-2.5 py-1">
+                                    Inactive
+                                </span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if m.accuracy_score is not None %}
+                                <span class="fw-semibold">{{ m.accuracy_score }}</span>
+                            {% else %}
+                                <span class="text-muted">—</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if m.precision_score is not None %}
+                                <span class="fw-semibold">{{ m.precision_score }}</span>
+                            {% else %}
+                                <span class="text-muted">—</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if m.recall_score is not None %}
+                                <span class="fw-semibold">{{ m.recall_score }}</span>
+                            {% else %}
+                                <span class="text-muted">—</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if m.training_samples is not None %}
+                                <span class="text-secondary">{{ m.training_samples }} samples</span>
+                            {% else %}
+                                <span class="text-muted">—</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            <span class="text-secondary small">{{ m.trained_at|date:"M d, Y" }}</span>
+                        </td>
+                        <td class="pe-4 text-truncate" style="max-width: 250px;">
+                            <span class="text-secondary small" title="{{ m.notes }}">{{ m.notes|default:"—" }}</span>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="9" class="text-center py-5 text-muted" data-testid="models-empty-state">
+                            <div class="mb-3">
+                                <i class="fa-solid fa-code-branch fa-3x text-light-subtle"></i>
+                            </div>
+                            <h6 class="fw-bold">No trained model versions are currently available</h6>
+                            <p class="small text-secondary mb-0">
+                                {% if selected_model_type or selected_is_active %}
+                                    No trained model versions match the selected filters.
+                                {% else %}
+                                    AI models have not been trained or configured in the system yet.
+                                {% endif %}
+                            </p>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Pagination -->
+        {% if page_obj.has_other_pages %}
+        <div class="card-footer bg-transparent border-0 py-3">
+            <nav aria-label="Page navigation">
+                <ul class="pagination justify-content-center mb-0">
+                    {% if page_obj.has_previous %}
+                    <li class="page-item">
+                        <a class="page-link rounded-start-3" href="?page={{ page_obj.previous_page_number }}{% if selected_model_type %}&model_type={{ selected_model_type }}{% endif %}{% if selected_is_active %}&is_active={{ selected_is_active }}{% endif %}" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                    {% else %}
+                    <li class="page-item disabled">
+                        <span class="page-link rounded-start-3">&laquo;</span>
+                    </li>
+                    {% endif %}
+
+                    {% for num in page_obj.paginator.page_range %}
+                        {% if page_obj.number == num %}
+                            <li class="page-item active"><span class="page-link">{{ num }}</span></li>
+                        {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ num }}{% if selected_model_type %}&model_type={{ selected_model_type }}{% endif %}{% if selected_is_active %}&is_active={{ selected_is_active }}{% endif %}">{{ num }}</a>
+                            </li>
+                        {% endif %}
+                    {% endfor %}
+
+                    {% if page_obj.has_next %}
+                    <li class="page-item">
+                        <a class="page-link rounded-end-3" href="?page={{ page_obj.next_page_number }}{% if selected_model_type %}&model_type={{ selected_model_type }}{% endif %}{% if selected_is_active %}&is_active={{ selected_is_active }}{% endif %}" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                    {% else %}
+                    <li class="page-item disabled">
+                        <span class="page-link rounded-end-3">&raquo;</span>
+                    </li>
+                    {% endif %}
+                </ul>
+            </nav>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

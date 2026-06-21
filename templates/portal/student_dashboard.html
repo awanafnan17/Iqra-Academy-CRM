@@ -1,0 +1,180 @@
+{% extends 'layouts/portal_base.html' %}
+{% load finance_tags %}
+
+{% block title %}My Portal - Iqra Academy{% endblock %}
+
+{% block content %}
+<div class="container-fluid px-0">
+    <!-- Welcome message for converted students (Phase 9) -->
+    {% if application %}
+        <div class="alert alert-success border-0 shadow-sm p-4 rounded-4 mb-4 animate-fade-in stagger-1 d-flex align-items-start">
+            <div class="bg-success bg-opacity-10 text-success rounded-circle p-3 me-3 icon-float">
+                <i class="fa-solid fa-circle-check fa-2xl"></i>
+            </div>
+            <div>
+                <h4 class="fw-bold text-success mb-1">Welcome to Iqra Academy!</h4>
+                <p class="mb-2">Your admission application was processed successfully and you are now an active student.</p>
+                <div class="row g-3 mt-1 text-primary-c small">
+                    <div class="col-sm-4"><strong>Roll Number:</strong> <span class="badge bg-success px-2 py-1 rounded">{{ student.roll_number }}</span></div>
+                    <div class="col-sm-4"><strong>Session:</strong> <span class="fw-semibold">{{ enrollment.session.name|default:"N/A" }}</span></div>
+                    <div class="col-sm-4"><strong>Enrollment Date:</strong> <span class="fw-semibold">{{ enrollment.registration_date|date:"F j, Y"|default:application.applied_at|date:"F j, Y" }}</span></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Application Status & Timeline Changes (Phase 9) -->
+        <div class="card p-4 mb-4 animate-fade-in stagger-2">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h5 class="fw-bold mb-0 text-primary"><i class="fa-solid fa-route me-2"></i>Admission Application Status</h5>
+                <span class="badge bg-secondary px-3 py-2 rounded-pill text-capitalize fw-bold">
+                    Status: {{ application.status }}
+                </span>
+            </div>
+            <div class="timeline ps-3 border-start py-2">
+                {% for log in timeline %}
+                    <div class="timeline-item position-relative mb-3 ps-4">
+                        <div class="timeline-dot-custom"></div>
+                        <div class="small text-muted">{{ log.date|date:"M d, Y H:i" }}</div>
+                        <div class="fw-semibold text-primary-c">
+                            Application transition from <span class="text-secondary text-capitalize">{{ log.old }}</span> to <span class="text-primary text-capitalize">{{ log.new }}</span>
+                        </div>
+                        <div class="small text-secondary">Logged by: {{ log.by }}</div>
+                    </div>
+                {% empty %}
+                    <div class="timeline-item position-relative mb-3 ps-4">
+                        <div class="timeline-dot-custom"></div>
+                        <div class="small text-muted">{{ application.applied_at|date:"M d, Y H:i" }}</div>
+                        <div class="fw-semibold text-primary-c">
+                            Application Submitted successfully
+                        </div>
+                        <div class="small text-secondary">Status: Pending</div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    {% endif %}
+
+    <!-- Page Header -->
+    <div class="page-header animate-fade-in">
+        <div class="page-header-left">
+            <h3 class="fw-bold mb-1 text-primary">Welcome back, {{ metrics.student_name }}!</h3>
+            <p class="text-secondary mb-0">Active Session: <span class="fw-semibold text-primary">{{ metrics.session_name|default:"None" }}</span></p>
+        </div>
+        <div class="page-header-actions">
+            <span class="badge bg-primary px-3 py-2 rounded-pill fw-semibold">
+                <i class="fa-solid fa-graduation-cap me-1"></i> Student Portal
+            </span>
+        </div>
+    </div>
+
+    <!-- Metrics Cards Grid -->
+    <div class="row g-4">
+        <!-- Attendance Percentage -->
+        <div class="col-12 col-md-4">
+            <div class="card metric-card h-100 {% if metrics.has_low_attendance or metrics.attendance_percentage < 70 %}card-state-danger{% endif %}">
+                <div class="card-body p-4 d-flex align-items-center">
+                    <div class="metric-icon me-3">
+                        <i class="fa-solid fa-calendar-check"></i>
+                    </div>
+                    <div>
+                        <span class="text-secondary small fw-medium">My Attendance</span>
+                        <div class="metric-value mt-1"
+                             data-target="{{ metrics.attendance_percentage|default:0 }}"
+                             data-duration="1200"
+                             data-suffix="%"
+                             data-decimals="0">
+                            {{ metrics.attendance_percentage|default:0 }}%
+                        </div>
+                        {% if metrics.has_low_attendance or metrics.attendance_percentage < 70 %}
+                            <span class="badge bg-danger mt-2 align-middle">Low Attendance</span>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Outstanding Balance -->
+        <div class="col-12 col-md-4">
+            <div class="card metric-card h-100">
+                <div class="card-body p-4 d-flex align-items-center">
+                    <div class="metric-icon me-3">
+                        <i class="fa-solid fa-credit-card"></i>
+                    </div>
+                    <div>
+                        <span class="text-secondary small fw-medium">Outstanding Balance</span>
+                        <div class="metric-value mt-1"
+                             data-target="{{ metrics.outstanding_balance|default:0 }}"
+                             data-duration="1200"
+                             data-prefix="PKR "
+                             data-decimals="0">
+                            {{ metrics.outstanding_balance|format_currency }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Unread Notifications -->
+        <div class="col-12 col-md-4">
+            <div class="card metric-card h-100">
+                <div class="card-body p-4 d-flex align-items-center">
+                    <div class="metric-icon me-3">
+                        <i class="fa-solid fa-bell"></i>
+                    </div>
+                    <div>
+                        <span class="text-secondary small fw-medium">Unread Notifications</span>
+                        <div class="metric-value mt-1"
+                             data-target="{{ metrics.unread_notifications|default:0 }}"
+                             data-duration="1200"
+                             data-decimals="0">
+                            {{ metrics.unread_notifications|default:0 }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Exam Results Table -->
+    <div class="row mt-4 animate-fade-in stagger-3">
+        <div class="col-12">
+            <div class="card p-0">
+                <div class="p-4 border-bottom border-soft">
+                    <h5 class="fw-bold mb-0 text-primary"><i class="fa-solid fa-file-signature me-2"></i>Recent Exam Results</h5>
+                </div>
+                <div class="table-wrapper">
+                    <table class="table align-middle mb-0">
+                        <thead>
+                            <tr>
+                                <th class="ps-4">Subject</th>
+                                <th>Exam Name</th>
+                                <th>Marks Obtained</th>
+                                <th>Grade</th>
+                                <th class="pe-4">Remarks</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for result in metrics.exam_results %}
+                                <tr>
+                                    <td class="ps-4 text-primary-c"><strong>{{ result.exam__subject__name }}</strong></td>
+                                    <td>{{ result.exam__name }}</td>
+                                    <td><span class="badge bg-primary">{{ result.score }}</span></td>
+                                    <td><span class="badge bg-success">{{ result.grade }}</span></td>
+                                    <td class="text-secondary small pe-4">{{ result.remarks|default:"-" }}</td>
+                                </tr>
+                            {% empty %}
+                                <tr>
+                                    <td colspan="5" class="text-center text-secondary py-5">
+                                        <i class="fa-regular fa-folder-open fa-3x mb-3 text-secondary"></i>
+                                        <p class="mb-0 fw-medium">No exam results available yet.</p>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

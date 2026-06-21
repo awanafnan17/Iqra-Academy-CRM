@@ -1,0 +1,596 @@
+{% extends 'layouts/panel_base.html' %}
+{% load static %}
+{% load finance_tags %}
+
+{% block title %}Executive Analytics - Iqra Academy{% endblock %}
+
+{% block content %}
+<div class="analytics-page">
+<div class="container-fluid px-0">
+    <!-- Page Header -->
+    <div class="p-4 rounded-4 mb-4 card border border-light shadow-sm animate-fade-in">
+        <div class="d-flex justify-content-between align-items-center">
+            <div>
+                <h3 class="fw-bold mb-1">Executive Analytics</h3>
+                <p class="text-secondary mb-0">System performance, financial trend analytics, and enrollment growth.</p>
+            </div>
+            <div>
+                <span class="badge bg-primary bg-opacity-10 text-primary px-3 py-2 rounded-pill fw-semibold">
+                    <i class="fa-solid fa-chart-line me-1"></i> Live Analytics
+                </span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Row 1: Revenue Trend & Aging Report -->
+    <div class="row g-4 mb-4">
+        <!-- Revenue Trend -->
+        <div class="col-12 col-xl-8">
+            <div class="card p-4 h-100 border border-light shadow rounded-4 animate-fade-in stagger-1">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h5 class="fw-bold mb-0 text-primary">
+                        <i class="fa-solid fa-money-bill-trend-up text-primary me-2"></i> Revenue & Cash Flow Trend
+                    </h5>
+                    <span class="badge bg-light text-muted border">Annual (PKR)</span>
+                </div>
+                <div class="chart-container chart-container-lg">
+                    <canvas id="revenueChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Overdue Aging Report -->
+        <div class="col-12 col-xl-4">
+            <div class="card p-4 h-100 border border-light shadow rounded-4 animate-fade-in stagger-2">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h5 class="fw-bold mb-0 text-primary">
+                        <i class="fa-solid fa-clock-rotate-left text-danger me-2"></i> Overdue Aging Report
+                    </h5>
+                    <span class="badge bg-danger bg-opacity-10 text-danger border border-danger-subtle">Aging Slots</span>
+                </div>
+                <div class="chart-container chart-container-lg">
+                    <canvas id="agingChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Row 2: Attendance & Enrollment Growth -->
+    <div class="row g-4 mb-4">
+        <!-- Attendance Trend -->
+        <div class="col-12 col-lg-6">
+            <div class="card p-4 h-100 border border-light shadow rounded-4 animate-fade-in stagger-3">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h5 class="fw-bold mb-0 text-primary">
+                        <i class="fa-solid fa-calendar-check text-success me-2"></i> Student Attendance Trend
+                    </h5>
+                    <span class="badge bg-light text-muted border">Last 10 Days</span>
+                </div>
+                <div class="chart-container chart-container-md">
+                    <canvas id="attendanceChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Enrollment Growth -->
+        <div class="col-12 col-lg-6">
+            <div class="card p-4 h-100 border border-light shadow rounded-4 animate-fade-in stagger-4">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h5 class="fw-bold mb-0 text-primary">
+                        <i class="fa-solid fa-user-plus text-info me-2"></i> Enrollment Growth Rate
+                    </h5>
+                    <span class="badge bg-light text-muted border">Monthly</span>
+                </div>
+                <div class="chart-container chart-container-md">
+                    <canvas id="growthChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Row 3: Conversion Funnel & Action Items -->
+    <div class="row g-4">
+        <!-- Lead Conversion Funnel -->
+        <div class="col-12 col-md-6 col-lg-5 col-xl-4">
+            <div class="card p-4 h-100 border border-light shadow rounded-4 animate-fade-in stagger-5">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h5 class="fw-bold mb-0 text-primary">
+                        <i class="fa-solid fa-filter text-warning me-2"></i> Lead Conversion Funnel
+                    </h5>
+                    <span class="badge bg-warning bg-opacity-10 text-warning border border-warning-subtle">Funnel Status</span>
+                </div>
+                <div class="chart-container chart-container-md">
+                    <canvas id="conversionChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- System Quick Summary -->
+        <div class="col-12 col-md-6 col-lg-7 col-xl-8">
+            <div class="card p-4 h-100 border border-light shadow rounded-4 animate-fade-in stagger-6">
+                <h5 class="fw-bold mb-3 text-primary">
+                    <i class="fa-solid fa-server text-secondary me-2"></i> Real-time ERP System Summary
+                </h5>
+                <div class="row g-3">
+                    <div class="col-6 col-md-4">
+                        <div class="p-3 border rounded-3 bg-light bg-opacity-50">
+                            <span class="text-secondary small">Total Active Sessions</span>
+                            <h5 class="fw-bold mb-0 text-primary mt-1">{{ metrics.active_sessions|default:"N/A" }}</h5>
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-4">
+                        <div class="p-3 border rounded-3 bg-light bg-opacity-50">
+                            <span class="text-secondary small">Total Staff Profiled</span>
+                            <h5 class="fw-bold mb-0 text-primary mt-1">{{ metrics.active_faculty|default:"0" }}</h5>
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-4">
+                        <div class="p-3 border rounded-3 bg-light bg-opacity-50">
+                            <span class="text-secondary small">Outstanding Balances</span>
+                            <h5 class="fw-bold mb-0 text-danger mt-1">{{ metrics.overdue_dues|format_currency|default:"PKR 0" }}</h5>
+                        </div>
+                    </div>
+                </div>
+                <hr class="my-4 border-light-subtle">
+                <div class="d-flex flex-wrap gap-2">
+                    <a href="{% url 'admin_panel:pending_dues' %}" class="btn btn-outline-primary btn-sm px-3 rounded-2">
+                        <i class="fa-solid fa-money-bill-wave me-1"></i> Inspect Pending Dues
+                    </a>
+                    <a href="{% url 'admin_panel:dashboard' %}" class="btn btn-primary text-white btn-sm px-3 rounded-2">
+                        <i class="fa-solid fa-house-user me-1"></i> Return to Operations
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Admission Funnel Analytics Header -->
+    <div class="p-4 rounded-4 my-4 card border border-light shadow-sm animate-fade-in stagger-7">
+        <div class="d-flex justify-content-between align-items-center">
+            <div>
+                <h4 class="fw-bold mb-1">
+                    <i class="fa-solid fa-filter me-2"></i> Admission Funnel & Demand Analytics
+                </h4>
+                <p class="text-secondary mb-0 small">Review process speed, stages distribution, and monthly trend statistics.</p>
+            </div>
+            <div>
+                <span class="badge bg-success bg-opacity-10 text-success px-3 py-2 rounded-pill fw-semibold">
+                    <i class="fa-solid fa-circle-nodes me-1"></i> Live Funnel
+                </span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Admission KPI Cards -->
+    <div class="row g-4 mb-4">
+        <!-- Total Applications -->
+        <div class="col-12 col-md-6 col-lg-3">
+            <div class="card metric-card h-100 animate-fade-in stagger-7">
+                <div class="card-body p-4">
+                    <div class="d-flex align-items-start justify-content-between mb-3">
+                        <div>
+                            <div class="metric-label">Total Applications</div>
+                            <div
+                                class="metric-value mt-2"
+                                data-target="{{ funnel_metrics.total_applications|default:0 }}"
+                                data-duration="1200"
+                                data-decimals="0">
+                                {{ funnel_metrics.total_applications|default:0 }}
+                            </div>
+                        </div>
+                        <div class="metric-icon">
+                            <i class="fa-solid fa-file-signature"></i>
+                        </div>
+                    </div>
+                    <div class="metric-accent">
+                        +{{ funnel_metrics.this_month_applications|default:0 }} this month
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Converted Applications -->
+        <div class="col-12 col-md-6 col-lg-3">
+            <div class="card metric-card h-100 animate-fade-in stagger-7">
+                <div class="card-body p-4">
+                    <div class="d-flex align-items-start justify-content-between mb-3">
+                        <div>
+                            <div class="metric-label">Converted Students</div>
+                            <div
+                                class="metric-value mt-2"
+                                data-target="{{ funnel_metrics.converted|default:0 }}"
+                                data-duration="1200"
+                                data-decimals="0">
+                                {{ funnel_metrics.converted|default:0 }}
+                            </div>
+                        </div>
+                        <div class="metric-icon">
+                            <i class="fa-solid fa-user-check"></i>
+                        </div>
+                    </div>
+                    <span class="badge bg-success bg-opacity-10 text-success rounded-pill px-2 py-1 small fw-semibold">
+                        {{ funnel_metrics.conversion_rate_percent }}% Rate
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Rejections -->
+        <div class="col-12 col-md-6 col-lg-3">
+            <div class="card metric-card h-100 animate-fade-in stagger-7">
+                <div class="card-body p-4">
+                    <div class="d-flex align-items-start justify-content-between mb-3">
+                        <div>
+                            <div class="metric-label">Rejections</div>
+                            <div
+                                class="metric-value mt-2"
+                                data-target="{{ funnel_metrics.rejected|default:0 }}"
+                                data-duration="1200"
+                                data-decimals="0">
+                                {{ funnel_metrics.rejected|default:0 }}
+                            </div>
+                        </div>
+                        <div class="metric-icon">
+                            <i class="fa-solid fa-user-xmark"></i>
+                        </div>
+                    </div>
+                    <span class="badge bg-danger bg-opacity-10 text-danger rounded-pill px-2 py-1 small fw-semibold">
+                        {{ funnel_metrics.rejection_rate_percent }}% Rate
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Average Review Time -->
+        <div class="col-12 col-md-6 col-lg-3">
+            <div class="card metric-card h-100 animate-fade-in stagger-7">
+                <div class="card-body p-4">
+                    <div class="d-flex align-items-start justify-content-between mb-3">
+                        <div>
+                            <div class="metric-label">Average Review Time</div>
+                            <div
+                                class="metric-value mt-2"
+                                data-target="{{ funnel_metrics.average_review_time_days|default:0 }}"
+                                data-duration="1200"
+                                data-suffix=" Days"
+                                data-decimals="0">
+                                {{ funnel_metrics.average_review_time_days|default:0 }}
+                            </div>
+                        </div>
+                        <div class="metric-icon">
+                            <i class="fa-solid fa-clock"></i>
+                        </div>
+                    </div>
+                    <div class="metric-accent">
+                        Approval speed index
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Admissions & Enrollments Period Analytics -->
+    <div class="p-4 rounded-4 my-4 card border border-light shadow-sm animate-fade-in stagger-7">
+        <div class="d-flex justify-content-between align-items-center">
+            <div>
+                <h4 class="fw-bold mb-1">
+                    <i class="fa-solid fa-calendar-days me-2 text-primary"></i> Period Performance Metrics
+                </h4>
+                <p class="text-secondary mb-0 small">Comparing Applications Received vs. Successful Enrollments across daily, weekly, and monthly periods.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-4 mb-4">
+        <!-- Today -->
+        <div class="col-12 col-md-4">
+            <div class="card metric-card h-100 animate-fade-in stagger-7">
+                <div class="card-body p-4">
+                    <div class="d-flex align-items-center justify-content-between mb-3 border-bottom pb-2">
+                        <h5 class="fw-bold text-primary mb-0">Today</h5>
+                        <div class="metric-icon bg-primary bg-opacity-10 text-primary p-2 rounded-circle" style="width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;">
+                            <i class="fa-solid fa-clock"></i>
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <span class="text-secondary fw-semibold">Applications Received</span>
+                        <span class="fs-4 fw-bold text-primary">{{ period_metrics.today.applications_received }}</span>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <span class="text-secondary fw-semibold">Successful Enrollments</span>
+                        <span class="fs-4 fw-bold text-success">{{ period_metrics.today.successful_enrollments }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- This Week -->
+        <div class="col-12 col-md-4">
+            <div class="card metric-card h-100 animate-fade-in stagger-7">
+                <div class="card-body p-4">
+                    <div class="d-flex align-items-center justify-content-between mb-3 border-bottom pb-2">
+                        <h5 class="fw-bold text-primary mb-0">This Week</h5>
+                        <div class="metric-icon bg-info bg-opacity-10 text-info p-2 rounded-circle" style="width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;">
+                            <i class="fa-solid fa-calendar-week"></i>
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <span class="text-secondary fw-semibold">Applications Received</span>
+                        <span class="fs-4 fw-bold text-primary">{{ period_metrics.this_week.applications_received }}</span>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <span class="text-secondary fw-semibold">Successful Enrollments</span>
+                        <span class="fs-4 fw-bold text-success">{{ period_metrics.this_week.successful_enrollments }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- This Month -->
+        <div class="col-12 col-md-4">
+            <div class="card metric-card h-100 animate-fade-in stagger-7">
+                <div class="card-body p-4">
+                    <div class="d-flex align-items-center justify-content-between mb-3 border-bottom pb-2">
+                        <h5 class="fw-bold text-primary mb-0">This Month</h5>
+                        <div class="metric-icon bg-success bg-opacity-10 text-success p-2 rounded-circle" style="width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;">
+                            <i class="fa-solid fa-calendar-days"></i>
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <span class="text-secondary fw-semibold">Applications Received</span>
+                        <span class="fs-4 fw-bold text-primary">{{ period_metrics.this_month.applications_received }}</span>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <span class="text-secondary fw-semibold">Successful Enrollments</span>
+                        <span class="fs-4 fw-bold text-success">{{ period_metrics.this_month.successful_enrollments }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Admission Funnel Charts Row -->
+    <div class="row g-4 mb-4">
+        <!-- Donut Chart: Funnel Stages -->
+        <div class="col-12 col-lg-4">
+            <div class="card p-4 h-100 border border-light shadow rounded-4 animate-fade-in stagger-7">
+                <h5 class="fw-bold mb-3 text-primary">
+                    <i class="fa-solid fa-filter text-primary me-2"></i> Funnel Stage Distribution
+                </h5>
+                <div class="chart-container chart-container-md">
+                    <canvas id="admissionFunnelChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bar Chart: Monthly Trend -->
+        <div class="col-12 col-lg-5">
+            <div class="card p-4 h-100 border border-light shadow rounded-4 animate-fade-in stagger-7">
+                <h5 class="fw-bold mb-3 text-primary">
+                    <i class="fa-solid fa-chart-column text-success me-2"></i> Monthly Applications & Conversions
+                </h5>
+                <div class="chart-container chart-container-md">
+                    <canvas id="admissionMonthlyTrendChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Session Demand Analysis -->
+        <div class="col-12 col-lg-3">
+            <div class="card p-4 h-100 border border-light shadow rounded-4 animate-fade-in stagger-7">
+                <h5 class="fw-bold mb-3 text-primary">
+                    <i class="fa-solid fa-fire text-danger me-2"></i> Session Demand
+                </h5>
+                <div class="table-responsive table-max-height-250px">
+                    <table class="table table-hover align-middle mb-0">
+                        <thead>
+                            <tr>
+                                <th>Session</th>
+                                <th class="text-center">Apps</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for item in session_demand %}
+                            <tr>
+                                <td class="fw-semibold small">{{ item.session_name }}</td>
+                                <td class="text-center font-monospace small">
+                                    <span class="badge bg-secondary bg-opacity-10 text-secondary rounded-pill px-2">
+                                        {{ item.applications_count }}
+                                    </span>
+                                </td>
+                            </tr>
+                            {% empty %}
+                            <tr>
+                                <td colspan="2" class="text-center text-muted small py-3">No session demand tracked.</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Row 4: Teacher Workload Analytics -->
+    <div class="row g-4 mt-2 mb-4 animate-fade-in stagger-7">
+        <div class="col-12">
+            <div class="card p-4 border border-light shadow rounded-4">
+                <h5 class="fw-bold mb-3 text-primary">
+                    <i class="fa-solid fa-chalkboard-user text-primary me-2"></i> Faculty Workload Analytics
+                </h5>
+                <div class="table-responsive saas-table-container">
+                    <table class="table saas-table align-middle mb-0">
+                        <thead>
+                            <tr>
+                                <th>Teacher Name</th>
+                                <th>Designation</th>
+                                <th>Department</th>
+                                <th>Sessions Assigned</th>
+                                <th>Subjects Assigned</th>
+                                <th>Hours Per Week</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for row in workload %}
+                                <tr>
+                                    <td><strong class="text-primary">{{ row.name }}</strong></td>
+                                    <td>{{ row.designation }}</td>
+                                    <td><span class="badge bg-light text-secondary border px-3 py-1">{{ row.department }}</span></td>
+                                    <td>
+                                        <span class="badge bg-primary bg-opacity-10 text-primary px-3 py-1 rounded-pill">
+                                            {{ row.sessions_count }} Sessions
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <span class="badge bg-info bg-opacity-10 text-info px-3 py-1 rounded-pill">
+                                            {{ row.subjects_count }} Subjects
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <strong class="text-primary me-2">{{ row.hours_per_week }} hrs</strong>
+                                            <div class="progress flex-grow-1 height-6px min-width-60px max-width-120px">
+                                                <div class="progress-bar bg-primary" role="progressbar" data-progress="{% if row.hours_per_week > 40 %}100{% else %}{{ row.hours_per_week }}{% endif %}" aria-valuenow="{{ row.hours_per_week }}" aria-valuemin="0" aria-valuemax="40"></div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            {% empty %}
+                                <tr>
+                                    <td colspan="6" class="text-center text-secondary py-4">No active faculty workload logged.</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+{% endblock %}
+
+{% block extra_css %}
+{% endblock %}
+
+{% block extra_js %}
+    {{ block.super }}
+    <script src="{% static 'js/charts.js' %}"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // 1. Admission Funnel Stages Donut Chart
+            const funnelCtx = document.getElementById("admissionFunnelChart");
+            if (funnelCtx) {
+                const funnelColors = {
+                    pending: "#3182ce",      // Blue
+                    under_review: "#805ad5", // Purple
+                    approved: "#319795",     // Teal
+                    rejected: "#e53e3e",     // Red
+                    converted: "#38a169"     // Green
+                };
+                new Chart(funnelCtx.getContext("2d"), {
+                    type: "doughnut",
+                    data: {
+                        labels: ["Pending", "Under Review", "Approved", "Rejected", "Converted"],
+                        datasets: [{
+                            data: [
+                                {{ funnel_metrics.pending|default:0 }},
+                                {{ funnel_metrics.under_review|default:0 }},
+                                {{ funnel_metrics.approved|default:0 }},
+                                {{ funnel_metrics.rejected|default:0 }},
+                                {{ funnel_metrics.converted|default:0 }}
+                            ],
+                            backgroundColor: [
+                                funnelColors.pending,
+                                funnelColors.under_review,
+                                funnelColors.approved,
+                                funnelColors.rejected,
+                                funnelColors.converted
+                            ],
+                            borderWidth: 2,
+                            borderColor: "#ffffff"
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                position: "right",
+                                labels: {
+                                    boxWidth: 12,
+                                    usePointStyle: true,
+                                    font: { size: 10 }
+                                }
+                            },
+                            tooltip: {
+                                callbacks: {
+                                    label: function(context) {
+                                        return context.label + ": " + context.raw + " Applications";
+                                    }
+                                }
+                            }
+                        },
+                        cutout: "60%"
+                    }
+                });
+            }
+
+            // 2. Monthly Applications and Conversions Bar Chart
+            const monthlyCtx = document.getElementById("admissionMonthlyTrendChart");
+            if (monthlyCtx) {
+                const monthlyLabels = [{% for item in monthly_trend %}"{{ item.month }}",{% endfor %}];
+                const applicationsData = [{% for item in monthly_trend %}{{ item.applications }},{% endfor %}];
+                const conversionsData = [{% for item in monthly_trend %}{{ item.conversions }},{% endfor %}];
+
+                new Chart(monthlyCtx.getContext("2d"), {
+                    type: "bar",
+                    data: {
+                        labels: monthlyLabels,
+                        datasets: [
+                            {
+                                label: "Applications",
+                                data: applicationsData,
+                                backgroundColor: "rgba(49, 130, 206, 0.75)",
+                                borderRadius: 4
+                            },
+                            {
+                                label: "Conversions",
+                                data: conversionsData,
+                                backgroundColor: "rgba(56, 161, 105, 0.75)",
+                                borderRadius: 4
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                position: "top",
+                                labels: { boxWidth: 10, font: { size: 10 } }
+                            },
+                            tooltip: {
+                                callbacks: {
+                                    label: function(context) {
+                                        return context.dataset.label + ": " + context.raw;
+                                    }
+                                }
+                            }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                ticks: { stepSize: 1, font: { size: 9 } }
+                            },
+                            x: {
+                                ticks: { font: { size: 9 } }
+                            }
+                        }
+                    }
+                });
+            }
+        });
+    </script>
+{% endblock %}
+

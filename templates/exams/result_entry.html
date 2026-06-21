@@ -1,0 +1,64 @@
+{% extends 'layouts/panel_base.html' %}
+{% load static %}
+
+{% block title %}Enter Result - {{ exam.name }} - Iqra Academy{% endblock %}
+
+{% block content %}
+<div class="container-fluid px-0">
+    <div class="p-4 rounded-4 mb-4 card border border-light shadow-sm animate-fade-in">
+        <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
+            <div>
+                <h3 class="fw-bold mb-1">
+                    <i class="fa-solid fa-keyboard me-2 text-primary"></i>
+                    Enter Result: {{ exam.name }}
+                </h3>
+                <p class="text-secondary mb-0">
+                    {{ exam.session.name }} &middot; Total Marks: {{ exam.total_marks }}
+                </p>
+            </div>
+            <a href="../" class="btn btn-outline-secondary rounded-3 px-4">
+                <i class="fa-solid fa-arrow-left me-2"></i> Back
+            </a>
+        </div>
+    </div>
+
+    {% if error %}
+    <div class="alert alert-danger alert-dismissible fade show rounded-3" role="alert">
+        <i class="fa-solid fa-circle-exclamation me-2"></i>{{ error }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+    {% endif %}
+
+    <div class="card p-4 border border-light shadow rounded-4 animate-fade-in stagger-1">
+        <form method="post" data-testid="result-entry-form">
+            {% csrf_token %}
+            <div class="row g-4">
+                <div class="col-12 col-md-6">
+                    <label for="student-id" class="form-label fw-semibold">Student ID <span class="text-danger">*</span></label>
+                    <input type="number" class="form-control" id="student-id" name="student_id" required>
+                </div>
+                <div class="col-12 col-md-6">
+                    <label for="obtained-marks" class="form-label fw-semibold">Marks Obtained <span class="text-danger">*</span></label>
+                    <input type="number" class="form-control" id="obtained-marks" name="obtained_marks" step="0.01" min="0" max="{{ exam.total_marks }}" required>
+                </div>
+                <div class="col-12 col-md-6">
+                    <label for="status" class="form-label fw-semibold">Status</label>
+                    <select class="form-select" id="status" name="status">
+                        <option value="Present" selected>Present</option>
+                        <option value="Absent">Absent</option>
+                    </select>
+                </div>
+                <div class="col-12 col-md-6">
+                    <label for="remarks" class="form-label fw-semibold">Remarks</label>
+                    <input type="text" class="form-control" id="remarks" name="remarks" placeholder="Optional remarks">
+                </div>
+            </div>
+            <div class="mt-4 pt-3 border-top d-flex justify-content-end">
+                <button type="submit" class="btn btn-primary rounded-3 px-4 shadow-sm">
+                    <i class="fa-solid fa-save me-2"></i> Save Result
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

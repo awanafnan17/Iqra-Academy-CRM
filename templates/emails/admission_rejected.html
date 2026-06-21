@@ -1,0 +1,14 @@
+{% extends "emails/base_email.html" %}
+
+{% block subject %}Admission Application Status Update{% endblock %}
+
+{% block content %}
+<h2 style="color: #b91c1c; margin-top: 0;">Admission Status Update</h2>
+<p>Dear {{ applicant_name }},</p>
+<p>Thank you for your interest in Iqra Academy. We have reviewed your application for <strong>{{ session_name }}</strong>.</p>
+<p>Regrettably, we are unable to offer you admission at this time. Your application status has been marked as <strong>Rejected</strong>.</p>
+{% if remarks %}
+<p><strong>Reviewer Remarks:</strong> {{ remarks }}</p>
+{% endif %}
+<p>We appreciate your interest in our programs and wish you the best of luck in your future academic endeavors.</p>
+{% endblock %}

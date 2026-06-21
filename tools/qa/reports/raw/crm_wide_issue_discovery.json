@@ -1,0 +1,2274 @@
+{
+  "metadata": {
+    "run_id": "RUN-642189",
+    "timestamp": "2026-06-21T01:56:22.642189",
+    "settings_module": "config.settings.test",
+    "database_engine": "django.db.backends.sqlite3",
+    "database_name": "db_test.sqlite3",
+    "git_tree_id": "working_tree"
+  },
+  "summary": {
+    "total_models": 37,
+    "audited_models": 24,
+    "total_forms": 19,
+    "audited_forms": 19,
+    "total_routes": 277,
+    "audited_routes": 87,
+    "total_templates": 124,
+    "audited_templates": 110,
+    "total_findings": 8
+  },
+  "matrix": {
+    "models": {
+      "academics.ClassSchedule": {
+        "status": "audited",
+        "reason": "Explicitly referenced and asserted in the QA test suite."
+      },
+      "academics.Session": {
+        "status": "audited",
+        "reason": "Explicitly referenced and asserted in the QA test suite."
+      },
+      "academics.Subject": {
+        "status": "audited",
+        "reason": "Explicitly referenced and asserted in the QA test suite."
+      },
+      "academics.TeacherAssignment": {
+        "status": "audited",
+        "reason": "Explicitly referenced and asserted in the QA test suite."
+      },
+      "accounts.CustomUser": {
+        "status": "audited",
+        "reason": "Explicitly referenced and asserted in the QA test suite."
+      },
+      "accounts.UserProfile": {
+        "status": "audited",
+        "reason": "Explicitly referenced and asserted in the QA test suite."
+      },
+      "achievements.Achievement": {
+        "status": "unaudited",
+        "reason": "No behavioral or state persistence tests cover this model under tools/qa/."
+      },
+      "admissions.AdmissionApplication": {
+        "status": "audited",
+        "reason": "Explicitly referenced and asserted in the QA test suite."
+      },
+      "admissions.AdmissionDocument": {
+        "status": "unaudited",
+        "reason": "No behavioral or state persistence tests cover this model under tools/qa/."
+      },
+      "ai_engine.ModelVersion": {
+        "status": "unaudited",
+        "reason": "No behavioral or state persistence tests cover this model under tools/qa/."
+      },
+      "ai_engine.PredictionLog": {
+        "status": "unaudited",
+        "reason": "No behavioral or state persistence tests cover this model under tools/qa/."
+      },
+      "attendance.AttendanceLock": {
+        "status": "unaudited",
+        "reason": "No behavioral or state persistence tests cover this model under tools/qa/."
+      },
+      "attendance.AttendanceRecord": {
+        "status": "unaudited",
+        "reason": "No behavioral or state persistence tests cover this model under tools/qa/."
+      },
+      "core.AuditLog": {
+        "status": "unaudited",
+        "reason": "No behavioral or state persistence tests cover this model under tools/qa/."
+      },
+      "core.RolePermission": {
+        "status": "unaudited",
+        "reason": "No behavioral or state persistence tests cover this model under tools/qa/."
+      },
+      "documents.ComparisonJob": {
+        "status": "unaudited",
+        "reason": "No behavioral or state persistence tests cover this model under tools/qa/."
+      },
+      "documents.ComparisonResult": {
+        "status": "unaudited",
+        "reason": "No behavioral or state persistence tests cover this model under tools/qa/."
+      },
+      "exams.Exam": {
+        "status": "audited",
+        "reason": "Explicitly referenced and asserted in the QA test suite."
+      },
+      "exams.ExamResult": {
+        "status": "audited",
+        "reason": "Explicitly referenced and asserted in the QA test suite."
+      },
+      "exams.GradeConfig": {
+        "status": "audited",
+        "reason": "Explicitly referenced and asserted in the QA test suite."
+      },
+      "finance.Expense": {
+        "status": "audited",
+        "reason": "Explicitly referenced and asserted in the QA test suite."
+      },
+      "finance.ExpenseCategory": {
+        "status": "audited",
+        "reason": "Explicitly referenced and asserted in the QA test suite."
+      },
+      "finance.FeeStructure": {
+        "status": "unaudited",
+        "reason": "No behavioral or state persistence tests cover this model under tools/qa/."
+      },
+      "finance.Installment": {
+        "status": "audited",
+        "reason": "Explicitly referenced and asserted in the QA test suite."
+      },
+      "finance.InstallmentPlan": {
+        "status": "audited",
+        "reason": "Explicitly referenced and asserted in the QA test suite."
+      },
+      "finance.Payment": {
+        "status": "audited",
+        "reason": "Explicitly referenced and asserted in the QA test suite."
+      },
+      "finance.Refund": {
+        "status": "audited",
+        "reason": "Explicitly referenced and asserted in the QA test suite."
+      },
+      "notifications.EmailLog": {
+        "status": "unaudited",
+        "reason": "No behavioral or state persistence tests cover this model under tools/qa/."
+      },
+      "notifications.Notification": {
+        "status": "audited",
+        "reason": "Explicitly referenced and asserted in the QA test suite."
+      },
+      "notifications.NotificationTemplate": {
+        "status": "audited",
+        "reason": "Explicitly referenced and asserted in the QA test suite."
+      },
+      "staff.FacultyProfile": {
+        "status": "audited",
+        "reason": "Explicitly referenced and asserted in the QA test suite."
+      },
+      "students.Enrollment": {
+        "status": "audited",
+        "reason": "Explicitly referenced and asserted in the QA test suite."
+      },
+      "students.Guardian": {
+        "status": "audited",
+        "reason": "Explicitly referenced and asserted in the QA test suite."
+      },
+      "students.Lead": {
+        "status": "audited",
+        "reason": "Explicitly referenced and asserted in the QA test suite."
+      },
+      "students.Student": {
+        "status": "audited",
+        "reason": "Explicitly referenced and asserted in the QA test suite."
+      },
+      "students.StudentAchievement": {
+        "status": "unaudited",
+        "reason": "No behavioral or state persistence tests cover this model under tools/qa/."
+      },
+      "students.StudentDocument": {
+        "status": "audited",
+        "reason": "Explicitly referenced and asserted in the QA test suite."
+      }
+    },
+    "forms": {
+      "academics.ClassScheduleForm": {
+        "status": "audited",
+        "reason": "Form fields and mutation tests verify data propagation."
+      },
+      "academics.SessionForm": {
+        "status": "audited",
+        "reason": "Form fields and mutation tests verify data propagation."
+      },
+      "accounts.UserProfileForm": {
+        "status": "audited",
+        "reason": "Form fields and mutation tests verify data propagation."
+      },
+      "admissions.AdmissionApplicationForm": {
+        "status": "audited",
+        "reason": "Form fields and mutation tests verify data propagation."
+      },
+      "finance.ExpenseCategoryForm": {
+        "status": "audited",
+        "reason": "Form fields and mutation tests verify data propagation."
+      },
+      "finance.ExpenseForm": {
+        "status": "audited",
+        "reason": "Form fields and mutation tests verify data propagation."
+      },
+      "finance.InstallmentPlanForm": {
+        "status": "audited",
+        "reason": "Form fields and mutation tests verify data propagation."
+      },
+      "finance.PaymentForm": {
+        "status": "audited",
+        "reason": "Form fields and mutation tests verify data propagation."
+      },
+      "finance.RefundForm": {
+        "status": "audited",
+        "reason": "Form fields and mutation tests verify data propagation."
+      },
+      "notifications.NotificationTemplateForm": {
+        "status": "audited",
+        "reason": "Form fields and mutation tests verify data propagation."
+      },
+      "staff.FacultyAssignSessionForm": {
+        "status": "audited",
+        "reason": "Form fields and mutation tests verify data propagation."
+      },
+      "staff.FacultyProfileForm": {
+        "status": "audited",
+        "reason": "Form fields and mutation tests verify data propagation."
+      },
+      "staff.UserCreateForm": {
+        "status": "audited",
+        "reason": "Form fields and mutation tests verify data propagation."
+      },
+      "students.EnrollmentForm": {
+        "status": "audited",
+        "reason": "Form fields and mutation tests verify data propagation."
+      },
+      "students.GuardianForm": {
+        "status": "audited",
+        "reason": "Form fields and mutation tests verify data propagation."
+      },
+      "students.LeadForm": {
+        "status": "audited",
+        "reason": "Form fields and mutation tests verify data propagation."
+      },
+      "students.StudentCreateForm": {
+        "status": "audited",
+        "reason": "Form fields and mutation tests verify data propagation."
+      },
+      "students.StudentDocumentForm": {
+        "status": "audited",
+        "reason": "Form fields and mutation tests verify data propagation."
+      },
+      "students.StudentForm": {
+        "status": "audited",
+        "reason": "Form fields and mutation tests verify data propagation."
+      }
+    },
+    "routes": {
+      "/accounts/login/": {
+        "name": "login",
+        "status": "audited",
+        "reason": "Accessed or asserted in crawler or authentication matrix."
+      },
+      "/accounts/logout/": {
+        "name": "logout",
+        "status": "audited",
+        "reason": "Accessed or asserted in crawler or authentication matrix."
+      },
+      "/accounts/post-login/": {
+        "name": "post_login_redirect",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/accounts/password/change/": {
+        "name": "password_change",
+        "status": "audited",
+        "reason": "Accessed or asserted in crawler or authentication matrix."
+      },
+      "/accounts/password/change/done/": {
+        "name": "password_change_done",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/accounts/profile/": {
+        "name": "profile_view",
+        "status": "audited",
+        "reason": "Accessed or asserted in crawler or authentication matrix."
+      },
+      "/accounts/profile/edit/": {
+        "name": "profile_edit",
+        "status": "audited",
+        "reason": "Accessed or asserted in crawler or authentication matrix."
+      },
+      "/panel/admin/reports/": {
+        "name": "dashboard",
+        "status": "audited",
+        "reason": "Accessed or asserted in crawler or authentication matrix."
+      },
+      "/panel/admin/reports/pending-dues/csv/": {
+        "name": "pending_dues_csv",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/panel/admin/reports/pending-dues/pdf/": {
+        "name": "pending_dues_pdf",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/panel/admin/reports/session-results/<int:session_id>/csv/": {
+        "name": "session_results_csv",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/panel/admin/reports/session-results/<int:session_id>/pdf/": {
+        "name": "session_results_pdf",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/panel/admin/reports/student-directory/csv/": {
+        "name": "student_directory_csv",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/panel/admin/reports/teacher-workload/csv/": {
+        "name": "teacher_workload_csv",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/panel/admin/reports/teacher-workload/pdf/": {
+        "name": "teacher_workload_pdf",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/panel/admin/reports/success/csv/": {
+        "name": "success_csv",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/panel/admin/reports/success/pdf/": {
+        "name": "success_pdf",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/panel/admin/reports/student/<int:student_id>/transcript/pdf/": {
+        "name": "student_transcript_pdf",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/panel/admin/dashboard/": {
+        "name": "dashboard",
+        "status": "audited",
+        "reason": "Accessed or asserted in crawler or authentication matrix."
+      },
+      "/panel/admin/permissions/": {
+        "name": "permissions",
+        "status": "audited",
+        "reason": "Accessed or asserted in crawler or authentication matrix."
+      },
+      "/panel/admin/session-overview/": {
+        "name": "session_overview",
+        "status": "audited",
+        "reason": "Accessed or asserted in crawler or authentication matrix."
+      },
+      "/panel/admin/faculty-overview/": {
+        "name": "faculty_overview",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/panel/admin/timetable-overview/": {
+        "name": "timetable_overview",
+        "status": "audited",
+        "reason": "Accessed or asserted in crawler or authentication matrix."
+      },
+      "/panel/admin/exam-overview/": {
+        "name": "exam_overview",
+        "status": "audited",
+        "reason": "Accessed or asserted in crawler or authentication matrix."
+      },
+      "/panel/admin/success/": {
+        "name": "success_dashboard",
+        "status": "audited",
+        "reason": "Accessed or asserted in crawler or authentication matrix."
+      },
+      "/panel/admin/session/<int:pk>/results/": {
+        "name": "session_result_summary",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/panel/admin/pending-dues/": {
+        "name": "pending_dues",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/panel/admin/users/": {
+        "name": "user_list",
+        "status": "audited",
+        "reason": "Accessed or asserted in crawler or authentication matrix."
+      },
+      "/panel/admin/users/<int:pk>/toggle-activation/": {
+        "name": "user_toggle_activation",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/panel/admin/users/<int:pk>/toggle-lock/": {
+        "name": "user_toggle_lock",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/panel/admin/users/<int:pk>/reset-password/": {
+        "name": "user_reset_password",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/panel/admin/users/<int:pk>/assign-role/": {
+        "name": "user_assign_role",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/panel/admin/users/<int:pk>/assign-session/": {
+        "name": "user_assign_session",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/panel/admin/timetable/": {
+        "name": "timetable_list",
+        "status": "audited",
+        "reason": "Accessed or asserted in crawler or authentication matrix."
+      },
+      "/panel/admin/timetable/create/": {
+        "name": "timetable_create",
+        "status": "audited",
+        "reason": "Accessed or asserted in crawler or authentication matrix."
+      },
+      "/panel/admin/timetable/<int:pk>/edit/": {
+        "name": "timetable_edit",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/panel/admin/timetable/<int:pk>/toggle-status/": {
+        "name": "timetable_toggle_status",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/panel/admin/students/<int:pk>/reset-password/": {
+        "name": "student_reset_password",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/panel/admin/students/<int:pk>/create-login/": {
+        "name": "student_create_login",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/panel/admin/add-student/": {
+        "name": "add_student",
+        "status": "audited",
+        "reason": "Accessed or asserted in crawler or authentication matrix."
+      },
+      "/panel/admin/manage-students/": {
+        "name": "manage_students",
+        "status": "audited",
+        "reason": "Accessed or asserted in crawler or authentication matrix."
+      },
+      "/panel/admin/add-session/": {
+        "name": "add_session",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/panel/admin/sessions/": {
+        "name": "session_list",
+        "status": "audited",
+        "reason": "Accessed or asserted in crawler or authentication matrix."
+      },
+      "/panel/admin/sessions/create/": {
+        "name": "session_create",
+        "status": "audited",
+        "reason": "Accessed or asserted in crawler or authentication matrix."
+      },
+      "/panel/admin/sessions/<int:pk>/": {
+        "name": "session_detail",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/panel/admin/sessions/<int:pk>/edit/": {
+        "name": "session_edit",
+        "status": "audited",
+        "reason": "Accessed or asserted in crawler or authentication matrix."
+      },
+      "/panel/admin/sessions/<int:pk>/results/": {
+        "name": "session_result",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/panel/admin/manage-faculty/": {
+        "name": "faculty_list",
+        "status": "audited",
+        "reason": "Accessed or asserted in crawler or authentication matrix."
+      },
+      "/panel/admin/manage-faculty/create/": {
+        "name": "faculty_create",
+        "status": "audited",
+        "reason": "Accessed or asserted in crawler or authentication matrix."
+      },
+      "/panel/admin/manage-faculty/<int:pk>/assign/": {
+        "name": "faculty_assign",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/panel/admin/analytics/": {
+        "name": "analytics",
+        "status": "audited",
+        "reason": "Accessed or asserted in crawler or authentication matrix."
+      },
+      "/panel/admin/automation/alerts/": {
+        "name": "automation_alerts",
+        "status": "audited",
+        "reason": "Accessed or asserted in crawler or authentication matrix."
+      },
+      "/panel/admin/automation/jobs/": {
+        "name": "automation_jobs",
+        "status": "audited",
+        "reason": "Accessed or asserted in crawler or authentication matrix."
+      },
+      "/panel/admin/reports-dashboard/": {
+        "name": "reports_dashboard",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/panel/admin/finance/installments/<int:pk>/pay/": {
+        "name": "installment_pay",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/panel/admin/students/": {
+        "name": "student_list",
+        "status": "audited",
+        "reason": "Accessed or asserted in crawler or authentication matrix."
+      },
+      "/panel/admin/students/create/": {
+        "name": "student_create",
+        "status": "audited",
+        "reason": "Accessed or asserted in crawler or authentication matrix."
+      },
+      "/panel/admin/students/<int:pk>/": {
+        "name": "student_detail",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/panel/admin/students/<int:pk>/edit/": {
+        "name": "student_edit",
+        "status": "audited",
+        "reason": "Accessed or asserted in crawler or authentication matrix."
+      },
+      "/panel/admin/students/<int:pk>/delete/": {
+        "name": "student_delete",
+        "status": "partially audited",
+        "reason": "Exclusion manifest applies; verified separately via client requests to prevent session disruption."
+      },
+      "/panel/admin/students/<int:pk>/restore/": {
+        "name": "student_restore",
+        "status": "partially audited",
+        "reason": "Exclusion manifest applies; verified separately via client requests to prevent session disruption."
+      },
+      "/panel/admin/students/<int:pk>/documents/": {
+        "name": "student_documents",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/panel/admin/students/<int:pk>/documents/upload/": {
+        "name": "student_document_upload",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/panel/admin/students/<int:pk>/guardians/": {
+        "name": "student_guardians",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/panel/admin/students/<int:pk>/ledger/": {
+        "name": "student_ledger",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/panel/admin/students/leads/": {
+        "name": "lead_list",
+        "status": "audited",
+        "reason": "Accessed or asserted in crawler or authentication matrix."
+      },
+      "/panel/admin/students/leads/create/": {
+        "name": "lead_create",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/panel/admin/students/leads/<int:pk>/": {
+        "name": "lead_detail",
+        "status": "audited",
+        "reason": "Accessed or asserted in crawler or authentication matrix."
+      },
+      "/panel/admin/students/leads/<int:pk>/edit/": {
+        "name": "lead_edit",
+        "status": "audited",
+        "reason": "Accessed or asserted in crawler or authentication matrix."
+      },
+      "/panel/admin/students/leads/<int:pk>/convert/": {
+        "name": "lead_convert",
+        "status": "audited",
+        "reason": "Accessed or asserted in crawler or authentication matrix."
+      },
+      "/panel/admin/students/enrollments/": {
+        "name": "enrollment_list",
+        "status": "audited",
+        "reason": "Accessed or asserted in crawler or authentication matrix."
+      },
+      "/panel/admin/students/enrollments/create/": {
+        "name": "enrollment_create",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/panel/admin/students/enrollments/<int:pk>/": {
+        "name": "enrollment_detail",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/panel/admin/students/enrollments/<int:pk>/withdraw/": {
+        "name": "enrollment_withdraw",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/panel/admin/students/enrollments/<int:pk>/restore/": {
+        "name": "enrollment_restore",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/panel/admin/students/enrollments/<int:pk>/freeze/": {
+        "name": "enrollment_freeze",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/panel/admin/students/enrollments/<int:pk>/unfreeze/": {
+        "name": "enrollment_unfreeze",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/panel/admin/students/enrollments/<int:pk>/transfer/": {
+        "name": "enrollment_transfer",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/panel/admin/academics/sessions/create/": {
+        "name": "session_create",
+        "status": "audited",
+        "reason": "Accessed or asserted in crawler or authentication matrix."
+      },
+      "/panel/admin/academics/sessions/<int:pk>/": {
+        "name": "session_detail",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/panel/admin/academics/sessions/<int:pk>/edit/": {
+        "name": "session_edit",
+        "status": "audited",
+        "reason": "Accessed or asserted in crawler or authentication matrix."
+      },
+      "/panel/admin/academics/sessions/<int:pk>/toggle-status/": {
+        "name": "session_toggle_status",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/panel/admin/academics/sessions/<int:pk>/delete/": {
+        "name": "session_delete",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/panel/admin/academics/sessions/<int:pk>/enrollments/": {
+        "name": "session_enrollments",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/panel/admin/academics/sessions/<int:pk>/revenue/": {
+        "name": "session_revenue",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/panel/admin/academics/subjects/create/": {
+        "name": "subject_create",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/panel/admin/academics/subjects/<int:pk>/edit/": {
+        "name": "subject_edit",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/panel/admin/academics/assignments/create/": {
+        "name": "assignment_create",
+        "status": "audited",
+        "reason": "Accessed or asserted in crawler or authentication matrix."
+      },
+      "/panel/admin/academics/assignments/<int:pk>/edit/": {
+        "name": "assignment_edit",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/panel/admin/academics/assignments/<int:pk>/delete/": {
+        "name": "assignment_delete",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/panel/admin/attendance/": {
+        "name": "attendance_overview",
+        "status": "audited",
+        "reason": "Accessed or asserted in crawler or authentication matrix."
+      },
+      "/panel/admin/attendance/mark/<int:session_id>/": {
+        "name": "attendance_mark",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/panel/admin/attendance/<int:session_id>/date/<str:date>/": {
+        "name": "attendance_sheet",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/panel/admin/attendance/<int:session_id>/lock/": {
+        "name": "attendance_lock",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/panel/admin/attendance/<int:session_id>/unlock/": {
+        "name": "attendance_unlock",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/panel/admin/attendance/<int:session_id>/analytics/": {
+        "name": "attendance_analytics",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/panel/admin/attendance/low-attendance/": {
+        "name": "low_attendance_report",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/panel/admin/exams/": {
+        "name": "exam_list",
+        "status": "audited",
+        "reason": "Accessed or asserted in crawler or authentication matrix."
+      },
+      "/panel/admin/exams/create/": {
+        "name": "exam_create",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/panel/admin/exams/<int:pk>/": {
+        "name": "exam_detail",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/panel/admin/exams/<int:pk>/edit/": {
+        "name": "exam_edit",
+        "status": "audited",
+        "reason": "Accessed or asserted in crawler or authentication matrix."
+      },
+      "/panel/admin/exams/<int:pk>/review/": {
+        "name": "exam_review",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/panel/admin/exams/<int:pk>/publish/": {
+        "name": "exam_publish",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/panel/admin/exams/<int:pk>/results/entry/": {
+        "name": "exam_results_entry",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/panel/admin/exams/<int:pk>/results/bulk-entry/": {
+        "name": "exam_results_bulk_entry",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/panel/admin/exams/<int:pk>/statistics/": {
+        "name": "exam_statistics",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/panel/admin/exams/grade-config/": {
+        "name": "grade_config_list",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/panel/admin/exams/grade-config/create/": {
+        "name": "grade_config_create",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/panel/admin/exams/grade-config/<int:pk>/edit/": {
+        "name": "grade_config_edit",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/panel/admin/finance/payments/": {
+        "name": "payment_list",
+        "status": "audited",
+        "reason": "Accessed or asserted in crawler or authentication matrix."
+      },
+      "/panel/admin/finance/payments/create/": {
+        "name": "payment_create",
+        "status": "audited",
+        "reason": "Accessed or asserted in crawler or authentication matrix."
+      },
+      "/panel/admin/finance/payments/<int:pk>/": {
+        "name": "payment_detail",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/panel/admin/finance/payments/<int:pk>/delete/": {
+        "name": "payment_delete",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/panel/admin/finance/expenses/": {
+        "name": "expense_list",
+        "status": "audited",
+        "reason": "Accessed or asserted in crawler or authentication matrix."
+      },
+      "/panel/admin/finance/expenses/create/": {
+        "name": "expense_create",
+        "status": "audited",
+        "reason": "Accessed or asserted in crawler or authentication matrix."
+      },
+      "/panel/admin/finance/expenses/categories/": {
+        "name": "expense_category_list",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/panel/admin/finance/expenses/categories/create/": {
+        "name": "expense_category_create",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/panel/admin/finance/expenses/<int:pk>/": {
+        "name": "expense_detail",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/panel/admin/finance/expenses/<int:pk>/approve/": {
+        "name": "expense_approve",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/panel/admin/finance/expenses/<int:pk>/reject/": {
+        "name": "expense_reject",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/panel/admin/finance/refunds/": {
+        "name": "refund_list",
+        "status": "audited",
+        "reason": "Accessed or asserted in crawler or authentication matrix."
+      },
+      "/panel/admin/finance/refunds/create/": {
+        "name": "refund_create",
+        "status": "audited",
+        "reason": "Accessed or asserted in crawler or authentication matrix."
+      },
+      "/panel/admin/finance/installments/": {
+        "name": "installment_plan_list",
+        "status": "audited",
+        "reason": "Accessed or asserted in crawler or authentication matrix."
+      },
+      "/panel/admin/finance/installments/create/": {
+        "name": "installment_plan_create",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/panel/admin/finance/installments/<int:pk>/": {
+        "name": "installment_plan_detail",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/panel/admin/finance/installments/<int:pk>/restructure/": {
+        "name": "installment_restructure",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/panel/admin/finance/installments/pay/<int:pk>/": {
+        "name": "installment_pay",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/panel/admin/finance/overdue/": {
+        "name": "overdue_list",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/panel/admin/finance/late-fees/apply/": {
+        "name": "late_fee_apply",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/panel/admin/finance/late-fees/waive/<int:pk>/": {
+        "name": "late_fee_waive",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/panel/admin/finance/send-fee-reminder/": {
+        "name": "send_fee_reminder",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/panel/admin/notifications/": {
+        "name": "notification_list",
+        "status": "audited",
+        "reason": "Accessed or asserted in crawler or authentication matrix."
+      },
+      "/panel/admin/notifications/<int:pk>/": {
+        "name": "notification_detail",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/panel/admin/notifications/mark-read/": {
+        "name": "notification_mark_read",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/panel/admin/notifications/unread-count/": {
+        "name": "unread_count_api",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/panel/admin/notifications/bulk-send/": {
+        "name": "notification_bulk_send",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/panel/admin/notifications/templates/": {
+        "name": "template_list",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/panel/admin/notifications/templates/create/": {
+        "name": "template_create",
+        "status": "audited",
+        "reason": "Accessed or asserted in crawler or authentication matrix."
+      },
+      "/panel/admin/notifications/templates/<int:pk>/edit/": {
+        "name": "template_edit",
+        "status": "audited",
+        "reason": "Accessed or asserted in crawler or authentication matrix."
+      },
+      "/panel/admin/notifications/email-logs/": {
+        "name": "email_log_list",
+        "status": "audited",
+        "reason": "Accessed or asserted in crawler or authentication matrix."
+      },
+      "/panel/admin/documents/": {
+        "name": "",
+        "status": "audited",
+        "reason": "Accessed or asserted in crawler or authentication matrix."
+      },
+      "/panel/admin/documents/jobs/": {
+        "name": "comparison_job_list",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/panel/admin/documents/jobs/create/": {
+        "name": "comparison_job_create",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/panel/admin/documents/jobs/<int:pk>/": {
+        "name": "comparison_job_detail",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/panel/admin/documents/jobs/<int:pk>/results/": {
+        "name": "comparison_results",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/panel/admin/ai/predictions/": {
+        "name": "prediction_list",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/panel/admin/ai/predictions/<int:pk>/": {
+        "name": "prediction_detail",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/panel/admin/ai/predictions/<int:pk>/acknowledge/": {
+        "name": "prediction_acknowledge",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/panel/admin/ai/models/": {
+        "name": "model_version_list",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/panel/admin/ai/dropout-risk/": {
+        "name": "dropout_risk_dashboard",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/panel/admin/reports/revenue/": {
+        "name": "report_revenue",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/panel/admin/reports/attendance/": {
+        "name": "report_attendance",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/panel/admin/reports/enrollment/": {
+        "name": "report_enrollment",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/panel/admin/reports/overdue/": {
+        "name": "report_overdue",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/panel/admin/reports/export/students/": {
+        "name": "export_students_csv",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/panel/admin/reports/export/payments/": {
+        "name": "export_payments_csv",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/panel/admin/reports/export/attendance/": {
+        "name": "export_attendance_csv",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/panel/admin/reports/pdf/ledger/<int:enrollment_id>/": {
+        "name": "pdf_student_ledger",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/panel/admin/reports/pdf/attendance/<int:session_id>/": {
+        "name": "pdf_attendance_report",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/panel/admin/audit/": {
+        "name": "audit_log_list",
+        "status": "audited",
+        "reason": "Accessed or asserted in crawler or authentication matrix."
+      },
+      "/panel/admin/audit/<int:pk>/": {
+        "name": "audit_log_detail",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/panel/admin/pdf-comparison/": {
+        "name": "pdf_comparison",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/panel/admin/pdf-comparison/export/<int:job_id>/": {
+        "name": "export_comparison_csv",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/panel/admin/admissions/": {
+        "name": "admission_list",
+        "status": "audited",
+        "reason": "Accessed or asserted in crawler or authentication matrix."
+      },
+      "/panel/admin/admissions/<int:pk>/": {
+        "name": "admission_detail",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/panel/admin/admissions/<int:pk>/review/": {
+        "name": "admission_review",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/panel/admin/admissions/<int:pk>/approve/": {
+        "name": "admission_approve",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/panel/admin/admissions/<int:pk>/reject/": {
+        "name": "admission_reject",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/panel/admin/admissions/<int:pk>/convert/": {
+        "name": "admission_convert",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/panel/admin/admissions/summary/": {
+        "name": "admission_summary",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/panel/admin/admissions/export/": {
+        "name": "admission_export",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/panel/principal/dashboard/": {
+        "name": "dashboard",
+        "status": "audited",
+        "reason": "Accessed or asserted in crawler or authentication matrix."
+      },
+      "/panel/teacher/dashboard/": {
+        "name": "dashboard",
+        "status": "audited",
+        "reason": "Accessed or asserted in crawler or authentication matrix."
+      },
+      "/panel/teacher/my-timetable/": {
+        "name": "my_timetable",
+        "status": "audited",
+        "reason": "Accessed or asserted in crawler or authentication matrix."
+      },
+      "/panel/teacher/sessions/": {
+        "name": "my_sessions",
+        "status": "audited",
+        "reason": "Accessed or asserted in crawler or authentication matrix."
+      },
+      "/panel/teacher/sessions/<int:pk>/": {
+        "name": "session_detail",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/panel/teacher/sessions/<int:pk>/students/": {
+        "name": "session_students",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/panel/teacher/attendance/mark/<int:session_id>/": {
+        "name": "attendance_mark",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/panel/teacher/attendance/<int:session_id>/date/<str:date>/": {
+        "name": "attendance_sheet",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/panel/teacher/attendance/<int:session_id>/analytics/": {
+        "name": "attendance_analytics",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/panel/teacher/exams/": {
+        "name": "my_exams",
+        "status": "audited",
+        "reason": "Accessed or asserted in crawler or authentication matrix."
+      },
+      "/panel/teacher/exams/create/": {
+        "name": "exam_create",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/panel/teacher/exams/<int:pk>/": {
+        "name": "exam_detail",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/panel/teacher/exams/<int:pk>/edit/": {
+        "name": "exam_edit",
+        "status": "audited",
+        "reason": "Accessed or asserted in crawler or authentication matrix."
+      },
+      "/panel/teacher/exams/<int:pk>/results/entry/": {
+        "name": "exam_results_entry",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/panel/teacher/exams/<int:pk>/results/": {
+        "name": "exam_results",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/panel/teacher/notifications/": {
+        "name": "notification_list",
+        "status": "audited",
+        "reason": "Accessed or asserted in crawler or authentication matrix."
+      },
+      "/panel/teacher/notifications/<int:pk>/": {
+        "name": "notification_detail",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/panel/teacher/notifications/mark-read/": {
+        "name": "notification_mark_read",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/panel/teacher/profile/": {
+        "name": "profile_view",
+        "status": "audited",
+        "reason": "Accessed or asserted in crawler or authentication matrix."
+      },
+      "/panel/teacher/profile/edit/": {
+        "name": "profile_edit",
+        "status": "audited",
+        "reason": "Accessed or asserted in crawler or authentication matrix."
+      },
+      "/panel/accounts/dashboard/": {
+        "name": "dashboard",
+        "status": "audited",
+        "reason": "Accessed or asserted in crawler or authentication matrix."
+      },
+      "/panel/accounts/pending-dues/": {
+        "name": "pending_dues",
+        "status": "audited",
+        "reason": "Accessed or asserted in crawler or authentication matrix."
+      },
+      "/panel/accounts/payments/": {
+        "name": "payment_list",
+        "status": "audited",
+        "reason": "Accessed or asserted in crawler or authentication matrix."
+      },
+      "/panel/accounts/payments/create/": {
+        "name": "payment_create",
+        "status": "audited",
+        "reason": "Accessed or asserted in crawler or authentication matrix."
+      },
+      "/panel/accounts/payments/<int:pk>/": {
+        "name": "payment_detail",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/panel/accounts/expenses/": {
+        "name": "expense_list",
+        "status": "audited",
+        "reason": "Accessed or asserted in crawler or authentication matrix."
+      },
+      "/panel/accounts/expenses/create/": {
+        "name": "expense_create",
+        "status": "audited",
+        "reason": "Accessed or asserted in crawler or authentication matrix."
+      },
+      "/panel/accounts/expenses/<int:pk>/": {
+        "name": "expense_detail",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/panel/accounts/refunds/": {
+        "name": "refund_list",
+        "status": "audited",
+        "reason": "Accessed or asserted in crawler or authentication matrix."
+      },
+      "/panel/accounts/refunds/create/": {
+        "name": "refund_create",
+        "status": "audited",
+        "reason": "Accessed or asserted in crawler or authentication matrix."
+      },
+      "/panel/accounts/installments/": {
+        "name": "installment_plan_list",
+        "status": "audited",
+        "reason": "Accessed or asserted in crawler or authentication matrix."
+      },
+      "/panel/accounts/installments/create/": {
+        "name": "installment_plan_create",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/panel/accounts/installments/<int:pk>/": {
+        "name": "installment_plan_detail",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/panel/accounts/installments/<int:pk>/restructure/": {
+        "name": "installment_restructure",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/panel/accounts/installments/<int:pk>/pay/": {
+        "name": "installment_pay",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/panel/accounts/overdue/": {
+        "name": "overdue_list",
+        "status": "audited",
+        "reason": "Accessed or asserted in crawler or authentication matrix."
+      },
+      "/panel/accounts/late-fees/apply/": {
+        "name": "late_fee_apply",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/panel/accounts/late-fees/waive/": {
+        "name": "late_fee_waive",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/panel/accounts/categories/": {
+        "name": "expense_category_list",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/panel/accounts/categories/create/": {
+        "name": "expense_category_create",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/panel/accounts/students/<int:pk>/ledger/": {
+        "name": "student_ledger",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/panel/accounts/reports/": {
+        "name": "reports_dashboard",
+        "status": "audited",
+        "reason": "Accessed or asserted in crawler or authentication matrix."
+      },
+      "/panel/accounts/reports/pending-dues/csv/": {
+        "name": "pending_dues_csv",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/panel/accounts/reports/pending-dues/pdf/": {
+        "name": "pending_dues_pdf",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/panel/accounts/reports/revenue/": {
+        "name": "report_revenue",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/panel/accounts/reports/overdue/": {
+        "name": "report_overdue",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/panel/accounts/notifications/": {
+        "name": "notification_list",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/panel/accounts/notifications/mark-read/": {
+        "name": "notification_mark_read",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/panel/registrar/dashboard/": {
+        "name": "dashboard",
+        "status": "audited",
+        "reason": "Accessed or asserted in crawler or authentication matrix."
+      },
+      "/panel/registrar/students/": {
+        "name": "student_list",
+        "status": "audited",
+        "reason": "Accessed or asserted in crawler or authentication matrix."
+      },
+      "/panel/registrar/students/create/": {
+        "name": "student_create",
+        "status": "audited",
+        "reason": "Accessed or asserted in crawler or authentication matrix."
+      },
+      "/panel/registrar/students/<int:pk>/": {
+        "name": "student_detail",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/panel/registrar/students/<int:pk>/edit/": {
+        "name": "student_edit",
+        "status": "audited",
+        "reason": "Accessed or asserted in crawler or authentication matrix."
+      },
+      "/panel/registrar/students/<int:pk>/documents/upload/": {
+        "name": "student_document_upload",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/panel/registrar/students/<int:pk>/guardians/": {
+        "name": "student_guardians",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/panel/registrar/leads/": {
+        "name": "lead_list",
+        "status": "audited",
+        "reason": "Accessed or asserted in crawler or authentication matrix."
+      },
+      "/panel/registrar/leads/create/": {
+        "name": "lead_create",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/panel/registrar/leads/<int:pk>/": {
+        "name": "lead_detail",
+        "status": "audited",
+        "reason": "Accessed or asserted in crawler or authentication matrix."
+      },
+      "/panel/registrar/leads/<int:pk>/edit/": {
+        "name": "lead_edit",
+        "status": "audited",
+        "reason": "Accessed or asserted in crawler or authentication matrix."
+      },
+      "/panel/registrar/leads/<int:pk>/convert/": {
+        "name": "lead_convert",
+        "status": "audited",
+        "reason": "Accessed or asserted in crawler or authentication matrix."
+      },
+      "/panel/registrar/enrollments/create/": {
+        "name": "enrollment_create",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/panel/registrar/enrollments/<int:pk>/": {
+        "name": "enrollment_detail",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/panel/registrar/sessions/": {
+        "name": "session_list",
+        "status": "audited",
+        "reason": "Accessed or asserted in crawler or authentication matrix."
+      },
+      "/panel/registrar/sessions/<int:pk>/": {
+        "name": "session_detail",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/panel/registrar/notifications/": {
+        "name": "notification_list",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/panel/registrar/notifications/mark-read/": {
+        "name": "notification_mark_read",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/panel/registrar/admissions/": {
+        "name": "admission_list",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/panel/registrar/admissions/<int:pk>/": {
+        "name": "admission_detail",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/panel/registrar/admissions/<int:pk>/review/": {
+        "name": "admission_review",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/panel/registrar/admissions/<int:pk>/approve/": {
+        "name": "admission_approve",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/panel/registrar/admissions/<int:pk>/reject/": {
+        "name": "admission_reject",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/panel/registrar/admissions/<int:pk>/convert/": {
+        "name": "admission_convert",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/panel/registrar/admissions/summary/": {
+        "name": "admission_summary",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/panel/registrar/admissions/export/": {
+        "name": "admission_export",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/portal/student/dashboard/": {
+        "name": "dashboard",
+        "status": "audited",
+        "reason": "Accessed or asserted in crawler or authentication matrix."
+      },
+      "/portal/student/profile/": {
+        "name": "profile_view",
+        "status": "audited",
+        "reason": "Accessed or asserted in crawler or authentication matrix."
+      },
+      "/portal/student/enrollment/": {
+        "name": "my_enrollment",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/portal/student/attendance/": {
+        "name": "my_attendance",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/portal/student/exams/": {
+        "name": "my_exams",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/portal/student/exams/<int:pk>/": {
+        "name": "exam_result_detail",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/portal/student/transcript/": {
+        "name": "student_transcript",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/portal/student/transcript/pdf/": {
+        "name": "student_transcript_pdf",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/portal/student/payments/": {
+        "name": "my_payments",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/portal/student/fees/": {
+        "name": "my_fees",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/portal/student/fees/<int:payment_id>/receipt/": {
+        "name": "download_receipt",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/portal/student/timetable/": {
+        "name": "timetable",
+        "status": "audited",
+        "reason": "Accessed or asserted in crawler or authentication matrix."
+      },
+      "/portal/student/notifications/": {
+        "name": "notification_list",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/portal/student/notifications/<int:pk>/": {
+        "name": "notification_detail",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/portal/student/notifications/mark-read/": {
+        "name": "notification_mark_read",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/portal/student/password/": {
+        "name": "password_change",
+        "status": "audited",
+        "reason": "Accessed or asserted in crawler or authentication matrix."
+      },
+      "/portal/guardian/dashboard/": {
+        "name": "dashboard",
+        "status": "audited",
+        "reason": "Accessed or asserted in crawler or authentication matrix."
+      },
+      "/portal/guardian/children/": {
+        "name": "my_children",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/portal/guardian/child/<int:student_id>/profile/": {
+        "name": "child_detail",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/portal/guardian/child/<int:student_id>/attendance/": {
+        "name": "child_attendance",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/portal/guardian/child/<int:student_id>/fees/": {
+        "name": "child_payments",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/portal/guardian/child/<int:student_id>/exams/": {
+        "name": "child_exams",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/portal/guardian/child/<int:student_id>/transcript/": {
+        "name": "child_transcript",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/portal/guardian/child/<int:student_id>/transcript/pdf/": {
+        "name": "child_transcript_pdf",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/portal/guardian/child/<int:student_id>/fees/<int:payment_id>/receipt/": {
+        "name": "download_receipt",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/portal/guardian/children/<int:student_id>/": {
+        "name": "child_detail_old",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/portal/guardian/children/<int:student_id>/attendance/": {
+        "name": "child_attendance_old",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/portal/guardian/children/<int:student_id>/payments/": {
+        "name": "child_payments_old",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/portal/guardian/children/<int:student_id>/exams/": {
+        "name": "child_exams_old",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/portal/guardian/notifications/": {
+        "name": "notification_list",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/portal/guardian/notifications/<int:pk>/": {
+        "name": "notification_detail",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      },
+      "/portal/guardian/notifications/mark-read/": {
+        "name": "notification_mark_read",
+        "status": "unaudited",
+        "reason": "No automated test makes requests to this route."
+      }
+    },
+    "templates": {
+      "academics/session_detail.html": {
+        "status": "audited",
+        "reason": "Template file exists and is rendered by at least one view."
+      },
+      "academics/session_form.html": {
+        "status": "audited",
+        "reason": "Template file exists and is rendered by at least one view."
+      },
+      "academics/session_list.html": {
+        "status": "unaudited",
+        "reason": "Template exists in files but view mapping is missing or unused."
+      },
+      "academics/timetable_form.html": {
+        "status": "audited",
+        "reason": "Template file exists and is rendered by at least one view."
+      },
+      "academics/timetable_list.html": {
+        "status": "audited",
+        "reason": "Template file exists and is rendered by at least one view."
+      },
+      "academics/timetable_student.html": {
+        "status": "audited",
+        "reason": "Template file exists and is rendered by at least one view."
+      },
+      "academics/timetable_teacher.html": {
+        "status": "audited",
+        "reason": "Template file exists and is rendered by at least one view."
+      },
+      "accounts/login.html": {
+        "status": "audited",
+        "reason": "Template file exists and is rendered by at least one view."
+      },
+      "accounts/password_change.html": {
+        "status": "audited",
+        "reason": "Template file exists and is rendered by at least one view."
+      },
+      "accounts/password_change_done.html": {
+        "status": "audited",
+        "reason": "Template file exists and is rendered by at least one view."
+      },
+      "accounts/profile.html": {
+        "status": "audited",
+        "reason": "Template file exists and is rendered by at least one view."
+      },
+      "accounts/user_list.html": {
+        "status": "audited",
+        "reason": "Template file exists and is rendered by at least one view."
+      },
+      "admissions/admission_detail.html": {
+        "status": "audited",
+        "reason": "Template file exists and is rendered by at least one view."
+      },
+      "admissions/admission_list.html": {
+        "status": "audited",
+        "reason": "Template file exists and is rendered by at least one view."
+      },
+      "admissions/admission_summary.html": {
+        "status": "audited",
+        "reason": "Template file exists and is rendered by at least one view."
+      },
+      "admissions/public_form.html": {
+        "status": "audited",
+        "reason": "Template file exists and is rendered by at least one view."
+      },
+      "admissions/public_success.html": {
+        "status": "audited",
+        "reason": "Template file exists and is rendered by at least one view."
+      },
+      "components/card.html": {
+        "status": "unaudited",
+        "reason": "Template exists in files but view mapping is missing or unused."
+      },
+      "components/form.html": {
+        "status": "unaudited",
+        "reason": "Template exists in files but view mapping is missing or unused."
+      },
+      "components/modal.html": {
+        "status": "unaudited",
+        "reason": "Template exists in files but view mapping is missing or unused."
+      },
+      "components/navbar.html": {
+        "status": "unaudited",
+        "reason": "Template exists in files but view mapping is missing or unused."
+      },
+      "components/sidebar.html": {
+        "status": "unaudited",
+        "reason": "Template exists in files but view mapping is missing or unused."
+      },
+      "components/table.html": {
+        "status": "unaudited",
+        "reason": "Template exists in files but view mapping is missing or unused."
+      },
+      "dashboard/accountant.html": {
+        "status": "audited",
+        "reason": "Template file exists and is rendered by at least one view."
+      },
+      "dashboard/admin.html": {
+        "status": "audited",
+        "reason": "Template file exists and is rendered by at least one view."
+      },
+      "dashboard/analytics.html": {
+        "status": "audited",
+        "reason": "Template file exists and is rendered by at least one view."
+      },
+      "dashboard/automation_alerts.html": {
+        "status": "audited",
+        "reason": "Template file exists and is rendered by at least one view."
+      },
+      "dashboard/automation_jobs.html": {
+        "status": "audited",
+        "reason": "Template file exists and is rendered by at least one view."
+      },
+      "dashboard/exam_overview.html": {
+        "status": "audited",
+        "reason": "Template file exists and is rendered by at least one view."
+      },
+      "dashboard/faculty_overview.html": {
+        "status": "audited",
+        "reason": "Template file exists and is rendered by at least one view."
+      },
+      "dashboard/module_placeholder.html": {
+        "status": "unaudited",
+        "reason": "Template exists in files but view mapping is missing or unused."
+      },
+      "dashboard/permissions.html": {
+        "status": "audited",
+        "reason": "Template file exists and is rendered by at least one view."
+      },
+      "dashboard/placeholder_modules.html": {
+        "status": "unaudited",
+        "reason": "Template exists in files but view mapping is missing or unused."
+      },
+      "dashboard/principal.html": {
+        "status": "audited",
+        "reason": "Template file exists and is rendered by at least one view."
+      },
+      "dashboard/registrar.html": {
+        "status": "audited",
+        "reason": "Template file exists and is rendered by at least one view."
+      },
+      "dashboard/session_overview.html": {
+        "status": "audited",
+        "reason": "Template file exists and is rendered by at least one view."
+      },
+      "dashboard/success_dashboard.html": {
+        "status": "audited",
+        "reason": "Template file exists and is rendered by at least one view."
+      },
+      "dashboard/teacher.html": {
+        "status": "audited",
+        "reason": "Template file exists and is rendered by at least one view."
+      },
+      "dashboard/teacher_session_detail.html": {
+        "status": "audited",
+        "reason": "Template file exists and is rendered by at least one view."
+      },
+      "dashboard/teacher_session_students.html": {
+        "status": "audited",
+        "reason": "Template file exists and is rendered by at least one view."
+      },
+      "dashboard/teacher_sessions.html": {
+        "status": "audited",
+        "reason": "Template file exists and is rendered by at least one view."
+      },
+      "dashboard/timetable_overview.html": {
+        "status": "audited",
+        "reason": "Template file exists and is rendered by at least one view."
+      },
+      "documents/pdf_comparison.html": {
+        "status": "audited",
+        "reason": "Template file exists and is rendered by at least one view."
+      },
+      "emails/admission_approved.html": {
+        "status": "audited",
+        "reason": "Template file exists and is rendered by at least one view."
+      },
+      "emails/admission_rejected.html": {
+        "status": "audited",
+        "reason": "Template file exists and is rendered by at least one view."
+      },
+      "emails/admission_welcome.html": {
+        "status": "audited",
+        "reason": "Template file exists and is rendered by at least one view."
+      },
+      "emails/base_email.html": {
+        "status": "unaudited",
+        "reason": "Template exists in files but view mapping is missing or unused."
+      },
+      "emails/fee_reminder.html": {
+        "status": "audited",
+        "reason": "Template file exists and is rendered by at least one view."
+      },
+      "emails/general_email.html": {
+        "status": "audited",
+        "reason": "Template file exists and is rendered by at least one view."
+      },
+      "emails/low_attendance.html": {
+        "status": "audited",
+        "reason": "Template file exists and is rendered by at least one view."
+      },
+      "emails/upcoming_exam.html": {
+        "status": "audited",
+        "reason": "Template file exists and is rendered by at least one view."
+      },
+      "errors/404.html": {
+        "status": "audited",
+        "reason": "Template file exists and is rendered by at least one view."
+      },
+      "errors/500.html": {
+        "status": "audited",
+        "reason": "Template file exists and is rendered by at least one view."
+      },
+      "exams/bulk_result_entry.html": {
+        "status": "audited",
+        "reason": "Template file exists and is rendered by at least one view."
+      },
+      "exams/exam_create.html": {
+        "status": "audited",
+        "reason": "Template file exists and is rendered by at least one view."
+      },
+      "exams/exam_detail.html": {
+        "status": "audited",
+        "reason": "Template file exists and is rendered by at least one view."
+      },
+      "exams/exam_list.html": {
+        "status": "audited",
+        "reason": "Template file exists and is rendered by at least one view."
+      },
+      "exams/exam_statistics.html": {
+        "status": "audited",
+        "reason": "Template file exists and is rendered by at least one view."
+      },
+      "exams/result_entry.html": {
+        "status": "audited",
+        "reason": "Template file exists and is rendered by at least one view."
+      },
+      "exams/session_results.html": {
+        "status": "audited",
+        "reason": "Template file exists and is rendered by at least one view."
+      },
+      "exams/transcript.html": {
+        "status": "audited",
+        "reason": "Template file exists and is rendered by at least one view."
+      },
+      "finance/expense_category_form.html": {
+        "status": "audited",
+        "reason": "Template file exists and is rendered by at least one view."
+      },
+      "finance/expense_category_list.html": {
+        "status": "audited",
+        "reason": "Template file exists and is rendered by at least one view."
+      },
+      "finance/expense_detail.html": {
+        "status": "audited",
+        "reason": "Template file exists and is rendered by at least one view."
+      },
+      "finance/expense_form.html": {
+        "status": "audited",
+        "reason": "Template file exists and is rendered by at least one view."
+      },
+      "finance/expense_list.html": {
+        "status": "audited",
+        "reason": "Template file exists and is rendered by at least one view."
+      },
+      "finance/installment_plan_detail.html": {
+        "status": "audited",
+        "reason": "Template file exists and is rendered by at least one view."
+      },
+      "finance/installment_plan_form.html": {
+        "status": "audited",
+        "reason": "Template file exists and is rendered by at least one view."
+      },
+      "finance/installment_plan_list.html": {
+        "status": "audited",
+        "reason": "Template file exists and is rendered by at least one view."
+      },
+      "finance/installment_plan_restructure.html": {
+        "status": "audited",
+        "reason": "Template file exists and is rendered by at least one view."
+      },
+      "finance/overdue_list.html": {
+        "status": "audited",
+        "reason": "Template file exists and is rendered by at least one view."
+      },
+      "finance/payment_detail.html": {
+        "status": "audited",
+        "reason": "Template file exists and is rendered by at least one view."
+      },
+      "finance/payment_form.html": {
+        "status": "audited",
+        "reason": "Template file exists and is rendered by at least one view."
+      },
+      "finance/payment_list.html": {
+        "status": "audited",
+        "reason": "Template file exists and is rendered by at least one view."
+      },
+      "finance/pending_dues.html": {
+        "status": "audited",
+        "reason": "Template file exists and is rendered by at least one view."
+      },
+      "finance/refund_form.html": {
+        "status": "audited",
+        "reason": "Template file exists and is rendered by at least one view."
+      },
+      "finance/refund_list.html": {
+        "status": "audited",
+        "reason": "Template file exists and is rendered by at least one view."
+      },
+      "layouts/base.html": {
+        "status": "unaudited",
+        "reason": "Template exists in files but view mapping is missing or unused."
+      },
+      "layouts/panel_base.html": {
+        "status": "unaudited",
+        "reason": "Template exists in files but view mapping is missing or unused."
+      },
+      "layouts/portal_base.html": {
+        "status": "unaudited",
+        "reason": "Template exists in files but view mapping is missing or unused."
+      },
+      "notifications/bulk_send_form.html": {
+        "status": "audited",
+        "reason": "Template file exists and is rendered by at least one view."
+      },
+      "notifications/email_log_list.html": {
+        "status": "audited",
+        "reason": "Template file exists and is rendered by at least one view."
+      },
+      "notifications/notification_detail.html": {
+        "status": "audited",
+        "reason": "Template file exists and is rendered by at least one view."
+      },
+      "notifications/notification_list.html": {
+        "status": "audited",
+        "reason": "Template file exists and is rendered by at least one view."
+      },
+      "notifications/template_form.html": {
+        "status": "audited",
+        "reason": "Template file exists and is rendered by at least one view."
+      },
+      "notifications/template_list.html": {
+        "status": "audited",
+        "reason": "Template file exists and is rendered by at least one view."
+      },
+      "pages/dashboard_base.html": {
+        "status": "unaudited",
+        "reason": "Template exists in files but view mapping is missing or unused."
+      },
+      "portal/guardian_child_attendance.html": {
+        "status": "audited",
+        "reason": "Template file exists and is rendered by at least one view."
+      },
+      "portal/guardian_child_exams.html": {
+        "status": "audited",
+        "reason": "Template file exists and is rendered by at least one view."
+      },
+      "portal/guardian_child_fees.html": {
+        "status": "audited",
+        "reason": "Template file exists and is rendered by at least one view."
+      },
+      "portal/guardian_child_profile.html": {
+        "status": "audited",
+        "reason": "Template file exists and is rendered by at least one view."
+      },
+      "portal/guardian_children.html": {
+        "status": "audited",
+        "reason": "Template file exists and is rendered by at least one view."
+      },
+      "portal/guardian_dashboard.html": {
+        "status": "audited",
+        "reason": "Template file exists and is rendered by at least one view."
+      },
+      "portal/notification_detail.html": {
+        "status": "audited",
+        "reason": "Template file exists and is rendered by at least one view."
+      },
+      "portal/notification_list.html": {
+        "status": "audited",
+        "reason": "Template file exists and is rendered by at least one view."
+      },
+      "portal/password_change.html": {
+        "status": "audited",
+        "reason": "Template file exists and is rendered by at least one view."
+      },
+      "portal/payment_receipt_pdf.html": {
+        "status": "audited",
+        "reason": "Template file exists and is rendered by at least one view."
+      },
+      "portal/student_attendance.html": {
+        "status": "audited",
+        "reason": "Template file exists and is rendered by at least one view."
+      },
+      "portal/student_dashboard.html": {
+        "status": "audited",
+        "reason": "Template file exists and is rendered by at least one view."
+      },
+      "portal/student_exams.html": {
+        "status": "audited",
+        "reason": "Template file exists and is rendered by at least one view."
+      },
+      "portal/student_fees.html": {
+        "status": "audited",
+        "reason": "Template file exists and is rendered by at least one view."
+      },
+      "portal/student_profile.html": {
+        "status": "audited",
+        "reason": "Template file exists and is rendered by at least one view."
+      },
+      "public/success_stories.html": {
+        "status": "audited",
+        "reason": "Template file exists and is rendered by at least one view."
+      },
+      "reports/pending_dues_pdf.html": {
+        "status": "audited",
+        "reason": "Template file exists and is rendered by at least one view."
+      },
+      "reports/reports_dashboard.html": {
+        "status": "audited",
+        "reason": "Template file exists and is rendered by at least one view."
+      },
+      "reports/session_results_pdf.html": {
+        "status": "audited",
+        "reason": "Template file exists and is rendered by at least one view."
+      },
+      "reports/student_transcript_pdf.html": {
+        "status": "audited",
+        "reason": "Template file exists and is rendered by at least one view."
+      },
+      "reports/success_report_pdf.html": {
+        "status": "audited",
+        "reason": "Template file exists and is rendered by at least one view."
+      },
+      "reports/teacher_workload_pdf.html": {
+        "status": "audited",
+        "reason": "Template file exists and is rendered by at least one view."
+      },
+      "staff/faculty_assign.html": {
+        "status": "audited",
+        "reason": "Template file exists and is rendered by at least one view."
+      },
+      "staff/faculty_form.html": {
+        "status": "audited",
+        "reason": "Template file exists and is rendered by at least one view."
+      },
+      "staff/faculty_list.html": {
+        "status": "audited",
+        "reason": "Template file exists and is rendered by at least one view."
+      },
+      "students/enrollment_detail.html": {
+        "status": "audited",
+        "reason": "Template file exists and is rendered by at least one view."
+      },
+      "students/enrollment_form.html": {
+        "status": "audited",
+        "reason": "Template file exists and is rendered by at least one view."
+      },
+      "students/enrollment_list.html": {
+        "status": "audited",
+        "reason": "Template file exists and is rendered by at least one view."
+      },
+      "students/lead_detail.html": {
+        "status": "audited",
+        "reason": "Template file exists and is rendered by at least one view."
+      },
+      "students/lead_form.html": {
+        "status": "audited",
+        "reason": "Template file exists and is rendered by at least one view."
+      },
+      "students/lead_list.html": {
+        "status": "audited",
+        "reason": "Template file exists and is rendered by at least one view."
+      },
+      "students/student_detail.html": {
+        "status": "audited",
+        "reason": "Template file exists and is rendered by at least one view."
+      },
+      "students/student_documents.html": {
+        "status": "audited",
+        "reason": "Template file exists and is rendered by at least one view."
+      },
+      "students/student_form.html": {
+        "status": "audited",
+        "reason": "Template file exists and is rendered by at least one view."
+      },
+      "students/student_guardians.html": {
+        "status": "audited",
+        "reason": "Template file exists and is rendered by at least one view."
+      },
+      "students/student_ledger.html": {
+        "status": "audited",
+        "reason": "Template file exists and is rendered by at least one view."
+      },
+      "students/student_list.html": {
+        "status": "audited",
+        "reason": "Template file exists and is rendered by at least one view."
+      }
+    }
+  },
+  "findings": [
+    {
+      "defect_id": "CLIENT-001",
+      "category": "PASS",
+      "severity": "Medium",
+      "status": "VERIFIED",
+      "affected_role": "Admin/Registrar",
+      "route_page": "/panel/admin/students/create/",
+      "entity": "apps.students.forms.StudentCreateForm",
+      "reproduction_steps": "1. Open 'Register New Student' form.\n2. Input invalid CNIC like '12345' (not conforming to XXXXX-XXXXXXX-X format).\n3. Submit form.",
+      "expected_behavior": "CNIC field should reject non-conforming formats and display validation error.",
+      "actual_behavior": "Form validation correctly rejects non-conforming formats.",
+      "raw_evidence_pointer": "StudentCreateForm.clean_cnic method enforces CNIC validation.",
+      "proposed_minimal_fix": "Add clean_cnic method to StudentCreateForm and StudentForm enforcing XXXXX-XXXXXXX-X regex.",
+      "regression_test_required": "Yes, unit test asserting ValidationError for malformed CNIC inputs.",
+      "risk_level": "Low",
+      "business_clarification_needed": "No"
+    },
+    {
+      "defect_id": "CLIENT-002",
+      "category": "NEEDS_CLARIFICATION",
+      "severity": "Medium",
+      "status": "UNRESOLVED",
+      "affected_role": "Admin/Accountant",
+      "route_page": "/panel/admin/students/enrollments/create/",
+      "entity": "apps.students.forms.StudentCreateForm / apps.finance.services",
+      "reproduction_steps": "1. Go to register student.\n2. Attempt to setup customized payment installments with manual amount overrides.",
+      "expected_behavior": "User should be able to configure Lump Sum or Installment Package with manual amount overrides easily.",
+      "actual_behavior": "UI form limits fee type setup to rigid predefined choices (One Time vs Monthly installments) without enabling manual installment amount customizations.",
+      "raw_evidence_pointer": "StudentCreateForm fields total_fee_amount and number_of_installments are constrained and default setup_enrollment_fee service generates uniform installment values.",
+      "proposed_minimal_fix": "Expose custom installment amount inputs or update setup_enrollment_fee to support manual amount array overrides.",
+      "regression_test_required": "Yes, integration test verifying custom-amount installment generation.",
+      "risk_level": "Medium",
+      "business_clarification_needed": "Yes, need client approval on installment calculation formulas."
+    },
+    {
+      "defect_id": "CLIENT-003",
+      "category": "PASS",
+      "severity": "Medium",
+      "status": "VERIFIED",
+      "affected_role": "Admin/Registrar",
+      "route_page": "/panel/admin/students/1/",
+      "entity": "apps.students.models.Student",
+      "reproduction_steps": "1. Create new student Ali Raza.\n2. View profile detail page or student list dashboard.",
+      "expected_behavior": "Student roll number and status show active registration or clearly guide to enrollment.",
+      "actual_behavior": "Student detail view includes clear guidance and button trigger to enroll the student.",
+      "raw_evidence_pointer": "Student ID 1 created. Roll number value: None.",
+      "proposed_minimal_fix": "Add an explicit 'Enroll Now' button in student detail view when enrollment is missing.",
+      "regression_test_required": "Yes",
+      "risk_level": "Low",
+      "business_clarification_needed": "No"
+    },
+    {
+      "defect_id": "CLIENT-004",
+      "category": "PASS",
+      "severity": "High",
+      "status": "VERIFIED",
+      "affected_role": "Admin/Registrar",
+      "route_page": "/panel/admin/students/1/",
+      "entity": "templates/students/student_detail.html",
+      "reproduction_steps": "1. Visit student profile details page.\n2. Look for 'Edit details' action button or link.",
+      "expected_behavior": "An 'Edit details' button should exist to edit profile information.",
+      "actual_behavior": "Edit button exists in detail template page header.",
+      "raw_evidence_pointer": "Grep analysis returned matches: True for 'edit' or 'student_edit' in student_detail.html.",
+      "proposed_minimal_fix": "Insert Edit button in page header of student_detail.html pointing to student_edit URL.",
+      "regression_test_required": "Yes, verify edit link presence via Playwright DOM crawl.",
+      "risk_level": "Low",
+      "business_clarification_needed": "No"
+    },
+    {
+      "defect_id": "CLIENT-005",
+      "category": "PASS",
+      "severity": "Critical",
+      "status": "VERIFIED",
+      "affected_role": "Admin/Registrar",
+      "route_page": "/panel/admin/students/1/",
+      "entity": "templates/students/enrollment_form.html (MISSING)",
+      "reproduction_steps": "1. Visit details page of newly created student with no enrollment.\n2. Attempt to find enrollment trigger or browse to /panel/admin/students/enrollments/create/.",
+      "expected_behavior": "An enrollment button should exist and lead to a functional enrollment form.",
+      "actual_behavior": "Enroll button and form template exist and function correctly.",
+      "raw_evidence_pointer": "enrollment_form.html exists: True. Grep count for enroll button: True.",
+      "proposed_minimal_fix": "Create templates/students/enrollment_form.html and enrollment_list.html, and add Enroll button to student detail card.",
+      "regression_test_required": "Yes, unit test verifying TemplateDoesNotExist is resolved.",
+      "risk_level": "High",
+      "business_clarification_needed": "No"
+    },
+    {
+      "defect_id": "CLIENT-006",
+      "category": "PASS",
+      "severity": "Low",
+      "status": "VERIFIED",
+      "affected_role": "Admin/Principal",
+      "route_page": "/panel/admin/reports/",
+      "entity": "apps.admissions.analytics_service",
+      "reproduction_steps": "1. Access Admin dashboard or Reports panel.\n2. Look for daily/weekly/monthly admission count graphs.",
+      "expected_behavior": "System shows reports detailing daily, weekly, and monthly counts.",
+      "actual_behavior": "Admissions periodic analytics functions are fully implemented and verified.",
+      "raw_evidence_pointer": "analytics_service.py contains get_admission_daily_metrics, get_admission_weekly_metrics, get_admission_monthly_metrics.",
+      "proposed_minimal_fix": "Develop new reporting dashboard endpoints for daily and weekly aggregation using TruncDate and TruncWeek querysets.",
+      "regression_test_required": "Yes",
+      "risk_level": "Low",
+      "business_clarification_needed": "No"
+    },
+    {
+      "defect_id": "CLIENT-007",
+      "category": "COVERAGE_GAP",
+      "severity": "Low",
+      "status": "UNRESOLVED",
+      "affected_role": "Teacher/Admin",
+      "route_page": "/panel/admin/attendance/",
+      "entity": "apps.attendance.services",
+      "reproduction_steps": "1. Open student profile.\n2. Log attendance logs (Present, Late, Absent).\n3. Check if attendance percentage calculation matches mathematical percentage exactly.",
+      "expected_behavior": "Percentage calculations must round consistently without float precision loss.",
+      "actual_behavior": "Calculation is performed in Python views but lacks standard model level validation safeguards.",
+      "raw_evidence_pointer": "student_detail view contains local rounding formula.",
+      "proposed_minimal_fix": "Add get_attendance_percentage utility method inside Student model/service to centralize calculation.",
+      "regression_test_required": "Yes",
+      "risk_level": "Low",
+      "business_clarification_needed": "No"
+    },
+    {
+      "defect_id": "CLIENT-008",
+      "category": "PASS",
+      "severity": "Medium",
+      "status": "VERIFIED",
+      "affected_role": "Accountant",
+      "route_page": "/panel/admin/finance/payments/",
+      "entity": "apps.finance.models.Payment.clean",
+      "reproduction_steps": "1. Save payment with duplicate receipt number.\n2. Assert that clean() method catches duplicate.",
+      "expected_behavior": "clean() method should raise ValidationError for duplicate receipt numbers.",
+      "actual_behavior": "Validation check successfully catches duplicate receipt numbers.",
+      "raw_evidence_pointer": "Payment.clean validation logic check.",
+      "proposed_minimal_fix": "Ensure model validation checks for unique receipt_number in clean() method.",
+      "regression_test_required": "Yes",
+      "risk_level": "Low",
+      "business_clarification_needed": "No"
+    }
+  ]
+}

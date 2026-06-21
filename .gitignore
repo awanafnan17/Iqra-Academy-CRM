@@ -1,0 +1,76 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.py[cod]
+*$py.class
+*.so
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Virtual environments
+venv/
+.venv/
+env/
+
+# Environment configurations and secrets
+.env
+*.env
+.env.local
+.env.production
+.env.development
+.env.staging
+
+# Databases
+*.sqlite3
+db.sqlite3
+db_demo.sqlite3
+db_test.sqlite3
+mysql_data/
+
+# Static and Media
+media/
+staticfiles/
+static/collected/
+
+# IDE / Editors
+.idea/
+.vscode/
+*.swp
+*.swo
+.project
+.pydevproject
+.settings/
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Package Manager
+node_modules/
+
+# Logs
+*.log
+logs/
+
+# Backups and Patches
+*.zip
+*.patch
+pre_repair_*
+pre_cnic_photo_*
+pre_logo_session_*
+pre_pdf_batch_*
+pre_batch_*
+repair_batch_*
+
+# Temporary and Scratch Directories
+scratch/
+test_results.pdf
+venv_listing.txt
+htaccess_temp.txt
+public_html_listing.txt
+new_htaccess.txt
+nginx.conf

@@ -1,0 +1,25 @@
+{% extends "layouts/panel_base.html" %}
+
+{% block title %}Module Coming Soon{% endblock %}
+
+{% block content %}
+<div class="container-fluid py-4">
+  <div class="row justify-content-center">
+    <div class="col-lg-6">
+      <div class="card p-5 text-center">
+        <div class="mb-4">
+          <i class="fas fa-tools fa-3x text-primary opacity-75"></i>
+        </div>
+        <h4 class="fw-bold mb-2">Module Under Development</h4>
+        <p class="text-muted mb-4">
+          This module is registered in the ERP and will be available soon.
+        </p>
+        <a href="javascript:history.back()"
+           class="btn btn-primary px-4 py-2 rounded-3">
+          Go Back
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

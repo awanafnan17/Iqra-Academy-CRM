@@ -1,0 +1,30 @@
+{
+  "metadata": {
+    "run_id": "e7586812-3531-4961-b8a7-9963cf879463",
+    "timestamp": "2026-06-21T04:38:08.943592",
+    "settings_module": "config.settings.test",
+    "database_engine": "django.db.backends.sqlite3",
+    "database_name": "file:memorydb_default?mode=memory&cache=shared",
+    "git_tree_id": "working_tree",
+    "source_evidence": [
+      "workflow_transitions.json"
+    ]
+  },
+  "dependencies": [
+    {
+      "source": "students.Lead",
+      "target": "students.Student",
+      "trigger": "convert"
+    },
+    {
+      "source": "admissions.AdmissionApplication",
+      "target": "students.Student",
+      "trigger": "convert"
+    },
+    {
+      "source": "academics.Session",
+      "target": "students.Enrollment",
+      "trigger": "session_id"
+    }
+  ]
+}

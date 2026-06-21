@@ -1,0 +1,218 @@
+{% extends 'layouts/portal_base.html' %}
+{% load static %}
+{% load finance_tags %}
+
+{% block title %}My Fee Ledger - Iqra Academy{% endblock %}
+
+{% block content %}
+<div class="container-fluid px-0">
+    <!-- Page Header -->
+    <div class="page-header animate-fade-in">
+        <div class="page-header-left">
+            <h3 class="fw-bold mb-1 text-primary">My Fees Ledger</h3>
+            <p class="text-secondary mb-0">Track payments, outstanding dues, and active installment schemes.</p>
+        </div>
+        <div class="page-header-actions">
+            <span class="badge bg-primary px-3 py-2 rounded-pill fw-semibold">
+                <i class="fa-solid fa-credit-card me-1"></i> Fee Management
+            </span>
+        </div>
+    </div>
+
+    {% if ledger %}
+        <!-- Dues & Balance Cards Grid -->
+        <div class="row g-4 animate-fade-in stagger-1">
+            <!-- Total Payable -->
+            <div class="col-12 col-sm-6 col-md-3">
+                <div class="card metric-card h-100">
+                    <div class="card-body p-4 d-flex align-items-center">
+                        <div class="metric-icon me-3">
+                            <i class="fa-solid fa-receipt"></i>
+                        </div>
+                        <div>
+                            <span class="text-secondary small fw-medium">Total Payable</span>
+                            <div class="metric-value mt-1"
+                                 data-target="{{ ledger.total_payable|default:0 }}"
+                                 data-duration="1200"
+                                 data-prefix="PKR "
+                                 data-decimals="0">
+                                {{ ledger.total_payable|format_currency }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Discount Applied -->
+            <div class="col-12 col-sm-6 col-md-3">
+                <div class="card metric-card h-100">
+                    <div class="card-body p-4 d-flex align-items-center">
+                        <div class="metric-icon me-3">
+                            <i class="fa-solid fa-percent"></i>
+                        </div>
+                        <div>
+                            <span class="text-secondary small fw-medium">Discount</span>
+                            <div class="metric-value mt-1"
+                                 data-target="{{ ledger.discount|default:0 }}"
+                                 data-duration="1200"
+                                 data-prefix="PKR "
+                                 data-decimals="0">
+                                {{ ledger.discount|format_currency }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Amount Paid -->
+            <div class="col-12 col-sm-6 col-md-3">
+                <div class="card metric-card h-100">
+                    <div class="card-body p-4 d-flex align-items-center">
+                        <div class="metric-icon me-3">
+                            <i class="fa-solid fa-circle-check"></i>
+                        </div>
+                        <div>
+                            <span class="text-secondary small fw-medium">Amount Paid</span>
+                            <div class="metric-value mt-1"
+                                 data-target="{{ ledger.total_paid|default:0 }}"
+                                 data-duration="1200"
+                                 data-prefix="PKR "
+                                 data-decimals="0">
+                                {{ ledger.total_paid|format_currency }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Outstanding Balance -->
+            <div class="col-12 col-sm-6 col-md-3">
+                <div class="card metric-card h-100 {% if ledger.outstanding_balance > 0 %}card-state-danger{% endif %}">
+                    <div class="card-body p-4 d-flex align-items-center">
+                        <div class="metric-icon me-3">
+                            <i class="fa-solid fa-wallet"></i>
+                        </div>
+                        <div>
+                            <span class="text-secondary small fw-medium">Outstanding Balance</span>
+                            <div class="metric-value mt-1 {% if ledger.outstanding_balance > 0 %}text-danger{% else %}text-success{% endif %}"
+                                 data-target="{{ ledger.outstanding_balance|default:0 }}"
+                                 data-duration="1200"
+                                 data-prefix="PKR "
+                                 data-decimals="0">
+                                {{ ledger.outstanding_balance|format_currency }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row g-4 mt-2">
+            <!-- Payment History Table -->
+            <div class="col-12 col-lg-8 animate-fade-in stagger-2">
+                <div class="card p-0 h-100 shadow-sm">
+                    <div class="p-4 border-bottom border-soft">
+                        <h5 class="fw-bold mb-0 text-primary"><i class="fa-solid fa-history me-2"></i>Payment History</h5>
+                    </div>
+                    <div class="table-wrapper">
+                        <table class="table align-middle mb-0">
+                            <thead>
+                                <tr>
+                                    <th class="ps-4">Date</th>
+                                    <th>Amount</th>
+                                    <th>Method</th>
+                                    <th>Receipt #</th>
+                                    <th>Status</th>
+                                    <th class="text-end pe-4">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for p in ledger.payments %}
+                                    <tr>
+                                        <td class="ps-4 text-secondary">{{ p.date|date:"M d, Y" }}</td>
+                                        <td class="text-primary-c"><strong>{{ p.amount|format_currency }}</strong></td>
+                                        <td><span class="badge bg-secondary">{{ p.method }}</span></td>
+                                        <td class="font-monospace text-primary-c">{{ p.receipt|default:"-" }}</td>
+                                        <td>
+                                            {% if p.status == 'confirmed' %}
+                                                <span class="badge bg-success">Confirmed</span>
+                                            {% elif p.status == 'pending' %}
+                                                <span class="badge bg-warning">Pending</span>
+                                            {% else %}
+                                                <span class="badge bg-secondary">{{ p.status }}</span>
+                                            {% endif %}
+                                        </td>
+                                        <td class="text-end pe-4">
+                                            {% if p.status == 'confirmed' %}
+                                                <a href="{% if role == 'Student' %}{% url 'student_portal:download_receipt' payment_id=p.id %}{% else %}{% url 'guardian_portal:download_receipt' student_id=student.id payment_id=p.id %}{% endif %}" class="btn btn-primary btn-sm">
+                                                    <i class="fa-solid fa-file-pdf me-1"></i> Receipt
+                                                </a>
+                                            {% else %}
+                                                -
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                {% empty %}
+                                    <tr>
+                                        <td colspan="6" class="text-center text-secondary py-4">No payments logged yet.</td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Installment Plan Section -->
+            <div class="col-12 col-lg-4 animate-fade-in stagger-3">
+                <div class="card p-4 h-100 shadow-sm">
+                    <h5 class="fw-bold mb-3 text-primary"><i class="fa-solid fa-calendar-days me-2"></i>Installment Plan</h5>
+                    {% if ledger.installment_plan %}
+                        <div class="d-flex justify-content-between align-items-center mb-3 border-bottom pb-2">
+                            <div>
+                                <span class="text-secondary small">Total Installments</span>
+                                <div class="fw-bold">{{ ledger.installment_plan.number_of_installments }} Installment Slots</div>
+                            </div>
+                            <span class="badge bg-success rounded-pill">Active Scheme</span>
+                        </div>
+
+                        <div class="d-flex flex-column gap-3">
+                            {% for inst in ledger.installment_plan.installments %}
+                                <div class="p-3 border rounded-3 bg-elevated d-flex justify-content-between align-items-center">
+                                     <div>
+                                         <span class="fw-semibold d-block">Installment #{{ inst.number }}</span>
+                                         <span class="text-secondary small">Due: {{ inst.due_date|date:"M d, Y" }}</span>
+                                     </div>
+                                     <div class="text-end">
+                                         <span class="fw-bold d-block {% if inst.status == 'overdue' %}text-danger{% endif %}">{{ inst.amount|format_currency }}</span>
+                                        {% if inst.status == 'paid' %}
+                                            <span class="badge bg-success">Paid</span>
+                                        {% elif inst.status == 'overdue' %}
+                                            <span class="badge bg-danger">Overdue</span>
+                                        {% elif inst.status == 'partial' %}
+                                            <span class="badge bg-warning">Partial</span>
+                                        {% else %}
+                                            <span class="badge bg-secondary">Pending</span>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        <div class="text-center py-5 text-secondary border border-dashed rounded-3">
+                            <i class="fa-solid fa-calendar-xmark fa-2x text-muted mb-2"></i>
+                            <p class="mb-0">No active installment plan structured for this session.</p>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    {% else %}
+        <div class="card p-5 text-center border rounded-4 shadow animate-fade-in stagger-1">
+            <i class="fa-solid fa-credit-card fa-3x text-muted mb-3"></i>
+            <h4 class="fw-bold mb-2">No Active Enrollment Fees Found</h4>
+            <p class="text-secondary mb-0">Please contact the finance department to initialize your fee schedules.</p>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

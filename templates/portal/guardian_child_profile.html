@@ -1,0 +1,96 @@
+{% extends 'layouts/portal_base.html' %}
+{% load static %}
+
+{% block title %}Child Profile - Iqra Academy{% endblock %}
+
+{% block content %}
+<div class="container-fluid px-0">
+    <!-- Page Header -->
+    <div class="page-header animate-fade-in">
+        <div class="page-header-left">
+            <h3 class="fw-bold mb-1 text-primary">Child Profile</h3>
+            <p class="text-secondary mb-0">Academic details and registration parameters for {{ student.full_name }}.</p>
+        </div>
+        <div class="page-header-actions">
+            <span class="badge bg-primary px-3 py-2 rounded-pill fw-semibold">
+                <i class="fa-regular fa-user me-1"></i> Child Record
+            </span>
+        </div>
+    </div>
+
+    <!-- Child Info Card -->
+    <div class="row g-4 justify-content-center animate-fade-in stagger-1">
+        <div class="col-12 col-md-8 col-lg-6">
+            <div class="card p-4 text-center shadow-sm">
+                <!-- Avatar -->
+                <div class="profile-avatar-custom mx-auto mb-4 border shadow-sm">
+                    {{ student.full_name|slice:":2"|upper }}
+                </div>
+
+                <h3 class="fw-bold mb-1">{{ student.full_name }}</h3>
+                <p class="text-secondary small mb-3">Student Profile Details</p>
+
+                <!-- Prominent Roll Number -->
+                <div class="roll-number-container mb-4">
+                    <span class="text-secondary small text-uppercase fw-semibold d-block">Roll Number</span>
+                    <h2 class="fw-extrabold text-primary mb-0 mt-1">{{ student.roll_number|default:"No Roll#" }}</h2>
+                </div>
+
+                <!-- Badges -->
+                <div class="d-flex justify-content-center gap-2 mb-4 flex-wrap">
+                    <span class="badge bg-secondary px-3 py-2 rounded-pill text-white fw-bold">
+                        <i class="fa-solid fa-graduation-cap me-1"></i> {{ active_enrollment.session.session_category|default:"General" }}
+                    </span>
+                    <span class="badge bg-success px-3 py-2 rounded-pill fw-bold">
+                        Academic Score: {{ academic_score }}
+                    </span>
+                    <span class="badge {% if student.status == 'Active' %}bg-success{% else %}bg-danger{% endif %} px-3 py-2 rounded-pill text-white fw-bold">
+                        {{ student.status }}
+                    </span>
+                    {% if student.student_achievements.exists %}
+                        {% for ach in student.student_achievements.all %}
+                            <span class="badge bg-warning text-black px-3 py-2 rounded-pill fw-bold">
+                                <i class="fa-solid fa-trophy me-1"></i> Selected in {{ ach.exam_type }} {{ ach.year }}
+                            </span>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+
+                <!-- Details List -->
+                <div class="text-start border-top border-soft pt-4">
+                    <div class="row g-3">
+                        <div class="col-6">
+                            <span class="text-secondary small d-block">Father's Name</span>
+                            <span class="fw-bold text-primary-c">{{ student.father_name|default:"-" }}</span>
+                        </div>
+                        <div class="col-6">
+                            <span class="text-secondary small d-block">CNIC / B-Form</span>
+                            <span class="fw-bold text-primary-c">{{ student.cnic|default:"-" }}</span>
+                        </div>
+                        <div class="col-6">
+                            <span class="text-secondary small d-block">Date of Birth</span>
+                            <span class="fw-bold text-primary-c">{{ student.date_of_birth|date:"F j, Y"|default:"-" }}</span>
+                        </div>
+                        <div class="col-6">
+                            <span class="text-secondary small d-block">Active Session</span>
+                            <span class="fw-bold text-primary-c">{{ active_enrollment.session.name|default:"None" }}</span>
+                        </div>
+                        <div class="col-6">
+                            <span class="text-secondary small d-block">Phone Number</span>
+                            <span class="fw-bold text-primary-c">{{ student.phone|default:"-" }}</span>
+                        </div>
+                        <div class="col-6">
+                            <span class="text-secondary small d-block">Email Address</span>
+                            <span class="fw-bold text-primary-c">{{ student.email|default:"-" }}</span>
+                        </div>
+                        <div class="col-12">
+                            <span class="text-secondary small d-block">Residential Address</span>
+                            <span class="fw-bold text-primary-c">{{ student.address_temporary|default:"-" }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

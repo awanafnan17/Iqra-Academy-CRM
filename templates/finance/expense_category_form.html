@@ -1,0 +1,58 @@
+{% extends 'layouts/panel_base.html' %}
+{% load finance_tags %}
+{% block title %}New Expense Category | Finance{% endblock %}
+{% block content %}
+<div class="container-fluid px-0">
+    <div class="row justify-content-center">
+        <div class="col-md-6 col-lg-5">
+            <div class="card p-4 animate-fade-in">
+                <div class="mb-4">
+                    <h4 class="fw-bold text-primary mb-1"><i class="fas fa-plus-circle me-2"></i>New Category</h4>
+                    <p class="text-secondary small mb-0">Define a new category to group related business expenses.</p>
+                </div>
+                <form method="post" id="financeForm">
+                    {% csrf_token %}
+                    {% for field in form %}
+                    <div class="mb-3">
+                        <label class="form-label text-secondary small" for="{{ field.id_for_label }}">{{ field.label }}</label>
+                        {{ field }}
+                        {% if field.errors %}
+                        <div class="text-danger small mt-1">{{ field.errors.0 }}</div>
+                        {% endif %}
+                    </div>
+                    {% endfor %}
+                    <div class="d-flex justify-content-end gap-2 mt-4">
+                        <a href="{% finance_url 'expense_category_list' %}" class="btn btn-outline-primary">Cancel</a>
+                        <button type="submit" class="btn btn-primary">Save Category</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const inputs = document.querySelectorAll('#financeForm input, #financeForm textarea');
+        inputs.forEach(el => {
+            if (el.type !== 'checkbox' && el.type !== 'radio' && el.type !== 'file') {
+                el.classList.add('form-control');
+            }
+        });
+        const selects = document.querySelectorAll('#financeForm select');
+        selects.forEach(el => {
+            el.classList.add('form-select');
+            el.querySelectorAll('option').forEach(opt => {
+                if (opt.textContent.includes('--')) {
+                    opt.textContent = opt.textContent.replace(/\-\-\s*/g, '').trim();
+                }
+                if (opt.textContent.includes('---------')) {
+                    opt.textContent = "Select Option";
+                }
+            });
+        });
+    });
+</script>
+{% endblock %}

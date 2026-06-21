@@ -1,0 +1,138 @@
+{% extends 'layouts/panel_base.html' %}
+{% load static %}
+{% load finance_tags %}
+
+{% block title %}Manage Sessions - Iqra Academy{% endblock %}
+
+{% block content %}
+<div class="session-page">
+<div class="container-fluid px-0">
+    <!-- Page Header -->
+    <div class="p-4 rounded-4 mb-4 card border border-light shadow-sm animate-fade-in">
+        <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
+            <div>
+                <h3 class="fw-bold mb-1">Academic Sessions</h3>
+                <p class="text-secondary mb-0">Monitor class capacities, schedule dates, fee rates, and status indicators.</p>
+            </div>
+            <div>
+                <a href="{% url 'admin_panel:add_session' %}" class="btn btn-primary px-4 py-2 rounded-3 shadow-sm">
+                    <i class="fa-solid fa-plus me-2"></i> Add New Session
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Filters -->
+    <div class="card p-3 border border-light shadow rounded-4 mb-4 animate-fade-in stagger-1">
+        <form method="get" class="row g-3 align-items-end">
+            <div class="col-12 col-md-6 col-lg-5">
+                <label class="form-label text-secondary small fw-semibold">Search Session</label>
+                <div class="input-group">
+                    <span class="input-group-text border-end-0 text-muted">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                    </span>
+                    <input type="text" name="q" class="form-control border-start-0" placeholder="Search by name, code..." value="{{ query }}">
+                </div>
+            </div>
+            <div class="col-12 col-md-4 col-lg-3">
+                <label class="form-label text-secondary small fw-semibold">Status Filter</label>
+                <select name="status" class="form-select">
+                    <option value="">All Statuses</option>
+                    <option value="Active" {% if status_filter == "Active" %}selected{% endif %}>Active</option>
+                    <option value="Inactive" {% if status_filter == "Inactive" %}selected{% endif %}>Inactive</option>
+                    <option value="Completed" {% if status_filter == "Completed" %}selected{% endif %}>Completed</option>
+                </select>
+            </div>
+            <div class="col-12 col-md-2 d-flex gap-2">
+                <button type="submit" class="btn btn-primary w-100 rounded-3">
+                    <i class="fa-solid fa-filter me-1"></i> Filter
+                </button>
+                <a href="{% url 'admin_panel:academics:session_list' %}" class="btn btn-secondary w-100 border-light-subtle rounded-3">
+                    Clear
+                </a>
+            </div>
+        </form>
+    </div>
+
+    <!-- Session Grid -->
+    <div class="row g-4">
+        {% for session in session_list %}
+        <div class="col-12 col-md-6 col-lg-4 animate-fade-in">
+            <div class="card card-lift p-4 border border-light shadow rounded-4 d-flex flex-column h-100">
+                <div class="d-flex justify-content-between align-items-start mb-3">
+                    <div>
+                        <span class="badge bg-primary bg-opacity-10 text-primary border border-primary-subtle rounded-pill mb-2 small fw-semibold">
+                            Code: {{ session.code|default:"-" }}
+                        </span>
+                        <h5 class="fw-bold mb-1">{{ session.name }}</h5>
+                        <p class="text-secondary small mb-0"><i class="fa-solid fa-barcode me-1 text-muted"></i> Prefix: <strong>{{ session.roll_prefix }}</strong></p>
+                    </div>
+                    <div>
+                        {% if session.status == "Active" %}
+                            <span class="badge bg-success bg-opacity-10 text-success border border-success-subtle rounded-pill px-3 py-1">Active</span>
+                        {% else %}
+                            <span class="badge bg-secondary bg-opacity-10 text-secondary border px-3 py-1 rounded-pill">{{ session.status }}</span>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <p class="text-secondary small mb-4 flex-grow-1">
+                    {{ session.description|default:"No description provided for this academic session."|truncatewords:20 }}
+                </p>
+
+                <div class="border-top border-light pt-3 mt-auto">
+                    <div class="row g-2 mb-3">
+                        <div class="col-6">
+                            <span class="text-secondary small d-block">Tuition Fee</span>
+                            <span class="fw-semibold">{{ session.fee|format_currency }}</span>
+                        </div>
+                        <div class="col-6">
+                            <span class="text-secondary small d-block">Capacity</span>
+                            <span class="fw-semibold">
+                                {{ session.enrollments.count }} / {% if session.max_students %}{{ session.max_students }}{% else %}Unlimited{% endif %}
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="d-flex gap-2">
+                        <a href="{% url 'admin_panel:academics:session_detail' session.pk %}" class="btn btn-sm btn-secondary flex-grow-1 rounded-2">
+                            <i class="fa-solid fa-eye me-1"></i> Details
+                        </a>
+                        <a href="{% url 'admin_panel:academics:session_edit' session.pk %}" class="btn btn-sm btn-outline-primary flex-grow-1 rounded-2">
+                            <i class="fa-solid fa-edit me-1"></i> Edit
+                        </a>
+                        <form action="{% url 'admin_panel:academics:session_toggle_status' session.pk %}" method="post" class="d-inline-block">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-sm {% if session.status == 'Active' %}btn-outline-danger{% else %}btn-outline-success{% endif %} rounded-2" title="Toggle Status">
+                                <i class="fa-solid fa-power-off"></i>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="col-12 text-center py-5 text-muted">
+            <div class="mb-3">
+                <i class="fa-solid fa-calendar-times fa-3x text-light-subtle"></i>
+            </div>
+            <h5 class="fw-bold">No Sessions Found</h5>
+            <p class="small text-secondary mb-0">Create academic sessions to begin profiling students and courses.</p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+</div>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+.crm-app .session-page .btn-primary {
+    color: #ffffff !important;
+}
+.crm-app .session-page .btn-primary:hover {
+    color: #ffffff !important;
+}
+</style>
+{% endblock %}
+

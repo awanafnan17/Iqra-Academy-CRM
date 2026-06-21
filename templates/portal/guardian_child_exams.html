@@ -1,0 +1,150 @@
+{% extends 'layouts/portal_base.html' %}
+{% load static %}
+
+{% block title %}{{ student.user.get_full_name }}'s Exams & Grades - Iqra Academy{% endblock %}
+
+{% block content %}
+<div class="container-fluid px-0">
+    <!-- Page Header -->
+    <div class="page-header animate-fade-in">
+        <div class="page-header-left">
+            <h3 class="fw-bold mb-1 text-primary">{{ student.user.get_full_name }}'s Exams & Grades</h3>
+            <p class="text-secondary mb-0">View published results, component grades, rankings, and download official transcripts.</p>
+        </div>
+        <div class="page-header-actions">
+            <!-- Download Transcript Button -->
+            <a href="{% url 'guardian_portal:child_transcript_pdf' student_id=student.id %}" class="btn btn-primary">
+                <i class="fa-solid fa-file-pdf me-1"></i> Download Transcript
+            </a>
+        </div>
+    </div>
+
+    {% if active_enrollment %}
+        <div class="row g-4 animate-fade-in stagger-1">
+            <!-- Overall Academic Performance Score -->
+            <div class="col-12 col-md-4">
+                <div class="card metric-card h-100">
+                    <div class="card-body p-4 d-flex align-items-center">
+                        <div class="metric-icon me-3">
+                            <i class="fa-solid fa-chart-line"></i>
+                        </div>
+                        <div>
+                            <div class="metric-label">Academic Score</div>
+                            <div class="metric-value mt-1 text-success"
+                                 data-target="{{ overall_score|default:0 }}"
+                                 data-duration="1200"
+                                 data-suffix="%"
+                                 data-decimals="0">
+                                {{ overall_score|default:0 }}%
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Published Exams Count -->
+            <div class="col-12 col-md-4">
+                <div class="card metric-card h-100">
+                    <div class="card-body p-4 d-flex align-items-center">
+                        <div class="metric-icon me-3">
+                            <i class="fa-solid fa-file-invoice"></i>
+                        </div>
+                        <div>
+                            <div class="metric-label">Published Exams</div>
+                            <div class="metric-value mt-1"
+                                 data-target="{{ exam_results|length }}"
+                                 data-duration="1200"
+                                 data-decimals="0">
+                                {{ exam_results|length }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Result Status -->
+            <div class="col-12 col-md-4">
+                <div class="card metric-card h-100">
+                    <div class="card-body p-4 d-flex align-items-center">
+                        <div class="metric-icon me-3">
+                            <i class="fa-solid fa-square-poll-vertical"></i>
+                        </div>
+                        <div>
+                            <div class="metric-label">Academic Progress</div>
+                            <div class="metric-value mt-1 text-info">Satisfactory</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row g-4 mt-2">
+            <!-- Exam Results Table -->
+            <div class="col-12 animate-fade-in stagger-2">
+                <div class="card p-0 shadow-sm">
+                    <div class="p-4 border-bottom border-soft">
+                        <h5 class="fw-bold mb-0 text-primary"><i class="fa-solid fa-file-signature me-2"></i>Published Exam Results</h5>
+                    </div>
+                    <div class="table-wrapper">
+                        <table class="table align-middle mb-0">
+                            <thead>
+                                <tr>
+                                    <th class="ps-4">Exam Name</th>
+                                    <th>Subject</th>
+                                    <th>Date</th>
+                                    <th>Marks (Obtained/Total)</th>
+                                    <th>Grade</th>
+                                    <th>Rank</th>
+                                    <th>Status</th>
+                                    <th class="pe-4">Remarks</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for result in exam_results %}
+                                    <tr>
+                                        <td class="ps-4 text-primary-c"><strong>{{ result.exam.name }}</strong></td>
+                                        <td><span class="badge bg-secondary">{{ result.exam.subject.name|default:"General" }}</span></td>
+                                        <td class="text-secondary">{{ result.exam.date|date:"M d, Y"|default:"-" }}</td>
+                                        <td class="text-primary-c">
+                                            <span class="fw-bold">{{ result.score }}</span> / <span class="text-secondary">{{ result.exam.total_marks }}</span>
+                                        </td>
+                                        <td><span class="badge bg-secondary">{{ result.grade|default:"-" }}</span></td>
+                                        <td>
+                                            {% if result.rank %}
+                                                <span class="badge bg-info">#{{ result.rank }}</span>
+                                            {% else %}
+                                                <span class="text-muted">-</span>
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                            {% if result.is_passed %}
+                                                <span class="badge bg-success"><i class="fa-solid fa-check me-1"></i> Pass</span>
+                                            {% else %}
+                                                <span class="badge bg-danger"><i class="fa-solid fa-xmark me-1"></i> Fail</span>
+                                            {% endif %}
+                                        </td>
+                                        <td class="text-secondary small pe-4">{{ result.remarks|default:"-" }}</td>
+                                    </tr>
+                                {% empty %}
+                                    <tr>
+                                        <td colspan="8" class="text-center text-secondary py-5">
+                                            <i class="fa-regular fa-folder-open fa-3x mb-3 text-secondary"></i>
+                                            <p class="mb-0 fw-medium">No published exam results found.</p>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% else %}
+        <div class="card p-5 text-center border rounded-4 shadow animate-fade-in stagger-1">
+            <i class="fa-solid fa-file-signature fa-3x text-muted mb-3"></i>
+            <h4 class="fw-bold mb-2">No Active Academic Results Logged</h4>
+            <p class="text-secondary mb-0">Please contact the Controller of Exams to activate academic scoring records.</p>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

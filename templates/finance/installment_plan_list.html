@@ -1,0 +1,73 @@
+{% extends 'layouts/panel_base.html' %}
+{% load finance_tags %}
+{% block title %}Installment Plans | Finance{% endblock %}
+{% block content %}
+<div class="container-fluid px-0">
+    <!-- Page Header -->
+    <div class="page-header animate-fade-in">
+        <div class="page-header-left">
+            <h3 class="fw-bold mb-1 text-primary">Installment Plans</h3>
+            <p class="text-secondary mb-0">Configure, monitor, and update structured installment options for student tuition fees.</p>
+        </div>
+        <div class="page-header-actions">
+            <a href="{% finance_url 'installment_plan_create' %}" class="btn btn-primary">
+                <i class="fas fa-plus me-2"></i>New Plan
+            </a>
+        </div>
+    </div>
+
+    <!-- Table Section -->
+    <div class="card p-0 animate-fade-in stagger-1">
+        <div class="table-wrapper">
+            <table class="table align-middle mb-0">
+                <thead>
+                    <tr>
+                        <th class="ps-4">Student</th>
+                        <th>Session</th>
+                        <th>Total Amount</th>
+                        <th>Installments</th>
+                        <th>Status</th>
+                        <th class="text-end pe-4">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for plan in page_obj %}
+                    <tr>
+                        <td class="fw-bold ps-4 text-primary-c">
+                            <div class="d-flex align-items-center">
+                                <div class="avatar me-3">
+                                    {{ plan.enrollment.student.full_name|slice:":1"|upper }}
+                                </div>
+                                {{ plan.enrollment.student.full_name }}
+                            </div>
+                        </td>
+                        <td>{{ plan.enrollment.session.name }}</td>
+                        <td class="fw-bold text-primary-c">PKR {{ plan.total_amount }}</td>
+                        <td>{{ plan.number_of_installments }}</td>
+                        <td>
+                            {% if plan.is_active %}
+                            <span class="badge bg-success">Active</span>
+                            {% else %}
+                            <span class="badge bg-secondary">Inactive</span>
+                            {% endif %}
+                        </td>
+                        <td class="text-end pe-4">
+                            <a href="{% finance_url 'installment_plan_detail' plan.pk %}" class="btn btn-sm btn-primary">
+                                <i class="fas fa-eye me-1"></i> View
+                            </a>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="6" class="text-center py-5 text-secondary">
+                            <i class="fa-regular fa-folder-open fa-3x mb-3 text-secondary"></i>
+                            <p class="mb-0 fw-medium">No installment plans found.</p>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

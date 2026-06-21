@@ -1,0 +1,181 @@
+{% extends 'layouts/panel_base.html' %}
+{% load static %}
+
+{% block title %}Dropout Risk Dashboard - Iqra Academy{% endblock %}
+
+{% block content %}
+<div class="container-fluid px-0">
+    <!-- Page Header -->
+    <div class="p-4 rounded-4 mb-4 card border border-light shadow-sm animate-fade-in">
+        <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
+            <div>
+                <h3 class="fw-bold mb-1">
+                    <i class="fa-solid fa-chart-pie me-2 text-primary"></i>
+                    Student Dropout Risk Dashboard
+                </h3>
+                <p class="text-secondary mb-0">
+                    Real-time academic stability monitoring and predictive analysis based on historical logs.
+                </p>
+            </div>
+            <div>
+                <a href="{% url 'admin_panel:ai_engine:prediction_list' %}?prediction_type=dropout" class="btn btn-outline-primary px-3 py-2 rounded-3">
+                    <i class="fa-solid fa-list me-1"></i> View All Dropout Logs
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Active Model Info & Metrics Summary -->
+    <div class="row g-4 animate-fade-in stagger-1 mb-4">
+        <!-- Model Status Card -->
+        <div class="col-12 col-md-6 col-lg-3">
+            <div class="card p-4 border border-light shadow-sm h-100 rounded-4">
+                <span class="text-secondary small fw-semibold d-block mb-1">Active AI Model</span>
+                {% if active_model %}
+                    <h5 class="fw-bold mb-1 text-primary">{{ active_model.get_model_type_display }}</h5>
+                    <div class="mt-2">
+                        <span class="badge bg-success bg-opacity-10 text-success border border-success-subtle rounded-pill">v{{ active_model.version }}</span>
+                        <small class="text-secondary d-block mt-2">Accuracy: <b>{{ active_model.accuracy_score|default:"N/A" }}</b></small>
+                    </div>
+                {% else %}
+                    <h5 class="fw-bold mb-1 text-muted">No Model Configured</h5>
+                    <div class="mt-2">
+                        <span class="badge bg-secondary bg-opacity-10 text-secondary border rounded-pill">Inactive</span>
+                        <small class="text-secondary d-block mt-2">No active dropout risk model found in database.</small>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Total Predictions Card -->
+        <div class="col-12 col-md-6 col-lg-3">
+            <div class="card p-4 border border-light shadow-sm h-100 rounded-4">
+                <span class="text-secondary small fw-semibold d-block mb-1">Total Predictions Generated</span>
+                <h2 class="fw-bold mb-1 text-dark" data-testid="metric-total">{{ total_predictions }}</h2>
+                <small class="text-secondary d-block mt-2">
+                    {% if latest_prediction_date %}
+                        Latest run: <b>{{ latest_prediction_date|date:"d M Y" }}</b>
+                    {% else %}
+                        No runs performed yet.
+                    {% endif %}
+                </small>
+            </div>
+        </div>
+
+        <!-- High/Critical Risk Card -->
+        <div class="col-12 col-md-6 col-lg-3">
+            <div class="card p-4 border border-light shadow-sm h-100 rounded-4">
+                <span class="text-secondary small fw-semibold d-block mb-1">High &amp; Critical Risk Alerts</span>
+                <h2 class="fw-bold mb-1 {% if high_critical_count > 0 %}text-danger{% else %}text-dark{% endif %}" data-testid="metric-high-risk">{{ high_critical_count }}</h2>
+                <small class="text-secondary d-block mt-2">
+                    Students identified as having elevated dropout risks.
+                </small>
+            </div>
+        </div>
+
+        <!-- Unacknowledged Alerts Card -->
+        <div class="col-12 col-md-6 col-lg-3">
+            <div class="card p-4 border border-light shadow-sm h-100 rounded-4">
+                <span class="text-secondary small fw-semibold d-block mb-1">Unacknowledged Risk Alerts</span>
+                <h2 class="fw-bold mb-1 {% if unacknowledged_count > 0 %}text-warning{% else %}text-dark{% endif %}" data-testid="metric-unacknowledged">{{ unacknowledged_count }}</h2>
+                <small class="text-secondary d-block mt-2">
+                    Awaiting staff evaluation and intervention plan.
+                </small>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Section: Top Risks or Empty States -->
+    {% if total_predictions > 0 %}
+        <div class="card border border-light shadow rounded-4 animate-fade-in stagger-2">
+            <div class="card-header bg-transparent border-0 pt-4 px-4 pb-0">
+                <h5 class="fw-bold text-dark mb-0">
+                    <i class="fa-solid fa-triangle-exclamation text-danger me-2"></i>
+                    High Risk Students Requiring Review
+                </h5>
+                <p class="text-secondary small mb-0">List of top unacknowledged high and critical risk predictions in the system.</p>
+            </div>
+            
+            <div class="table-responsive p-3">
+                <table class="table table-hover align-middle mb-0" data-testid="dashboard-risks-table">
+                    <thead class="table-light">
+                        <tr>
+                            <th class="ps-3">Student Name</th>
+                            <th>Roll Number</th>
+                            <th>Risk Level</th>
+                            <th>Confidence</th>
+                            <th>Inference Date</th>
+                            <th class="text-end pe-3">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for pred in top_risks %}
+                        <tr data-testid="dashboard-risk-row-{{ pred.pk }}">
+                            <td class="ps-3">
+                                {% if pred.student_target %}
+                                    <a href="{% url 'admin_panel:students:student_detail' pred.student_target.pk %}" class="fw-bold text-decoration-none">
+                                        {{ pred.student_target.full_name }}
+                                    </a>
+                                {% else %}
+                                    <span class="text-muted">Target ID: {{ pred.target_object_id }}</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if pred.student_target %}
+                                    <span>{{ pred.student_target.roll_number|default:"—" }}</span>
+                                {% else %}
+                                    <span class="text-muted">—</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if pred.risk_level == "critical" %}
+                                    <span class="badge bg-danger text-white rounded-pill px-2.5 py-1 fw-bold">Critical</span>
+                                {% else %}
+                                    <span class="badge bg-danger bg-opacity-10 text-danger border border-danger-subtle rounded-pill px-2.5 py-1">High</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                <span class="fw-bold text-primary">{{ pred.confidence_score|default:"0" }}%</span>
+                            </td>
+                            <td>
+                                <span class="text-secondary small">{{ pred.created_at|date:"M d, Y" }}</span>
+                            </td>
+                            <td class="text-end pe-3">
+                                <a href="{% url 'admin_panel:ai_engine:prediction_detail' pred.pk %}" class="btn btn-sm btn-primary rounded-2 px-3">
+                                    <i class="fa-solid fa-eye me-1"></i> Review
+                                </a>
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="6" class="text-center text-success py-4">
+                                <i class="fa-solid fa-circle-check me-2"></i> All high-risk dropout alerts have been reviewed and acknowledged!
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    {% else %}
+        <!-- Empty State Dashboard Panel -->
+        <div class="card p-5 text-center border border-light shadow rounded-4 animate-fade-in stagger-2" data-testid="dashboard-empty-state">
+            <div class="mb-4">
+                <i class="fa-solid fa-chart-line fa-4x text-light-subtle"></i>
+            </div>
+            <h5 class="fw-bold mb-2">No AI predictions have been generated yet</h5>
+            <p class="text-secondary max-width-md mx-auto mb-4" style="max-width: 500px;">
+                No AI dropout risk predictions have been generated yet. Please ensure that the AI model is configured and run to generate predictions.
+            </p>
+            <div class="p-3 bg-light border rounded-3 max-width-md mx-auto small text-start text-secondary mb-4" style="max-width: 600px;">
+                <h6 class="fw-bold text-dark mb-2"><i class="fa-solid fa-info-circle me-1"></i> How does the dropout risk dashboard populate?</h6>
+                <ol class="mb-0 ps-3">
+                    <li class="mb-1">Ensure a semantic model version for <b>Dropout Risk Detection</b> is marked active.</li>
+                    <li class="mb-1">Run training/inference scripts to process academic, finance, and attendance logs.</li>
+                    <li class="mb-1">PredictionLog records generated by the AI Engine will load dynamically in this view.</li>
+                </ol>
+            </div>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

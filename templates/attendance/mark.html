@@ -1,0 +1,160 @@
+{% extends "layouts/panel_base.html" %}
+{% load static %}
+
+{% block title %}Mark Attendance - {{ session.name }} - Iqra Academy{% endblock %}
+
+{% block content %}
+<div class="container-fluid py-4 form-container">
+    <!-- Header Card -->
+    <div class="card p-4 border border-light shadow-sm rounded-4 mb-4 animate-fade-in">
+        <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3">
+            <div class="d-flex align-items-center">
+                <a href="{{ back_url }}" class="btn btn-outline-primary btn-sm rounded-circle me-3 btn-back-circle">
+                    <i class="fa-solid fa-arrow-left"></i>
+                </a>
+                <div>
+                    <h4 class="fw-bold mb-1">{{ session.name }}</h4>
+                    <p class="text-secondary mb-0 small">Marking daily attendance. Batch: {{ session.code }}</p>
+                </div>
+            </div>
+
+            <!-- Date Selector Form -->
+            <form method="get" class="d-flex align-items-center gap-2">
+                <label for="date-select" class="small fw-semibold text-secondary mb-0 text-nowrap">Selected Date:</label>
+                <input type="date" id="date-select" name="date" class="form-control rounded-3" value="{{ date_str }}" onchange="this.form.submit()">
+            </form>
+        </div>
+    </div>
+
+    <!-- Status Alerts -->
+    {% if is_locked %}
+        <div class="alert alert-danger border-danger-subtle rounded-4 p-3 mb-4 shadow-sm animate-fade-in stagger-1 d-flex align-items-center">
+            <i class="fa-solid fa-lock fa-lg text-danger me-3"></i>
+            <div>
+                <h6 class="fw-bold text-danger mb-1">Attendance Sheet Locked</h6>
+                <p class="mb-0 small text-danger">Attendance for this date is locked and cannot be edited. View the <a href="{{ sheet_url }}" class="fw-bold text-decoration-underline text-danger">logs</a>.</p>
+            </div>
+        </div>
+    {% endif %}
+
+    <!-- Student Attendance Grid Form -->
+    <div class="card border border-light shadow-sm rounded-4 animate-fade-in stagger-2">
+        <div class="p-3.5 border-bottom card-header bg-light rounded-top-4">
+            <div class="d-flex justify-content-between align-items-center">
+                <h6 class="mb-0 fw-bold"><i class="fa-solid fa-users me-2"></i>Active Enrollments</h6>
+                <span class="badge bg-primary rounded-pill px-3 py-1.5">{{ enrollments|length }} Enrolled</span>
+            </div>
+        </div>
+        
+        <form method="post">
+            {% csrf_token %}
+            <input type="hidden" name="date" value="{{ date_str }}">
+
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead class="bg-light-subtle">
+                        <tr>
+                            <th class="ps-4" style="width: 120px;">Roll No</th>
+                            <th>Student Name</th>
+                            <th class="text-center" style="width: 350px;">Status</th>
+                            <th class="pe-4" style="width: 250px;">Remarks</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for enr in enrollments %}
+                            <tr>
+                                <td class="ps-4 fw-semibold">{{ enr.student.roll_number|default:"N/A" }}</td>
+                                <td>
+                                    <div class="fw-bold text-dark">{{ enr.student.full_name }}</div>
+                                    <div class="text-muted small">{{ enr.student.email|default:"" }}</div>
+                                </td>
+                                <td class="text-center">
+                                    <div class="d-flex justify-content-center gap-1.5 status-group">
+                                        {% for status_val, status_lbl in status_choices %}
+                                            <input type="radio" 
+                                                   class="btn-check" 
+                                                   name="status_{{ enr.student.pk }}" 
+                                                   id="status_{{ enr.student.pk }}_{{ status_val }}" 
+                                                   value="{{ status_val }}"
+                                                   {% if enr.existing_status == status_val %}checked{% endif %}
+                                                   {% if is_locked %}disabled{% endif %}>
+                                            <label class="btn btn-sm btn-outline-status rounded-pill px-3" 
+                                                   for="status_{{ enr.student.pk }}_{{ status_val }}">{{ status_lbl }}</label>
+                                        {% endfor %}
+                                    </div>
+                                </td>
+                                <td class="pe-4">
+                                    <input type="text" 
+                                           name="remarks_{{ enr.student.pk }}" 
+                                           class="form-control form-control-sm rounded-3" 
+                                           placeholder="Optional remarks" 
+                                           value="{{ enr.existing_remarks|default:'' }}"
+                                           {% if is_locked %}disabled{% endif %}>
+                                </td>
+                            </tr>
+                        {% empty %}
+                            <tr>
+                                <td colspan="4" class="text-center py-5 text-muted">
+                                    <i class="fa-solid fa-users-slash fa-2x mb-3 text-secondary"></i>
+                                    <p class="mb-0">No active students enrolled in this session.</p>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Form Actions -->
+            {% if enrollments and not is_locked %}
+                <div class="p-4 border-top bg-light rounded-bottom-4 d-flex justify-content-end gap-2">
+                    <a href="{{ back_url }}" class="btn btn-secondary rounded-3 px-4">Cancel</a>
+                    <button type="submit" class="btn btn-primary rounded-3 px-4">
+                        <i class="fa-solid fa-check me-2"></i> Save Attendance
+                    </button>
+                </div>
+            {% endif %}
+        </form>
+    </div>
+</div>
+
+<style>
+body.crm-app .btn-back-circle {
+    width: 38px;
+    height: 38px;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+body.crm-app .btn-outline-status {
+    border-color: #dee2e6;
+    color: #495057;
+    background-color: transparent;
+    transition: all 0.2s ease;
+}
+body.crm-app .btn-check:checked + label[for*="_Present"] {
+    background-color: #2e7d32 !important;
+    border-color: #2e7d32 !important;
+    color: #fff !important;
+}
+body.crm-app .btn-check:checked + label[for*="_Absent"] {
+    background-color: #c62828 !important;
+    border-color: #c62828 !important;
+    color: #fff !important;
+}
+body.crm-app .btn-check:checked + label[for*="_Late"] {
+    background-color: #f9a825 !important;
+    border-color: #f9a825 !important;
+    color: #fff !important;
+}
+body.crm-app .btn-check:checked + label[for*="_Excused"] {
+    background-color: #1565c0 !important;
+    border-color: #1565c0 !important;
+    color: #fff !important;
+}
+body.crm-app .status-group label:hover {
+    background-color: #f8f9fa;
+    border-color: #adb5bd;
+}
+</style>
+{% endblock %}

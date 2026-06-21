@@ -1,0 +1,156 @@
+{% extends 'layouts/panel_base.html' %}
+{% load static %}
+
+{% block title %}{% if exam %}Edit Exam{% else %}Create Exam{% endif %} - Iqra Academy{% endblock %}
+
+{% block content %}
+<div class="container-fluid px-0">
+    <!-- Page Header -->
+    <div class="p-4 rounded-4 mb-4 card border border-light shadow-sm animate-fade-in">
+        <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
+            <div>
+                <h3 class="fw-bold mb-1">
+                    <i class="fa-solid fa-{% if exam %}pen-to-square{% else %}plus-circle{% endif %} me-2 text-primary"></i>
+                    {% if exam %}Edit Exam: {{ exam.name }}{% else %}Create New Exam{% endif %}
+                </h3>
+                <p class="text-secondary mb-0">
+                    {% if exam %}Modify exam details and settings.{% else %}Define a new exam or assessment.{% endif %}
+                </p>
+            </div>
+            <div>
+                <a href="../" class="btn btn-outline-secondary rounded-3 px-4">
+                    <i class="fa-solid fa-arrow-left me-2"></i> Back to Exams
+                </a>
+            </div>
+        </div>
+    </div>
+
+    {% if error %}
+    <div class="alert alert-danger alert-dismissible fade show rounded-3 shadow-sm" role="alert" data-testid="exam-form-error">
+        <i class="fa-solid fa-circle-exclamation me-2"></i>
+        {{ error }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+    {% endif %}
+
+    <!-- Exam Form -->
+    <div class="card p-4 border border-light shadow rounded-4 animate-fade-in stagger-1">
+        <form method="post" data-testid="exam-form">
+            {% csrf_token %}
+
+            <div class="row g-4">
+                <!-- Exam Name -->
+                <div class="col-12 col-md-6">
+                    <label for="exam-name" class="form-label fw-semibold">
+                        Exam Name <span class="text-danger">*</span>
+                    </label>
+                    <input type="text" class="form-control" id="exam-name" name="name"
+                           value="{{ exam.name|default:'' }}"
+                           placeholder="e.g. Midterm Exam 1"
+                           required data-testid="exam-name-input">
+                </div>
+
+                <!-- Exam Type -->
+                <div class="col-12 col-md-6">
+                    <label for="exam-type" class="form-label fw-semibold">
+                        Exam Type <span class="text-danger">*</span>
+                    </label>
+                    <select class="form-select" id="exam-type" name="exam_type"
+                            required data-testid="exam-type-select">
+                        <option value="Quiz" {% if exam.exam_type == "Quiz" %}selected{% endif %}>Quiz</option>
+                        <option value="Test" {% if exam.exam_type == "Test" or not exam %}selected{% endif %}>Test</option>
+                        <option value="Midterm" {% if exam.exam_type == "Midterm" %}selected{% endif %}>Midterm</option>
+                        <option value="Final" {% if exam.exam_type == "Final" %}selected{% endif %}>Final Exam</option>
+                        <option value="Assignment" {% if exam.exam_type == "Assignment" %}selected{% endif %}>Assignment</option>
+                        <option value="Project" {% if exam.exam_type == "Project" %}selected{% endif %}>Project</option>
+                    </select>
+                </div>
+
+                <!-- Session -->
+                <div class="col-12 col-md-6">
+                    <label for="exam-session" class="form-label fw-semibold">
+                        Session <span class="text-danger">*</span>
+                    </label>
+                    <select class="form-select" id="exam-session" name="session_id"
+                            required data-testid="exam-session-select"
+                            {% if exam %}disabled{% endif %}>
+                        <option value="">Select Session</option>
+                        {% for sess in sessions %}
+                            <option value="{{ sess.id }}"
+                                    {% if exam and exam.session_id == sess.id %}selected{% endif %}>
+                                {{ sess.name }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                    {% if exam %}
+                        <input type="hidden" name="session_id" value="{{ exam.session_id }}">
+                    {% endif %}
+                </div>
+
+                <!-- Subject -->
+                <div class="col-12 col-md-6">
+                    <label for="exam-subject" class="form-label fw-semibold">Subject</label>
+                    <select class="form-select" id="exam-subject" name="subject_id"
+                            data-testid="exam-subject-select"
+                            {% if exam %}disabled{% endif %}>
+                        <option value="">General (No subject)</option>
+                        {% for subj in subjects %}
+                            <option value="{{ subj.id }}"
+                                    {% if exam and exam.subject_id == subj.id %}selected{% endif %}>
+                                {{ subj.name }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                    {% if exam %}
+                        <input type="hidden" name="subject_id" value="{{ exam.subject_id|default:'' }}">
+                    {% endif %}
+                </div>
+
+                <!-- Total Marks -->
+                <div class="col-12 col-md-4">
+                    <label for="exam-total-marks" class="form-label fw-semibold">
+                        Total Marks <span class="text-danger">*</span>
+                    </label>
+                    <input type="number" class="form-control" id="exam-total-marks"
+                           name="total_marks" step="0.01" min="0.01"
+                           value="{{ exam.total_marks|default:'' }}"
+                           placeholder="e.g. 100"
+                           required data-testid="exam-total-marks-input">
+                </div>
+
+                <!-- Passing Marks -->
+                <div class="col-12 col-md-4">
+                    <label for="exam-passing-marks" class="form-label fw-semibold">
+                        Passing Marks
+                    </label>
+                    <input type="number" class="form-control" id="exam-passing-marks"
+                           name="passing_marks" step="0.01" min="0"
+                           value="{{ exam.passing_marks|default:'' }}"
+                           placeholder="e.g. 40"
+                           data-testid="exam-passing-marks-input">
+                    <div class="form-text text-muted">Leave blank for no passing threshold.</div>
+                </div>
+
+                <!-- Exam Date -->
+                <div class="col-12 col-md-4">
+                    <label for="exam-date" class="form-label fw-semibold">Exam Date</label>
+                    <input type="date" class="form-control" id="exam-date"
+                           name="exam_date"
+                           value="{{ exam.exam_date|date:'Y-m-d'|default:'' }}"
+                           data-testid="exam-date-input">
+                </div>
+            </div>
+
+            <!-- Submit -->
+            <div class="mt-4 pt-3 border-top d-flex justify-content-end gap-3">
+                <a href="../" class="btn btn-outline-secondary rounded-3 px-4">Cancel</a>
+                <button type="submit" class="btn btn-primary rounded-3 px-4 shadow-sm"
+                        data-testid="exam-form-submit">
+                    <i class="fa-solid fa-{% if exam %}save{% else %}plus{% endif %} me-2"></i>
+                    {% if exam %}Save Changes{% else %}Create Exam{% endif %}
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

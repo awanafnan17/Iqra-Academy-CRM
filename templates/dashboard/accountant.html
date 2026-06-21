@@ -1,0 +1,148 @@
+{% extends 'layouts/panel_base.html' %}
+{% load finance_tags %}
+
+{% block title %}Financial Ledger - Iqra Academy{% endblock %}
+
+{% block content %}
+<div class="container-fluid px-0">
+    <!-- Page Header -->
+    <div class="p-4 rounded-4 mb-4 card border border-light shadow-sm animate-fade-in">
+        <div class="d-flex justify-content-between align-items-center">
+            <div>
+                <h3 class="fw-bold mb-1">Financial Ledger</h3>
+                <p class="text-secondary mb-0">Track revenue streams, pending accounts, and transaction logs in Iqra Academy.</p>
+            </div>
+            <div>
+                <span class="badge bg-primary bg-opacity-10 text-primary px-3 py-2 rounded-pill fw-semibold">
+                    <i class="fa-solid fa-calculator me-1"></i> Accountant Portal
+                </span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Metrics Cards Grid -->
+    <div class="row g-4">
+        <!-- Confirmed Revenue -->
+        <div class="col-12 col-md-6 col-lg-3">
+            <div class="card metric-card h-100 animate-fade-in stagger-1">
+                <div class="card-body p-4">
+                    <div class="d-flex align-items-start justify-content-between mb-3">
+                        <div>
+                            <div class="metric-label">Confirmed Revenue</div>
+                            <div
+                                class="metric-value mt-2"
+                                data-target="{{ metrics.confirmed_revenue|default:0 }}"
+                                data-duration="1200"
+                                data-prefix="PKR "
+                                data-decimals="0">
+                                {{ metrics.confirmed_revenue|default:0 }}
+                            </div>
+                        </div>
+                        <div class="metric-icon">
+                            <i class="fa-solid fa-money-bill-trend-up"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Unpaid Installments -->
+        <div class="col-12 col-md-6 col-lg-3">
+            <div class="card metric-card h-100 animate-fade-in stagger-2">
+                <div class="card-body p-4">
+                    <div class="d-flex align-items-start justify-content-between mb-3">
+                        <div>
+                            <div class="metric-label">Unpaid Installments</div>
+                            <div
+                                class="metric-value mt-2"
+                                data-target="{{ metrics.unpaid_installments|default:0 }}"
+                                data-duration="1200"
+                                data-prefix="PKR "
+                                data-decimals="0">
+                                {{ metrics.unpaid_installments|default:0 }}
+                            </div>
+                        </div>
+                        <div class="metric-icon">
+                            <i class="fa-solid fa-wallet"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pending Expenses -->
+        <div class="col-12 col-md-6 col-lg-3">
+            <div class="card metric-card h-100 animate-fade-in stagger-3">
+                <div class="card-body p-4">
+                    <div class="d-flex align-items-start justify-content-between mb-3">
+                        <div>
+                            <div class="metric-label">Pending Expenses</div>
+                            <div
+                                class="metric-value mt-2"
+                                data-target="{{ metrics.pending_expenses|default:0 }}"
+                                data-duration="1200"
+                                data-prefix="PKR "
+                                data-decimals="0">
+                                {{ metrics.pending_expenses|default:0 }}
+                            </div>
+                        </div>
+                        <div class="metric-icon">
+                            <i class="fa-solid fa-receipt"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Processed Refunds -->
+        <div class="col-12 col-md-6 col-lg-3">
+            <div class="card metric-card h-100 animate-fade-in stagger-4">
+                <div class="card-body p-4">
+                    <div class="d-flex align-items-start justify-content-between mb-3">
+                        <div>
+                            <div class="metric-label">Processed Refunds</div>
+                            <div
+                                class="metric-value mt-2"
+                                data-target="{{ metrics.processed_refunds|default:0 }}"
+                                data-duration="1200"
+                                data-prefix="PKR "
+                                data-decimals="0">
+                                {{ metrics.processed_refunds|default:0 }}
+                            </div>
+                        </div>
+                        <div class="metric-icon">
+                            <i class="fa-solid fa-arrow-rotate-left"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Secondary Row -->
+    <div class="row g-4 mt-2">
+        <!-- Overdue Fee Accounts -->
+        <div class="col-12 col-md-4">
+            <div class="card metric-card h-100 animate-fade-in stagger-5">
+                <div class="card-body p-4">
+                    <div class="d-flex align-items-start justify-content-between mb-3">
+                        <div>
+                            <div class="metric-label">Overdue Accounts</div>
+                            <div
+                                class="metric-value mt-2"
+                                data-target="{{ metrics.overdue_count|default:0 }}"
+                                data-duration="1200"
+                                data-decimals="0">
+                                {{ metrics.overdue_count|default:0 }}
+                            </div>
+                        </div>
+                        <div class="metric-icon">
+                            <i class="fa-solid fa-clock-rotate-left"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

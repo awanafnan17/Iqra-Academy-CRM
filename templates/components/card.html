@@ -1,0 +1,15 @@
+<div class="glass-card p-4 {% if card_class %}{{ card_class }}{% endif %}">
+    {% if card_title %}
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h5 class="fw-bold mb-0 text-primary">{{ card_title }}</h5>
+            {% if card_action %}
+                <div class="card-action">
+                    {{ card_action }}
+                </div>
+            {% endif %}
+        </div>
+    {% endif %}
+    <div class="card-content">
+        {{ card_content }}
+    </div>
+</div>

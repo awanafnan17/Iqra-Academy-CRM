@@ -1,0 +1,171 @@
+{% extends "layouts/panel_base.html" %}
+{% load static %}
+
+{% block title %}{{ page_title }} - Iqra Academy{% endblock %}
+
+{% block content %}
+<div class="container-fluid py-4">
+    <!-- Header Card -->
+    <div class="card p-4 border border-light shadow-sm rounded-4 mb-4 animate-fade-in">
+        <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3">
+            <div class="d-flex align-items-center">
+                <a href="{{ back_url }}" class="btn btn-outline-primary btn-sm rounded-circle me-3 btn-back-circle">
+                    <i class="fa-solid fa-arrow-left"></i>
+                </a>
+                <div>
+                    <h4 class="fw-bold mb-1">Session Roster</h4>
+                    <p class="text-secondary mb-0 small">{{ session.name }} ({{ session.code }})</p>
+                </div>
+            </div>
+            
+            <!-- Stats -->
+            <div class="d-flex gap-4 align-items-center">
+                <div class="text-center">
+                    <div class="fw-bold text-primary fs-5">{{ enrollments.paginator.count|default:"0" }}</div>
+                    <div class="text-secondary small">Total Enrolled</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Filters Bar -->
+    <div class="card p-4 border border-light shadow-sm rounded-4 mb-4 animate-fade-in stagger-1">
+        <form method="get" class="row g-3">
+            <!-- Search field -->
+            <div class="col-12 col-md-5">
+                <label for="search-input" class="form-label small fw-semibold text-secondary">Search Student</label>
+                <div class="input-group">
+                    <span class="input-group-text bg-white border-end-0 text-muted"><i class="fa-solid fa-magnifying-glass"></i></span>
+                    <input type="text" id="search-input" name="search" class="form-control border-start-0 rounded-end-3" placeholder="Name or roll number..." value="{{ search_query }}">
+                </div>
+            </div>
+            
+            <!-- Status filter -->
+            <div class="col-12 col-md-4">
+                <label for="status-filter" class="form-label small fw-semibold text-secondary">Status</label>
+                <select id="status-filter" name="status" class="form-select rounded-3">
+                    <option value="">All Statuses</option>
+                    {% for status_val, status_lbl in status_choices %}
+                        <option value="{{ status_val }}" {% if status_filter == status_val %}selected{% endif %}>{{ status_lbl }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            
+            <!-- Form Actions -->
+            <div class="col-12 col-md-3 d-flex align-items-end gap-2">
+                <button type="submit" class="btn btn-primary w-100 rounded-3"><i class="fa-solid fa-filter me-2"></i>Apply</button>
+                <a href="?" class="btn btn-outline-secondary w-100 rounded-3"><i class="fa-solid fa-arrows-rotate me-2"></i>Reset</a>
+            </div>
+        </form>
+    </div>
+
+    <!-- Enrolled Students Table -->
+    <div class="card border border-light shadow-sm rounded-4 animate-fade-in stagger-2">
+        <div class="p-3.5 border-bottom card-header bg-light rounded-top-4">
+            <h6 class="mb-0 fw-bold"><i class="fa-solid fa-users me-2"></i>Students List</h6>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <thead class="bg-light-subtle">
+                    <tr>
+                        <th class="ps-4" style="width: 150px;">Roll No</th>
+                        <th>Student Name</th>
+                        <th>Status</th>
+                        <th>Registration Date</th>
+                        <th class="pe-4 text-end" style="width: 150px;">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for enr in enrollments %}
+                        <tr>
+                            <td class="ps-4 fw-semibold">{{ enr.student.roll_number|default:"N/A" }}</td>
+                            <td>
+                                <div class="fw-bold text-dark">{{ enr.student.full_name }}</div>
+                                <div class="text-muted small">{{ enr.student.email|default:"" }}</div>
+                            </td>
+                            <td>
+                                {% if enr.status == 'Active' %}
+                                    <span class="badge bg-success-subtle text-success border border-success-subtle px-2.5 py-1 rounded-pill">Active</span>
+                                {% elif enr.status == 'Frozen' %}
+                                    <span class="badge bg-warning-subtle text-warning border border-warning-subtle px-2.5 py-1 rounded-pill">Frozen</span>
+                                {% elif enr.status == 'Completed' %}
+                                    <span class="badge bg-info-subtle text-info border border-info-subtle px-2.5 py-1 rounded-pill">Completed</span>
+                                {% elif enr.status == 'Withdrawn' %}
+                                    <span class="badge bg-danger-subtle text-danger border border-danger-subtle px-2.5 py-1 rounded-pill">Withdrawn</span>
+                                {% else %}
+                                    <span class="badge bg-secondary-subtle text-secondary border border-secondary-subtle px-2.5 py-1 rounded-pill">{{ enr.status }}</span>
+                                {% endif %}
+                            </td>
+                            <td class="text-secondary small">{{ enr.registration_date|date:"M d, Y"|default:"—" }}</td>
+                            <td class="pe-4 text-end">
+                                <a href="{% url 'admin_panel:students:student_detail' enr.student.pk %}" class="btn btn-sm btn-outline-primary rounded-3">
+                                    <i class="fa-solid fa-eye me-1"></i>View Profile
+                                </a>
+                            </td>
+                        </tr>
+                    {% empty %}
+                        <tr>
+                            <td colspan="5" class="text-center py-5 text-muted">
+                                <i class="fa-solid fa-users-slash fa-2x mb-3 text-secondary"></i>
+                                <p class="mb-0">No enrollments found matching the criteria.</p>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Pagination -->
+        {% if enrollments.has_other_pages %}
+            <div class="card-footer bg-white border-top py-3 d-flex justify-content-between align-items-center">
+                <span class="small text-secondary">Showing page {{ enrollments.number }} of {{ enrollments.paginator.num_pages }}</span>
+                <nav aria-label="Page navigation">
+                    <ul class="pagination pagination-sm mb-0">
+                        {% if enrollments.has_previous %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ enrollments.previous_page_number }}{% if search_query %}&search={{ search_query }}{% endif %}{% if status_filter %}&status={{ status_filter }}{% endif %}" aria-label="Previous">
+                                    <span aria-hidden="true">&laquo;</span>
+                                </a>
+                            </li>
+                        {% else %}
+                            <li class="page-item disabled"><span class="page-link">&laquo;</span></li>
+                        {% endif %}
+                        
+                        {% for num in enrollments.paginator.page_range %}
+                            {% if enrollments.number == num %}
+                                <li class="page-item active"><span class="page-link">{{ num }}</span></li>
+                            {% elif num > enrollments.number|add:'-3' and num < enrollments.number|add:'3' %}
+                                <li class="page-item">
+                                    <a class="page-link" href="?page={{ num }}{% if search_query %}&search={{ search_query }}{% endif %}{% if status_filter %}&status={{ status_filter }}{% endif %}">{{ num }}</a>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+                        
+                        {% if enrollments.has_next %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ enrollments.next_page_number }}{% if search_query %}&search={{ search_query }}{% endif %}{% if status_filter %}&status={{ status_filter }}{% endif %}" aria-label="Next">
+                                    <span aria-hidden="true">&raquo;</span>
+                                </a>
+                            </li>
+                        {% else %}
+                            <li class="page-item disabled"><span class="page-link">&raquo;</span></li>
+                        {% endif %}
+                    </ul>
+                </nav>
+            </div>
+        {% endif %}
+    </div>
+</div>
+
+<style>
+body.crm-app .btn-back-circle {
+    width: 38px;
+    height: 38px;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+</style>
+{% endblock %}

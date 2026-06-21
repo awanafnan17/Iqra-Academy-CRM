@@ -1,0 +1,97 @@
+{% load static %}
+{% with path=request.path %}
+<nav class="navbar" id="navbar" aria-label="Top navigation">
+    <div class="d-flex align-items-center">
+        <!-- Mobile Sidebar Toggle -->
+        <button
+          id="sidebarToggle"
+          class="sidebar-toggle-btn me-3"
+          aria-label="Toggle sidebar">
+          <i class="fas fa-bars"></i>
+        </button>
+        <!-- Title / Context -->
+        <div class="d-flex align-items-center gap-2">
+            <img src="{% static 'images/logo.png' %}" alt="Logo" style="height: 28px; width: auto; object-fit: contain;" class="d-inline-block align-text-top">
+            <span class="page-title d-none d-sm-inline-block">Iqra Academy</span>
+        </div>
+    </div>
+
+    <!-- Search bar (styled clean) -->
+    <div class="mx-3 d-none d-md-flex flex-grow-1 search-box">
+        <input type="text" class="form-control" placeholder="Search..." aria-label="Search">
+        <span class="search-icon"><i class="fa-solid fa-magnifying-glass"></i></span>
+    </div>
+
+    <div class="navbar-right">
+        <!-- Theme Toggle Button -->
+        <button
+          id="themeToggle"
+          class="theme-toggle me-3"
+          aria-label="Toggle theme"
+          title="Toggle dark/light mode">
+          <i class="fas fa-moon" id="themeIcon"></i>
+        </button>
+
+        <!-- Notification Dropdown -->
+        <div class="dropdown me-3">
+            <button class="btn btn-secondary btn-icon position-relative" type="button" id="notifDropdown" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Notifications">
+                <i class="fa-regular fa-bell" id="notification-bell"></i>
+                <span id="unread-badge" class="position-absolute top-0 start-100 translate-middle badge bg-danger">
+                    0
+                </span>
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end py-0" aria-labelledby="notifDropdown">
+                <li class="p-3 d-flex justify-content-between align-items-center border-bottom">
+                    <h6 class="mb-0 fw-bold text-primary-c">Notifications</h6>
+                    {% if "/panel/admin/" in path %}
+                        <a href="{% url 'admin_panel:notifications:notification_list' %}" class="small text-decoration-none text-accent">View All</a>
+                    {% elif "/panel/teacher/" in path %}
+                        <a href="{% url 'teacher_panel:notification_list' %}" class="small text-decoration-none text-accent">View All</a>
+                    {% elif "/panel/accounts/" in path %}
+                        <a href="{% url 'accounts_panel:notification_list' %}" class="small text-decoration-none text-accent">View All</a>
+                    {% elif "/panel/registrar/" in path %}
+                        <a href="{% url 'registrar_panel:notification_list' %}" class="small text-decoration-none text-accent">View All</a>
+                    {% elif "/portal/student/" in path %}
+                        <a href="{% url 'student_portal:notification_list' %}" class="small text-decoration-none text-accent">View All</a>
+                    {% elif "/portal/guardian/" in path %}
+                        <a href="{% url 'guardian_portal:notification_list' %}" class="small text-decoration-none text-accent">View All</a>
+                    {% endif %}
+                </li>
+                <!-- JavaScript loads list here -->
+                <div id="notification-dropdown-list" class="notif-list p-2">
+                    <li class="p-2 text-center text-muted small">Loading notifications...</li>
+                </div>
+            </ul>
+        </div>
+
+        <!-- User Profile Dropdown -->
+        <div class="dropdown">
+            <button class="btn btn-secondary py-1 px-2 d-flex align-items-center text-decoration-none" type="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false" data-testid="account-menu-user-name">
+                <div class="avatar avatar-sm me-2 fw-bold">
+                    {{ request.user.display_name|slice:":2"|upper }}
+                </div>
+                <span class="d-none d-md-inline text-secondary small fw-medium" data-testid="navbar-user-name">{{ request.user.display_name }}</span>
+            </button>
+
+            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                <li>
+                    <a class="dropdown-item py-2" href="{% url 'accounts:profile_view' %}">
+                        <i class="fa-regular fa-user text-muted"></i> My Profile
+                    </a>
+                </li>
+                <li>
+                    <a class="dropdown-item py-2" href="{% url 'accounts:password_change' %}">
+                        <i class="fa-solid fa-key text-muted"></i> Change Password
+                    </a>
+                </li>
+                <li><hr class="dropdown-divider"></li>
+                <li>
+                    <a class="dropdown-item py-2 text-danger" href="{% url 'accounts:logout' %}">
+                        <i class="fa-solid fa-right-from-bracket"></i> Logout
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+{% endwith %}

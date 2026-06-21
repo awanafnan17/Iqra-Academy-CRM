@@ -1,0 +1,57 @@
+{% extends 'layouts/panel_base.html' %}
+{% load static %}
+
+{% block title %}{{ page_title }} - Iqra Academy{% endblock %}
+
+{% block content %}
+<div class="container-fluid px-0">
+    <div class="p-4 rounded-4 mb-4 card border border-light shadow-sm animate-fade-in">
+        <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
+            <div>
+                <h3 class="fw-bold mb-1">
+                    <i class="fa-solid fa-users me-2 text-primary"></i>
+                    Students: {{ session.name }}
+                </h3>
+                <p class="text-secondary mb-0">{{ enrollments|length }} students currently enrolled.</p>
+            </div>
+            <a href="{% url 'teacher_panel:session_detail' session.pk %}" class="btn btn-outline-secondary rounded-3 px-4">
+                <i class="fa-solid fa-arrow-left me-2"></i> Back
+            </a>
+        </div>
+    </div>
+
+    <div class="card border border-light shadow rounded-4 animate-fade-in stagger-1">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <thead class="table-light">
+                    <tr>
+                        <th class="ps-4">#</th>
+                        <th>Roll No</th>
+                        <th>Student Name</th>
+                        <th>Father's Name</th>
+                        <th>Phone</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for enroll in enrollments %}
+                    <tr>
+                        <td class="ps-4 text-muted">{{ forloop.counter }}</td>
+                        <td class="fw-bold">{{ enroll.student.roll_number|default:"-" }}</td>
+                        <td class="fw-semibold text-primary">{{ enroll.student.full_name }}</td>
+                        <td>{{ enroll.student.father_name|default:"-" }}</td>
+                        <td>{{ enroll.student.phone|default:"-" }}</td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="5" class="text-center py-5 text-muted">
+                            <i class="fa-solid fa-user-slash fa-2x mb-2 d-block opacity-50"></i>
+                            No students enrolled.
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

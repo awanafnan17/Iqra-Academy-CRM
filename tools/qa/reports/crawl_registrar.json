@@ -1,0 +1,186 @@
+{
+  "role": "Registrar",
+  "mode": "enforcement",
+  "timestamp": "2026-06-20T02:49:54.722348",
+  "pages_visited": [
+    {
+      "url": "/panel/registrar/dashboard/",
+      "status": 200,
+      "load_time_ms": 130,
+      "final_url": "/panel/registrar/dashboard/",
+      "title": "Admissions Desk - Iqra Academy",
+      "source_url": "seed",
+      "link_source": "seed"
+    },
+    {
+      "url": "/accounts/profile/",
+      "status": 200,
+      "load_time_ms": 70,
+      "final_url": "/accounts/profile/",
+      "title": "My Profile - Iqra Academy",
+      "source_url": "/panel/registrar/dashboard/",
+      "link_source": "navbar"
+    },
+    {
+      "url": "/panel/registrar/leads/",
+      "status": 200,
+      "load_time_ms": 133,
+      "final_url": "/panel/registrar/leads/",
+      "title": "Lead Management - Iqra Academy",
+      "source_url": "/accounts/profile/",
+      "link_source": "sidebar"
+    },
+    {
+      "url": "/panel/registrar/students/",
+      "status": 200,
+      "load_time_ms": 138,
+      "final_url": "/panel/registrar/students/",
+      "title": "Manage Students - Iqra Academy",
+      "source_url": "/panel/registrar/leads/",
+      "link_source": "sidebar"
+    },
+    {
+      "url": "/panel/registrar/admissions/",
+      "status": 200,
+      "load_time_ms": 106,
+      "final_url": "/panel/registrar/admissions/",
+      "title": "Admissions Registry - Iqra Academy",
+      "source_url": "/panel/registrar/students/",
+      "link_source": "sidebar"
+    },
+    {
+      "url": "/panel/registrar/admissions/summary/",
+      "status": 200,
+      "load_time_ms": 65,
+      "final_url": "/panel/registrar/admissions/summary/",
+      "title": "Admissions Summary & Analytics - Iqra Academy",
+      "source_url": "/panel/registrar/admissions/",
+      "link_source": "sidebar"
+    },
+    {
+      "url": "/panel/registrar/notifications/",
+      "status": 200,
+      "load_time_ms": 87,
+      "final_url": "/panel/registrar/notifications/",
+      "title": "Notifications - Iqra Academy",
+      "source_url": "/panel/registrar/admissions/summary/",
+      "link_source": "navbar"
+    },
+    {
+      "url": "/accounts/password/change/",
+      "status": 200,
+      "load_time_ms": 56,
+      "final_url": "/accounts/password/change/",
+      "title": "Change Password - Iqra Academy",
+      "source_url": "/panel/registrar/notifications/",
+      "link_source": "navbar"
+    },
+    {
+      "url": "/accounts/post-login/",
+      "status": 200,
+      "load_time_ms": 89,
+      "final_url": "/panel/registrar/dashboard/",
+      "title": "Admissions Desk - Iqra Academy",
+      "source_url": "/accounts/password/change/",
+      "link_source": "navigation"
+    },
+    {
+      "url": "/panel/registrar/leads/create/",
+      "status": 200,
+      "load_time_ms": 119,
+      "final_url": "/panel/registrar/leads/create/",
+      "title": "Create Lead - Iqra Academy",
+      "source_url": "/panel/registrar/leads/",
+      "link_source": "navigation"
+    },
+    {
+      "url": "/panel/registrar/students/create/",
+      "status": 200,
+      "load_time_ms": 85,
+      "final_url": "/panel/registrar/students/create/",
+      "title": "Register New Student",
+      "source_url": "/panel/registrar/students/",
+      "link_source": "navigation"
+    },
+    {
+      "url": "/panel/registrar/students/6/",
+      "status": 200,
+      "load_time_ms": 110,
+      "final_url": "/panel/registrar/students/6/",
+      "title": "TestStudent QA - Profile - Iqra Academy",
+      "source_url": "/panel/registrar/students/",
+      "link_source": "navigation"
+    }
+  ],
+  "errors_500": [],
+  "errors_404": [],
+  "errors_403": [],
+  "console_errors": [
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "url": "http://127.0.0.1:4082/panel/registrar/dashboard/"
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "url": "http://127.0.0.1:4082/accounts/profile/"
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "url": "http://127.0.0.1:4082/accounts/profile/"
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "url": "http://127.0.0.1:4082/panel/registrar/leads/"
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "url": "http://127.0.0.1:4082/panel/registrar/students/"
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "url": "http://127.0.0.1:4082/panel/registrar/admissions/"
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "url": "http://127.0.0.1:4082/panel/registrar/admissions/summary/"
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "url": "http://127.0.0.1:4082/panel/registrar/notifications/"
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "url": "http://127.0.0.1:4082/accounts/password/change/"
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "url": "http://127.0.0.1:4082/accounts/password/change/"
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "url": "http://127.0.0.1:4082/panel/registrar/dashboard/"
+    }
+  ],
+  "redirect_loops": [],
+  "slow_pages": [],
+  "empty_pages": [],
+  "redirects": [
+    {
+      "from": "/accounts/post-login/",
+      "to": "/panel/registrar/dashboard/",
+      "status": 200
+    }
+  ],
+  "all_errors": []
+}

@@ -1,0 +1,122 @@
+{
+  "audit_version": "1.0",
+  "timestamp": "2026-06-21T16:26:00Z",
+  "status": "RELEASE_READY",
+  "summary": {
+    "is_release_ready": true,
+    "missing_links_count": 7,
+    "broken_links_count": 0,
+    "stale_links_count": 1,
+    "unauthorized_visible_links_count": 0
+  },
+  "missing_links": [
+    {
+      "module": "core",
+      "name": "Audit Logs",
+      "url_name": "admin_panel:audit:audit_log_list",
+      "path": "/panel/admin/audit/",
+      "allowed_roles": ["Admin"],
+      "recommended_section": "Administration"
+    },
+    {
+      "module": "ai_engine",
+      "name": "Dropout Risk Dashboard",
+      "url_name": "admin_panel:ai_engine:dropout_risk_dashboard",
+      "path": "/panel/admin/ai/dropout-risk/",
+      "allowed_roles": ["Admin", "Principal"],
+      "recommended_section": "AI Engine"
+    },
+    {
+      "module": "ai_engine",
+      "name": "AI Predictions",
+      "url_name": "admin_panel:ai_engine:prediction_list",
+      "path": "/panel/admin/ai/predictions/",
+      "allowed_roles": ["Admin"],
+      "recommended_section": "AI Engine"
+    },
+    {
+      "module": "ai_engine",
+      "name": "Model Versions",
+      "url_name": "admin_panel:ai_engine:model_version_list",
+      "path": "/panel/admin/ai/models/",
+      "allowed_roles": ["Admin"],
+      "recommended_section": "AI Engine"
+    },
+    {
+      "module": "attendance",
+      "name": "Attendance Overview",
+      "url_name": "admin_panel:attendance:attendance_overview",
+      "path": "/panel/admin/attendance/",
+      "allowed_roles": ["Admin"],
+      "recommended_section": "Attendance"
+    },
+    {
+      "module": "attendance",
+      "name": "Low Attendance Report",
+      "url_name": "admin_panel:attendance:low_attendance_report",
+      "path": "/panel/admin/attendance/low-report/",
+      "allowed_roles": ["Admin", "Principal"],
+      "recommended_section": "Attendance"
+    },
+    {
+      "module": "exams",
+      "name": "Grade Configurations",
+      "url_name": "admin_panel:exams:grade_config_list",
+      "path": "/panel/admin/exams/grade-config/",
+      "allowed_roles": ["Admin", "Principal"],
+      "recommended_section": "Academic Management"
+    }
+  ],
+  "stale_links": [
+    {
+      "name": "Manage Sessions",
+      "url_name": "admin_panel:session_overview",
+      "description": "Duplicate link in Admin sidebar resolving to session overview"
+    }
+  ],
+  "unauthorized_visible_links": [],
+  "dashboard_improvements": [
+    {
+      "role": "Admin",
+      "dashboard_template": "templates/dashboard/admin.html",
+      "card_label": "Active Dropout Alerts",
+      "target_url_name": "admin_panel:ai_engine:dropout_risk_dashboard"
+    },
+    {
+      "role": "Principal",
+      "dashboard_template": "templates/dashboard/principal.html",
+      "card_label": "Dropout Risk Alerts",
+      "target_url_name": "admin_panel:ai_engine:dropout_risk_dashboard"
+    }
+  ],
+  "role_matrix": {
+    "Admin": {
+      "visible_links": ["Dashboard", "Analytics", "Session Overview", "Reports & Exports", "Add Student", "Manage Students", "Add Session", "Manage Sessions", "Manage Faculty", "Exams", "Class Timetable", "PDF Comparison", "Applications", "Summary & Metrics", "Payments", "Expenses", "Refund Request", "Installment Plans", "Overdue Payments", "Pending Dues", "Send Alert", "Email Logs", "System Alerts", "Background Jobs", "Permission Matrix", "User Management"],
+      "hidden_accessible": ["Audit Logs", "AI predictions", "AI models", "Dropout Risk Dashboard", "Attendance Overview", "Low Attendance Report", "Grade Configurations"]
+    },
+    "Principal": {
+      "visible_links": ["Dashboard", "Analytics", "Session Overview", "Reports & Exports", "Manage Students", "Manage Sessions", "Manage Faculty", "Exams", "Class Timetable", "PDF Comparison", "Payments", "Overdue Payments", "Pending Dues"],
+      "hidden_accessible": ["Dropout Risk Dashboard", "Low Attendance Report", "Grade Configurations"]
+    },
+    "Registrar": {
+      "visible_links": ["Dashboard", "Manage Students", "Leads", "Applications", "Summary & Metrics"],
+      "hidden_accessible": []
+    },
+    "Teacher": {
+      "visible_links": ["Dashboard", "My Sessions", "Exams", "My Timetable", "Notifications"],
+      "hidden_accessible": []
+    },
+    "Accountant": {
+      "visible_links": ["Dashboard", "Reports & Exports", "Payments", "Expenses", "Refund Request", "Installment Plans", "Overdue Payments", "Pending Dues"],
+      "hidden_accessible": []
+    },
+    "Student": {
+      "visible_links": ["Dashboard", "Enrollment", "Attendance", "Exams & Grades", "Academic Transcript", "Class Timetable", "Payments", "Notifications"],
+      "hidden_accessible": []
+    },
+    "Guardian": {
+      "visible_links": ["Dashboard", "Children", "Notifications"],
+      "hidden_accessible": []
+    }
+  }
+}

@@ -1,0 +1,536 @@
+{% extends "layouts/panel_base.html" %}
+{% load student_tags %}
+
+{% block title %}{{ page_title|default:"Add Student" }}{% endblock %}
+
+{% block extra_css %}
+<style>
+.photo-preview-wrap {
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  border: 3px dashed var(--border-soft);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: var(--bg-input);
+  cursor: pointer;
+  transition: var(--transition);
+}
+.photo-preview-wrap:hover {
+  border-color: var(--accent-primary);
+}
+.photo-preview-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.fee-section {
+  display: none;
+  animation: fadeIn 0.3s ease;
+}
+.fee-section.visible {
+  display: block;
+}
+.installment-fields {
+  display: none;
+}
+.installment-fields.visible {
+  display: block;
+}
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.session-fee-info {
+  display: none;
+  background: var(--accent-glow-sm);
+  border: 1px solid var(--border-accent);
+  border-radius: var(--radius-sm);
+  padding: 12px 16px;
+  margin-top: 8px;
+}
+.d-none-custom {
+  display: none;
+}
+.installment-box-custom {
+  background: var(--accent-glow-xs);
+  border: 1px solid var(--border-accent);
+}
+.monthly-amount-box-custom {
+  background: var(--success-bg);
+  border: 1px solid var(--success-border);
+}
+.fee-summary-box-custom {
+  background: var(--success-bg);
+  border: 1px solid var(--success-border);
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid py-4 student-page">
+  <div class="row justify-content-center">
+    <div class="col-xl-9 col-lg-10">
+
+      <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+          <h4 class="fw-bold mb-1">
+            <i class="fas fa-user-plus me-2 text-accent"></i>
+            {{ page_title|default:"Register New Student" }}
+          </h4>
+          <p class="text-muted mb-0">
+            Fill in the student details below. Photo and session enrollment are optional.
+          </p>
+        </div>
+        <a href="{% student_url 'student_list' %}" class="btn btn-outline-primary btn-sm px-3">
+          <i class="fas fa-arrow-left me-1"></i>
+          Back to List
+        </a>
+      </div>
+
+      {% if messages %}
+        {% for msg in messages %}
+          <div class="alert alert-{{ msg.tags }} alert-dismissible fade show mb-3">
+            {{ msg }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+          </div>
+        {% endfor %}
+      {% endif %}
+
+      <form method="post" enctype="multipart/form-data" novalidate id="studentCreateForm">
+        {% csrf_token %}
+
+        <!-- ======================== -->
+        <!-- SECTION 1: PHOTO + NAME -->
+        <!-- ======================== -->
+        <div class="card p-4 mb-4">
+          <div class="section-header mb-4">
+            <h6 class="section-title mb-0">
+              <i class="fas fa-id-card me-2"></i>
+              Personal Information
+            </h6>
+          </div>
+
+          <div class="row g-4">
+
+            <!-- Photo Upload -->
+            <div class="col-md-3 d-flex flex-column align-items-center">
+              <label class="form-label fw-semibold text-center mb-2">
+                Profile Photo
+              </label>
+              <div class="photo-preview-wrap"
+                   onclick="document.getElementById('id_profile_photo').click()">
+                <img id="photoPreview" src="" alt="" class="d-none-custom">
+                <div id="photoPlaceholder" class="text-center text-muted p-2">
+                  <i class="fas fa-camera fa-2x d-block mb-1 opacity-50"></i>
+                  <small>Click to upload</small>
+                </div>
+              </div>
+              <div class="d-none-custom">
+                {{ form.profile_photo }}
+              </div>
+              <small class="text-muted mt-2 text-center">
+                Optional. JPG or PNG.
+                <br>Max 5MB.
+              </small>
+              {% if form.profile_photo.errors %}
+              <div class="text-danger small mt-1">
+                {{ form.profile_photo.errors.0 }}
+              </div>
+              {% endif %}
+            </div>
+
+            <!-- Name Fields -->
+            <div class="col-md-9">
+              <div class="row g-3">
+
+                <div class="col-md-6">
+                  <label class="form-label fw-semibold">
+                    Full Name <span class="text-danger">*</span>
+                  </label>
+                  {{ form.full_name }}
+                  {% if form.full_name.errors %}
+                  <div class="text-danger small mt-1">
+                    {{ form.full_name.errors.0 }}
+                  </div>
+                  {% endif %}
+                </div>
+
+                <div class="col-md-6">
+                  <label class="form-label fw-semibold">
+                    Father Name
+                  </label>
+                  {{ form.father_name }}
+                </div>
+
+                <div class="col-md-6">
+                  <label class="form-label fw-semibold">
+                    Email Address
+                  </label>
+                  {{ form.email }}
+                  {% if form.email.errors %}
+                  <div class="text-danger small mt-1">
+                    {{ form.email.errors.0 }}
+                  </div>
+                  {% endif %}
+                </div>
+
+                <div class="col-md-6">
+                  <label class="form-label fw-semibold">
+                    Phone Number
+                  </label>
+                  {{ form.phone }}
+                </div>
+
+                <div class="col-md-4">
+                  <label class="form-label fw-semibold">
+                    Date of Birth
+                  </label>
+                  {{ form.date_of_birth }}
+                </div>
+
+                <div class="col-md-4">
+                  <label class="form-label fw-semibold">
+                    Gender
+                  </label>
+                  {{ form.gender }}
+                </div>
+
+                <div class="col-md-4">
+                  <label class="form-label fw-semibold">
+                    CNIC
+                  </label>
+                  {{ form.cnic }}
+                  {% if form.cnic.errors %}
+                  <div class="text-danger small mt-1">
+                    {{ form.cnic.errors.0 }}
+                  </div>
+                  {% endif %}
+                </div>
+
+                <div class="col-md-8">
+                  <label class="form-label fw-semibold">
+                    CNIC Photo/Image
+                  </label>
+                  {{ form.cnic_photo }}
+                  <div class="form-text small">
+                    Optional. JPG, JPEG, PNG, or WEBP image format. Max 2MB.
+                  </div>
+                  {% if form.cnic_photo.errors %}
+                  <div class="text-danger small mt-1">
+                    {{ form.cnic_photo.errors.0 }}
+                  </div>
+                  {% endif %}
+                  {% if student_cnic_doc %}
+                  <div class="mt-2 small">
+                    <span class="text-secondary">Current CNIC Photo:</span>
+                    <a href="{{ student_cnic_doc.file.url }}" target="_blank" class="fw-semibold ms-1">
+                      <i class="fa-solid fa-eye me-1"></i> View Current
+                    </a>
+                  </div>
+                  {% endif %}
+                </div>
+
+                <div class="col-12">
+                  <label class="form-label fw-semibold">
+                    Address
+                  </label>
+                  {{ form.address }}
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ============================ -->
+        <!-- SECTION 2: SESSION ENROLLMENT -->
+        <!-- ============================ -->
+        <div class="card p-4 mb-4">
+          <div class="section-header mb-4">
+            <h6 class="section-title mb-0">
+              <i class="fas fa-graduation-cap me-2"></i>
+              Session Enrollment
+              <span class="text-muted fw-normal text-lowercase ms-1">
+                (optional)
+              </span>
+            </h6>
+          </div>
+
+          <div class="row g-3">
+
+            <div class="col-md-6">
+              <label class="form-label fw-semibold">
+                Enroll in Session
+              </label>
+              {{ form.session }}
+              <div class="form-text">
+                Leave blank to add student without session enrollment.
+              </div>
+              {% if form.session.errors %}
+              <div class="text-danger small mt-1">
+                {{ form.session.errors.0 }}
+              </div>
+              {% endif %}
+            </div>
+
+            <div class="col-md-6 d-flex align-items-end">
+              <div class="session-fee-info w-100" id="sessionFeeInfo">
+                <div class="d-flex align-items-center gap-2">
+                  <i class="fas fa-info-circle text-accent"></i>
+                  <strong id="sessionFeeName">
+                    Session Fee Info
+                  </strong>
+                </div>
+                <div class="mt-1 text-muted small" id="sessionFeeDetail">
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- =========================== -->
+        <!-- SECTION 3: FEE MANAGEMENT  -->
+        <!-- =========================== -->
+        <div class="card p-4 mb-4 fee-section" id="feeSection">
+          <div class="section-header mb-4">
+            <h6 class="section-title mb-0">
+              <i class="fas fa-money-bill-wave me-2"></i>
+              Fee Configuration
+            </h6>
+          </div>
+
+          <div class="row g-3">
+
+            <div class="col-md-4">
+              <label class="form-label fw-semibold">
+                Fee Payment Type
+                <span class="text-danger">*</span>
+              </label>
+              {{ form.fee_type }}
+              {% if form.fee_type.errors %}
+              <div class="text-danger small mt-1">
+                {{ form.fee_type.errors.0 }}
+              </div>
+              {% endif %}
+            </div>
+
+            <div class="col-md-4">
+              <label class="form-label fw-semibold">
+                Total Fee Amount (PKR)
+              </label>
+              {{ form.total_fee_amount }}
+              {% if form.total_fee_amount.errors %}
+              <div class="text-danger small mt-1">
+                {{ form.total_fee_amount.errors.0 }}
+              </div>
+              {% endif %}
+            </div>
+
+            <div class="col-md-4">
+              <label class="form-label fw-semibold">
+                Discount (PKR)
+              </label>
+              {{ form.discount_amount }}
+            </div>
+
+            <!-- Installment Fields -->
+            <div class="col-12 installment-fields" id="installmentFields">
+              <div class="row g-3 p-3 rounded-3 installment-box-custom">
+
+                <div class="col-12 mb-1">
+                  <span class="fw-semibold text-accent">
+                    <i class="fas fa-calendar-alt me-1"></i>
+                    Installment Schedule
+                  </span>
+                </div>
+
+                <div class="col-md-4">
+                  <label class="form-label fw-semibold">
+                    Number of Installments
+                  </label>
+                  {{ form.number_of_installments }}
+                  {% if form.number_of_installments.errors %}
+                  <div class="text-danger small mt-1">
+                    {{ form.number_of_installments.errors.0 }}
+                  </div>
+                  {% endif %}
+                </div>
+
+                <div class="col-md-4">
+                  <label class="form-label fw-semibold">
+                    Due Day Each Month
+                  </label>
+                  {{ form.due_day }}
+                  <div class="form-text">
+                    Day 1-28 payment is collected.
+                  </div>
+                </div>
+
+                <div class="col-md-4 d-flex align-items-end">
+                  <div class="w-100">
+                    <div class="p-3 rounded-3 text-center monthly-amount-box-custom">
+                      <div class="text-muted small mb-1">
+                        Monthly Amount
+                      </div>
+                      <div class="fw-bold text-success fs-5" id="monthlyAmountDisplay">
+                        PKR 0
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+            <!-- Fee Summary -->
+            <div class="col-12 d-none-custom" id="feeSummaryBox">
+              <div class="row g-3 p-3 rounded-3 fee-summary-box-custom">
+                <div class="col-md-3 text-center">
+                  <div class="text-muted small">
+                    Total Fee
+                  </div>
+                  <div class="fw-bold fs-6" id="summaryTotal">
+                    PKR 0
+                  </div>
+                </div>
+                <div class="col-md-3 text-center">
+                  <div class="text-muted small">
+                    Discount
+                  </div>
+                  <div class="fw-bold text-warning fs-6" id="summaryDiscount">
+                    PKR 0
+                  </div>
+                </div>
+                <div class="col-md-3 text-center">
+                  <div class="text-muted small">
+                    Net Payable
+                  </div>
+                  <div class="fw-bold text-success fs-6" id="summaryNet">
+                    PKR 0
+                  </div>
+                </div>
+                <div class="col-md-3 text-center">
+                  <div class="text-muted small">
+                    Installments
+                  </div>
+                  <div class="fw-bold text-primary fs-6" id="summaryInstall">
+                    1
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Submit -->
+        <div class="d-flex justify-content-end gap-3 mb-4">
+          <a href="{% student_url 'student_list' %}" class="btn btn-outline-primary px-4">
+            Cancel
+          </a>
+          <button type="submit" class="btn btn-primary px-5">
+            <i class="fas fa-user-plus me-2"></i>
+            Register Student
+          </button>
+        </div>
+
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+// Photo Preview
+document.getElementById('id_profile_photo')
+  .addEventListener('change', function(e) {
+    const file = e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = function(ev) {
+      const img = document.getElementById('photoPreview');
+      const ph = document.getElementById('photoPlaceholder');
+      img.src = ev.target.result;
+      img.style.display = 'block';
+      ph.style.display = 'none';
+    };
+    reader.readAsDataURL(file);
+  });
+
+// Session selected - show fee section
+function loadSessionFeeInfo(sessionId) {
+  const feeSection = document.getElementById('feeSection');
+  const feeInfo = document.getElementById('sessionFeeInfo');
+
+  if (sessionId) {
+    feeSection.classList.add('visible');
+    feeInfo.style.display = 'block';
+    document.getElementById('sessionFeeName').textContent =
+      'Session selected - configure fee below';
+    document.getElementById('sessionFeeDetail').textContent =
+      'Choose one-time or monthly installments.';
+  } else {
+    feeSection.classList.remove('visible');
+    feeInfo.style.display = 'none';
+  }
+}
+
+// Fee type toggle
+function toggleInstallmentFields(feeType) {
+  const instFields = document.getElementById('installmentFields');
+  if (feeType === 'monthly') {
+    instFields.classList.add('visible');
+  } else {
+    instFields.classList.remove('visible');
+  }
+  updateFeeSummary();
+}
+
+// Live fee calculation
+function updateFeeSummary() {
+  const total = parseFloat(
+    document.querySelector('[name=total_fee_amount]').value
+  ) || 0;
+  const discount = parseFloat(
+    document.querySelector('[name=discount_amount]').value
+  ) || 0;
+  const numInst = parseInt(
+    document.querySelector('[name=number_of_installments]').value
+  ) || 1;
+  const feeType = document.querySelector('[name=fee_type]').value;
+
+  const net = Math.max(0, total - discount);
+  const monthly = feeType === 'monthly' ? (net / numInst).toFixed(0) : net.toFixed(0);
+
+  const fmt = (n) => 'PKR ' + parseInt(n).toLocaleString('en-PK');
+
+  document.getElementById('summaryTotal').textContent = fmt(total);
+  document.getElementById('summaryDiscount').textContent = fmt(discount);
+  document.getElementById('summaryNet').textContent = fmt(net);
+  document.getElementById('summaryInstall').textContent = feeType === 'monthly' ? numInst : '1 (Full)';
+  document.getElementById('monthlyAmountDisplay').textContent = fmt(monthly);
+
+  const box = document.getElementById('feeSummaryBox');
+  if (total > 0) {
+    box.style.display = 'block';
+  } else {
+    box.style.display = 'none';
+  }
+}
+
+// Attach listeners
+document.querySelector('[name=total_fee_amount]')
+  .addEventListener('input', updateFeeSummary);
+document.querySelector('[name=discount_amount]')
+  .addEventListener('input', updateFeeSummary);
+document.querySelector('[name=number_of_installments]')
+  .addEventListener('input', updateFeeSummary);
+document.querySelector('[name=fee_type]')
+  .addEventListener('change', updateFeeSummary);
+</script>
+{% endblock %}

@@ -1,0 +1,95 @@
+{% extends 'layouts/panel_base.html' %}
+{% load static %}
+
+{% block title %}Assign Sessions - {{ object.user.get_full_name|default:object.user.username }} - Iqra Academy{% endblock %}
+
+{% block extra_css %}
+<style>
+.form-container-width {
+    max-width: 800px;
+}
+.session-grid-container {
+    background: var(--bg-input);
+    border-color: var(--border-soft) !important;
+}
+.session-checkbox-card {
+    background: var(--bg-card);
+    border-color: var(--border-soft) !important;
+    transition: var(--transition);
+}
+.session-checkbox-card:hover {
+    border-color: var(--border-accent) !important;
+    box-shadow: var(--shadow-sm);
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid px-0 form-container-width">
+    <!-- Page Header -->
+    <div class="p-4 rounded-4 mb-4 card border border-light shadow-sm animate-fade-in">
+        <div class="d-flex justify-content-between align-items-center">
+            <div>
+                <h3 class="fw-bold mb-1 text-primary">Assign Sessions</h3>
+                <p class="text-secondary mb-0">Manage course allocation for <strong>{{ object.user.get_full_name|default:object.user.username }}</strong> ({{ object.designation }}).</p>
+            </div>
+            <div>
+                <a href="{% url 'admin_panel:staff:faculty_list' %}" class="btn btn-outline-secondary px-3 py-2 rounded-3">
+                    <i class="fa-solid fa-arrow-left me-2"></i> Back
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Allocation Form -->
+    <div class="card p-4 border border-light shadow rounded-4 animate-fade-in stagger-1">
+        <form method="post">
+            {% csrf_token %}
+
+            <div class="mb-4">
+                <h5 class="fw-bold border-bottom pb-2 mb-3">
+                    <i class="fa-solid fa-chalkboard-user text-primary me-2"></i> Active Sessions List
+                </h5>
+                <p class="text-secondary small mb-3">Select the active academic sessions this faculty member is assigned to instruct. They will be granted permissions to view student rosters, record attendances, and log grades for the selected sessions.</p>
+
+                <div class="session-selector-grid border rounded-3 p-3 session-grid-container">
+                    {% if form.assigned_sessions.field.queryset.exists %}
+                        <div class="row g-3">
+                            {% for checkbox in form.assigned_sessions %}
+                            <div class="col-12 col-md-6">
+                                <div class="form-check p-3 border rounded-3 session-checkbox-card d-flex align-items-center">
+                                    <div class="me-2">
+                                        {{ checkbox.tag }}
+                                    </div>
+                                    <label class="form-check-label fw-semibold text-primary-c flex-grow-1 cursor-pointer" for="{{ checkbox.id_for_label }}">
+                                        {{ checkbox.choice_label }}
+                                    </label>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        <div class="text-center py-4 text-muted">
+                            <i class="fa-solid fa-calendar-xmark fa-2x mb-2 text-light-subtle"></i>
+                            <p class="mb-0 small">No active academic sessions found in the system. Create a session first before allocating faculty.</p>
+                        </div>
+                    {% endif %}
+                </div>
+                {% if form.assigned_sessions.errors %}
+                    <div class="text-danger small mt-2">{{ form.assigned_sessions.errors.0 }}</div>
+                {% endif %}
+            </div>
+
+            <!-- Form Actions -->
+            <div class="d-flex justify-content-end gap-2 border-top pt-3">
+                <a href="{% url 'admin_panel:staff:faculty_list' %}" class="btn btn-secondary px-4 py-2 rounded-3">
+                    Cancel
+                </a>
+                <button type="submit" class="btn btn-primary px-4 py-2 rounded-3">
+                    <i class="fa-solid fa-floppy-disk me-2"></i> Save Session Assignments
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,115 @@
+{
+  "metadata": {
+    "run_id": "c6387874-9e97-428e-901f-bb4a52244b5b",
+    "timestamp": "2026-06-21T04:40:53.696230",
+    "settings_module": "config.settings.test",
+    "database_engine": "django.db.backends.sqlite3",
+    "database_name": "file:memorydb_default?mode=memory&cache=shared",
+    "git_tree_id": "working_tree"
+  },
+  "vis_001_overflow": [],
+  "vis_002_matrix": {
+    "viewport": "375x812",
+    "theme": "dark",
+    "role_count": 7,
+    "module_count": 6,
+    "expected_matrix_cells": 42,
+    "actual_matrix_rows": 49,
+    "table_dimensions": {
+      "width": 635.9375,
+      "height": 2582.03125
+    },
+    "form_dimensions": {
+      "width": 343,
+      "height": 680.6875
+    },
+    "submit_button_position": {
+      "y": 422.850830078125
+    },
+    "duplicate_controls": false,
+    "viewport_specific_behavior": "Permission table size pushes submit action excessively far below the initial screen."
+  },
+  "vis_003_analytics": {
+    "scenarios": {
+      "scenario_1": {
+        "description": "fresh anonymous context opened directly on login",
+        "requests_recorded": [],
+        "chart_element_existed": false,
+        "console_messages": [],
+        "navigation_timing_seconds": 1.2076244354248047,
+        "page_url_when_initiated": "http://127.0.0.1:22421/accounts/login/"
+      },
+      "scenario_2": {
+        "description": "authenticated dashboard followed by logout",
+        "requests_recorded": [
+          {
+            "url": "http://127.0.0.1:22421/static/js/charts.js",
+            "timestamp": "2026-06-21T04:39:11.827098",
+            "method": "GET"
+          },
+          {
+            "url": "http://127.0.0.1:22421/static/js/charts.js",
+            "timestamp": "2026-06-21T04:39:12.133168",
+            "method": "GET"
+          },
+          {
+            "url": "http://127.0.0.1:22421/api/analytics/revenue-trend/",
+            "timestamp": "2026-06-21T04:39:12.697131",
+            "method": "GET"
+          },
+          {
+            "url": "http://127.0.0.1:22421/api/analytics/attendance-trend/",
+            "timestamp": "2026-06-21T04:39:12.698126",
+            "method": "GET"
+          },
+          {
+            "url": "http://127.0.0.1:22421/api/analytics/enrollment-growth/",
+            "timestamp": "2026-06-21T04:39:12.703127",
+            "method": "GET"
+          },
+          {
+            "url": "http://127.0.0.1:22421/api/analytics/lead-funnel/",
+            "timestamp": "2026-06-21T04:39:12.705136",
+            "method": "GET"
+          },
+          {
+            "url": "http://127.0.0.1:22421/api/analytics/aging-report/",
+            "timestamp": "2026-06-21T04:39:12.728128",
+            "method": "GET"
+          }
+        ],
+        "chart_element_existed": true,
+        "console_messages": [],
+        "page_url_when_initiated": "http://127.0.0.1:22421/accounts/login/"
+      },
+      "scenario_3": {
+        "description": "dashboard navigation interrupted while analytics requests are active",
+        "requests_recorded": [
+          {
+            "url": "http://127.0.0.1:22421/static/js/charts.js",
+            "timestamp": "2026-06-21T04:39:17.202549",
+            "method": "GET"
+          },
+          {
+            "url": "http://127.0.0.1:22421/static/js/charts.js",
+            "timestamp": "2026-06-21T04:39:17.496473",
+            "method": "GET"
+          }
+        ],
+        "console_messages": [
+          {
+            "type": "error",
+            "text": "Failed to load resource: the server responded with a status of 500 (Internal Server Error)",
+            "timestamp": "2026-06-21T04:39:18.105055"
+          },
+          {
+            "type": "error",
+            "text": "Failed to load resource: the server responded with a status of 500 (Internal Server Error)",
+            "timestamp": "2026-06-21T04:39:18.478880"
+          }
+        ],
+        "page_url_when_initiated": "http://127.0.0.1:22421/accounts/profile/"
+      }
+    }
+  }
+}

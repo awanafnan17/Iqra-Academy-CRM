@@ -1,0 +1,53 @@
+{% extends 'layouts/panel_base.html' %}
+
+{% block title %}Email Logs - Iqra Academy{% endblock %}
+
+{% block content %}
+<div class="container-fluid px-0">
+    <!-- Page Header -->
+    <div class="page-header animate-fade-in">
+        <div class="page-header-left">
+            <h3 class="fw-bold mb-1 text-primary">Email Logs</h3>
+            <p class="text-secondary mb-0">Audit trail of all sent email communications.</p>
+        </div>
+    </div>
+
+    <!-- Email Logs Table -->
+    <div class="card p-4 animate-fade-in stagger-2">
+        <div class="table-responsive p-3">
+            <table class="table align-middle mb-0">
+                <thead>
+                    <tr>
+                        <th>Date Sent</th>
+                        <th>Recipient</th>
+                        <th>Subject</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for log in logs %}
+                        <tr>
+                            <td class="text-secondary small">{{ log.sent_at|date:"M d, Y H:i" }}</td>
+                            <td class="text-primary-c">{{ log.recipient_email }}</td>
+                            <td class="text-secondary">{{ log.subject }}</td>
+                            <td>
+                                {% if log.status == 'sent' %}
+                                    <span class="badge bg-success">Sent</span>
+                                {% elif log.status == 'failed' %}
+                                    <span class="badge bg-danger" title="{{ log.error_message|default:'' }}">Failed</span>
+                                {% else %}
+                                    <span class="badge bg-warning">{{ log.status|title }}</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% empty %}
+                        <tr>
+                            <td colspan="4" class="text-center text-secondary py-4">No email logs found.</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

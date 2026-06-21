@@ -1,0 +1,151 @@
+{% extends 'layouts/panel_base.html' %}
+{% load static %}
+
+{% block title %}Admissions Summary & Analytics - Iqra Academy{% endblock %}
+
+{% block content %}
+<div class="container-fluid px-0">
+    <!-- Page Header -->
+    <div class="page-header animate-fade-in">
+        <div class="page-header-left">
+            <h3 class="fw-bold mb-1 text-primary">Admissions Summary & Analytics</h3>
+            <p class="text-secondary mb-0">Overview of the current admissions cycle, processing efficiency, and enrollment rates.</p>
+        </div>
+        <div class="page-header-actions">
+            {% if 'registrar_panel' in request.resolver_match.namespace %}
+                <a href="{% url 'registrar_panel:admissions:admission_list' %}" class="btn btn-outline-primary btn-sm">
+                    <i class="fa-solid fa-arrow-left me-1"></i> Back to Registry
+                </a>
+            {% else %}
+                <a href="{% url 'admin_panel:admissions:admission_list' %}" class="btn btn-outline-primary btn-sm">
+                    <i class="fa-solid fa-arrow-left me-1"></i> Back to Registry
+                </a>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Analytics Dashboard Cards -->
+    <div class="row g-4 animate-fade-in stagger-1">
+        <!-- Total Applications -->
+        <div class="col-12 col-md-6 col-lg-4">
+            <div class="card metric-card h-100">
+                <div class="card-body p-4 d-flex align-items-center">
+                    <div class="metric-icon me-3">
+                        <i class="fa-solid fa-folder-open"></i>
+                    </div>
+                    <div>
+                        <div class="metric-label">Total Applications</div>
+                        <div class="metric-value mt-1"
+                             data-target="{{ summary.total_applications|default:0 }}"
+                             data-duration="1200"
+                             data-decimals="0">
+                            {{ summary.total_applications|default:0 }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pending / Reviewing -->
+        <div class="col-12 col-md-6 col-lg-4">
+            <div class="card metric-card h-100">
+                <div class="card-body p-4 d-flex align-items-center">
+                    <div class="metric-icon me-3">
+                        <i class="fa-solid fa-clock"></i>
+                    </div>
+                    <div>
+                        <div class="metric-label">Pending Review</div>
+                        <div class="metric-value mt-1 text-warning"
+                             data-target="{{ summary.pending_applications|default:0 }}"
+                             data-duration="1200"
+                             data-decimals="0">
+                            {{ summary.pending_applications|default:0 }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Conversion Rate -->
+        <div class="col-12 col-md-6 col-lg-4">
+            <div class="card metric-card h-100">
+                <div class="card-body p-4 d-flex align-items-center">
+                    <div class="metric-icon me-3">
+                        <i class="fa-solid fa-chart-pie"></i>
+                    </div>
+                    <div>
+                        <div class="metric-label">Conversion Rate</div>
+                        <div class="metric-value mt-1"
+                             data-target="{{ summary.conversion_rate|default:0 }}"
+                             data-duration="1200"
+                             data-decimals="1"
+                             data-suffix="%">
+                            {{ summary.conversion_rate|default:0 }}%
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Approved -->
+        <div class="col-12 col-md-6 col-lg-4">
+            <div class="card metric-card h-100">
+                <div class="card-body p-4 d-flex align-items-center">
+                    <div class="metric-icon me-3">
+                        <i class="fa-solid fa-circle-check"></i>
+                    </div>
+                    <div>
+                        <div class="metric-label">Approved Applications</div>
+                        <div class="metric-value mt-1 text-success"
+                             data-target="{{ summary.approved_applications|default:0 }}"
+                             data-duration="1200"
+                             data-decimals="0">
+                            {{ summary.approved_applications|default:0 }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Rejected -->
+        <div class="col-12 col-md-6 col-lg-4">
+            <div class="card metric-card h-100">
+                <div class="card-body p-4 d-flex align-items-center">
+                    <div class="metric-icon me-3">
+                        <i class="fa-solid fa-circle-xmark"></i>
+                    </div>
+                    <div>
+                        <div class="metric-label">Rejected Applications</div>
+                        <div class="metric-value mt-1 text-danger"
+                             data-target="{{ summary.rejected_applications|default:0 }}"
+                             data-duration="1200"
+                             data-decimals="0">
+                            {{ summary.rejected_applications|default:0 }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Converted to Registered -->
+        <div class="col-12 col-md-6 col-lg-4">
+            <div class="card metric-card h-100">
+                <div class="card-body p-4 d-flex align-items-center">
+                    <div class="metric-icon me-3">
+                        <i class="fa-solid fa-user-plus"></i>
+                    </div>
+                    <div>
+                        <div class="metric-label">Converted to Registered</div>
+                        <div class="metric-value mt-1 text-success"
+                             data-target="{{ summary.converted_applications|default:0 }}"
+                             data-duration="1200"
+                             data-decimals="0">
+                            {{ summary.converted_applications|default:0 }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

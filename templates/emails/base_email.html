@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block subject %}{% endblock %}</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f7f6;
+            margin: 0;
+            padding: 0;
+            color: #333333;
+        }
+        .container {
+            max-width: 600px;
+            margin: 30px auto;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+            border: 1px solid #e1e7e5;
+        }
+        .header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+            padding: 30px;
+            text-align: center;
+            color: #ffffff;
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 24px;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+        .header p {
+            margin: 5px 0 0 0;
+            font-size: 14px;
+            opacity: 0.9;
+        }
+        .content {
+            padding: 40px 30px;
+            line-height: 1.6;
+            font-size: 16px;
+        }
+        .footer {
+            background-color: #f8fafc;
+            padding: 20px 30px;
+            text-align: center;
+            font-size: 12px;
+            color: #64748b;
+            border-top: 1px solid #e2e8f0;
+        }
+        .footer a {
+            color: #3b82f6;
+            text-decoration: none;
+        }
+        .btn {
+            display: inline-block;
+            background-color: #3b82f6;
+            color: #ffffff !important;
+            padding: 12px 24px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            margin-top: 20px;
+        }
+        .badge {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        .badge-danger {
+            background-color: #fef2f2;
+            color: #ef4444;
+            border: 1px solid #fee2e2;
+        }
+        .badge-warning {
+            background-color: #fffbeb;
+            color: #d97706;
+            border: 1px solid #fef3c7;
+        }
+        .badge-info {
+            background-color: #f0f9ff;
+            color: #0284c7;
+            border: 1px solid #e0f2fe;
+        }
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        .table th, .table td {
+            border: 1px solid #e2e8f0;
+            padding: 10px;
+            text-align: left;
+        }
+        .table th {
+            background-color: #f8fafc;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Iqra Academy CRM</h1>
+            <p>Academic Operations & Management System</p>
+        </div>
+        <div class="content">
+            {% block content %}{% endblock %}
+        </div>
+        <div class="footer">
+            <p>&copy; 2026 Iqra Academy. All rights reserved.</p>
+            <p>This is an automated notification. Please do not reply directly to this email.</p>
+            <p>
+                <a href="https://www.iqraacademy.com">Website</a> |
+                <a href="mailto:info@iqraacademy.com">Support</a> |
+                Phone: +92 (42) 111-222-333
+            </p>
+        </div>
+    </div>
+</body>
+</html>

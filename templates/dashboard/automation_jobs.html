@@ -1,0 +1,80 @@
+{% extends 'layouts/panel_base.html' %}
+
+{% block title %}Background Jobs - Iqra Academy{% endblock %}
+
+{% block content %}
+<div class="container-fluid px-0">
+    <!-- Page Header -->
+    <div class="page-header animate-fade-in">
+        <div class="page-header-left">
+            <h3 class="fw-bold mb-1 text-primary">Background Jobs</h3>
+            <p class="text-secondary mb-0">Registered automation tasks and their execution status.</p>
+        </div>
+        <div>
+            <span class="badge bg-primary bg-opacity-10 text-primary px-3 py-2 rounded-pill fw-semibold">
+                <i class="fa-solid fa-gears me-1"></i> Task Registry
+            </span>
+        </div>
+    </div>
+
+    <!-- Manual Execution Notice -->
+    <div class="card p-3 mb-3 animate-fade-in stagger-1">
+        <div class="d-flex align-items-center gap-2">
+            <i class="fa-solid fa-terminal text-secondary"></i>
+            <span class="text-secondary small">
+                Manual execution: <code>{{ run_command }}</code>
+            </span>
+        </div>
+        <p class="text-muted small mb-0 mt-1">
+            Celery is not configured. Tasks are executed via the management command above
+            or scheduled via cron/Task Scheduler.
+            Browser-based manual triggering is not supported.
+        </p>
+    </div>
+
+    <!-- Jobs List -->
+    {% for job in jobs %}
+    <div class="card p-4 mb-3 animate-fade-in stagger-2">
+        <div class="d-flex justify-content-between align-items-start flex-wrap gap-2">
+            <div class="flex-grow-1">
+                <h5 class="fw-bold mb-1">
+                    <i class="fa-solid fa-gear text-primary me-2"></i>
+                    {{ job.name }}
+                </h5>
+                <p class="text-secondary mb-2">{{ job.description }}</p>
+                <div class="d-flex gap-3 flex-wrap">
+                    <span class="small text-muted">
+                        <i class="fa-solid fa-code me-1"></i>
+                        <code>{{ job.function }}</code>
+                    </span>
+                    <span class="small text-muted">
+                        <i class="fa-solid fa-clock me-1"></i>
+                        {{ job.schedule }}
+                    </span>
+                </div>
+            </div>
+            <div class="text-end">
+                {% if job.last_run %}
+                    <span class="badge bg-success mb-1">Last executed</span>
+                    <br>
+                    <span class="small text-secondary">{{ job.last_run|date:"M d, Y H:i" }}</span>
+                    <br>
+                    <span class="small text-muted">(Source: {{ job.last_run_source }})</span>
+                {% else %}
+                    <span class="badge bg-secondary">Not recorded</span>
+                    <br>
+                    <span class="small text-muted">No execution evidence in AuditLog</span>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <div class="card p-4 text-center">
+        <p class="text-secondary mb-0">
+            <i class="fa-solid fa-gears me-2"></i>
+            No automation jobs are registered.
+        </p>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

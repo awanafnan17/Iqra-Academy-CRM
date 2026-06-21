@@ -1,0 +1,18 @@
+<div class="modal fade" id="{{ modal_id }}" tabindex="-1" aria-labelledby="{{ modal_id }}Label" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered {% if modal_size %}{{ modal_size }}{% endif %}">
+        <div class="modal-content glass-card border-0 overflow-hidden">
+            <div class="modal-header card-header-gradient border-0 px-4 py-3 d-flex justify-content-between align-items-center">
+                <h5 class="modal-title fw-bold text-primary mb-0" id="{{ modal_id }}Label">{{ modal_title }}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body p-4">
+                {{ modal_content }}
+            </div>
+            {% if modal_footer %}
+                <div class="modal-footer border-0 p-4 pt-0 d-flex justify-content-end gap-2">
+                    {{ modal_footer }}
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>

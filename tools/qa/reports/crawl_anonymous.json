@@ -1,0 +1,40 @@
+{
+  "role": "Anonymous",
+  "mode": "enforcement",
+  "timestamp": "2026-06-20T02:48:49.919633",
+  "pages_visited": [
+    {
+      "url": "/",
+      "status": 404,
+      "final_url": "/",
+      "title": "Page Not Found - IICE",
+      "source_url": "seed",
+      "link_source": "seed"
+    },
+    {
+      "url": "/accounts/login/",
+      "status": 200,
+      "final_url": "/accounts/login/",
+      "title": "Sign In - IICE ERP",
+      "source_url": "seed",
+      "link_source": "seed"
+    },
+    {
+      "url": "/accounts/register/",
+      "status": 404,
+      "final_url": "/accounts/register/",
+      "title": "Page Not Found - IICE",
+      "source_url": "seed",
+      "link_source": "seed"
+    }
+  ],
+  "errors_500": [],
+  "errors_404": [],
+  "errors_403": [],
+  "console_errors": [],
+  "redirect_loops": [],
+  "slow_pages": [],
+  "empty_pages": [],
+  "redirects": [],
+  "all_errors": []
+}

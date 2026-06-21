@@ -1,0 +1,78 @@
+{% extends 'layouts/panel_base.html' %}
+{% load static %}
+
+{% block title %}{{ page_title }} - Iqra Academy{% endblock %}
+
+{% block content %}
+<div class="container-fluid px-0">
+    <div class="p-4 rounded-4 mb-4 card border border-light shadow-sm animate-fade-in">
+        <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
+            <div>
+                <h3 class="fw-bold mb-1">
+                    <i class="fa-solid fa-book-open me-2 text-primary"></i>
+                    {{ session.name }}
+                </h3>
+                <p class="text-secondary mb-0">
+                    {{ session.get_session_type_display|default:"Session" }}
+                    &middot; Status: {{ session.status }}
+                    &middot; {{ enrollments|length }} students
+                </p>
+            </div>
+            <a href="{% url 'teacher_panel:my_sessions' %}" class="btn btn-outline-secondary rounded-3 px-4">
+                <i class="fa-solid fa-arrow-left me-2"></i> Back to Sessions
+            </a>
+        </div>
+    </div>
+
+    <div class="row g-3 mb-4">
+        <div class="col-6 col-md-3">
+            <div class="card p-3 border rounded-4 text-center">
+                <div class="text-muted small mb-1">Enrolled</div>
+                <div class="fw-bold fs-4 text-primary">{{ enrollments|length }}</div>
+            </div>
+        </div>
+        <div class="col-6 col-md-3">
+            <div class="card p-3 border rounded-4 text-center">
+                <div class="text-muted small mb-1">Status</div>
+                {% if session.status == "Active" %}
+                    <span class="badge bg-success bg-opacity-10 text-success border-success-subtle rounded-pill px-3 py-1 fs-6">Active</span>
+                {% else %}
+                    <span class="badge bg-secondary bg-opacity-10 text-secondary rounded-pill px-3 py-1 fs-6">{{ session.status }}</span>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <div class="card border border-light shadow rounded-4 animate-fade-in stagger-1">
+        <div class="p-3 border-bottom">
+            <h5 class="fw-bold mb-0"><i class="fa-solid fa-users me-2 text-primary"></i>Enrolled Students</h5>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <thead class="table-light">
+                    <tr>
+                        <th class="ps-4">Roll No</th>
+                        <th>Student Name</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for enroll in enrollments %}
+                    <tr>
+                        <td class="ps-4 fw-bold">{{ enroll.student.roll_number|default:"-" }}</td>
+                        <td>{{ enroll.student.full_name }}</td>
+                        <td>
+                            <span class="badge bg-success bg-opacity-10 text-success rounded-pill px-2">{{ enroll.status }}</span>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="3" class="text-center py-5 text-muted">No students enrolled in this session.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

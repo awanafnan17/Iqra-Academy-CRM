@@ -1,0 +1,21 @@
+<div class="glass-card p-4">
+    {% if form_title %}
+        <h4 class="fw-bold mb-4 text-primary">{{ form_title }}</h4>
+    {% endif %}
+    <form method="post" {% if is_multipart %}enctype="multipart/form-data"{% endif %} class="needs-validation" novalidate>
+        {% csrf_token %}
+
+        <div class="row g-3">
+            {{ form_fields }}
+        </div>
+
+        <div class="mt-4 d-flex justify-content-end gap-2">
+            {% if cancel_url %}
+                <a href="{{ cancel_url }}" class="btn btn-light rounded-3 px-4">Cancel</a>
+            {% endif %}
+            <button type="submit" class="btn btn-saas px-4">
+                <i class="fa-solid fa-check me-2"></i> Save Changes
+            </button>
+        </div>
+    </form>
+</div>

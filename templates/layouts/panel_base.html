@@ -1,0 +1,25 @@
+{% extends 'layouts/base.html' %}
+{% load static %}
+
+{% block main_layout %}
+<div class="app-wrapper">
+    <!-- Sidebar Navigation -->
+    {% include 'components/sidebar.html' %}
+
+    <!-- Main Content Section -->
+    <main class="main-content" id="mainContent">
+        <!-- Top Navbar -->
+        {% include 'components/navbar.html' %}
+
+        <!-- Content Area -->
+        <div class="page-content">
+            {% block content %}{% endblock %}
+        </div>
+    </main>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+    <script src="{% static 'js/sidebar.js' %}"></script>
+    <script src="{% static 'js/notifications.js' %}"></script>
+{% endblock %}

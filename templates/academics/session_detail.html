@@ -1,0 +1,158 @@
+{% extends "layouts/panel_base.html" %}
+
+{% block title %}{{ page_title }}{% endblock %}
+
+{% block content %}
+<div class="container-fluid py-4">
+
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+      <h4 class="fw-bold mb-1">
+        <i class="fas fa-layer-group me-2 text-primary"></i>
+        {{ session.name|default:"Unnamed Session" }}
+      </h4>
+      <p class="text-muted mb-0">
+        {{ session.session_category|default:"N/A" }} | Prefix: {{ session.roll_prefix|default:"N/A" }}
+      </p>
+    </div>
+    <div class="d-flex gap-2">
+      <a href="{% url 'admin_panel:session_overview' %}" class="btn btn-outline-secondary">
+        <i class="fas fa-arrow-left me-2"></i>Back to Sessions
+      </a>
+      {% if request.user.is_superuser or request.user.groups.all.0.name == 'Admin' or request.user.groups.all.1.name == 'Admin' %}
+      <a href="{% url 'admin_panel:academics:session_revenue' session.pk %}" class="btn btn-outline-success">
+        <i class="fas fa-coins me-2"></i>View Revenue
+      </a>
+      {% endif %}
+      <a href="{% url 'admin_panel:academics:session_edit' session.pk %}" class="btn btn-primary">
+        <i class="fas fa-edit me-2"></i>Edit Session
+      </a>
+    </div>
+  </div>
+
+  <div class="row g-4 mb-4">
+    <!-- Stats -->
+    <div class="col-md-3">
+      <div class="card p-3 text-center">
+        <div class="fw-bold fs-4 text-primary">{{ total_enrolled|default:"0" }}</div>
+        <div class="text-muted small">Active Enrollments</div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card p-3 text-center">
+        <div class="fw-bold fs-4 text-success">{{ success_count|default:"0" }}</div>
+        <div class="text-muted small">Successful Students</div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card p-3 text-center">
+        <div class="fw-bold fs-4 text-info">{{ success_rate|default:"0" }}%</div>
+        <div class="text-muted small">Success Rate</div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card p-3 text-center">
+        <div class="fw-bold fs-4 {% if session.status == 'Active' %}text-success{% else %}text-secondary{% endif %}">
+          {{ session.status|default:"Unknown" }}
+        </div>
+        <div class="text-muted small">Status</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row g-4">
+    <!-- Enrolled Students -->
+    <div class="col-lg-8">
+      <div class="card p-0 h-100">
+        <div class="p-3 border-bottom card-header">
+          <h6 class="mb-0 fw-bold"><i class="fas fa-users me-2"></i>Enrolled Students</h6>
+        </div>
+        <div class="table-responsive table-scroll-400">
+          <table class="table table-hover mb-0 align-middle">
+            <thead class="sticky-top">
+              <tr>
+                <th class="ps-3">Roll No</th>
+                <th>Name</th>
+                <th>Fee Plan</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for enr in enrollments %}
+              <tr>
+                <td class="ps-3 fw-semibold">{{ enr.student.roll_number|default:"N/A" }}</td>
+                <td>{{ enr.student.full_name|default:"Unnamed" }}</td>
+                <td><span class="badge border text-secondary">{{ enr.fee_type|default:"Standard" }}</span></td>
+                <td>
+                  <a href="{% url 'admin_panel:students:student_detail' enr.student.pk %}" class="btn btn-sm btn-outline-primary">
+                    View
+                  </a>
+                </td>
+              </tr>
+              {% empty %}
+              <tr>
+                <td colspan="4" class="text-center py-4 text-muted">No active enrollments.</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Timetable & Exams Summary -->
+    <div class="col-lg-4">
+      <!-- Timetable -->
+      <div class="card p-0 mb-4">
+        <div class="p-3 border-bottom card-header">
+          <h6 class="mb-0 fw-bold"><i class="fas fa-calendar-alt me-2"></i>Class Schedule</h6>
+        </div>
+        <div class="p-3">
+          {% for slot in timetable %}
+          <div class="d-flex justify-content-between align-items-center mb-2 pb-2 border-bottom">
+            <div>
+              <div class="fw-semibold small">{{ slot.subject.name|default:"Unknown" }}</div>
+              <div class="text-muted text-size-sm">{{ slot.faculty.user.get_full_name|default:"TBA" }}</div>
+            </div>
+            <div class="text-end">
+              <span class="badge bg-primary d-block mb-1">{{ slot.day_of_week|default:"TBA" }}</span>
+              <small class="text-muted">{{ slot.start_time|time:"H:i"|default:"TBA" }}</small>
+            </div>
+          </div>
+          {% empty %}
+          <div class="text-muted small text-center py-2">No schedule assigned.</div>
+          {% endfor %}
+        </div>
+      </div>
+
+      <!-- Exams -->
+      <div class="card p-0">
+        <div class="p-3 border-bottom card-header">
+          <h6 class="mb-0 fw-bold"><i class="fas fa-file-alt me-2"></i>Recent Exams</h6>
+        </div>
+        <div class="p-3">
+          {% for exam in exams|slice:":3" %}
+          <div class="d-flex justify-content-between mb-2">
+            <span class="small fw-semibold">{{ exam.exam_type|default:"Test" }}</span>
+            <span class="badge border text-secondary">{{ exam.exam_date|date:"M d, Y"|default:"TBA" }}</span>
+          </div>
+          {% empty %}
+          <div class="text-muted small text-center py-2">No exams found.</div>
+          {% endfor %}
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<style>
+body.crm-app .table-scroll-400 {
+    max-height: 400px;
+}
+body.crm-app .text-size-sm {
+    font-size: 0.8rem;
+}
+</style>
+{% endblock %}

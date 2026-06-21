@@ -1,0 +1,64 @@
+{% extends 'layouts/panel_base.html' %}
+{% load static %}
+
+{% block title %}My Sessions - Iqra Academy{% endblock %}
+
+{% block content %}
+<div class="container-fluid px-0">
+    <div class="p-4 rounded-4 mb-4 card border border-light shadow-sm animate-fade-in">
+        <div>
+            <h3 class="fw-bold mb-1">
+                <i class="fa-solid fa-chalkboard-user me-2 text-primary"></i>
+                My Sessions
+            </h3>
+            <p class="text-secondary mb-0">Sessions and classes assigned to you.</p>
+        </div>
+    </div>
+
+    <div class="row g-3">
+        {% for item in sessions %}
+        <div class="col-12 col-md-6 col-lg-4">
+            <div class="card border border-light shadow-sm rounded-4 p-4 h-100 animate-fade-in">
+                <h5 class="fw-bold mb-2">
+                    <i class="fa-solid fa-book-open me-2 text-primary"></i>
+                    {{ item.session.name }}
+                </h5>
+                <div class="mb-2">
+                    {% if item.subject %}
+                        <span class="badge bg-primary bg-opacity-10 text-primary border border-primary-subtle rounded-pill px-3 py-1">
+                            {{ item.subject.name }}
+                        </span>
+                    {% else %}
+                        <span class="badge bg-secondary bg-opacity-10 text-secondary rounded-pill px-3 py-1">All Subjects</span>
+                    {% endif %}
+                </div>
+                <p class="text-muted small mb-2">
+                    <i class="fa-solid fa-users me-1"></i> {{ item.student_count }} students enrolled
+                </p>
+                {% if item.assigned_from %}
+                <p class="text-muted small mb-3">
+                    <i class="fa-solid fa-calendar me-1"></i> Since {{ item.assigned_from|date:"d M Y" }}
+                </p>
+                {% endif %}
+                <div class="mt-auto">
+                    <a href="{% url 'teacher_panel:session_detail' item.session.pk %}" class="btn btn-sm btn-outline-primary rounded-2 px-3">
+                        <i class="fa-solid fa-eye me-1"></i> View Details
+                    </a>
+                    <a href="{% url 'teacher_panel:session_students' item.session.pk %}" class="btn btn-sm btn-outline-secondary rounded-2 px-3">
+                        <i class="fa-solid fa-users me-1"></i> Students
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="col-12">
+            <div class="card p-5 text-center text-muted border rounded-4">
+                <i class="fa-solid fa-chalkboard fa-3x mb-3 opacity-50"></i>
+                <h5 class="fw-bold">No Sessions Assigned</h5>
+                <p class="small mb-0">You have not been assigned to any sessions yet.</p>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

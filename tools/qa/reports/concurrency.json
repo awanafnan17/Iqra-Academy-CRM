@@ -1,0 +1,6 @@
+{
+  "timestamp": "2026-06-20T02:53:29.903916",
+  "db_engine": "sqlite3 (file-based)",
+  "server_mode": "standard threaded LiveServerTestCase",
+  "note": "SQLite locking errors are classified separately from application race conditions"
+}

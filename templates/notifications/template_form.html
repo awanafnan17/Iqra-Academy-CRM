@@ -1,0 +1,107 @@
+{% extends 'layouts/panel_base.html' %}
+{% load static %}
+
+{% block title %}{% if template %}Edit Template - {{ template.name }}{% else %}Create Template{% endif %} - Iqra Academy{% endblock %}
+
+{% block content %}
+<div class="container-fluid px-0 form-container">
+    <!-- Page Header -->
+    <div class="p-4 rounded-4 mb-4 card border border-light shadow-sm animate-fade-in">
+        <div class="d-flex justify-content-between align-items-center">
+            <div>
+                <h3 class="fw-bold mb-1">{% if template %}Edit Notification Template{% else %}New Notification Template{% endif %}</h3>
+                <p class="text-secondary mb-0">Configure templates with customizable variable substitution placeholders.</p>
+            </div>
+            <div>
+                <a href="{% url 'admin_panel:notifications:template_list' %}" class="btn btn-outline-secondary px-3 py-2 rounded-3 border-light-subtle">
+                    <i class="fa-solid fa-arrow-left me-2"></i> Cancel
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Form Card -->
+    <div class="card p-4 border border-light shadow rounded-4 animate-fade-in stagger-1">
+        <form method="post">
+            {% csrf_token %}
+
+            <h5 class="fw-bold border-bottom pb-2 mb-3">
+                <i class="fa-solid fa-file-code text-primary me-2"></i> Template Details
+            </h5>
+
+            <div class="row g-3 mb-4">
+                <div class="col-12 col-md-6">
+                    <label class="form-label fw-semibold text-secondary">Template Name</label>
+                    {{ form.name }}
+                    {% if form.name.errors %}
+                        <div class="text-danger small mt-1">{{ form.name.errors.0 }}</div>
+                    {% endif %}
+                </div>
+                <div class="col-12 col-md-6">
+                    <label class="form-label fw-semibold text-secondary">Machine Identifier (Code)</label>
+                    {{ form.code }}
+                    {% if form.code.errors %}
+                        <div class="text-danger small mt-1">{{ form.code.errors.0 }}</div>
+                    {% endif %}
+                </div>
+                <div class="col-12 col-md-6">
+                    <label class="form-label fw-semibold text-secondary">Delivery Channel</label>
+                    {{ form.channel }}
+                    {% if form.channel.errors %}
+                        <div class="text-danger small mt-1">{{ form.channel.errors.0 }}</div>
+                    {% endif %}
+                </div>
+                <div class="col-12 col-md-6">
+                    <label class="form-label fw-semibold text-secondary">Subject Template (for email)</label>
+                    {{ form.subject_template }}
+                    {% if form.subject_template.errors %}
+                        <div class="text-danger small mt-1">{{ form.subject_template.errors.0 }}</div>
+                    {% endif %}
+                </div>
+                <div class="col-12">
+                    <label class="form-label fw-semibold text-secondary">Body Template</label>
+                    {{ form.body_template }}
+                    <div class="form-text text-muted small mt-1">
+                        Use Python <code>{variable_name}</code> placeholders for dynamic substitutions (e.g. <code>{student_name}</code>, <code>{due_date}</code>).
+                    </div>
+                    {% if form.body_template.errors %}
+                        <div class="text-danger small mt-1">{{ form.body_template.errors.0 }}</div>
+                    {% endif %}
+                </div>
+                <div class="col-12">
+                    <label class="form-label fw-semibold text-secondary">Internal Description</label>
+                    {{ form.description }}
+                    {% if form.description.errors %}
+                        <div class="text-danger small mt-1">{{ form.description.errors.0 }}</div>
+                    {% endif %}
+                </div>
+                <div class="col-12">
+                    <div class="form-check mt-2">
+                        {{ form.is_active }}
+                        <label class="form-check-label fw-semibold text-secondary ms-2" for="{{ form.is_active.id_for_label }}">Active / Enabled Status</label>
+                    </div>
+                    {% if form.is_active.errors %}
+                        <div class="text-danger small mt-1">{{ form.is_active.errors.0 }}</div>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Form Actions -->
+            <div class="d-flex justify-content-end gap-2 border-top pt-3">
+                <a href="{% url 'admin_panel:notifications:template_list' %}" class="btn btn-secondary px-4 py-2 rounded-3 border-light-subtle">
+                    Cancel
+                </a>
+                <button type="submit" class="btn btn-primary px-4 py-2 rounded-3">
+                    <i class="fa-solid fa-floppy-disk me-2"></i> Save Template
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<style>
+body.crm-app .form-container {
+    max-width: 900px;
+}
+</style>
+{% endblock %}

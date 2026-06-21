@@ -1,0 +1,11 @@
+{% extends "emails/base_email.html" %}
+
+{% block subject %}Admission Application Approved{% endblock %}
+
+{% block content %}
+<h2 style="color: #1e3a8a; margin-top: 0;">Admission Approved</h2>
+<p>Dear {{ applicant_name }},</p>
+<p>We are pleased to inform you that your application for admission into <strong>{{ session_name }}</strong> (Category: {{ exam_type }}) has been <strong>Approved</strong>.</p>
+<p>Our registrar office is preparing your official student profile. You will receive a follow-up welcome email with your student portal credentials and roll number details shortly.</p>
+<p>If you have any immediate questions, please contact our support desk.</p>
+{% endblock %}

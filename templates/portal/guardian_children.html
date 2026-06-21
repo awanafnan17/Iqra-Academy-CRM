@@ -1,0 +1,87 @@
+{% extends 'layouts/portal_base.html' %}
+{% load static %}
+
+{% block title %}My Children - Iqra Academy{% endblock %}
+
+{% block content %}
+<div class="container-fluid px-0">
+    <!-- Page Header -->
+    <div class="page-header animate-fade-in">
+        <div class="page-header-left">
+            <h3 class="fw-bold mb-1 text-primary">My Children</h3>
+            <p class="text-secondary mb-0">View linked children profile cards and academic management portals.</p>
+        </div>
+        <div class="page-header-actions">
+            <span class="badge bg-primary px-3 py-2 rounded-pill fw-semibold">
+                <i class="fa-solid fa-children me-1"></i> Guardian Portal
+            </span>
+        </div>
+    </div>
+
+    <!-- Children Cards Grid -->
+    <div class="row g-4 animate-fade-in stagger-1">
+        {% for child in children %}
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="card p-4 shadow-sm h-100 d-flex flex-column">
+                    <div class="text-center mb-3">
+                        <div class="profile-avatar-sm mx-auto mb-3 border shadow-sm">
+                            {{ child.full_name|slice:":2"|upper }}
+                        </div>
+                        <h5 class="fw-bold mb-1">{{ child.full_name }}</h5>
+                        <span class="badge bg-elevated text-secondary border small mb-3">Roll#: {{ child.roll_number|default:"No Roll#" }}</span>
+                    </div>
+
+                    <!-- Enrollment Detail -->
+                    <div class="border-top pt-3 flex-grow-1">
+                        {% for enrollment in child.enrollments.all %}
+                            {% if enrollment.status == 'Active' %}
+                                <div class="d-flex justify-content-between mb-2 small">
+                                    <span class="text-secondary">Session:</span>
+                                    <span class="fw-bold text-end">{{ enrollment.session.name }}</span>
+                                </div>
+                                <div class="d-flex justify-content-between mb-2 small">
+                                    <span class="text-secondary">Session Category:</span>
+                                    <span class="badge bg-secondary px-2 py-0.5 rounded">{{ enrollment.session.session_category|default:"General" }}</span>
+                                </div>
+                                <div class="d-flex justify-content-between mb-2 small">
+                                    <span class="text-secondary">Status:</span>
+                                    <span class="badge bg-success px-2 py-0.5 rounded text-white">{{ enrollment.status }}</span>
+                                </div>
+                            {% endif %}
+                        {% empty %}
+                            <div class="text-center text-muted small py-2">No active academic session found.</div>
+                        {% endfor %}
+                    </div>
+
+                    <!-- Action Links Grid -->
+                    <div class="border-top pt-3 mt-3 d-grid gap-2">
+                        <a href="{% url 'guardian_portal:child_detail' student_id=child.id %}" class="btn btn-primary btn-sm rounded-pill py-2">
+                            <i class="fa-solid fa-graduation-cap me-1"></i> Student Profile
+                        </a>
+                        <div class="row g-2">
+                            <div class="col-6">
+                                <a href="{% url 'guardian_portal:child_attendance' student_id=child.id %}" class="btn btn-outline-secondary btn-sm rounded-pill w-100">
+                                    Attendance
+                                </a>
+                            </div>
+                            <div class="col-6">
+                                <a href="{% url 'guardian_portal:child_payments' student_id=child.id %}" class="btn btn-outline-secondary btn-sm rounded-pill w-100">
+                                    Fees
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% empty %}
+            <div class="col-12">
+                <div class="card p-5 text-center border rounded-4 shadow">
+                    <i class="fa-solid fa-children fa-3x text-muted mb-3"></i>
+                    <h4 class="fw-bold mb-2">No Linked Children Found</h4>
+                    <p class="text-secondary mb-0">Please contact the registrar office to link your parent profile to your children records.</p>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

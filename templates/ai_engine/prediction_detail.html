@@ -1,0 +1,242 @@
+{% extends 'layouts/panel_base.html' %}
+{% load static %}
+
+{% block title %}Prediction Details - Iqra Academy{% endblock %}
+
+{% block content %}
+<div class="container-fluid px-0">
+    <!-- Navigation Back -->
+    <div class="mb-3 animate-fade-in">
+        <a href="{% url 'admin_panel:ai_engine:prediction_list' %}" class="btn btn-link text-decoration-none p-0 text-secondary">
+            <i class="fa-solid fa-arrow-left me-1"></i> Back to Predictions
+        </a>
+    </div>
+
+    <!-- Header Card -->
+    <div class="p-4 rounded-4 mb-4 card border border-light shadow-sm animate-fade-in">
+        <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
+            <div>
+                <span class="badge bg-secondary bg-opacity-10 text-dark border px-2.5 py-1 mb-2">
+                    {{ prediction.get_prediction_type_display }}
+                </span>
+                <h3 class="fw-bold mb-1">
+                    Prediction Details #{{ prediction.pk }}
+                </h3>
+                <p class="text-secondary mb-0">
+                    Generated on {{ prediction.created_at|date:"F d, Y H:i:s" }}
+                </p>
+            </div>
+            <div>
+                {% if not prediction.is_acknowledged %}
+                    <form method="post" action="{% url 'admin_panel:ai_engine:prediction_acknowledge' prediction.pk %}" style="display:inline;" data-testid="ack-form-{{ prediction.pk }}">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-success px-4 py-2 rounded-3 shadow-sm">
+                            <i class="fa-solid fa-check-double me-1"></i> Acknowledge Prediction
+                        </button>
+                    </form>
+                {% else %}
+                    <span class="badge bg-success bg-opacity-15 text-success border border-success-subtle px-3 py-2 rounded-3 fs-6">
+                        <i class="fa-solid fa-circle-check me-1"></i> Acknowledged
+                    </span>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-4 animate-fade-in stagger-1">
+        <!-- Left Side: Basic Info & Student Profile -->
+        <div class="col-12 col-lg-4">
+            <!-- Summary Info -->
+            <div class="card p-4 border border-light shadow rounded-4 mb-4">
+                <h5 class="fw-bold mb-3 border-bottom pb-2">Overview</h5>
+                
+                <div class="mb-3">
+                    <span class="text-secondary small d-block">Risk Level</span>
+                    {% if prediction.risk_level == "critical" %}
+                        <span class="badge bg-danger text-white rounded-pill px-3 py-1 fw-bold fs-6">Critical</span>
+                    {% elif prediction.risk_level == "high" %}
+                        <span class="badge bg-danger bg-opacity-10 text-danger border border-danger-subtle rounded-pill px-3 py-1 fs-6">High</span>
+                    {% elif prediction.risk_level == "medium" %}
+                        <span class="badge bg-warning bg-opacity-10 text-warning border border-warning-subtle rounded-pill px-3 py-1 fs-6">Medium</span>
+                    {% elif prediction.risk_level == "low" %}
+                        <span class="badge bg-success bg-opacity-10 text-success border border-success-subtle rounded-pill px-3 py-1 fs-6">Low</span>
+                    {% else %}
+                        <span class="text-muted fs-6">—</span>
+                    {% endif %}
+                </div>
+
+                <div class="mb-3">
+                    <span class="text-secondary small d-block">Confidence Score</span>
+                    {% if prediction.confidence_score is not None %}
+                        <span class="fs-4 fw-bold text-primary">{{ prediction.confidence_score }}%</span>
+                    {% else %}
+                        <span class="text-muted fs-4 fw-bold">—</span>
+                    {% endif %}
+                </div>
+
+                <div class="mb-3">
+                    <span class="text-secondary small d-block">Model Version Used</span>
+                    {% if prediction.model_version %}
+                        <a href="{% url 'admin_panel:ai_engine:model_version_list' %}?model_type={{ prediction.model_version.model_type }}" class="fw-semibold">
+                            {{ prediction.model_version.get_model_type_display }} v{{ prediction.model_version.version }}
+                        </a>
+                    {% else %}
+                        <span class="text-muted">Unknown / Deleted version</span>
+                    {% endif %}
+                </div>
+
+                <div class="mb-3">
+                    <span class="text-secondary small d-block">Stale Expiration Date</span>
+                    <span class="fw-semibold text-secondary">{{ prediction.expires_at|date:"M d, Y H:i"|default:"Never" }}</span>
+                </div>
+
+                {% if prediction.is_acknowledged %}
+                    <div class="p-3 bg-success bg-opacity-10 border border-success-subtle rounded-3 mt-3">
+                        <span class="text-success small fw-bold d-block mb-1">Acknowledgement Info</span>
+                        <span class="text-secondary small d-block">Acknowledged By:</span>
+                        <span class="fw-semibold text-dark small">{{ prediction.acknowledged_by.get_full_name|default:prediction.acknowledged_by.username }}</span>
+                        
+                        <span class="text-secondary small d-block mt-2">Acknowledged At:</span>
+                        <span class="fw-semibold text-dark small">{{ prediction.acknowledged_at|date:"F d, Y H:i" }}</span>
+                    </div>
+                {% endif %}
+            </div>
+
+            <!-- Student Profile Reference -->
+            {% if student_target %}
+                <div class="card p-4 border border-light shadow rounded-4">
+                    <h5 class="fw-bold mb-3 border-bottom pb-2">Student Target</h5>
+                    <div class="d-flex align-items-center mb-3">
+                        <div class="avatar bg-primary text-white rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 50px; height: 50px; font-size: 20px;">
+                            {{ student_target.full_name|slice:":1"|upper }}
+                        </div>
+                        <div>
+                            <h6 class="fw-bold mb-0">{{ student_target.full_name }}</h6>
+                            <span class="text-secondary small">Roll: {{ student_target.roll_number|default:"—" }}</span>
+                        </div>
+                    </div>
+                    
+                    <table class="table table-sm table-borderless small mb-0">
+                        <tr>
+                            <td class="text-secondary ps-0" style="width: 40%;">Status</td>
+                            <td class="fw-semibold text-dark">{{ student_target.status }}</td>
+                        </tr>
+                        <tr>
+                            <td class="text-secondary ps-0">Gender</td>
+                            <td>{{ student_target.gender }}</td>
+                        </tr>
+                        <tr>
+                            <td class="text-secondary ps-0">Contact</td>
+                            <td>{{ student_target.mobile_number|default:"—" }}</td>
+                        </tr>
+                        <tr>
+                            <td class="text-secondary ps-0">Email</td>
+                            <td class="text-break">{{ student_target.email|default:"—" }}</td>
+                        </tr>
+                    </table>
+                    
+                    <div class="mt-3">
+                        <a href="{% url 'admin_panel:students:student_detail' student_target.pk %}" class="btn btn-sm btn-outline-primary w-100 rounded-2">
+                            <i class="fa-solid fa-user me-1"></i> View Full Profile
+                        </a>
+                    </div>
+                </div>
+            {% else %}
+                <div class="card p-4 border border-light shadow rounded-4">
+                    <h5 class="fw-bold mb-3 border-bottom pb-2">Polymorphic Target</h5>
+                    <p class="text-secondary small mb-2">This prediction targets a non-student or missing database object reference.</p>
+                    <table class="table table-sm table-borderless mb-0">
+                        <tr>
+                            <td class="text-secondary ps-0">Target Model</td>
+                            <td><code>{{ prediction.target_model }}</code></td>
+                        </tr>
+                        <tr>
+                            <td class="text-secondary ps-0">Object ID</td>
+                            <td><code>{{ prediction.target_object_id }}</code></td>
+                        </tr>
+                    </table>
+                </div>
+            {% endif %}
+        </div>
+
+        <!-- Right Side: JSON Inputs and Outputs -->
+        <div class="col-12 col-lg-8">
+            <!-- Prediction JSON Value / Insights output -->
+            <div class="card p-4 border border-light shadow rounded-4 mb-4">
+                <h5 class="fw-bold mb-3 border-bottom pb-2">
+                    <i class="fa-solid fa-square-poll-vertical text-primary me-2"></i>
+                    Prediction Output Insights
+                </h5>
+                {% if prediction_value_json %}
+                    {% if prediction_value_json.keys %}
+                        <div class="table-responsive">
+                            <table class="table table-bordered align-middle">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th style="width: 35%;">Metric/Key</th>
+                                        <th>Estimated Value/Insight</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for key, val in prediction_value_json.items %}
+                                    <tr>
+                                        <td class="fw-semibold text-secondary small">{{ key }}</td>
+                                        <td>
+                                            {% if val == True %}
+                                                <span class="badge bg-success bg-opacity-10 text-success border border-success-subtle rounded-pill px-2.5 py-1">True</span>
+                                            {% elif val == False %}
+                                                <span class="badge bg-danger bg-opacity-10 text-danger border border-danger-subtle rounded-pill px-2.5 py-1">False</span>
+                                            {% else %}
+                                                <span class="text-dark fw-medium">{{ val }}</span>
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    {% else %}
+                        <pre class="bg-light p-3 rounded-3 small"><code>{{ prediction.prediction_value }}</code></pre>
+                    {% endif %}
+                {% else %}
+                    <p class="text-muted small">No output insights populated.</p>
+                {% endif %}
+            </div>
+
+            <!-- Input Features used for training/inference -->
+            <div class="card p-4 border border-light shadow rounded-4">
+                <h5 class="fw-bold mb-3 border-bottom pb-2">
+                    <i class="fa-solid fa-rectangle-list text-secondary me-2"></i>
+                    Inference Features Context
+                </h5>
+                {% if input_features_json %}
+                    {% if input_features_json.keys %}
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-sm align-middle small">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th style="width: 40%;">Feature Property</th>
+                                        <th>Inference Value</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for key, val in input_features_json.items %}
+                                    <tr>
+                                        <td class="text-secondary">{{ key }}</td>
+                                        <td class="fw-medium text-dark">{{ val }}</td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    {% else %}
+                        <pre class="bg-light p-3 rounded-3 small"><code>{{ prediction.input_features }}</code></pre>
+                    {% endif %}
+                {% else %}
+                    <p class="text-muted small">No features logged for this inference.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

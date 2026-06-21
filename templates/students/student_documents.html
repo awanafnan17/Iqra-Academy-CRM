@@ -1,0 +1,118 @@
+{% extends 'layouts/panel_base.html' %}
+{% load static %}
+{% load student_tags %}
+
+{% block title %}{{ page_title }} - Iqra Academy{% endblock %}
+
+{% block content %}
+<div class="container-fluid px-0">
+    <div class="p-4 rounded-4 mb-4 card border border-light shadow-sm animate-fade-in">
+        <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
+            <div>
+                <h3 class="fw-bold mb-1">{{ page_title }}</h3>
+                <p class="text-secondary mb-0">Manage documents, transcripts, and ID cards for {{ student.full_name }}.</p>
+            </div>
+            <div>
+                <a href="{% student_url 'student_detail' student.pk %}" class="btn btn-outline-primary px-3 py-2 rounded-3">
+                    <i class="fa-solid fa-arrow-left me-1"></i> Back to Profile
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-4">
+        <!-- Upload Form -->
+        <div class="col-md-5 col-lg-4">
+            <div class="card p-4 border border-soft shadow rounded-4 h-100">
+                <h5 class="fw-bold border-bottom pb-2 mb-3">
+                    <i class="fa-solid fa-cloud-arrow-up text-primary me-2"></i> Upload Document
+                </h5>
+                <form method="post" enctype="multipart/form-data" action="{% student_url 'student_document_upload' student.pk %}" id="documentUploadForm">
+                    {% csrf_token %}
+                    {% for field in form %}
+                    <div class="mb-3">
+                        <label class="form-label text-secondary small fw-semibold" for="{{ field.id_for_label }}">{{ field.label }}</label>
+                        {{ field }}
+                        {% if field.errors %}
+                        <div class="text-danger small mt-1">{{ field.errors.0 }}</div>
+                        {% endif %}
+                    </div>
+                    {% endfor %}
+                    <button type="submit" class="btn btn-primary w-100 rounded-3 py-2 mt-2">
+                        <i class="fa-solid fa-upload me-1"></i> Upload
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Documents List -->
+        <div class="col-md-7 col-lg-8">
+            <div class="card p-4 border border-soft shadow rounded-4 h-100">
+                <h5 class="fw-bold border-bottom pb-2 mb-3">
+                    <i class="fa-solid fa-file-invoice text-primary me-2"></i> Academic Documents Registry
+                </h5>
+                <div class="table-responsive border rounded-3 mb-0">
+                    <table class="table table-hover align-middle mb-0 text-nowrap small">
+                        <thead>
+                            <tr>
+                                <th class="ps-3">Type</th>
+                                <th>Title</th>
+                                <th>File Size</th>
+                                <th>Uploaded By</th>
+                                <th>Upload Date</th>
+                                <th class="pe-3 text-end">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for doc in documents %}
+                            <tr>
+                                <td class="ps-3">
+                                    <span class="badge bg-primary bg-opacity-10 text-primary font-monospace">{{ doc.get_document_type_display }}</span>
+                                </td>
+                                <td class="fw-bold">{{ doc.title|default:"Untitled" }}</td>
+                                <td>{{ doc.file_size|filesizeformat }}</td>
+                                <td>{{ doc.uploaded_by.get_full_name|default:doc.uploaded_by.email }}</td>
+                                <td>{{ doc.created_at|date:"d M, Y" }}</td>
+                                <td class="pe-3 text-end">
+                                    {% if doc.file %}
+                                    <a href="{{ doc.file.url }}" target="_blank" class="btn btn-sm btn-outline-primary px-3">
+                                        <i class="fa-solid fa-arrow-down-long me-1"></i> Open
+                                    </a>
+                                    {% else %}
+                                    <span class="text-muted">-</span>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            {% empty %}
+                            <tr>
+                                <td colspan="6" class="text-center py-5 text-muted">
+                                    <i class="fa-solid fa-folder-open fa-3x text-light-subtle mb-3"></i>
+                                    <h6 class="fw-bold">No Documents Uploaded</h6>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const inputs = document.querySelectorAll('#documentUploadForm input');
+        inputs.forEach(el => {
+            if (el.type !== 'checkbox' && el.type !== 'radio' && el.type !== 'file') {
+                el.classList.add('form-control');
+            }
+        });
+        const selects = document.querySelectorAll('#documentUploadForm select');
+        selects.forEach(el => {
+            el.classList.add('form-select');
+        });
+    });
+</script>
+{% endblock %}

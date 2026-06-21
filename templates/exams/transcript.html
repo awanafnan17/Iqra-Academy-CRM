@@ -1,0 +1,473 @@
+{% extends 'layouts/portal_base.html' %}
+{% load static %}
+
+{% block title %}Academic Transcript | Iqra Academy{% endblock %}
+
+{% block extra_css %}
+<style>
+    /* Premium Styling for Screen View */
+    .transcript-container {
+        max-width: 900px;
+        margin: 0 auto;
+        background: var(--bg-card);
+        border-radius: 16px;
+        box-shadow: var(--shadow-card);
+        border: 1px solid var(--border-soft);
+        position: relative;
+        overflow: hidden;
+        padding: 40px;
+        color: var(--text-primary);
+    }
+
+    /* Watermark styling */
+    .transcript-watermark {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) rotate(-30deg);
+        font-size: 5rem;
+        font-weight: 800;
+        color: rgba(201, 162, 39, 0.04);
+        pointer-events: none;
+        white-space: nowrap;
+        user-select: none;
+        z-index: 1;
+        text-transform: uppercase;
+        letter-spacing: 10px;
+    }
+
+    .transcript-content {
+        position: relative;
+        z-index: 2;
+    }
+
+    /* Header styling */
+    .transcript-header {
+        border-bottom: 3px double var(--border-soft);
+        padding-bottom: 25px;
+        margin-bottom: 30px;
+    }
+
+    .institute-logo {
+        height: 70px;
+        object-fit: contain;
+    }
+
+    .institute-title {
+        font-family: 'Outfit', 'Inter', sans-serif;
+        font-weight: 800;
+        color: var(--text-primary);
+        letter-spacing: 0.5px;
+        font-size: 1.8rem;
+    }
+
+    .institute-subtitle {
+        font-size: 0.9rem;
+        color: var(--text-secondary);
+        text-transform: uppercase;
+        letter-spacing: 2px;
+    }
+
+    .transcript-title-badge {
+        background: var(--bg-elevated);
+        border: 1px solid var(--border-soft);
+        color: var(--text-primary);
+        font-weight: 700;
+        padding: 8px 20px;
+        border-radius: 50px;
+        display: inline-block;
+        font-size: 1rem;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+    }
+
+    /* Student info block */
+    .student-info-grid {
+        background: var(--bg-elevated);
+        border-radius: 12px;
+        padding: 20px;
+        border: 1px solid var(--border-soft);
+        margin-bottom: 30px;
+    }
+
+    .info-label {
+        font-size: 0.8rem;
+        color: var(--text-secondary);
+        text-transform: uppercase;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+    }
+
+    .info-value {
+        font-size: 0.95rem;
+        color: var(--text-primary);
+        font-weight: 700;
+    }
+
+    /* Table styling */
+    .marks-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 30px;
+    }
+
+    .marks-table th {
+        background: var(--bg-sidebar);
+        color: #ffffff;
+        font-weight: 600;
+        text-transform: uppercase;
+        font-size: 0.75rem;
+        letter-spacing: 1px;
+        padding: 12px 16px;
+        border: 1px solid var(--border-soft);
+    }
+
+    .marks-table td {
+        padding: 14px 16px;
+        border: 1px solid var(--border-soft);
+        font-size: 0.9rem;
+    }
+
+    .marks-table tr:nth-child(even) {
+        background: var(--bg-elevated);
+    }
+
+    .subject-row-header {
+        font-weight: 700;
+        color: var(--text-primary);
+    }
+
+    .exam-sub-row {
+        font-size: 0.85rem !important;
+        color: var(--text-secondary);
+        background: transparent !important;
+    }
+
+    .exam-indent {
+        padding-left: 30px !important;
+    }
+
+    /* Summary block */
+    .summary-grid {
+        background: var(--bg-elevated);
+        border-radius: 12px;
+        padding: 25px;
+        border: 1px solid var(--border-soft);
+        margin-bottom: 40px;
+    }
+
+    .metric-card-inner {
+        text-align: center;
+        border-right: 1px solid var(--border-soft);
+    }
+
+    .metric-card-inner:last-child {
+        border-right: none;
+    }
+
+    .metric-value-inner {
+        font-size: 1.8rem;
+        font-weight: 800;
+        color: var(--text-primary);
+    }
+
+    .metric-label-inner {
+        font-size: 0.75rem;
+        color: var(--text-secondary);
+        text-transform: uppercase;
+        font-weight: 600;
+        letter-spacing: 1px;
+        margin-top: 5px;
+    }
+
+    /* Signatures */
+    .signatures-container {
+        margin-top: 60px;
+        padding-top: 20px;
+    }
+
+    .sig-line {
+        border-top: 1px solid #94a3b8;
+        width: 200px;
+        margin: 0 auto 8px auto;
+    }
+
+    .sig-title {
+        font-size: 0.8rem;
+        color: #64748b;
+        text-transform: uppercase;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+    }
+
+    /* Print settings button */
+    .actions-panel {
+        max-width: 900px;
+        margin: 20px auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    /* Custom classes for column widths to avoid inline styles */
+    .marks-table-col-subject {
+        width: 45%;
+    }
+    .marks-table-col-obtained {
+        width: 15%;
+    }
+    .marks-table-col-total {
+        width: 15%;
+    }
+    .marks-table-col-percentage {
+        width: 13%;
+    }
+    .marks-table-col-grade {
+        width: 12%;
+    }
+    .badge-achievement {
+        font-size: 0.75rem !important;
+    }
+
+    /* PRINT SPECIFIC STYLES */
+    @media print {
+        body * {
+            visibility: hidden;
+        }
+        .app-wrapper, .app-sidebar, .app-navbar, .app-main, .sidebar, .navbar, .btn, .no-print, .actions-panel, header {
+            display: none !important;
+        }
+        .transcript-container, .transcript-container * {
+            visibility: visible;
+        }
+        .transcript-container {
+            display: block !important;
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100% !important;
+            border: none !important;
+            box-shadow: none !important;
+            padding: 0 !important;
+            margin: 0 !important;
+            background: white !important;
+            color: black !important;
+        }
+        .student-info-grid {
+            background-color: #f8fafc !important;
+            border: 1px solid #cbd5e1 !important;
+            color: black !important;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+        .summary-grid {
+            background-color: #f8fafc !important;
+            border: 1px solid #cbd5e1 !important;
+            color: black !important;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+        .marks-table th {
+            background-color: #0f172a !important;
+            color: white !important;
+            border: 1px solid #0f172a !important;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+        .marks-table td {
+            border: 1px solid #cbd5e1 !important;
+            color: black !important;
+        }
+        .transcript-watermark {
+            color: rgba(0, 0, 0, 0.05) !important;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid py-4">
+    <!-- Action panel (Screen only) -->
+    <div class="actions-panel no-print">
+        <h3 class="fw-bold text-white-50 mb-0">Official Transcript</h3>
+        <div>
+            <button onclick="window.print();" class="btn btn-primary rounded-3 px-4 shadow-sm">
+                <i class="fa-solid fa-print me-2"></i>Print Transcript
+            </button>
+        </div>
+    </div>
+
+    <!-- Official Transcript Document -->
+    <div class="transcript-container printable-transcript">
+        <div class="transcript-watermark">IQRA ACADEMY OFFICIAL</div>
+
+        <div class="transcript-content">
+            <!-- Header section -->
+            <div class="transcript-header text-center">
+                <div class="d-flex justify-content-center align-items-center mb-3">
+                    <img src="{% static 'images/logo.svg' %}" alt="Logo" class="institute-logo me-3">
+                    <div class="text-start">
+                        <h1 class="institute-title mb-0">IQRA ACADEMY</h1>
+                        <p class="institute-subtitle mb-0">Official Academic Record & Transcript</p>
+                    </div>
+                </div>
+                <div class="transcript-title-badge">TRANSCRIPT OF ACADEMIC RECORD</div>
+            </div>
+
+            <!-- Student Info Block -->
+            <div class="student-info-grid">
+                <div class="row g-3">
+                    <div class="col-md-4 col-6">
+                        <div class="info-label">Student Name</div>
+                        <div class="info-value">
+                            {{ transcript.student_name }}
+                            {% if transcript.achievements %}
+                                {% for ach in transcript.achievements %}
+                                    <span class="badge bg-warning text-black border border-warning px-2 py-0.5 rounded-pill fw-bold ms-1 badge-achievement">
+                                        <i class="fa-solid fa-trophy text-warning me-1"></i> Selected in {{ ach.exam_type }} {{ ach.year }}
+                                    </span>
+                                {% endfor %}
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-6">
+                        <div class="info-label">Roll Number</div>
+                        <div class="info-value">{{ transcript.roll_number }}</div>
+                    </div>
+                    <div class="col-md-4 col-12">
+                        <div class="info-label">Session offering</div>
+                        <div class="info-value">{{ transcript.session_name }}</div>
+                    </div>
+                    <div class="col-md-4 col-6">
+                        <div class="info-label">Transcript Date</div>
+                        <div class="info-value">{% now "F j, Y" %}</div>
+                    </div>
+                    <div class="col-md-4 col-6">
+                        <div class="info-label">Status</div>
+                        <div class="info-value"><span class="text-success">Active Record</span></div>
+                    </div>
+                    <div class="col-md-4 col-12">
+                        <div class="info-label">ERP Reference</div>
+                        <div class="info-value font-monospace text-muted">TX-{{ transcript.student_id }}-{{ transcript.session_id }}</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Subject-wise Marks Table -->
+            <table class="marks-table">
+                <thead>
+                    <tr>
+                        <th class="marks-table-col-subject">Subject / Exam Component</th>
+                        <th class="marks-table-col-obtained text-center">Obtained</th>
+                        <th class="marks-table-col-total text-center">Total</th>
+                        <th class="marks-table-col-percentage text-center">Percentage</th>
+                        <th class="marks-table-col-grade text-center">Grade</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for subject in transcript.subject_results %}
+                        <!-- Subject aggregation row -->
+                        <tr class="subject-row-header">
+                            <td>{{ subject.subject_name }} {% if subject.subject_code %}({{ subject.subject_code }}){% endif %}</td>
+                            <td class="text-center">{{ subject.obtained_marks }}</td>
+                            <td class="text-center">{{ subject.total_marks }}</td>
+                            <td class="text-center">{{ subject.percentage }}%</td>
+                            <td class="text-center">
+                                <span class="badge {% if subject.grade == 'A+' or subject.grade == 'A' %}bg-success{% elif subject.grade == 'B' or subject.grade == 'C' %}bg-primary{% elif subject.grade == 'D' or subject.grade == 'E' %}bg-warning{% else %}bg-danger{% endif %} px-2.5 py-1">
+                                    {{ subject.grade }}
+                                </span>
+                            </td>
+                        </tr>
+
+                        <!-- Exam component breakups -->
+                        {% for exam in subject.exams %}
+                            <tr class="exam-sub-row">
+                                <td class="exam-indent text-muted">
+                                    <i class="fa-solid fa-angle-right me-2 text-primary"></i>
+                                    {{ exam.exam_name }} ({{ exam.exam_type }})
+                                </td>
+                                <td class="text-center text-muted">
+                                    {% if exam.is_absent %}
+                                        <span class="text-danger">Absent</span>
+                                    {% else %}
+                                        {{ exam.marks_obtained }}
+                                    {% endif %}
+                                </td>
+                                <td class="text-center text-muted">{{ exam.total_marks }}</td>
+                                <td class="text-center text-muted">{{ exam.percentage }}%</td>
+                                <td class="text-center">
+                                    <span class="badge {% if exam.grade == 'A+' or exam.grade == 'A' %}bg-success{% elif exam.grade == 'B' or exam.grade == 'C' %}bg-primary{% elif exam.grade == 'D' or exam.grade == 'E' %}bg-warning{% else %}bg-danger{% endif %} bg-opacity-75 px-2 py-0.5">
+                                        {{ exam.grade }}
+                                    </span>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    {% empty %}
+                        <tr>
+                            <td colspan="5" class="text-center text-muted py-4">No academic results recorded for this session.</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+            <!-- Summary metrics block -->
+            <div class="summary-grid">
+                <div class="row text-center">
+                    <div class="col-md-3 col-6 metric-card-inner py-2">
+                        <div class="metric-value-inner">{{ transcript.gpa }}</div>
+                        <div class="metric-label-inner">Weighted GPA</div>
+                    </div>
+                    <div class="col-md-3 col-6 metric-card-inner py-2">
+                        <div class="metric-value-inner">{{ transcript.overall_percentage }}%</div>
+                        <div class="metric-label-inner">Overall Percentage</div>
+                    </div>
+                    <div class="col-md-3 col-6 metric-card-inner py-2">
+                        <div class="metric-value-inner">{{ transcript.academic_score }}%</div>
+                        <div class="metric-label-inner">Academic Score</div>
+                    </div>
+                    <div class="col-md-3 col-6 metric-card-inner py-2">
+                        <div class="metric-value-inner">
+                            {% if transcript.overall_result == 'Pass' %}
+                                <span class="text-success">PASS</span>
+                            {% else %}
+                                <span class="text-danger">FAIL</span>
+                            {% endif %}
+                        </div>
+                        <div class="metric-label-inner">Overall Result</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Signature block -->
+            <div class="signatures-container">
+                <div class="row text-center mt-5">
+                    <div class="col-6">
+                        <div class="sig-line"></div>
+                        <div class="sig-title">Controller of Examinations</div>
+                    </div>
+                    <div class="col-6">
+                        <div class="sig-line"></div>
+                        <div class="sig-title">Director / Principal</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+{{ block.super }}
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // Strip double-dashes from select placeholders to ensure premium look
+        document.querySelectorAll("select option").forEach(opt => {
+            if (opt.textContent.includes("--")) {
+                opt.textContent = opt.textContent.replace(/-+/g, "").trim();
+            }
+        });
+    });
+</script>
+{% endblock %}

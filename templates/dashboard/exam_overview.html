@@ -1,0 +1,70 @@
+{% extends "layouts/panel_base.html" %}
+
+{% block title %}Exam Overview{% endblock %}
+
+{% block content %}
+<div class="container-fluid py-4">
+
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+      <h4 class="fw-bold mb-1">
+        <i class="fas fa-file-alt me-2 text-primary"></i>
+        Master Exam List
+      </h4>
+      <p class="text-muted mb-0">
+        {{ total_exams }} total exams | {{ upcoming_count }} upcoming
+      </p>
+    </div>
+    {% if request.user.is_superuser or request.user.groups.all.0.name == 'Admin' or request.user.groups.all.1.name == 'Admin' %}
+    <a href="{% url 'admin_panel:exams:exam_create' %}" class="btn btn-primary px-4">
+      <i class="fas fa-plus me-2"></i>Schedule Exam
+    </a>
+    {% endif %}
+  </div>
+
+  <div class="card p-0 overflow-hidden">
+    <div class="table-responsive">
+      <table class="table table-hover align-middle mb-0">
+        <thead class="table-dark">
+          <tr>
+            <th class="ps-4">Date</th>
+            <th>Type</th>
+            <th>Session</th>
+            <th>Subject</th>
+            <th>Max Marks</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for exam in exams %}
+          <tr>
+            <td class="ps-4 fw-semibold">{{ exam.exam_date|date:"M d, Y" }}</td>
+            <td>
+              <span class="badge bg-light text-primary fw-normal">{{ exam.exam_type|default:"Test" }}</span>
+            </td>
+            <td>{{ exam.session.name|default:"N/A" }}</td>
+            <td>{{ exam.subject.name|default:"General" }}</td>
+            <td>{{ exam.max_marks|default:"0" }}</td>
+            <td>
+              <div class="d-flex gap-2">
+                <a href="{% url 'admin_panel:exams:exam_detail' exam.pk %}" class="btn btn-sm btn-outline-primary px-3">
+                  <i class="fas fa-eye me-1"></i>View
+                </a>
+              </div>
+            </td>
+          </tr>
+          {% empty %}
+          <tr>
+            <td colspan="6" class="text-center py-5 text-muted">
+              <i class="fas fa-file-invoice fa-2x mb-2 d-block opacity-50"></i>
+              No exams scheduled.<br>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
+{% endblock %}

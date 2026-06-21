@@ -1,0 +1,61 @@
+{% extends 'layouts/panel_base.html' %}
+{% load finance_tags %}
+{% block title %}Refunds | Finance{% endblock %}
+{% block content %}
+<div class="container-fluid px-0">
+    <!-- Page Header -->
+    <div class="page-header animate-fade-in">
+        <div class="page-header-left">
+            <h3 class="fw-bold mb-1 text-primary">Refunds</h3>
+            <p class="text-secondary mb-0">Track and manage student enrollment refund processing, approval states, and amounts.</p>
+        </div>
+        <div class="page-header-actions">
+            <a href="{% finance_url 'refund_create' %}" class="btn btn-primary">
+                <i class="fas fa-plus me-2"></i>Process Refund
+            </a>
+        </div>
+    </div>
+
+    <!-- Table Section -->
+    <div class="card p-0 animate-fade-in stagger-1">
+        <div class="table-wrapper">
+            <table class="table align-middle mb-0">
+                <thead>
+                    <tr>
+                        <th class="ps-4">Date</th>
+                        <th>Student</th>
+                        <th>Payment Receipt</th>
+                        <th>Amount</th>
+                        <th class="pe-4">Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for refund in page_obj %}
+                    <tr>
+                        <td class="ps-4">{{ refund.refund_date }}</td>
+                        <td class="fw-bold text-primary-c">
+                            <div class="d-flex align-items-center">
+                                <div class="avatar me-3">
+                                    {{ refund.payment.enrollment.student.full_name|slice:":1"|upper }}
+                                </div>
+                                {{ refund.payment.enrollment.student.full_name }}
+                            </div>
+                        </td>
+                        <td><span class="font-monospace fw-semibold text-primary-c">{{ refund.payment.receipt_number }}</span></td>
+                        <td class="text-danger fw-bold">PKR {{ refund.amount }}</td>
+                        <td class="pe-4"><span class="badge bg-success">{{ refund.status|title }}</span></td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="5" class="text-center py-5 text-secondary">
+                            <i class="fa-regular fa-folder-open fa-3x mb-3 text-secondary"></i>
+                            <p class="mb-0 fw-medium">No refunds found.</p>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,123 @@
+{% extends 'layouts/panel_base.html' %}
+{% load static %}
+{% load student_tags %}
+{% load finance_tags %}
+
+{% block title %}{{ page_title }} - Iqra Academy{% endblock %}
+
+{% block content %}
+<div class="container-fluid px-0">
+    <div class="p-4 rounded-4 mb-4 card border border-light shadow-sm animate-fade-in">
+        <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
+            <div>
+                <h3 class="fw-bold mb-1">{{ page_title }}</h3>
+                <p class="text-secondary mb-0">Financial account history, transaction ledger, and fee plans for {{ student.full_name }}.</p>
+            </div>
+            <div>
+                <a href="{% student_url 'student_detail' student.pk %}" class="btn btn-outline-primary px-3 py-2 rounded-3">
+                    <i class="fa-solid fa-arrow-left me-1"></i> Back to Profile
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Summary Metrics -->
+    <div class="row g-3 mb-4 animate-fade-in stagger-1">
+        <div class="col-md-6">
+            <div class="card p-3 border rounded-3 bg-elevated shadow-sm text-center">
+                <span class="text-secondary small d-block">Total Allocated Dues</span>
+                <h3 class="fw-bold text-primary mb-0 mt-1">PKR {{ total_due|floatformat:2 }}</h3>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card p-3 border rounded-3 bg-elevated shadow-sm text-center">
+                <span class="text-secondary small d-block">Total Paid Amount</span>
+                <h3 class="fw-bold text-success mb-0 mt-1">PKR {{ total_paid|floatformat:2 }}</h3>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Active Installment Plans -->
+    <div class="card p-4 border border-soft shadow rounded-4 mb-4 animate-fade-in stagger-2">
+        <h5 class="fw-bold border-bottom pb-2 mb-3">
+            <i class="fa-solid fa-calendar-days text-primary me-2"></i> Active Fee Plans
+        </h5>
+        <div class="table-responsive border rounded-3 mb-0">
+            <table class="table table-hover align-middle mb-0 text-nowrap small">
+                <thead class="table-light">
+                    <tr>
+                        <th class="ps-3">Session</th>
+                        <th>Total Amount</th>
+                        <th>Installments Count</th>
+                        <th>Created Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for plan in installment_plans %}
+                    <tr>
+                        <td class="ps-3 fw-bold">{{ plan.enrollment.session.name }}</td>
+                        <td class="fw-semibold">PKR {{ plan.total_amount|floatformat:2 }}</td>
+                        <td>{{ plan.number_of_installments }}</td>
+                        <td>{{ plan.created_at|date:"d M, Y" }}</td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="4" class="text-center py-4 text-muted">No fee plan structures defined for this student.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Payments Ledger -->
+    <div class="card p-4 border border-soft shadow rounded-4 animate-fade-in stagger-3">
+        <h5 class="fw-bold border-bottom pb-2 mb-3">
+            <i class="fa-solid fa-receipt text-primary me-2"></i> Transaction Registry
+        </h5>
+        <div class="table-responsive border rounded-3 mb-0">
+            <table class="table table-hover align-middle mb-0 text-nowrap small">
+                <thead class="table-light">
+                    <tr>
+                        <th class="ps-3">Date</th>
+                        <th>Purpose</th>
+                        <th>Receipt Number</th>
+                        <th>Amount</th>
+                        <th>Payment Method</th>
+                        <th class="pe-3 text-end">Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for payment in payments %}
+                    <tr>
+                        <td class="ps-3 font-monospace">{{ payment.payment_date|date:"Y-m-d" }}</td>
+                        <td>
+                            {% if payment.is_late_fee %}
+                            <span class="text-danger"><i class="fa-solid fa-circle-exclamation me-1"></i> Late Fee Penalty</span>
+                            {% else %}
+                            <span>Tuition Fee</span>
+                            {% endif %}
+                        </td>
+                        <td>#{{ payment.receipt_number|default:"-" }}</td>
+                        <td class="fw-bold text-success">PKR {{ payment.amount|floatformat:2 }}</td>
+                        <td>{{ payment.payment_method|upper }}</td>
+                        <td class="pe-3 text-end">
+                            {% if payment.status == 'Completed' %}
+                            <span class="badge bg-success bg-opacity-10 text-success border border-success-subtle rounded-pill px-3 py-1">Completed</span>
+                            {% else %}
+                            <span class="badge bg-secondary bg-opacity-10 text-secondary border px-3 py-1 rounded-pill">{{ payment.status }}</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="6" class="text-center py-5 text-muted">No registered transactions recorded for this profile.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,152 @@
+{% extends "layouts/panel_base.html" %}
+{% load static %}
+
+{% block title %}Attendance Analytics - {{ session.name }} - Iqra Academy{% endblock %}
+
+{% block content %}
+<div class="container-fluid py-4">
+    <!-- Header Card -->
+    <div class="card p-4 border border-light shadow-sm rounded-4 mb-4 animate-fade-in">
+        <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3">
+            <div class="d-flex align-items-center">
+                <a href="{{ back_url }}" class="btn btn-outline-primary btn-sm rounded-circle me-3 btn-back-circle">
+                    <i class="fa-solid fa-arrow-left"></i>
+                </a>
+                <div>
+                    <h4 class="fw-bold mb-1"><i class="fa-solid fa-chart-line text-primary me-2"></i>Attendance Analytics</h4>
+                    <p class="text-secondary mb-0 small">{{ session.name }} ({{ session.code }})</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Date Range Filter -->
+    <div class="card p-4 border border-light shadow-sm rounded-4 mb-4 animate-fade-in stagger-1">
+        <form method="get" class="row g-3 align-items-end">
+            <div class="col-12 col-md-4">
+                <label for="start-date" class="form-label small fw-semibold text-secondary">Start Date</label>
+                <input type="date" id="start-date" name="start_date" class="form-control rounded-3" value="{{ start_date_str }}">
+            </div>
+            <div class="col-12 col-md-4">
+                <label for="end-date" class="form-label small fw-semibold text-secondary">End Date</label>
+                <input type="date" id="end-date" name="end_date" class="form-control rounded-3" value="{{ end_date_str }}">
+            </div>
+            <div class="col-12 col-md-4 d-flex gap-2">
+                <button type="submit" class="btn btn-primary w-100 rounded-3">
+                    <i class="fa-solid fa-filter me-2"></i>Filter
+                </button>
+                <a href="?" class="btn btn-outline-secondary w-100 rounded-3">
+                    <i class="fa-solid fa-arrows-rotate me-2"></i>Reset
+                </a>
+            </div>
+        </form>
+    </div>
+
+    {% if counts.total > 0 %}
+        <!-- Stats Cards Grid -->
+        <div class="row g-4 mb-4 animate-fade-in stagger-2">
+            <div class="col-12 col-md-4 col-lg-3">
+                <div class="card h-100 border border-light shadow-sm rounded-4 text-center p-4">
+                    <div class="text-secondary small fw-semibold mb-2">Total Marked Days</div>
+                    <div class="fw-bold text-dark fs-3 mb-1">{{ total_marked_days }}</div>
+                    <div class="text-muted small">Unique dates logged</div>
+                </div>
+            </div>
+            <div class="col-12 col-md-4 col-lg-3">
+                <div class="card h-100 border border-light shadow-sm rounded-4 text-center p-4">
+                    <div class="text-secondary small fw-semibold mb-2">Total Attendance Logs</div>
+                    <div class="fw-bold text-primary fs-3 mb-1">{{ counts.total }}</div>
+                    <div class="text-muted small">Cumulative student records</div>
+                </div>
+            </div>
+            <div class="col-12 col-md-4 col-lg-3">
+                <div class="card h-100 border border-light shadow-sm rounded-4 text-center p-4">
+                    <div class="text-secondary small fw-semibold mb-2">Present Rate</div>
+                    <div class="fw-bold text-success fs-3 mb-1">{{ analytics.present_rate }}%</div>
+                    <div class="text-muted small">{{ counts.present }} Present logs</div>
+                </div>
+            </div>
+            <div class="col-12 col-md-4 col-lg-3">
+                <div class="card h-100 border border-light shadow-sm rounded-4 text-center p-4">
+                    <div class="text-secondary small fw-semibold mb-2">Absent Rate</div>
+                    <div class="fw-bold text-danger fs-3 mb-1">{{ analytics.absent_rate }}%</div>
+                    <div class="text-muted small">{{ counts.absent }} Absent logs</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Breakdown Details Card -->
+        <div class="card border border-light shadow-sm rounded-4 animate-fade-in stagger-3">
+            <div class="p-3.5 border-bottom card-header bg-light rounded-top-4">
+                <h6 class="mb-0 fw-bold"><i class="fa-solid fa-list-check me-2"></i>Detailed Distribution</h6>
+            </div>
+            
+            <div class="p-4">
+                <!-- Present Row -->
+                <div class="mb-4">
+                    <div class="d-flex justify-content-between align-items-center mb-1">
+                        <span class="fw-bold text-dark">Present</span>
+                        <span class="small text-secondary">{{ counts.present }} / {{ counts.total }} ({{ analytics.present_rate }}%)</span>
+                    </div>
+                    <div class="progress rounded-pill" style="height: 12px;">
+                        <div class="progress-bar bg-success rounded-pill" role="progressbar" style="width: {{ analytics.present_rate }}%" aria-valuenow="{{ analytics.present_rate }}" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                </div>
+
+                <!-- Late Row -->
+                <div class="mb-4">
+                    <div class="d-flex justify-content-between align-items-center mb-1">
+                        <span class="fw-bold text-dark">Late</span>
+                        <span class="small text-secondary">{{ counts.late }} / {{ counts.total }} ({{ analytics.late_rate }}%)</span>
+                    </div>
+                    <div class="progress rounded-pill" style="height: 12px;">
+                        <div class="progress-bar bg-warning rounded-pill" role="progressbar" style="width: {{ analytics.late_rate }}%" aria-valuenow="{{ analytics.late_rate }}" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                </div>
+
+                <!-- Absent Row -->
+                <div class="mb-4">
+                    <div class="d-flex justify-content-between align-items-center mb-1">
+                        <span class="fw-bold text-dark">Absent</span>
+                        <span class="small text-secondary">{{ counts.absent }} / {{ counts.total }} ({{ analytics.absent_rate }}%)</span>
+                    </div>
+                    <div class="progress rounded-pill" style="height: 12px;">
+                        <div class="progress-bar bg-danger rounded-pill" role="progressbar" style="width: {{ analytics.absent_rate }}%" aria-valuenow="{{ analytics.absent_rate }}" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                </div>
+
+                <!-- Excused Row -->
+                <div class="mb-0">
+                    <div class="d-flex justify-content-between align-items-center mb-1">
+                        <span class="fw-bold text-dark">Excused</span>
+                        <span class="small text-secondary">{{ counts.excused }} / {{ counts.total }} ({{ analytics.excused_rate }}%)</span>
+                    </div>
+                    <div class="progress rounded-pill" style="height: 12px;">
+                        <div class="progress-bar bg-info rounded-pill" role="progressbar" style="width: {{ analytics.excused_rate }}%" aria-valuenow="{{ analytics.excused_rate }}" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% else %}
+        <!-- Empty State -->
+        <div class="card p-5 text-center border border-light shadow-sm rounded-4 animate-fade-in stagger-2">
+            <div class="py-5 text-muted">
+                <i class="fa-solid fa-chart-bar fa-3x text-secondary mb-3"></i>
+                <h5 class="fw-bold text-dark">No Attendance Logs Found</h5>
+                <p class="text-secondary mb-0">No student attendance logs have been recorded for this session within the selected period.</p>
+            </div>
+        </div>
+    {% endif %}
+</div>
+
+<style>
+body.crm-app .btn-back-circle {
+    width: 38px;
+    height: 38px;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+</style>
+{% endblock %}

@@ -1,0 +1,65 @@
+{% extends 'layouts/panel_base.html' %}
+{% load static %}
+
+{% block title %}{{ title }} - Iqra Academy{% endblock %}
+
+{% block content %}
+<div class="automation-page">
+<div class="container-fluid px-0">
+    <!-- Page Header -->
+    <div class="p-4 rounded-4 mb-4 card border border-light shadow-sm animate-fade-in">
+        <div class="d-flex justify-content-between align-items-center">
+            <div>
+                <h3 class="fw-bold mb-1">{{ title }}</h3>
+                <p class="text-secondary mb-0">{{ description }}</p>
+            </div>
+            <div>
+                <span class="badge bg-primary bg-opacity-10 text-primary px-3 py-2 rounded-pill fw-semibold">
+                    <i class="fa-solid fa-robot me-1"></i> ERP Automation
+                </span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content Area -->
+    <div class="card p-5 border border-light shadow rounded-4 text-center animate-fade-in">
+        <div class="mb-4">
+            <div class="d-inline-flex align-items-center justify-content-center bg-primary bg-opacity-10 text-primary rounded-circle p-4 animate-bounce status-icon-wrapper">
+                <i class="fa-solid fa-gears fa-2xl"></i>
+            </div>
+        </div>
+        <h4 class="fw-bold text-primary mb-2">Module Integration Pending</h4>
+        <p class="text-secondary mx-auto mb-4 status-desc">
+            This module has been registered in the ERP navigation matrix. Full controls, hooks, and automated processing triggers are scheduled to deploy with the next systems update.
+        </p>
+        <div class="d-flex justify-content-center gap-3">
+            <a href="{% url 'admin_panel:dashboard' %}" class="btn btn-primary px-4 py-2 rounded-3 shadow-sm text-white">
+                <i class="fa-solid fa-arrow-left me-2"></i> Back to Dashboard
+            </a>
+            <button class="btn btn-outline-secondary px-4 py-2 rounded-3 border-light-subtle">
+                <i class="fa-solid fa-circle-info me-2"></i> View Integration Roadmap
+            </button>
+        </div>
+    </div>
+</div>
+</div>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+.crm-app .automation-page .btn-primary {
+    color: #ffffff !important;
+}
+.crm-app .automation-page .btn-primary:hover {
+    color: #ffffff !important;
+}
+.crm-app .automation-page .status-icon-wrapper {
+    width: 80px;
+    height: 80px;
+}
+.crm-app .automation-page .status-desc {
+    max-width: 500px;
+}
+</style>
+{% endblock %}
+

@@ -1,0 +1,55 @@
+{% extends 'layouts/portal_base.html' %}
+{% load static %}
+
+{% block title %}{{ notification.title }} - Iqra Academy{% endblock %}
+
+{% block content %}
+<div class="container-fluid px-0">
+    <div class="mb-4">
+        <a href="{% if role == 'Student' %}{% url 'student_portal:notification_list' %}{% else %}{% url 'guardian_portal:notification_list' %}{% endif %}" class="btn btn-secondary">
+            <i class="fa-solid fa-arrow-left me-2"></i> Back to Notifications
+        </a>
+    </div>
+
+    <div class="card p-5 shadow-sm animate-fade-in stagger-1">
+        <div class="d-flex align-items-center gap-3 mb-4 border-bottom border-soft pb-4">
+            <div>
+                {% if notification.category == 'Finance' %}
+                    <div class="avatar avatar-lg category-icon-finance">
+                        <i class="fa-solid fa-file-invoice-dollar fa-lg"></i>
+                    </div>
+                {% elif notification.category == 'Academic' %}
+                    <div class="avatar avatar-lg category-icon-academic">
+                        <i class="fa-solid fa-graduation-cap fa-lg"></i>
+                    </div>
+                {% elif notification.category == 'Attendance' %}
+                    <div class="avatar avatar-lg category-icon-attendance">
+                        <i class="fa-solid fa-calendar-check fa-lg"></i>
+                    </div>
+                {% else %}
+                    <div class="avatar avatar-lg category-icon-general">
+                        <i class="fa-solid fa-bell fa-lg"></i>
+                    </div>
+                {% endif %}
+            </div>
+            <div>
+                <span class="badge bg-secondary mb-2">{{ notification.get_category_display }}</span>
+                <h3 class="fw-bold mb-1 text-primary">{{ notification.title }}</h3>
+                <span class="text-secondary small"><i class="fa-regular fa-clock me-1"></i> {{ notification.created_at|date:"F d, Y h:i A" }}</span>
+            </div>
+        </div>
+
+        <div class="content-body text-secondary lh-lg">
+            {{ notification.message|linebreaks }}
+        </div>
+
+        {% if notification.action_url %}
+            <div class="mt-5 pt-4 border-top border-soft">
+                <a href="{{ notification.action_url }}" class="btn btn-primary">
+                    View Details <i class="fa-solid fa-arrow-right ms-2"></i>
+                </a>
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,207 @@
+{% extends 'layouts/panel_base.html' %}
+{% load finance_tags %}
+
+{% block title %}Pending Dues - Iqra Academy{% endblock %}
+
+{% block content %}
+<div class="container-fluid px-0">
+    <!-- Page Header -->
+    <div class="page-header animate-fade-in">
+        <div class="page-header-left">
+            <h3 class="fw-bold mb-1 text-primary">Pending Dues</h3>
+            <p class="text-secondary mb-0">Overview of active students with outstanding balances across all sessions, with automated reminders.</p>
+        </div>
+        <div class="page-header-actions">
+            {% if request.resolver_match.namespace == 'accounts_panel' %}
+                <a href="{% url 'accounts_panel:pending_dues_pdf' %}" target="_blank" class="btn btn-outline-primary btn-sm">
+                    <i class="fa-solid fa-file-pdf me-1"></i> Export PDF
+                </a>
+                <a href="{% url 'accounts_panel:pending_dues_csv' %}" class="btn btn-success btn-sm ms-2">
+                    <i class="fa-solid fa-file-csv me-1"></i> Export CSV
+                </a>
+            {% else %}
+                <a href="{% url 'reports:pending_dues_pdf' %}" target="_blank" class="btn btn-outline-primary btn-sm">
+                    <i class="fa-solid fa-file-pdf me-1"></i> Export PDF
+                </a>
+                <a href="{% url 'reports:pending_dues_csv' %}" class="btn btn-success btn-sm ms-2">
+                    <i class="fa-solid fa-file-csv me-1"></i> Export CSV
+                </a>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Filters Section -->
+    <div class="filter-bar bg-elevated border border-soft rounded-4 p-3 mb-4 animate-fade-in stagger-1">
+        <form method="GET" action="" class="row g-3 align-items-end">
+            <!-- Category -->
+            <div class="col-12 col-md-3">
+                <label for="category" class="form-label small text-secondary">Session Category</label>
+                <select id="category" name="category" class="form-select">
+                    <option value="">All Categories</option>
+                    {% for cat in categories %}
+                        <option value="{{ cat }}" {% if selected_category == cat %}selected{% endif %}>{{ cat }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <!-- Academic Year -->
+            <div class="col-12 col-md-3">
+                <label for="academic_year" class="form-label small text-secondary">Academic Year</label>
+                <select id="academic_year" name="academic_year" class="form-select">
+                    <option value="">All Years</option>
+                    {% for year in academic_years %}
+                        <option value="{{ year }}" {% if selected_academic_year == year %}selected{% endif %}>{{ year }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <!-- Due Date Start -->
+            <div class="col-12 col-md-2">
+                <label for="due_start" class="form-label small text-secondary">Due From (Start)</label>
+                <input type="date" id="due_start" name="due_start" value="{{ selected_due_start|default:'' }}" class="form-control">
+            </div>
+
+            <!-- Due Date End -->
+            <div class="col-12 col-md-2">
+                <label for="due_end" class="form-label small text-secondary">Due To (End)</label>
+                <input type="date" id="due_end" name="due_end" value="{{ selected_due_end|default:'' }}" class="form-control">
+            </div>
+
+            <!-- Actions -->
+            <div class="col-12 col-md-2 d-flex gap-2">
+                <button type="submit" class="btn btn-primary w-100">Filter</button>
+                <a href="." class="btn btn-secondary w-100 text-center d-flex align-items-center justify-content-center">Reset</a>
+            </div>
+        </form>
+    </div>
+
+    <!-- Table Card -->
+    <div class="card p-0 animate-fade-in stagger-2">
+        <form method="POST" action="" id="reminderForm">
+            {% csrf_token %}
+
+            <!-- Bulk Action Control Header -->
+            <div class="d-flex justify-content-between align-items-center p-3 border-bottom flex-wrap gap-2">
+                <div class="text-secondary small">
+                    <span id="selectedCount" class="fw-bold text-primary-c">0</span> students selected
+                </div>
+                <button type="submit" id="bulkReminderBtn" class="btn btn-warning btn-sm" disabled>
+                    <i class="fa-solid fa-bullhorn me-1"></i> Send Bulk Reminders
+                </button>
+            </div>
+
+            <div class="table-wrapper">
+                <table class="table align-middle mb-0">
+                    <thead>
+                        <tr>
+                            <th class="col-chk ps-4">
+                                <input type="checkbox" id="selectAll" class="form-check-input">
+                            </th>
+                            <th class="col-roll">Roll Number</th>
+                            <th>Student Name</th>
+                            <th>Session Name</th>
+                            <th class="col-due">Due From Date</th>
+                            <th class="text-end col-amount">Pending Amount</th>
+                            <th class="text-center col-actions pe-4">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for due in dues %}
+                            <tr>
+                                <td class="ps-4">
+                                    <input type="checkbox" name="enrollment_ids" value="{{ due.enrollment_id }}" class="form-check-input student-checkbox">
+                                </td>
+                                <td class="font-monospace fw-bold text-primary-c">{{ due.roll_number|default:"-" }}</td>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <div class="avatar me-3">
+                                            {{ due.student_name|slice:":1"|upper }}
+                                        </div>
+                                        <span class="fw-semibold text-primary-c">{{ due.student_name }}</span>
+                                    </div>
+                                </td>
+                                <td>
+                                    <span class="badge bg-secondary">
+                                        {{ due.session_name }}
+                                    </span>
+                                </td>
+                                <td>
+                                    <span class="text-secondary">{{ due.due_from|date:"M d, Y"|default:"-" }}</span>
+                                </td>
+                                <td class="text-end fw-bold text-danger">
+                                    {{ due.outstanding_balance|format_currency }}
+                                </td>
+                                <td class="text-center pe-4">
+                                    <button type="submit" name="enrollment_id" value="{{ due.enrollment_id }}" class="btn btn-sm btn-outline-primary">
+                                        <i class="fa-solid fa-paper-plane me-1"></i> Remind
+                                    </button>
+                                </td>
+                            </tr>
+                        {% empty %}
+                            <tr>
+                                <td colspan="7" class="text-center text-secondary py-5">
+                                    <div class="my-3 text-muted">
+                                        <i class="fa-regular fa-circle-check fa-3x mb-3 text-success"></i>
+                                        <h5 class="fw-bold">No Pending Dues!</h5>
+                                        <p class="mb-0 small text-secondary">All student accounts matching the criteria are fully paid.</p>
+                                    </div>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const selectAll = document.getElementById("selectAll");
+        const checkboxes = document.querySelectorAll(".student-checkbox");
+        const bulkBtn = document.getElementById("bulkReminderBtn");
+        const selectedCountSpan = document.getElementById("selectedCount");
+
+        function updateBulkState() {
+            const checkedCount = document.querySelectorAll(".student-checkbox:checked").length;
+            selectedCountSpan.textContent = checkedCount;
+            if (checkedCount > 0) {
+                bulkBtn.removeAttribute("disabled");
+            } else {
+                bulkBtn.setAttribute("disabled", "true");
+            }
+        }
+
+        if (selectAll) {
+            selectAll.addEventListener("change", function() {
+                checkboxes.forEach(cb => {
+                    cb.checked = selectAll.checked;
+                });
+                updateBulkState();
+            });
+        }
+
+        checkboxes.forEach(cb => {
+            cb.addEventListener("change", function() {
+                if (!cb.checked) {
+                    selectAll.checked = false;
+                } else {
+                    const allChecked = Array.from(checkboxes).every(c => c.checked);
+                    selectAll.checked = allChecked;
+                }
+                updateBulkState();
+            });
+        });
+    });
+</script>
+
+{% block extra_css %}
+<style>
+.crm-app .col-chk { width: 40px; }
+.crm-app .col-roll { min-width: 120px; }
+.crm-app .col-due { min-width: 140px; }
+.crm-app .col-amount { min-width: 140px; }
+.crm-app .col-actions { min-width: 150px; }
+</style>
+{% endblock %}
+{% endblock %}

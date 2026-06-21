@@ -1,0 +1,116 @@
+{% extends 'layouts/panel_base.html' %}
+{% load static %}
+
+{% block title %}Faculty Directory - Iqra Academy{% endblock %}
+
+{% block content %}
+<div class="container-fluid px-0">
+    <!-- Page Header -->
+    <div class="p-4 rounded-4 mb-4 card border border-light shadow-sm animate-fade-in">
+        <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
+            <div>
+                <h3 class="fw-bold mb-1 text-primary">Faculty Directory</h3>
+                <p class="text-secondary mb-0">Manage and view teaching assignments, departments, and session access scopes.</p>
+            </div>
+            <div class="d-flex gap-2">
+                <a href="{% url 'reports:teacher_workload_pdf' %}" target="_blank" class="btn btn-outline-danger px-3 py-2 rounded-3">
+                    <i class="fa-solid fa-file-pdf me-1"></i> Workload PDF
+                </a>
+                <a href="{% url 'reports:teacher_workload_csv' %}" class="btn btn-outline-success px-3 py-2 rounded-3">
+                    <i class="fa-solid fa-file-csv me-1"></i> Workload CSV
+                </a>
+                {% if request.user.is_superuser or request.user.groups.all.0.name == 'Admin' or request.user.groups.all.1.name == 'Admin' %}
+                <a href="{% url 'admin_panel:staff:faculty_create' %}" class="btn btn-primary px-4 py-2 rounded-3 shadow-sm">
+                    <i class="fa-solid fa-user-plus me-2"></i> Register Faculty Member
+                </a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <!-- Faculty List Card -->
+    <div class="card border border-light shadow rounded-4 animate-fade-in stagger-1">
+        <div class="p-4 border-bottom border-light d-flex justify-content-between align-items-center flex-wrap gap-2">
+            <h5 class="fw-bold mb-0">Staff Overview</h5>
+            <span class="badge bg-secondary rounded-pill">
+                {{ faculty_list|length }} Record(s) Found
+            </span>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <thead>
+                    <tr>
+                        <th class="ps-4">Full Name</th>
+                        <th>Email / Username</th>
+                        <th>Designation</th>
+                        <th>Department</th>
+                        <th>Assigned Sessions</th>
+                        <th>Status</th>
+                        <th class="text-end pe-4">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for faculty in faculty_list %}
+                    <tr>
+                        <td class="ps-4">
+                            <div class="d-flex align-items-center">
+                                <div class="avatar me-3">
+                                    {{ faculty.user.first_name|slice:":1"|upper }}{{ faculty.user.last_name|slice:":1"|upper }}
+                                </div>
+                                <div>
+                                    <span class="fw-bold d-block">{{ faculty.user.get_full_name|default:faculty.user.username }}</span>
+                                    <span class="text-muted small">ID: #{{ faculty.id }}</span>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <span>{{ faculty.user.email }}</span>
+                            <span class="text-muted small d-block">@{{ faculty.user.username }}</span>
+                        </td>
+                        <td>
+                            <span class="fw-semibold text-accent">{{ faculty.designation }}</span>
+                        </td>
+                        <td>
+                            <span class="text-secondary">{{ faculty.department }}</span>
+                        </td>
+                        <td>
+                            <div class="d-flex flex-wrap gap-1">
+                                {% for session in faculty.assigned_sessions.all %}
+                                    <span class="badge bg-primary rounded-pill">
+                                        {{ session.name }}
+                                    </span>
+                                {% empty %}
+                                    <span class="text-muted small">None assigned</span>
+                                {% endfor %}
+                            </div>
+                        </td>
+                        <td>
+                            {% if faculty.is_active %}
+                                <span class="badge bg-success">Active</span>
+                            {% else %}
+                                <span class="badge bg-danger">Inactive</span>
+                            {% endif %}
+                        </td>
+                        <td class="text-end pe-4">
+                            <a href="{% url 'admin_panel:staff:faculty_assign' faculty.pk %}" class="btn btn-sm btn-outline-primary rounded-2 px-3">
+                                <i class="fa-solid fa-chalkboard-user me-1"></i> Assign Sessions
+                            </a>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="7" class="text-center py-5 text-muted">
+                            <div class="mb-3">
+                                <i class="fa-solid fa-users-slash fa-3x text-light-subtle"></i>
+                            </div>
+                            <h6 class="fw-bold">No Faculty Registered</h6>
+                            <p class="small text-secondary mb-0">Get started by registering a new faculty profile above.</p>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

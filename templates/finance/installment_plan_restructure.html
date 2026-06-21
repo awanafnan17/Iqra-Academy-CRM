@@ -1,0 +1,65 @@
+{% extends 'layouts/panel_base.html' %}
+{% load finance_tags %}
+{% block title %}Restructure Plan | Finance{% endblock %}
+{% block content %}
+<div class="container-fluid px-0">
+    <div class="row justify-content-center">
+        <div class="col-md-6 col-lg-5">
+            <div class="card p-4 animate-fade-in">
+                <div class="mb-4">
+                    <h4 class="fw-bold text-primary mb-1"><i class="fas fa-sync-alt me-2"></i>Restructure Installment Plan</h4>
+                    <p class="text-secondary small mb-0">Re-adjust payment installment parameters for this student enrollment.</p>
+                </div>
+                <div class="alert alert-warning mb-4">
+                    <i class="fas fa-exclamation-triangle me-2"></i> Restructuring will deactivate the current plan and generate a new one.
+                </div>
+                <form method="post" id="financeForm">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label class="form-label text-secondary small" for="first_due_date">First Due Date</label>
+                        <input type="date" id="first_due_date" name="first_due_date" class="form-control" required>
+                    </div>
+                    {% for field in form %}
+                    <div class="mb-3">
+                        <label class="form-label text-secondary small" for="{{ field.id_for_label }}">{{ field.label }}</label>
+                        {{ field }}
+                        {% if field.errors %}
+                        <div class="text-danger small mt-1">{{ field.errors.0 }}</div>
+                        {% endif %}
+                    </div>
+                    {% endfor %}
+                    <div class="d-flex justify-content-end gap-2 mt-4">
+                        <a href="{% finance_url 'installment_plan_detail' plan.pk %}" class="btn btn-outline-primary">Cancel</a>
+                        <button type="submit" class="btn btn-warning">Restructure Plan</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const inputs = document.querySelectorAll('#financeForm input, #financeForm textarea');
+        inputs.forEach(el => {
+            if (el.type !== 'checkbox' && el.type !== 'radio' && el.type !== 'file') {
+                el.classList.add('form-control');
+            }
+        });
+        const selects = document.querySelectorAll('#financeForm select');
+        selects.forEach(el => {
+            el.classList.add('form-select');
+            el.querySelectorAll('option').forEach(opt => {
+                if (opt.textContent.includes('--')) {
+                    opt.textContent = opt.textContent.replace(/\-\-\s*/g, '').trim();
+                }
+                if (opt.textContent.includes('---------')) {
+                    opt.textContent = "Select Option";
+                }
+            });
+        });
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,222 @@
+{% extends 'layouts/panel_base.html' %}
+{% load static %}
+
+{% block title %}Application Review - {{ application.full_name }} - Iqra Academy{% endblock %}
+
+{% block content %}
+<div class="container-fluid px-0">
+    <!-- Breadcrumbs & Back Link -->
+    <div class="mb-3 animate-fade-in">
+        {% if 'registrar_panel' in request.resolver_match.namespace %}
+            <a href="{% url 'registrar_panel:admissions:admission_list' %}" class="btn btn-link text-decoration-none p-0 text-accent">
+                <i class="fa-solid fa-arrow-left me-1"></i> Back to Applications Registry
+            </a>
+        {% else %}
+            <a href="{% url 'admin_panel:admissions:admission_list' %}" class="btn btn-link text-decoration-none p-0 text-accent">
+                <i class="fa-solid fa-arrow-left me-1"></i> Back to Applications Registry
+            </a>
+        {% endif %}
+    </div>
+
+    <!-- Application Summary Header -->
+    <div class="p-4 rounded-4 mb-4 card border border-soft shadow-sm animate-fade-in stagger-1">
+        <div class="row align-items-center g-3">
+            <div class="col-auto">
+                <div class="avatar avatar-lg">
+                    {{ application.full_name|slice:":1"|upper }}
+                </div>
+            </div>
+            <div class="col">
+                <h3 class="fw-bold mb-1 text-primary-c">{{ application.full_name }}</h3>
+                <p class="text-secondary mb-0">Applied for: <strong class="text-accent">{{ application.desired_session.name }}</strong> (Category: {{ application.get_exam_type_display }})</p>
+            </div>
+            <div class="col-auto">
+                {% if application.status == 'pending' %}
+                    <span class="badge bg-warning">Status: Pending</span>
+                {% elif application.status == 'under_review' %}
+                    <span class="badge bg-warning">Status: Under Review</span>
+                {% elif application.status == 'approved' %}
+                    <span class="badge bg-success">Status: Approved</span>
+                {% elif application.status == 'rejected' %}
+                    <span class="badge bg-danger">Status: Rejected</span>
+                {% elif application.status == 'withdrawn' %}
+                    <span class="badge bg-secondary">Status: Converted</span>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-4">
+        <!-- Main Application Details Card -->
+        <div class="col-12 col-lg-8 animate-fade-in stagger-2">
+            <div class="card p-4 mb-4">
+                <h5 class="fw-bold mb-4"><i class="fa-solid fa-circle-info me-2"></i> Applicant Information</h5>
+                <div class="row g-3">
+                    <div class="col-6 col-md-4">
+                        <span class="text-secondary small d-block">Full Name</span>
+                        <span class="fw-semibold text-primary-c">{{ application.full_name }}</span>
+                    </div>
+                    <div class="col-6 col-md-4">
+                        <span class="text-secondary small d-block">Father's Name</span>
+                        <span class="fw-semibold text-primary-c">{{ application.father_name }}</span>
+                    </div>
+                    <div class="col-6 col-md-4">
+                        <span class="text-secondary small d-block">Date of Birth</span>
+                        <span class="fw-semibold text-primary-c">{{ application.date_of_birth }}</span>
+                    </div>
+                    <div class="col-6 col-md-4">
+                        <span class="text-secondary small d-block">Email Address</span>
+                        <span class="fw-semibold text-primary-c">{{ application.email }}</span>
+                    </div>
+                    <div class="col-6 col-md-4">
+                        <span class="text-secondary small d-block">Phone Number</span>
+                        <span class="fw-semibold text-primary-c">{{ application.phone }}</span>
+                    </div>
+                    <div class="col-6 col-md-4">
+                        <span class="text-secondary small d-block">CNIC / B-Form</span>
+                        <span class="fw-semibold text-primary-c">{{ application.cnic|default:"N/A" }}</span>
+                    </div>
+                    <div class="col-12">
+                        <span class="text-secondary small d-block">Postal Address</span>
+                        <span class="fw-semibold text-primary-c">{{ application.address|default:"N/A" }}</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Uploaded Documents Card -->
+            <div class="card p-4">
+                <h5 class="fw-bold mb-4"><i class="fa-solid fa-file-pdf me-2"></i> Uploaded Documents</h5>
+                <div class="row g-3">
+                    {% for doc in application.documents.all %}
+                        <div class="col-12 col-md-6">
+                            <div class="p-3 border border-soft rounded-3 d-flex align-items-center justify-content-between">
+                                <div class="d-flex align-items-center">
+                                    <i class="fa-solid fa-file-image fa-2x text-primary me-3"></i>
+                                    <div>
+                                        <h6 class="mb-0 fw-bold text-primary-c">{{ doc.get_document_type_display }}</h6>
+                                        <span class="text-secondary small">Uploaded: {{ doc.uploaded_at|date:"Y-m-d" }}</span>
+                                    </div>
+                                </div>
+                                <a href="{{ doc.file.url }}" target="_blank" class="btn btn-sm btn-outline-primary">
+                                    <i class="fa-solid fa-arrow-up-right-from-square"></i> Open
+                                </a>
+                            </div>
+                        </div>
+                    {% empty %}
+                        <div class="col-12 text-center py-4 text-secondary">
+                            <i class="fa-solid fa-file-circle-exclamation fa-2x mb-2 text-secondary"></i>
+                            <p class="mb-0 small">No documents were uploaded with this application.</p>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        <!-- Workflow Actions Panel -->
+        <div class="col-12 col-lg-4 animate-fade-in stagger-3">
+            <div class="card p-4 h-100">
+                <h5 class="fw-bold mb-4"><i class="fa-solid fa-gears me-2"></i> Application Workflow</h5>
+
+                <!-- Internal Review Comments Logs -->
+                {% if application.reviewed_by %}
+                    <div class="alert alert-info border border-soft rounded-3 mb-4">
+                        <span class="text-secondary small d-block mb-1">Reviewed By:</span>
+                        <span class="fw-bold text-primary">{{ application.reviewed_by.get_full_name|default:application.reviewed_by.username }}</span>
+                        <span class="text-secondary small d-block mt-2">Remarks:</span>
+                        <p class="mb-0 italic mt-1 font-monospace small">"{{ application.remarks|default:"No remarks provided." }}"</p>
+                    </div>
+                {% endif %}
+
+                <!-- Workflow status check -->
+                {% if application.status == 'withdrawn' %}
+                    {% if 'registrar_panel' in request.resolver_match.namespace %}
+                        {% url 'registrar_panel:student_detail' application.converted_student.id as student_detail_url %}
+                    {% else %}
+                        {% url 'admin_panel:students:student_detail' application.converted_student.id as student_detail_url %}
+                    {% endif %}
+                    <div class="alert alert-success border border-soft p-3 rounded-3 text-center mb-4">
+                        <i class="fa-solid fa-circle-check text-success fa-2x mb-2"></i>
+                        <h6 class="fw-bold text-success mb-2">Student Profile Active</h6>
+                        <p class="text-secondary small mb-3">This applicant has been successfully converted into a registered student.</p>
+                        <a href="{{ student_detail_url }}" class="btn btn-success btn-sm px-4">
+                            <i class="fa-solid fa-user-graduate me-1"></i> Go to Student Profile
+                        </a>
+                    </div>
+                {% else %}
+                    <!-- Actions form depending on roles -->
+                    {% if 'registrar_panel' in request.resolver_match.namespace %}
+                        <!-- Registrar Actions -->
+                        {% if application.status == 'pending' %}
+                            <form method="post" action="{% url 'registrar_panel:admissions:admission_review' application.id %}">
+                                {% csrf_token %}
+                                <div class="mb-3">
+                                    <label class="form-label small text-secondary">Review Comments / Remarks</label>
+                                    <textarea name="remarks" class="form-control" rows="3" placeholder="Add remarks or missing documents detail..."></textarea>
+                                </div>
+                                <button type="submit" class="btn btn-info w-100">
+                                    <i class="fa-solid fa-magnifying-glass-chart me-1"></i> Mark Under Review
+                                </button>
+                            </form>
+                        {% else %}
+                            <div class="text-center py-4 text-secondary">
+                                <i class="fa-solid fa-lock fa-2x mb-2 text-secondary"></i>
+                                <p class="mb-0 small">No registrar actions available. The application status requires Admin attention.</p>
+                            </div>
+                        {% endif %}
+                    {% else %}
+                        <!-- Admin Actions -->
+                        {% if application.status == 'pending' %}
+                            <form method="post" action="{% url 'admin_panel:admissions:admission_review' application.id %}" class="mb-3">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-info w-100 mb-2">
+                                    <i class="fa-solid fa-magnifying-glass-chart me-1"></i> Mark Under Review
+                                </button>
+                            </form>
+                        {% endif %}
+
+                        {% if application.status == 'pending' or application.status == 'under_review' %}
+                            <div class="border-top border-soft pt-3 mt-3">
+                                <form method="post" id="decisionForm">
+                                    {% csrf_token %}
+                                    <div class="mb-3">
+                                        <label class="form-label small text-secondary">Remarks for Applicant (Sent in update email)</label>
+                                        <textarea name="remarks" class="form-control" rows="3" placeholder="Approval or Rejection remarks..."></textarea>
+                                    </div>
+                                    <div class="d-flex gap-2">
+                                        <button type="submit" formaction="{% url 'admin_panel:admissions:admission_approve' application.id %}" class="btn btn-success w-100">
+                                            <i class="fa-solid fa-check me-1"></i> Approve
+                                        </button>
+                                        <button type="submit" formaction="{% url 'admin_panel:admissions:admission_reject' application.id %}" class="btn btn-danger w-100">
+                                            <i class="fa-solid fa-xmark me-1"></i> Reject
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        {% endif %}
+
+                        {% if application.status == 'approved' %}
+                            <div class="border-top border-soft pt-3 mt-3 text-center">
+                                <p class="text-secondary small mb-3">The application is approved. Proceed to generate roll number and activate student profile.</p>
+                                <form method="post" action="{% url 'admin_panel:admissions:admission_convert' application.id %}">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-success w-100 py-2.5">
+                                        <i class="fa-solid fa-user-plus me-1"></i> Convert to Registered Student
+                                    </button>
+                                </form>
+                            </div>
+                        {% endif %}
+
+                        {% if application.status == 'rejected' %}
+                            <div class="alert alert-danger border border-soft p-3 rounded-3 text-center">
+                                <i class="fa-solid fa-circle-xmark text-danger fa-2x mb-2"></i>
+                                <h6 class="fw-bold text-danger">Application Rejected</h6>
+                                <p class="text-secondary small mb-0">This application was rejected. You can notify the applicant or they may submit a new application.</p>
+                            </div>
+                        {% endif %}
+                    {% endif %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

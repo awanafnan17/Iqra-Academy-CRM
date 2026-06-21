@@ -1,0 +1,71 @@
+{% extends 'layouts/panel_base.html' %}
+{% load finance_tags %}
+{% block title %}Payments | Finance{% endblock %}
+{% block content %}
+<div class="container-fluid px-0">
+    <!-- Page Header -->
+    <div class="page-header animate-fade-in">
+        <div class="page-header-left">
+            <h3 class="fw-bold mb-1 text-primary">Payments</h3>
+            <p class="text-secondary mb-0">Track student tuition fee receipts, payment methods, and transaction ledger details.</p>
+        </div>
+        <div class="page-header-actions">
+            {% if request.user.is_superuser or request.user.groups.all.0.name == 'Admin' or request.user.groups.all.1.name == 'Admin' or request.user.groups.all.0.name == 'Accountant' or request.user.groups.all.1.name == 'Accountant' %}
+            <a href="{% finance_url 'payment_create' %}" class="btn btn-primary">
+                <i class="fas fa-plus me-2"></i>Record Payment
+            </a>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Table Section -->
+    <div class="card p-0 animate-fade-in stagger-1">
+        <div class="table-wrapper">
+            <table class="table align-middle mb-0">
+                <thead>
+                    <tr>
+                        <th class="ps-4">Date</th>
+                        <th>Receipt</th>
+                        <th>Student</th>
+                        <th>Session</th>
+                        <th>Amount</th>
+                        <th>Method</th>
+                        <th class="text-end pe-4">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for payment in page_obj %}
+                    <tr>
+                        <td class="ps-4">{{ payment.payment_date }}</td>
+                        <td><span class="font-monospace fw-semibold text-primary-c">{{ payment.receipt_number|default:"N/A" }}</span></td>
+                        <td class="fw-bold text-primary-c">
+                             <div class="d-flex align-items-center">
+                                 <div class="avatar me-3">
+                                     {{ payment.enrollment.student.full_name|slice:":1"|upper }}
+                                 </div>
+                                 {{ payment.enrollment.student.full_name }}
+                             </div>
+                        </td>
+                        <td>{{ payment.enrollment.session.name }}</td>
+                        <td class="text-success fw-bold">PKR {{ payment.amount }}</td>
+                        <td><span class="badge bg-secondary">{{ payment.payment_method }}</span></td>
+                        <td class="text-end pe-4">
+                            <a href="{% finance_url 'payment_detail' payment.pk %}" class="btn btn-sm btn-outline-primary">
+                                <i class="fas fa-eye me-1"></i> Details
+                            </a>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="7" class="text-center py-5 text-secondary">
+                            <i class="fa-regular fa-folder-open fa-3x mb-3 text-secondary"></i>
+                            <p class="mb-0 fw-medium">No payments found.</p>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

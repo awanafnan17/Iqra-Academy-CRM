@@ -1,0 +1,501 @@
+{
+  "metadata": {
+    "run_id": "e7586812-3531-4961-b8a7-9963cf879463",
+    "timestamp": "2026-06-21T04:38:08.943592",
+    "settings_module": "config.settings.test",
+    "database_engine": "django.db.backends.sqlite3",
+    "database_name": "file:memorydb_default?mode=memory&cache=shared",
+    "git_tree_id": "working_tree",
+    "source_evidence": [
+      "field_ledger.json"
+    ]
+  },
+  "fields": [
+    {
+      "module": "academics",
+      "model": "Session",
+      "field": "academic_year",
+      "outcome": "PASS"
+    },
+    {
+      "module": "academics",
+      "model": "Session",
+      "field": "batch_number",
+      "outcome": "PASS"
+    },
+    {
+      "module": "academics",
+      "model": "Session",
+      "field": "code",
+      "outcome": "PASS"
+    },
+    {
+      "module": "academics",
+      "model": "Session",
+      "field": "description",
+      "outcome": "PASS"
+    },
+    {
+      "module": "academics",
+      "model": "Session",
+      "field": "end_date",
+      "outcome": "PASS"
+    },
+    {
+      "module": "academics",
+      "model": "Session",
+      "field": "fee",
+      "outcome": "PASS"
+    },
+    {
+      "module": "academics",
+      "model": "Session",
+      "field": "is_admission_open",
+      "outcome": "PASS"
+    },
+    {
+      "module": "academics",
+      "model": "Session",
+      "field": "late_fee_amount",
+      "outcome": "PASS"
+    },
+    {
+      "module": "academics",
+      "model": "Session",
+      "field": "late_fee_grace_days",
+      "outcome": "PASS"
+    },
+    {
+      "module": "academics",
+      "model": "Session",
+      "field": "late_fee_maximum",
+      "outcome": "PASS"
+    },
+    {
+      "module": "academics",
+      "model": "Session",
+      "field": "max_capacity",
+      "outcome": "PASS"
+    },
+    {
+      "module": "academics",
+      "model": "Session",
+      "field": "max_students",
+      "outcome": "PASS"
+    },
+    {
+      "module": "academics",
+      "model": "Session",
+      "field": "name",
+      "outcome": "PASS"
+    },
+    {
+      "module": "academics",
+      "model": "Session",
+      "field": "registration_fee",
+      "outcome": "PASS"
+    },
+    {
+      "module": "academics",
+      "model": "Session",
+      "field": "roll_prefix",
+      "outcome": "PASS"
+    },
+    {
+      "module": "academics",
+      "model": "Session",
+      "field": "session_category",
+      "outcome": "PASS"
+    },
+    {
+      "module": "academics",
+      "model": "Session",
+      "field": "session_type",
+      "outcome": "PASS"
+    },
+    {
+      "module": "academics",
+      "model": "Session",
+      "field": "start_date",
+      "outcome": "PASS"
+    },
+    {
+      "module": "academics",
+      "model": "Session",
+      "field": "status",
+      "outcome": "PASS"
+    },
+    {
+      "module": "accounts",
+      "model": "CustomUser",
+      "field": "first_name",
+      "outcome": "PASS"
+    },
+    {
+      "module": "accounts",
+      "model": "CustomUser",
+      "field": "last_name",
+      "outcome": "PASS"
+    },
+    {
+      "module": "accounts",
+      "model": "CustomUser",
+      "field": "phone",
+      "outcome": "PASS"
+    },
+    {
+      "module": "exams",
+      "model": "Exam",
+      "field": "exam_date",
+      "outcome": "PASS"
+    },
+    {
+      "module": "exams",
+      "model": "Exam",
+      "field": "name",
+      "outcome": "PASS"
+    },
+    {
+      "module": "exams",
+      "model": "Exam",
+      "field": "total_marks",
+      "outcome": "PASS"
+    },
+    {
+      "module": "exams",
+      "model": "ExamResult",
+      "field": "remarks",
+      "outcome": "PASS"
+    },
+    {
+      "module": "finance",
+      "model": "Payment",
+      "field": "payment_date",
+      "outcome": "PASS"
+    },
+    {
+      "module": "finance",
+      "model": "Refund",
+      "field": "refund_date",
+      "outcome": "PASS"
+    },
+    {
+      "module": "students",
+      "model": "Lead",
+      "field": "area_of_residence",
+      "outcome": "PASS"
+    },
+    {
+      "module": "students",
+      "model": "Lead",
+      "field": "follow_up_date",
+      "outcome": "PASS"
+    },
+    {
+      "module": "students",
+      "model": "Lead",
+      "field": "follow_up_notes",
+      "outcome": "PASS"
+    },
+    {
+      "module": "students",
+      "model": "Lead",
+      "field": "inquiry_date",
+      "outcome": "PASS"
+    },
+    {
+      "module": "students",
+      "model": "Lead",
+      "field": "inquiry_source",
+      "outcome": "PASS"
+    },
+    {
+      "module": "students",
+      "model": "Lead",
+      "field": "interested_session",
+      "outcome": "PASS"
+    },
+    {
+      "module": "students",
+      "model": "Lead",
+      "field": "loss_reason",
+      "outcome": "PASS"
+    },
+    {
+      "module": "students",
+      "model": "Lead",
+      "field": "name",
+      "outcome": "PASS"
+    },
+    {
+      "module": "students",
+      "model": "Lead",
+      "field": "phone",
+      "outcome": "PASS"
+    },
+    {
+      "module": "students",
+      "model": "Lead",
+      "field": "status",
+      "outcome": "PASS"
+    },
+    {
+      "module": "students",
+      "model": "Student",
+      "field": "address_permanent",
+      "outcome": "PASS"
+    },
+    {
+      "module": "students",
+      "model": "Student",
+      "field": "address_temporary",
+      "outcome": "PASS"
+    },
+    {
+      "module": "students",
+      "model": "Student",
+      "field": "date_of_birth",
+      "outcome": "PASS"
+    },
+    {
+      "module": "students",
+      "model": "Student",
+      "field": "father_name",
+      "outcome": "PASS"
+    },
+    {
+      "module": "students",
+      "model": "Student",
+      "field": "full_name",
+      "outcome": "PASS"
+    },
+    {
+      "module": "students",
+      "model": "Student",
+      "field": "gender",
+      "outcome": "PASS"
+    },
+    {
+      "module": "students",
+      "model": "Student",
+      "field": "inactive_reason",
+      "outcome": "PASS"
+    },
+    {
+      "module": "students",
+      "model": "Student",
+      "field": "phone",
+      "outcome": "PASS"
+    },
+    {
+      "module": "students",
+      "model": "Student",
+      "field": "status",
+      "outcome": "PASS"
+    },
+    {
+      "module": "admissions",
+      "model": "AdmissionApplication",
+      "field": "address",
+      "outcome": "FAIL"
+    },
+    {
+      "module": "admissions",
+      "model": "AdmissionApplication",
+      "field": "cnic",
+      "outcome": "FAIL"
+    },
+    {
+      "module": "admissions",
+      "model": "AdmissionApplication",
+      "field": "date_of_birth",
+      "outcome": "FAIL"
+    },
+    {
+      "module": "admissions",
+      "model": "AdmissionApplication",
+      "field": "desired_session",
+      "outcome": "FAIL"
+    },
+    {
+      "module": "admissions",
+      "model": "AdmissionApplication",
+      "field": "email",
+      "outcome": "FAIL"
+    },
+    {
+      "module": "admissions",
+      "model": "AdmissionApplication",
+      "field": "exam_type",
+      "outcome": "FAIL"
+    },
+    {
+      "module": "admissions",
+      "model": "AdmissionApplication",
+      "field": "father_name",
+      "outcome": "FAIL"
+    },
+    {
+      "module": "admissions",
+      "model": "AdmissionApplication",
+      "field": "full_name",
+      "outcome": "FAIL"
+    },
+    {
+      "module": "admissions",
+      "model": "AdmissionApplication",
+      "field": "phone",
+      "outcome": "FAIL"
+    },
+    {
+      "module": "exams",
+      "model": "Exam",
+      "field": "exam_type",
+      "outcome": "FAIL"
+    },
+    {
+      "module": "exams",
+      "model": "Exam",
+      "field": "passing_marks",
+      "outcome": "FAIL"
+    },
+    {
+      "module": "finance",
+      "model": "Expense",
+      "field": "amount",
+      "outcome": "FAIL"
+    },
+    {
+      "module": "finance",
+      "model": "Expense",
+      "field": "category",
+      "outcome": "FAIL"
+    },
+    {
+      "module": "finance",
+      "model": "Expense",
+      "field": "description",
+      "outcome": "FAIL"
+    },
+    {
+      "module": "finance",
+      "model": "Expense",
+      "field": "expense_date",
+      "outcome": "FAIL"
+    },
+    {
+      "module": "finance",
+      "model": "ExpenseCategory",
+      "field": "description",
+      "outcome": "FAIL"
+    },
+    {
+      "module": "finance",
+      "model": "ExpenseCategory",
+      "field": "name",
+      "outcome": "FAIL"
+    },
+    {
+      "module": "finance",
+      "model": "InstallmentPlan",
+      "field": "notes",
+      "outcome": "FAIL"
+    },
+    {
+      "module": "finance",
+      "model": "InstallmentPlan",
+      "field": "number_of_installments",
+      "outcome": "FAIL"
+    },
+    {
+      "module": "finance",
+      "model": "InstallmentPlan",
+      "field": "total_amount",
+      "outcome": "FAIL"
+    },
+    {
+      "module": "finance",
+      "model": "Payment",
+      "field": "amount",
+      "outcome": "FAIL"
+    },
+    {
+      "module": "finance",
+      "model": "Payment",
+      "field": "enrollment",
+      "outcome": "FAIL"
+    },
+    {
+      "module": "finance",
+      "model": "Payment",
+      "field": "notes",
+      "outcome": "FAIL"
+    },
+    {
+      "module": "finance",
+      "model": "Payment",
+      "field": "payment_method",
+      "outcome": "FAIL"
+    },
+    {
+      "module": "finance",
+      "model": "Payment",
+      "field": "reference_number",
+      "outcome": "FAIL"
+    },
+    {
+      "module": "finance",
+      "model": "Refund",
+      "field": "amount",
+      "outcome": "FAIL"
+    },
+    {
+      "module": "finance",
+      "model": "Refund",
+      "field": "reason",
+      "outcome": "FAIL"
+    },
+    {
+      "module": "students",
+      "model": "Enrollment",
+      "field": "discount",
+      "outcome": "FAIL"
+    },
+    {
+      "module": "students",
+      "model": "Enrollment",
+      "field": "fee",
+      "outcome": "FAIL"
+    },
+    {
+      "module": "students",
+      "model": "Enrollment",
+      "field": "registration_date",
+      "outcome": "FAIL"
+    },
+    {
+      "module": "students",
+      "model": "Enrollment",
+      "field": "registration_fee",
+      "outcome": "FAIL"
+    },
+    {
+      "module": "students",
+      "model": "Enrollment",
+      "field": "session",
+      "outcome": "FAIL"
+    },
+    {
+      "module": "students",
+      "model": "Enrollment",
+      "field": "status",
+      "outcome": "FAIL"
+    },
+    {
+      "module": "students",
+      "model": "Enrollment",
+      "field": "student",
+      "outcome": "FAIL"
+    }
+  ]
+}

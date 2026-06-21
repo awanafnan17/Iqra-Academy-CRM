@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+    <defs>
+        <!-- Background Gradients -->
+        <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#0B0F19" />
+            <stop offset="50%" stop-color="#111827" />
+            <stop offset="100%" stop-color="#070A13" />
+        </linearGradient>
+        <radialGradient id="glowGrad" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#7C3AED" stop-opacity="0.18" />
+            <stop offset="60%" stop-color="#5B5FEF" stop-opacity="0.05" />
+            <stop offset="100%" stop-color="#5B5FEF" stop-opacity="0" />
+        </radialGradient>
+        
+        <!-- Logo Gradients -->
+        <linearGradient id="logoPrimary" x1="0%" y1="100%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="#5B5FEF" />
+            <stop offset="100%" stop-color="#7C3AED" />
+        </linearGradient>
+        <linearGradient id="logoSecondary" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#7C3AED" />
+            <stop offset="100%" stop-color="#A78BFA" />
+        </linearGradient>
+        <linearGradient id="logoAccent" x1="100%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#A78BFA" />
+            <stop offset="100%" stop-color="#5B5FEF" />
+        </linearGradient>
+        
+        <!-- Logo Shadow & Glow -->
+        <filter id="logoShadow" x="-30%" y="-30%" width="160%" height="160%">
+            <feDropShadow dx="0" dy="8" stdDeviation="8" flood-color="#7C3AED" flood-opacity="0.3" />
+        </filter>
+        
+        <!-- Border Glow -->
+        <linearGradient id="borderGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="#5B5FEF" stop-opacity="0.2" />
+            <stop offset="50%" stop-color="#A78BFA" stop-opacity="0.4" />
+            <stop offset="100%" stop-color="#7C3AED" stop-opacity="0.2" />
+        </linearGradient>
+    </defs>
+    
+    <!-- Dark Background -->
+    <rect width="1200" height="630" fill="url(#bgGrad)" />
+    
+    <!-- Central Ambient Glow -->
+    <circle cx="600" cy="315" r="500" fill="url(#glowGrad)" />
+    
+    <!-- Decorative Tech Gridlines (Linear & Stripe feel) -->
+    <path d="M 0 100 L 1200 100 M 0 530 L 1200 530 M 200 0 L 200 630 M 1000 0 L 1000 630" stroke="#1F2937" stroke-width="0.5" stroke-dasharray="8 8" opacity="0.3" />
+    
+    <!-- Glowing Outer Frame Border -->
+    <rect x="30" y="30" width="1140" height="570" rx="16" fill="none" stroke="url(#borderGrad)" stroke-width="1.5" />
+    
+    <!-- Centered Inverted Brand Logo Assembly -->
+    <g filter="url(#logoShadow)" transform="translate(250, 215) scale(2.5)">
+        <!-- Brand Icon -->
+        <g transform="translate(10, 10) scale(0.75)">
+            <path d="M 14 24 L 14 76" stroke="url(#logoPrimary)" stroke-width="8" stroke-linecap="round" fill="none" />
+            <path d="M 26 24 L 26 76" stroke="url(#logoPrimary)" stroke-width="8" stroke-linecap="round" fill="none" />
+            <path d="M 54 24 C 34 24 30 35 30 50 C 30 65 34 76 54 76" stroke="url(#logoSecondary)" stroke-width="8" stroke-linecap="round" fill="none" />
+            <path d="M 52 24 L 86 24 M 66 24 L 66 76 M 48 50 L 82 50 M 52 76 L 86 76" stroke="url(#logoAccent)" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+        </g>
+        
+        <!-- Wordmark Typography -->
+        <g fill="#F9FAFB">
+            <rect x="90" y="22" width="8" height="36" rx="3.5"/>
+            <rect x="106" y="22" width="8" height="36" rx="3.5"/>
+            <path d="M 144 26 C 130 26 126 33 126 40 C 126 47 130 54 144 54" fill="none" stroke="#F9FAFB" stroke-width="8" stroke-linecap="round"/>
+            <path d="M 176 26 L 162 26 L 162 54 L 176 54 M 162 40 L 172 40" fill="none" stroke="#F9FAFB" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+        </g>
+        
+        <!-- Subtext -->
+        <text x="90" y="70" font-family="'Inter', -apple-system, sans-serif" font-weight="600" font-size="8.5" fill="#A78BFA" letter-spacing="0.22em">ENTERPRISE SYSTEM</text>
+    </g>
+    
+    <!-- Footer Branding info -->
+    <text x="600" y="565" text-anchor="middle" font-family="'Inter', -apple-system, sans-serif" font-weight="500" font-size="12" fill="#9CA3AF" letter-spacing="0.4em" opacity="0.8">IICE DIGITAL ACADEMY PORTAL</text>
+</svg>

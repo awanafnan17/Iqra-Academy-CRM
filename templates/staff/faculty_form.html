@@ -1,0 +1,112 @@
+{% extends 'layouts/panel_base.html' %}
+{% load static %}
+
+{% block title %}Register Faculty Member - Iqra Academy{% endblock %}
+
+{% block extra_css %}
+<style>
+.form-container-width {
+    max-width: 800px;
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid px-0 form-container-width">
+    <!-- Page Header -->
+    <div class="p-4 rounded-4 mb-4 card border border-light shadow-sm animate-fade-in">
+        <div class="d-flex justify-content-between align-items-center">
+            <div>
+                <h3 class="fw-bold mb-1 text-primary">Register Faculty</h3>
+                <p class="text-secondary mb-0">Create a new teacher/faculty user account and profile.</p>
+            </div>
+            <div>
+                <a href="{% url 'admin_panel:staff:faculty_list' %}" class="btn btn-outline-secondary px-3 py-2 rounded-3">
+                    <i class="fa-solid fa-arrow-left me-2"></i> Cancel
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Form Container -->
+    <div class="card p-4 border border-light shadow rounded-4 animate-fade-in stagger-1">
+        <form method="post" class="needs-validation" novalidate>
+            {% csrf_token %}
+
+            <!-- User Form Section -->
+            <h5 class="fw-bold border-bottom pb-2 mb-3">
+                <i class="fa-solid fa-user-lock text-primary me-2"></i> Account Credentials
+            </h5>
+            <div class="row g-3 mb-4">
+                <div class="col-12 col-md-6">
+                    <label class="form-label fw-semibold text-secondary">First Name</label>
+                    {{ user_form.first_name }}
+                    {% if user_form.first_name.errors %}
+                        <div class="text-danger small mt-1">{{ user_form.first_name.errors.0 }}</div>
+                    {% endif %}
+                </div>
+                <div class="col-12 col-md-6">
+                    <label class="form-label fw-semibold text-secondary">Last Name</label>
+                    {{ user_form.last_name }}
+                    {% if user_form.last_name.errors %}
+                        <div class="text-danger small mt-1">{{ user_form.last_name.errors.0 }}</div>
+                    {% endif %}
+                </div>
+                <div class="col-12 col-md-6">
+                    <label class="form-label fw-semibold text-secondary">Email Address</label>
+                    {{ user_form.email }}
+                    {% if user_form.email.errors %}
+                        <div class="text-danger small mt-1">{{ user_form.email.errors.0 }}</div>
+                    {% endif %}
+                </div>
+                <div class="col-12 col-md-6">
+                    <label class="form-label fw-semibold text-secondary">Password</label>
+                    {{ user_form.password }}
+                    {% if user_form.password.errors %}
+                        <div class="text-danger small mt-1">{{ user_form.password.errors.0 }}</div>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Profile Form Section -->
+            <h5 class="fw-bold border-bottom pb-2 mb-3">
+                <i class="fa-solid fa-briefcase text-primary me-2"></i> Professional Details
+            </h5>
+            <div class="row g-3 mb-4">
+                <div class="col-12 col-md-6">
+                    <label class="form-label fw-semibold text-secondary">Designation</label>
+                    {{ form.designation }}
+                    {% if form.designation.errors %}
+                        <div class="text-danger small mt-1">{{ form.designation.errors.0 }}</div>
+                    {% endif %}
+                </div>
+                <div class="col-12 col-md-6">
+                    <label class="form-label fw-semibold text-secondary">Department / Scope</label>
+                    {{ form.department }}
+                    {% if form.department.errors %}
+                        <div class="text-danger small mt-1">{{ form.department.errors.0 }}</div>
+                    {% endif %}
+                </div>
+                <div class="col-12">
+                    <div class="form-check form-switch mt-2">
+                        {{ form.is_active }}
+                        <label class="form-check-label fw-semibold text-secondary ms-2" for="{{ form.is_active.id_for_label }}">
+                            Active Status (Check to enable login and course allocations)
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Form Actions -->
+            <div class="d-flex justify-content-end gap-2 border-top pt-3">
+                <a href="{% url 'admin_panel:staff:faculty_list' %}" class="btn btn-secondary px-4 py-2 rounded-3">
+                    Cancel
+                </a>
+                <button type="submit" class="btn btn-primary px-4 py-2 rounded-3">
+                    <i class="fa-solid fa-check me-2"></i> Register Profile
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

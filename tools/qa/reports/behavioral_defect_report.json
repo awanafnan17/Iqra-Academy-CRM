@@ -1,0 +1,47 @@
+{
+  "metadata": {
+    "run_id": "e7586812-3531-4961-b8a7-9963cf879463",
+    "timestamp": "2026-06-21T04:38:08.943592",
+    "settings_module": "config.settings.test",
+    "database_engine": "django.db.backends.sqlite3",
+    "database_name": "file:memorydb_default?mode=memory&cache=shared",
+    "git_tree_id": "working_tree",
+    "source_evidence": [
+      "detector_canaries.json",
+      "visual_evidence.json"
+    ]
+  },
+  "total_defects": 3,
+  "defects": [
+    {
+      "id": "VIS-001",
+      "severity": "Medium",
+      "module": "authentication",
+      "workflow": "login_page",
+      "field": "layout",
+      "expected": "No horizontal overflow at any viewport",
+      "actual": "scrollWidth > clientWidth on viewport 1440, 1024, 768, 375",
+      "root_cause": "Absolute positioning of background glow overlay elements extends beyond boundary."
+    },
+    {
+      "id": "VIS-002",
+      "severity": "Medium",
+      "module": "permissions",
+      "workflow": "permission_matrix",
+      "field": "submit_button_position",
+      "expected": "Submit button within 2x viewport height of content",
+      "actual": "Submit button at y=3255px (table height: 2900px)",
+      "root_cause": "Permission matrix renders all 42 combinations as individual rows pushing card bottom excessively down."
+    },
+    {
+      "id": "VIS-003",
+      "severity": "Low",
+      "module": "analytics",
+      "workflow": "login_page_js",
+      "field": "charts.js console errors",
+      "expected": "No JS errors on login page",
+      "actual": "charts.js fetchApi throws TypeError: Failed to fetch on login page during transitions",
+      "root_cause": "DOMContentLoaded handlers unconditionally query page and fetch api analytics, throwing unhandled abort request exception."
+    }
+  ]
+}

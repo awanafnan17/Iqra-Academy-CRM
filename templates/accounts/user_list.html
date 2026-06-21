@@ -1,0 +1,418 @@
+{% extends 'layouts/panel_base.html' %}
+{% load static %}
+
+{% block title %}User Management - Iqra Academy{% endblock %}
+
+{% block content %}
+<div class="container-fluid px-0">
+    <!-- Page Header -->
+    <div class="p-4 rounded-4 mb-4 card border border-soft shadow-sm animate-fade-in">
+        <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
+            <div>
+                <h3 class="fw-bold mb-1 text-primary">User Management</h3>
+                <p class="text-secondary mb-0">List, filter, lock, assign roles, and allocate teaching sessions for system users.</p>
+            </div>
+            <span class="badge bg-primary px-3 py-2 fw-bold">
+                USER MANAGEMENT ACTIVE
+            </span>
+        </div>
+    </div>
+
+    <!-- Django Messages System -->
+    {% if messages %}
+        <div class="messages mb-4">
+            {% for message in messages %}
+                <div class="alert alert-{% if message.tags == 'error' %}danger{% else %}{{ message.tags }}{% endif %} alert-dismissible fade show rounded-3 shadow-sm border-0" role="alert">
+                    <div class="d-flex align-items-center gap-2">
+                        {% if message.tags == 'success' %}
+                            <i class="fa-solid fa-circle-check text-success"></i>
+                        {% elif message.tags == 'error' %}
+                            <i class="fa-solid fa-circle-xmark text-danger"></i>
+                        {% else %}
+                            <i class="fa-solid fa-circle-info text-info"></i>
+                        {% endif %}
+                        <span>{{ message }}</span>
+                    </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <!-- Filters & Search Card -->
+    <div class="card p-4 mb-4 animate-fade-in stagger-1">
+        <form method="GET" action="" class="row g-3 align-items-end">
+            <div class="col-md-5">
+                <label for="searchInput" class="form-label">Search Users</label>
+                <div class="search-box">
+                    <input type="text" id="searchInput" name="search" class="form-control" placeholder="Search by name, email, phone..." value="{{ search_query }}">
+                    <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <label for="roleFilterSelect" class="form-label">Filter by Role</label>
+                <select id="roleFilterSelect" name="role" class="form-select">
+                    <option value="">All Roles</option>
+                    {% for grp in groups %}
+                        <option value="{{ grp.name }}" {% if selected_role == grp.name %}selected{% endif %}>{{ grp.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-md-3 d-flex gap-2">
+                <button type="submit" class="btn btn-primary w-100 py-2">
+                    <i class="fa-solid fa-filter me-1"></i> Apply Filters
+                </button>
+                {% if search_query or selected_role %}
+                    <a href="{% url 'admin_panel:users:user_list' %}" class="btn btn-secondary w-50 py-2 text-center">
+                        Clear
+                    </a>
+                {% endif %}
+            </div>
+        </form>
+    </div>
+
+    <!-- Table Card -->
+    <div class="card p-4 animate-fade-in stagger-2">
+        <div class="table-wrapper p-3">
+            <table class="table align-middle mb-0">
+                <thead class="font-monospace small">
+                    <tr>
+                        <th>User</th>
+                        <th>Username & Contact</th>
+                        <th>Role / Groups</th>
+                        <th>Status / Lockout</th>
+                        <th>Assigned Sessions (Teacher)</th>
+                        <th class="text-end" style="min-width: 150px;">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for u in users %}
+                        <tr>
+                            <!-- User Name/Email -->
+                            <td>
+                                <div class="d-flex align-items-center gap-2">
+                                    <div class="avatar">
+                                        {{ u.first_name|slice:":1"|upper }}{{ u.last_name|slice:":1"|upper }}
+                                    </div>
+                                    <div>
+                                        <span class="fw-semibold text-primary-c d-block">{{ u.full_name|default:u.username }}</span>
+                                        <span class="text-secondary small font-monospace">{{ u.email }}</span>
+                                    </div>
+                                </div>
+                            </td>
+
+                            <!-- Username & Phone -->
+                            <td>
+                                <span class="d-block text-primary-c small font-monospace">{{ u.username }}</span>
+                                <span class="text-secondary small">{{ u.phone|default:"-" }}</span>
+                            </td>
+
+                            <!-- Role/Groups -->
+                            <td>
+                                {% for grp in u.groups.all %}
+                                    <span class="badge bg-primary">
+                                        {{ grp.name }}
+                                    </span>
+                                {% empty %}
+                                    <span class="text-muted small">-</span>
+                                {% endfor %}
+                            </td>
+
+                            <!-- Status / Lockout -->
+                            <td>
+                                <div class="d-flex flex-column gap-1 align-items-start">
+                                    {% if u.is_active %}
+                                        <span class="badge bg-success">
+                                            Active
+                                        </span>
+                                    {% else %}
+                                        <span class="badge bg-danger">
+                                            Inactive
+                                        </span>
+                                    {% endif %}
+
+                                    {% if u.is_locked_out %}
+                                        <span class="badge bg-warning" title="Locked until {{ u.lockout_until }}">
+                                            <i class="fa-solid fa-lock me-1"></i> Locked Out
+                                        </span>
+                                    {% elif u.failed_login_attempts > 0 %}
+                                        <span class="text-secondary small font-monospace">
+                                            Failed tries: {{ u.failed_login_attempts }}/5
+                                        </span>
+                                    {% endif %}
+                                </div>
+                            </td>
+
+                            <!-- Teacher Sessions -->
+                            <td>
+                                {% if u.groups.first.name == "Teacher" %}
+                                    <div class="d-flex flex-wrap gap-1">
+                                        {% for assign in u.teaching_assignments.all %}
+                                            {% if assign.is_active %}
+                                                <span class="badge bg-secondary" title="Assigned subject: {{ assign.subject.name|default:'All' }}">
+                                                    {{ assign.session.name }}{% if assign.subject %} - {{ assign.subject.name }}{% endif %}
+                                                </span>
+                                            {% endif %}
+                                        {% empty %}
+                                            <span class="text-muted small">No assignments</span>
+                                        {% endfor %}
+                                    </div>
+                                {% else %}
+                                    <span class="text-muted small">-</span>
+                                {% endif %}
+                            </td>
+
+                            <!-- Actions -->
+                            <td class="text-end">
+                                <div class="dropdown">
+                                    <button class="btn btn-sm btn-outline-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        Manage
+                                    </button>
+                                    <ul class="dropdown-menu dropdown-menu-end shadow border-0 p-2">
+                                        <!-- Reset Password -->
+                                        <li>
+                                            <button type="button" class="dropdown-item rounded-2 small text-primary-c"
+                                                    data-bs-toggle="modal" data-bs-target="#resetPasswordModal"
+                                                    data-email="{{ u.email }}"
+                                                    data-action="{% url 'admin_panel:users:user_reset_password' u.pk %}">
+                                                <i class="fa-solid fa-key me-2 text-primary"></i> Reset Password
+                                            </button>
+                                        </li>
+                                        <!-- Assign Role -->
+                                        {% if u.pk != request.user.pk %}
+                                            <li>
+                                                <button type="button" class="dropdown-item rounded-2 small text-primary-c"
+                                                        data-bs-toggle="modal" data-bs-target="#assignRoleModal"
+                                                        data-email="{{ u.email }}"
+                                                        data-role="{{ u.groups.first.name|default:'' }}"
+                                                        data-action="{% url 'admin_panel:users:user_assign_role' u.pk %}">
+                                                    <i class="fa-solid fa-user-tag me-2 text-warning"></i> Assign Role
+                                                </button>
+                                            </li>
+                                        {% endif %}
+                                        <!-- Assign Session (Teachers only) -->
+                                        {% if u.groups.first.name == "Teacher" %}
+                                            <li>
+                                                <button type="button" class="dropdown-item rounded-2 small text-primary-c"
+                                                        data-bs-toggle="modal" data-bs-target="#assignSessionModal"
+                                                        data-email="{{ u.email }}"
+                                                        data-action="{% url 'admin_panel:users:user_assign_session' u.pk %}">
+                                                    <i class="fa-solid fa-chalkboard-user me-2 text-info"></i> Assign Session
+                                                </button>
+                                            </li>
+                                        {% endif %}
+                                        <div class="dropdown-divider"></div>
+                                        <!-- Toggle Activation -->
+                                        {% if u.pk != request.user.pk %}
+                                            <li>
+                                                <form method="POST" action="{% url 'admin_panel:users:user_toggle_activation' u.pk %}" class="d-inline">
+                                                    {% csrf_token %}
+                                                    <input type="hidden" name="active" value="{% if u.is_active %}false{% else %}true{% endif %}">
+                                                    <button type="submit" class="dropdown-item rounded-2 small {% if u.is_active %}text-danger{% else %}text-success{% endif %}">
+                                                        {% if u.is_active %}
+                                                            <i class="fa-solid fa-user-slash me-2"></i> Deactivate
+                                                        {% else %}
+                                                            <i class="fa-solid fa-user-check me-2"></i> Activate
+                                                        {% endif %}
+                                                    </button>
+                                                </form>
+                                            </li>
+                                            <!-- Toggle Lockout -->
+                                            <li>
+                                                <form method="POST" action="{% url 'admin_panel:users:user_toggle_lock' u.pk %}" class="d-inline">
+                                                    {% csrf_token %}
+                                                    <input type="hidden" name="lock" value="{% if u.is_locked_out %}false{% else %}true{% endif %}">
+                                                    <button type="submit" class="dropdown-item rounded-2 small text-secondary">
+                                                        {% if u.is_locked_out %}
+                                                            <i class="fa-solid fa-lock-open me-2"></i> Unlock Account
+                                                        {% else %}
+                                                            <i class="fa-solid fa-lock me-2"></i> Lock Account
+                                                        {% endif %}
+                                                    </button>
+                                                </form>
+                                            </li>
+                                        {% endif %}
+                                    </ul>
+                                </div>
+                            </td>
+                        </tr>
+                    {% empty %}
+                        <tr>
+                            <td colspan="6" class="text-center text-secondary py-5">
+                                <div class="my-3 text-muted">
+                                    <i class="fa-solid fa-users-slash fa-3x mb-3 text-secondary"></i>
+                                    <h5 class="fw-bold text-primary-c">No Users Found</h5>
+                                    <p class="mb-0 small text-secondary">Try adjusting your filters or search terms.</p>
+                                </div>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- ========================================================================= -->
+<!-- MODALS -->
+<!-- ========================================================================= -->
+
+<!-- Reset Password Modal -->
+<div class="modal fade" id="resetPasswordModal" tabindex="-1" aria-labelledby="resetPasswordModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title fw-bold" id="resetPasswordModalLabel">Reset Password</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form id="resetPasswordForm" method="POST" action="">
+                {% csrf_token %}
+                <div class="modal-body p-4">
+                    <p class="text-secondary small">Reset password for user: <strong id="resetPasswordUserEmail" class="text-primary-c"></strong></p>
+                    <div class="mb-3">
+                        <label for="newPasswordInput" class="form-label fw-semibold">New Password</label>
+                        <input type="password" class="form-control" id="newPasswordInput" name="new_password" required minlength="6" placeholder="Enter at least 6 characters">
+                    </div>
+                </div>
+                <div class="modal-footer p-3">
+                    <button type="button" class="btn btn-secondary px-3" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary px-4">Reset Password</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Assign Role Modal -->
+<div class="modal fade" id="assignRoleModal" tabindex="-1" aria-labelledby="assignRoleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title fw-bold" id="assignRoleModalLabel">Change User Role</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form id="assignRoleForm" method="POST" action="">
+                {% csrf_token %}
+                <div class="modal-body p-4">
+                    <p class="text-secondary small">Change role for user: <strong id="assignRoleUserEmail" class="text-primary-c"></strong></p>
+                    <div class="mb-3">
+                        <label for="roleSelect" class="form-label fw-semibold">Select Role</label>
+                        <select class="form-select" id="roleSelect" name="role_name" required>
+                            {% for grp in groups %}
+                                <option value="{{ grp.name }}">{{ grp.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer p-3">
+                    <button type="button" class="btn btn-secondary px-3" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary px-4">Update Role</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Assign Session Modal -->
+<div class="modal fade" id="assignSessionModal" tabindex="-1" aria-labelledby="assignSessionModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title fw-bold" id="assignSessionModalLabel">Assign Session to Teacher</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form id="assignSessionForm" method="POST" action="">
+                {% csrf_token %}
+                <div class="modal-body p-4">
+                    <p class="text-secondary small">Assign session for teacher: <strong id="assignSessionTeacherEmail" class="text-primary-c"></strong></p>
+                    <div class="mb-3">
+                        <label for="sessionSelect" class="form-label fw-semibold">Select Session</label>
+                        <select class="form-select" id="sessionSelect" name="session_id" required>
+                            <option value="">Choose Session</option>
+                            {% for sess in sessions %}
+                                <option value="{{ sess.pk }}">{{ sess.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="subjectSelect" class="form-label fw-semibold">Select Subject (Optional)</label>
+                        <select class="form-select" id="subjectSelect" name="subject_id">
+                            <option value="">Choose Subject (Global or All)</option>
+                            {% for sub in subjects %}
+                                <option value="{{ sub.pk }}">{{ sub.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer p-3">
+                    <button type="button" class="btn btn-secondary px-3" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary px-4">Assign Session</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+{{ block.super }}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Reset Password Modal Setup
+        const resetPasswordModal = document.getElementById('resetPasswordModal');
+        if (resetPasswordModal) {
+            resetPasswordModal.addEventListener('show.bs.modal', function (event) {
+                const button = event.relatedTarget;
+                const email = button.getAttribute('data-email');
+                const action = button.getAttribute('data-action');
+
+                const modalEmail = resetPasswordModal.querySelector('#resetPasswordUserEmail');
+                const modalForm = resetPasswordModal.querySelector('#resetPasswordForm');
+
+                modalEmail.textContent = email;
+                modalForm.setAttribute('action', action);
+                resetPasswordModal.querySelector('#newPasswordInput').value = '';
+            });
+        }
+
+        // Assign Role Modal Setup
+        const assignRoleModal = document.getElementById('assignRoleModal');
+        if (assignRoleModal) {
+            assignRoleModal.addEventListener('show.bs.modal', function (event) {
+                const button = event.relatedTarget;
+                const email = button.getAttribute('data-email');
+                const role = button.getAttribute('data-role');
+                const action = button.getAttribute('data-action');
+
+                const modalEmail = assignRoleModal.querySelector('#assignRoleUserEmail');
+                const modalForm = assignRoleModal.querySelector('#assignRoleForm');
+                const modalSelect = assignRoleModal.querySelector('#roleSelect');
+
+                modalEmail.textContent = email;
+                modalForm.setAttribute('action', action);
+                if (role) {
+                    modalSelect.value = role;
+                }
+            });
+        }
+
+        // Assign Session Modal Setup
+        const assignSessionModal = document.getElementById('assignSessionModal');
+        if (assignSessionModal) {
+            assignSessionModal.addEventListener('show.bs.modal', function (event) {
+                const button = event.relatedTarget;
+                const email = button.getAttribute('data-email');
+                const action = button.getAttribute('data-action');
+
+                const modalEmail = assignSessionModal.querySelector('#assignSessionTeacherEmail');
+                const modalForm = assignSessionModal.querySelector('#assignSessionForm');
+
+                modalEmail.textContent = email;
+                modalForm.setAttribute('action', action);
+                assignSessionModal.querySelector('#sessionSelect').value = '';
+                assignSessionModal.querySelector('#subjectSelect').value = '';
+            });
+        }
+    });
+</script>
+{% endblock %}

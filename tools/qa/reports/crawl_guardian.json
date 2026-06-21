@@ -1,0 +1,280 @@
+{
+  "role": "Guardian",
+  "mode": "enforcement",
+  "timestamp": "2026-06-20T02:48:50.545222",
+  "pages_visited": [
+    {
+      "url": "/portal/guardian/dashboard/",
+      "status": 200,
+      "load_time_ms": 132,
+      "final_url": "/portal/guardian/dashboard/",
+      "title": "Guardian Desk - Iqra Academy",
+      "source_url": "seed",
+      "link_source": "seed"
+    },
+    {
+      "url": "/accounts/profile/",
+      "status": 200,
+      "load_time_ms": 63,
+      "final_url": "/accounts/profile/",
+      "title": "My Profile - Iqra Academy",
+      "source_url": "seed",
+      "link_source": "seed"
+    },
+    {
+      "url": "/portal/guardian/children/",
+      "status": 200,
+      "load_time_ms": 53,
+      "final_url": "/portal/guardian/children/",
+      "title": "My Children - Iqra Academy",
+      "source_url": "/accounts/profile/",
+      "link_source": "sidebar"
+    },
+    {
+      "url": "/portal/guardian/child/4/profile/",
+      "status": 200,
+      "load_time_ms": 47,
+      "final_url": "/portal/guardian/child/4/profile/",
+      "title": "Child Profile - Iqra Academy",
+      "source_url": "/portal/guardian/children/",
+      "link_source": "sidebar"
+    },
+    {
+      "url": "/portal/guardian/child/4/attendance/",
+      "status": 200,
+      "load_time_ms": 74,
+      "final_url": "/portal/guardian/child/4/attendance/",
+      "title": "Attendance - TestStudent QA - Iqra Academy",
+      "source_url": "/portal/guardian/child/4/profile/",
+      "link_source": "sidebar"
+    },
+    {
+      "url": "/portal/guardian/child/4/fees/",
+      "status": 200,
+      "load_time_ms": 61,
+      "final_url": "/portal/guardian/child/4/fees/",
+      "title": "'s Fee Ledger - Iqra Academy",
+      "source_url": "/portal/guardian/child/4/attendance/",
+      "link_source": "sidebar"
+    },
+    {
+      "url": "/portal/guardian/child/4/exams/",
+      "status": 200,
+      "load_time_ms": 55,
+      "final_url": "/portal/guardian/child/4/exams/",
+      "title": "'s Exams & Grades - Iqra Academy",
+      "source_url": "/portal/guardian/child/4/fees/",
+      "link_source": "sidebar"
+    },
+    {
+      "url": "/portal/guardian/child/4/transcript/",
+      "status": 200,
+      "load_time_ms": 122,
+      "final_url": "/portal/guardian/child/4/transcript/",
+      "title": "Academic Transcript | Iqra Academy",
+      "source_url": "/portal/guardian/child/4/exams/",
+      "link_source": "sidebar"
+    },
+    {
+      "url": "/portal/guardian/notifications/",
+      "status": 200,
+      "load_time_ms": 46,
+      "final_url": "/portal/guardian/notifications/",
+      "title": "My Notifications - Iqra Academy",
+      "source_url": "/portal/guardian/child/4/transcript/",
+      "link_source": "sidebar"
+    },
+    {
+      "url": "/accounts/password/change/",
+      "status": 200,
+      "load_time_ms": 95,
+      "final_url": "/accounts/password/change/",
+      "title": "Change Password - Iqra Academy",
+      "source_url": "/accounts/profile/",
+      "link_source": "navbar"
+    },
+    {
+      "url": "/accounts/post-login/",
+      "status": 200,
+      "load_time_ms": 54,
+      "final_url": "/portal/guardian/dashboard/",
+      "title": "Guardian Desk - Iqra Academy",
+      "source_url": "/accounts/password/change/",
+      "link_source": "navigation"
+    },
+    {
+      "url": "/portal/guardian/notifications/?category=General",
+      "status": 200,
+      "load_time_ms": 79,
+      "final_url": "/portal/guardian/notifications/",
+      "title": "My Notifications - Iqra Academy",
+      "source_url": "/portal/guardian/notifications/",
+      "link_source": "navigation"
+    },
+    {
+      "url": "/portal/guardian/notifications/?category=LateFee",
+      "status": 200,
+      "load_time_ms": 49,
+      "final_url": "/portal/guardian/notifications/",
+      "title": "My Notifications - Iqra Academy",
+      "source_url": "/portal/guardian/notifications/?category=General",
+      "link_source": "navigation"
+    },
+    {
+      "url": "/portal/guardian/notifications/?category=NewEntry",
+      "status": 200,
+      "load_time_ms": 49,
+      "final_url": "/portal/guardian/notifications/",
+      "title": "My Notifications - Iqra Academy",
+      "source_url": "/portal/guardian/notifications/?category=LateFee",
+      "link_source": "navigation"
+    },
+    {
+      "url": "/portal/guardian/notifications/?category=Deletion",
+      "status": 200,
+      "load_time_ms": 56,
+      "final_url": "/portal/guardian/notifications/",
+      "title": "My Notifications - Iqra Academy",
+      "source_url": "/portal/guardian/notifications/?category=NewEntry",
+      "link_source": "navigation"
+    },
+    {
+      "url": "/portal/guardian/notifications/?category=Payment",
+      "status": 200,
+      "load_time_ms": 66,
+      "final_url": "/portal/guardian/notifications/",
+      "title": "My Notifications - Iqra Academy",
+      "source_url": "/portal/guardian/notifications/?category=Deletion",
+      "link_source": "navigation"
+    },
+    {
+      "url": "/portal/guardian/notifications/?category=Attendance",
+      "status": 200,
+      "load_time_ms": 65,
+      "final_url": "/portal/guardian/notifications/",
+      "title": "My Notifications - Iqra Academy",
+      "source_url": "/portal/guardian/notifications/?category=Payment",
+      "link_source": "navigation"
+    },
+    {
+      "url": "/portal/guardian/notifications/?category=ExamResult",
+      "status": 200,
+      "load_time_ms": 56,
+      "final_url": "/portal/guardian/notifications/",
+      "title": "My Notifications - Iqra Academy",
+      "source_url": "/portal/guardian/notifications/?category=Attendance",
+      "link_source": "navigation"
+    },
+    {
+      "url": "/portal/guardian/notifications/?category=MonthlyRenewal",
+      "status": 200,
+      "load_time_ms": 72,
+      "final_url": "/portal/guardian/notifications/",
+      "title": "My Notifications - Iqra Academy",
+      "source_url": "/portal/guardian/notifications/?category=ExamResult",
+      "link_source": "navigation"
+    },
+    {
+      "url": "/portal/guardian/notifications/?category=System",
+      "status": 200,
+      "load_time_ms": 119,
+      "final_url": "/portal/guardian/notifications/",
+      "title": "My Notifications - Iqra Academy",
+      "source_url": "/portal/guardian/notifications/?category=MonthlyRenewal",
+      "link_source": "navigation"
+    }
+  ],
+  "errors_500": [],
+  "errors_404": [],
+  "errors_403": [],
+  "console_errors": [
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "url": "http://127.0.0.1:4082/accounts/profile/"
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "url": "http://127.0.0.1:4082/accounts/profile/"
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "url": "http://127.0.0.1:4082/accounts/password/change/"
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "url": "http://127.0.0.1:4082/accounts/password/change/"
+    }
+  ],
+  "redirect_loops": [],
+  "slow_pages": [],
+  "empty_pages": [],
+  "redirects": [
+    {
+      "from": "/accounts/post-login/",
+      "to": "/portal/guardian/dashboard/",
+      "status": 200
+    },
+    {
+      "from": "/portal/guardian/notifications/?category=General",
+      "to": "/portal/guardian/notifications/",
+      "status": 200
+    },
+    {
+      "from": "/portal/guardian/notifications/?category=LateFee",
+      "to": "/portal/guardian/notifications/",
+      "status": 200
+    },
+    {
+      "from": "/portal/guardian/notifications/?category=NewEntry",
+      "to": "/portal/guardian/notifications/",
+      "status": 200
+    },
+    {
+      "from": "/portal/guardian/notifications/?category=Deletion",
+      "to": "/portal/guardian/notifications/",
+      "status": 200
+    },
+    {
+      "from": "/portal/guardian/notifications/?category=Payment",
+      "to": "/portal/guardian/notifications/",
+      "status": 200
+    },
+    {
+      "from": "/portal/guardian/notifications/?category=Attendance",
+      "to": "/portal/guardian/notifications/",
+      "status": 200
+    },
+    {
+      "from": "/portal/guardian/notifications/?category=ExamResult",
+      "to": "/portal/guardian/notifications/",
+      "status": 200
+    },
+    {
+      "from": "/portal/guardian/notifications/?category=MonthlyRenewal",
+      "to": "/portal/guardian/notifications/",
+      "status": 200
+    },
+    {
+      "from": "/portal/guardian/notifications/?category=System",
+      "to": "/portal/guardian/notifications/",
+      "status": 200
+    }
+  ],
+  "all_errors": [
+    {
+      "url": "/portal/guardian/child/4/transcript/pdf/",
+      "source_url": "/portal/guardian/child/4/exams/",
+      "link_source": "navigation",
+      "status": 0,
+      "expected_status": 200,
+      "error": "Page.goto: Download is starting\nCall log:\n  - navigating to \"http://127.0.0.1:4082/portal/guardian/child/4/transcript/pdf/\", waiting until \"domcontentloaded\"\n",
+      "role": "Guardian",
+      "severity": "Critical",
+      "category": "exception"
+    }
+  ]
+}

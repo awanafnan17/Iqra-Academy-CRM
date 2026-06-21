@@ -1,0 +1,210 @@
+{% extends 'layouts/panel_base.html' %}
+{% load static %}
+
+{% block title %}AI Predictions - Iqra Academy{% endblock %}
+
+{% block content %}
+<div class="container-fluid px-0">
+    <!-- Page Header -->
+    <div class="p-4 rounded-4 mb-4 card border border-light shadow-sm animate-fade-in">
+        <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
+            <div>
+                <h3 class="fw-bold mb-1">
+                    <i class="fa-solid fa-brain me-2 text-primary"></i>
+                    AI Engine Predictions
+                </h3>
+                <p class="text-secondary mb-0">
+                    Review and acknowledge system-generated predictive insights and anomaly logs.
+                </p>
+            </div>
+            <div>
+                <a href="{% url 'admin_panel:ai_engine:dropout_risk_dashboard' %}" class="btn btn-outline-primary px-3 py-2 rounded-3">
+                    <i class="fa-solid fa-chart-line me-1"></i> Risk Dashboard
+                </a>
+                <a href="{% url 'admin_panel:ai_engine:model_version_list' %}" class="btn btn-outline-secondary px-3 py-2 rounded-3 ms-2">
+                    <i class="fa-solid fa-code-branch me-1"></i> Model Versions
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Filters -->
+    <div class="card p-3 border border-light shadow rounded-4 mb-4 animate-fade-in stagger-1">
+        <form method="get" class="row g-3 align-items-end">
+            <div class="col-12 col-md-3">
+                <label class="form-label text-secondary small fw-semibold">Prediction Type</label>
+                <select name="prediction_type" class="form-select">
+                    <option value="">All Types</option>
+                    {% for val, label in prediction_types %}
+                    <option value="{{ val }}" {% if selected_prediction_type == val %}selected{% endif %}>{{ label }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-12 col-md-3">
+                <label class="form-label text-secondary small fw-semibold">Risk Level</label>
+                <select name="risk_level" class="form-select">
+                    <option value="">All Levels</option>
+                    {% for val, label in risk_levels %}
+                    <option value="{{ val }}" {% if selected_risk_level == val %}selected{% endif %}>{{ label }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-12 col-md-2">
+                <label class="form-label text-secondary small fw-semibold">Status</label>
+                <select name="is_acknowledged" class="form-select">
+                    <option value="">All Statuses</option>
+                    <option value="false" {% if selected_is_acknowledged == "false" %}selected{% endif %}>Unacknowledged</option>
+                    <option value="true" {% if selected_is_acknowledged == "true" %}selected{% endif %}>Acknowledged</option>
+                </select>
+            </div>
+            <div class="col-12 col-md-2">
+                <label class="form-label text-secondary small fw-semibold">Search Student</label>
+                <input type="text" name="q" value="{{ q }}" placeholder="Name or ID..." class="form-select">
+            </div>
+            <div class="col-12 col-md-2">
+                <button type="submit" class="btn btn-primary w-100 rounded-3">
+                    <i class="fa-solid fa-filter me-1"></i> Filter
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Predictions List -->
+    <div class="card border border-light shadow rounded-4 animate-fade-in stagger-2">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0" data-testid="prediction-list-table">
+                <thead class="table-light">
+                    <tr>
+                        <th class="ps-4">Date/Time</th>
+                        <th>Type</th>
+                        <th>Target Object</th>
+                        <th>Risk Level</th>
+                        <th>Confidence</th>
+                        <th>Status</th>
+                        <th class="text-end pe-4">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for pred in page_obj %}
+                    <tr data-testid="prediction-row-{{ pred.pk }}">
+                        <td class="ps-4">
+                            <span class="text-secondary small">{{ pred.created_at|date:"M d, Y H:i" }}</span>
+                        </td>
+                        <td>
+                            <span class="badge bg-secondary bg-opacity-10 text-dark border rounded-pill px-2.5 py-1">
+                                {{ pred.get_prediction_type_display }}
+                            </span>
+                        </td>
+                        <td>
+                            {% if pred.student_target %}
+                                <a href="{% url 'admin_panel:students:student_detail' pred.student_target.pk %}" class="fw-semibold text-decoration-none">
+                                    {{ pred.student_target.full_name }}
+                                </a>
+                                <small class="text-muted d-block">Roll: {{ pred.student_target.roll_number|default:"—" }}</small>
+                            {% else %}
+                                <code class="text-secondary">{{ pred.target_model }}:{{ pred.target_object_id }}</code>
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if pred.risk_level == "critical" %}
+                                <span class="badge bg-danger text-white rounded-pill px-2.5 py-1 fw-bold">Critical</span>
+                            {% elif pred.risk_level == "high" %}
+                                <span class="badge bg-danger bg-opacity-10 text-danger border border-danger-subtle rounded-pill px-2.5 py-1">High</span>
+                            {% elif pred.risk_level == "medium" %}
+                                <span class="badge bg-warning bg-opacity-10 text-warning border border-warning-subtle rounded-pill px-2.5 py-1">Medium</span>
+                            {% elif pred.risk_level == "low" %}
+                                <span class="badge bg-success bg-opacity-10 text-success border border-success-subtle rounded-pill px-2.5 py-1">Low</span>
+                            {% else %}
+                                <span class="text-muted">—</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if pred.confidence_score is not None %}
+                                <span class="fw-semibold">{{ pred.confidence_score }}%</span>
+                            {% else %}
+                                <span class="text-muted">—</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if pred.is_acknowledged %}
+                                <span class="badge bg-success bg-opacity-10 text-success border border-success-subtle rounded-pill px-2.5 py-1">
+                                    <i class="fa-solid fa-check me-1"></i> Acknowledged
+                                </span>
+                            {% else %}
+                                <span class="badge bg-warning bg-opacity-10 text-warning border border-warning-subtle rounded-pill px-2.5 py-1">
+                                    <i class="fa-solid fa-circle-exclamation me-1"></i> Pending
+                                </span>
+                            {% endif %}
+                        </td>
+                        <td class="text-end pe-4">
+                            <a href="{% url 'admin_panel:ai_engine:prediction_detail' pred.pk %}" class="btn btn-sm btn-outline-primary rounded-2 px-3" data-testid="view-prediction-{{ pred.pk }}">
+                                <i class="fa-solid fa-eye me-1"></i> View
+                             </a>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="7" class="text-center py-5 text-muted" data-testid="predictions-empty-state">
+                            <div class="mb-3">
+                                <i class="fa-solid fa-brain fa-3x text-light-subtle"></i>
+                            </div>
+                            <h6 class="fw-bold">No AI predictions have been generated yet</h6>
+                            <p class="small text-secondary mb-0">
+                                {% if q or selected_prediction_type or selected_risk_level or selected_is_acknowledged %}
+                                    No database prediction records match the chosen filter settings.
+                                {% else %}
+                                    AI models have not generated any prediction telemetry logs yet.
+                                {% endif %}
+                            </p>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Pagination -->
+        {% if page_obj.has_other_pages %}
+        <div class="card-footer bg-transparent border-0 py-3">
+            <nav aria-label="Page navigation">
+                <ul class="pagination justify-content-center mb-0">
+                    {% if page_obj.has_previous %}
+                    <li class="page-item">
+                        <a class="page-link rounded-start-3" href="?page={{ page_obj.previous_page_number }}{% if selected_prediction_type %}&prediction_type={{ selected_prediction_type }}{% endif %}{% if selected_risk_level %}&risk_level={{ selected_risk_level }}{% endif %}{% if selected_is_acknowledged %}&is_acknowledged={{ selected_is_acknowledged }}{% endif %}{% if q %}&q={{ q }}{% endif %}" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                    {% else %}
+                    <li class="page-item disabled">
+                        <span class="page-link rounded-start-3">&laquo;</span>
+                    </li>
+                    {% endif %}
+
+                    {% for num in page_obj.paginator.page_range %}
+                        {% if page_obj.number == num %}
+                            <li class="page-item active"><span class="page-link">{{ num }}</span></li>
+                        {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ num }}{% if selected_prediction_type %}&prediction_type={{ selected_prediction_type }}{% endif %}{% if selected_risk_level %}&risk_level={{ selected_risk_level }}{% endif %}{% if selected_is_acknowledged %}&is_acknowledged={{ selected_is_acknowledged }}{% endif %}{% if q %}&q={{ q }}{% endif %}">{{ num }}</a>
+                            </li>
+                        {% endif %}
+                    {% endfor %}
+
+                    {% if page_obj.has_next %}
+                    <li class="page-item">
+                        <a class="page-link rounded-end-3" href="?page={{ page_obj.next_page_number }}{% if selected_prediction_type %}&prediction_type={{ selected_prediction_type }}{% endif %}{% if selected_risk_level %}&risk_level={{ selected_risk_level }}{% endif %}{% if selected_is_acknowledged %}&is_acknowledged={{ selected_is_acknowledged }}{% endif %}{% if q %}&q={{ q }}{% endif %}" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                    {% else %}
+                    <li class="page-item disabled">
+                        <span class="page-link rounded-end-3">&raquo;</span>
+                    </li>
+                    {% endif %}
+                </ul>
+            </nav>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,1076 @@
+[
+  {
+    "file": "templates\\academics\\session_form.html",
+    "form_index": 1,
+    "line": 25,
+    "issues": [
+      "POST form with empty action (relies on current URL)"
+    ],
+    "details": {
+      "method": "POST",
+      "action": "",
+      "has_csrf": true,
+      "has_file_input": false,
+      "has_enctype": true,
+      "has_submit": true,
+      "submit_has_testid": false,
+      "field_counts": {
+        "inputs": 0,
+        "selects": 0,
+        "textareas": 0
+      }
+    }
+  },
+  {
+    "file": "templates\\academics\\session_list.html",
+    "form_index": 1,
+    "line": 27,
+    "issues": [],
+    "details": {
+      "method": "GET",
+      "action": "",
+      "has_csrf": false,
+      "has_file_input": false,
+      "has_enctype": false,
+      "has_submit": true,
+      "submit_has_testid": false,
+      "field_counts": {
+        "inputs": 1,
+        "selects": 1,
+        "textareas": 0
+      }
+    }
+  },
+  {
+    "file": "templates\\academics\\session_list.html",
+    "form_index": 2,
+    "line": 104,
+    "issues": [],
+    "details": {
+      "method": "POST",
+      "action": "{% url ",
+      "has_csrf": true,
+      "has_file_input": false,
+      "has_enctype": false,
+      "has_submit": true,
+      "submit_has_testid": false,
+      "field_counts": {
+        "inputs": 0,
+        "selects": 0,
+        "textareas": 0
+      }
+    }
+  },
+  {
+    "file": "templates\\academics\\timetable_form.html",
+    "form_index": 1,
+    "line": 38,
+    "issues": [
+      "POST form with empty action (relies on current URL)"
+    ],
+    "details": {
+      "method": "POST",
+      "action": "",
+      "has_csrf": true,
+      "has_file_input": false,
+      "has_enctype": false,
+      "has_submit": true,
+      "submit_has_testid": false,
+      "field_counts": {
+        "inputs": 0,
+        "selects": 0,
+        "textareas": 0
+      }
+    }
+  },
+  {
+    "file": "templates\\academics\\timetable_list.html",
+    "form_index": 1,
+    "line": 25,
+    "issues": [],
+    "details": {
+      "method": "GET",
+      "action": "",
+      "has_csrf": false,
+      "has_file_input": false,
+      "has_enctype": false,
+      "has_submit": true,
+      "submit_has_testid": false,
+      "field_counts": {
+        "inputs": 0,
+        "selects": 1,
+        "textareas": 0
+      }
+    }
+  },
+  {
+    "file": "templates\\accounts\\login.html",
+    "form_index": 1,
+    "line": 134,
+    "issues": [
+      "POST form with empty action (relies on current URL)"
+    ],
+    "details": {
+      "method": "POST",
+      "action": "",
+      "has_csrf": true,
+      "has_file_input": false,
+      "has_enctype": false,
+      "has_submit": true,
+      "submit_has_testid": false,
+      "field_counts": {
+        "inputs": 0,
+        "selects": 0,
+        "textareas": 0
+      }
+    }
+  },
+  {
+    "file": "templates\\accounts\\password_change.html",
+    "form_index": 1,
+    "line": 17,
+    "issues": [
+      "POST form with empty action (relies on current URL)"
+    ],
+    "details": {
+      "method": "POST",
+      "action": "",
+      "has_csrf": true,
+      "has_file_input": false,
+      "has_enctype": false,
+      "has_submit": true,
+      "submit_has_testid": false,
+      "field_counts": {
+        "inputs": 0,
+        "selects": 0,
+        "textareas": 0
+      }
+    }
+  },
+  {
+    "file": "templates\\accounts\\profile.html",
+    "form_index": 1,
+    "line": 59,
+    "issues": [
+      "POST form with empty action (relies on current URL)"
+    ],
+    "details": {
+      "method": "POST",
+      "action": "",
+      "has_csrf": true,
+      "has_file_input": false,
+      "has_enctype": false,
+      "has_submit": true,
+      "submit_has_testid": true,
+      "field_counts": {
+        "inputs": 0,
+        "selects": 0,
+        "textareas": 0
+      }
+    }
+  },
+  {
+    "file": "templates\\accounts\\user_list.html",
+    "form_index": 1,
+    "line": 44,
+    "issues": [],
+    "details": {
+      "method": "GET",
+      "action": "",
+      "has_csrf": false,
+      "has_file_input": false,
+      "has_enctype": false,
+      "has_submit": true,
+      "submit_has_testid": false,
+      "field_counts": {
+        "inputs": 1,
+        "selects": 1,
+        "textareas": 0
+      }
+    }
+  },
+  {
+    "file": "templates\\accounts\\user_list.html",
+    "form_index": 2,
+    "line": 208,
+    "issues": [],
+    "details": {
+      "method": "POST",
+      "action": "{% url ",
+      "has_csrf": true,
+      "has_file_input": false,
+      "has_enctype": false,
+      "has_submit": true,
+      "submit_has_testid": false,
+      "field_counts": {
+        "inputs": 1,
+        "selects": 0,
+        "textareas": 0
+      }
+    }
+  },
+  {
+    "file": "templates\\accounts\\user_list.html",
+    "form_index": 3,
+    "line": 222,
+    "issues": [],
+    "details": {
+      "method": "POST",
+      "action": "{% url ",
+      "has_csrf": true,
+      "has_file_input": false,
+      "has_enctype": false,
+      "has_submit": true,
+      "submit_has_testid": false,
+      "field_counts": {
+        "inputs": 1,
+        "selects": 0,
+        "textareas": 0
+      }
+    }
+  },
+  {
+    "file": "templates\\accounts\\user_list.html",
+    "form_index": 4,
+    "line": 268,
+    "issues": [
+      "POST form with empty action (relies on current URL)"
+    ],
+    "details": {
+      "method": "POST",
+      "action": "",
+      "has_csrf": true,
+      "has_file_input": false,
+      "has_enctype": false,
+      "has_submit": true,
+      "submit_has_testid": false,
+      "field_counts": {
+        "inputs": 1,
+        "selects": 0,
+        "textareas": 0
+      }
+    }
+  },
+  {
+    "file": "templates\\accounts\\user_list.html",
+    "form_index": 5,
+    "line": 294,
+    "issues": [
+      "POST form with empty action (relies on current URL)"
+    ],
+    "details": {
+      "method": "POST",
+      "action": "",
+      "has_csrf": true,
+      "has_file_input": false,
+      "has_enctype": false,
+      "has_submit": true,
+      "submit_has_testid": false,
+      "field_counts": {
+        "inputs": 0,
+        "selects": 1,
+        "textareas": 0
+      }
+    }
+  },
+  {
+    "file": "templates\\accounts\\user_list.html",
+    "form_index": 6,
+    "line": 324,
+    "issues": [
+      "POST form with empty action (relies on current URL)"
+    ],
+    "details": {
+      "method": "POST",
+      "action": "",
+      "has_csrf": true,
+      "has_file_input": false,
+      "has_enctype": false,
+      "has_submit": true,
+      "submit_has_testid": false,
+      "field_counts": {
+        "inputs": 0,
+        "selects": 2,
+        "textareas": 0
+      }
+    }
+  },
+  {
+    "file": "templates\\admissions\\admission_detail.html",
+    "form_index": 1,
+    "line": 150,
+    "issues": [],
+    "details": {
+      "method": "POST",
+      "action": "{% url ",
+      "has_csrf": true,
+      "has_file_input": false,
+      "has_enctype": false,
+      "has_submit": true,
+      "submit_has_testid": false,
+      "field_counts": {
+        "inputs": 0,
+        "selects": 0,
+        "textareas": 1
+      }
+    }
+  },
+  {
+    "file": "templates\\admissions\\admission_detail.html",
+    "form_index": 2,
+    "line": 169,
+    "issues": [],
+    "details": {
+      "method": "POST",
+      "action": "{% url ",
+      "has_csrf": true,
+      "has_file_input": false,
+      "has_enctype": false,
+      "has_submit": true,
+      "submit_has_testid": false,
+      "field_counts": {
+        "inputs": 0,
+        "selects": 0,
+        "textareas": 0
+      }
+    }
+  },
+  {
+    "file": "templates\\admissions\\admission_detail.html",
+    "form_index": 3,
+    "line": 179,
+    "issues": [
+      "POST form with empty action (relies on current URL)"
+    ],
+    "details": {
+      "method": "POST",
+      "action": "",
+      "has_csrf": true,
+      "has_file_input": false,
+      "has_enctype": false,
+      "has_submit": true,
+      "submit_has_testid": false,
+      "field_counts": {
+        "inputs": 0,
+        "selects": 0,
+        "textareas": 1
+      }
+    }
+  },
+  {
+    "file": "templates\\admissions\\admission_detail.html",
+    "form_index": 4,
+    "line": 200,
+    "issues": [],
+    "details": {
+      "method": "POST",
+      "action": "{% url ",
+      "has_csrf": true,
+      "has_file_input": false,
+      "has_enctype": false,
+      "has_submit": true,
+      "submit_has_testid": false,
+      "field_counts": {
+        "inputs": 0,
+        "selects": 0,
+        "textareas": 0
+      }
+    }
+  },
+  {
+    "file": "templates\\admissions\\admission_list.html",
+    "form_index": 1,
+    "line": 32,
+    "issues": [],
+    "details": {
+      "method": "GET",
+      "action": "",
+      "has_csrf": false,
+      "has_file_input": false,
+      "has_enctype": false,
+      "has_submit": true,
+      "submit_has_testid": false,
+      "field_counts": {
+        "inputs": 1,
+        "selects": 2,
+        "textareas": 0
+      }
+    }
+  },
+  {
+    "file": "templates\\admissions\\public_form.html",
+    "form_index": 1,
+    "line": 53,
+    "issues": [
+      "POST form with empty action (relies on current URL)"
+    ],
+    "details": {
+      "method": "POST",
+      "action": "",
+      "has_csrf": true,
+      "has_file_input": false,
+      "has_enctype": true,
+      "has_submit": true,
+      "submit_has_testid": false,
+      "field_counts": {
+        "inputs": 0,
+        "selects": 0,
+        "textareas": 0
+      }
+    }
+  },
+  {
+    "file": "templates\\components\\form.html",
+    "form_index": 1,
+    "line": 5,
+    "issues": [
+      "POST form with empty action (relies on current URL)"
+    ],
+    "details": {
+      "method": "POST",
+      "action": "",
+      "has_csrf": true,
+      "has_file_input": false,
+      "has_enctype": true,
+      "has_submit": true,
+      "submit_has_testid": false,
+      "field_counts": {
+        "inputs": 0,
+        "selects": 0,
+        "textareas": 0
+      }
+    }
+  },
+  {
+    "file": "templates\\dashboard\\permissions.html",
+    "form_index": 1,
+    "line": 25,
+    "issues": [
+      "POST form with empty action (relies on current URL)"
+    ],
+    "details": {
+      "method": "POST",
+      "action": "",
+      "has_csrf": true,
+      "has_file_input": false,
+      "has_enctype": false,
+      "has_submit": true,
+      "submit_has_testid": false,
+      "field_counts": {
+        "inputs": 6,
+        "selects": 0,
+        "textareas": 0
+      }
+    }
+  },
+  {
+    "file": "templates\\documents\\pdf_comparison.html",
+    "form_index": 1,
+    "line": 36,
+    "issues": [],
+    "details": {
+      "method": "POST",
+      "action": "/panel/admin/pdf-comparison/",
+      "has_csrf": true,
+      "has_file_input": true,
+      "has_enctype": true,
+      "has_submit": true,
+      "submit_has_testid": false,
+      "field_counts": {
+        "inputs": 1,
+        "selects": 1,
+        "textareas": 0
+      }
+    }
+  },
+  {
+    "file": "templates\\exams\\bulk_result_entry.html",
+    "form_index": 1,
+    "line": 34,
+    "issues": [
+      "POST form with empty action (relies on current URL)"
+    ],
+    "details": {
+      "method": "POST",
+      "action": "",
+      "has_csrf": true,
+      "has_file_input": false,
+      "has_enctype": false,
+      "has_submit": true,
+      "submit_has_testid": false,
+      "field_counts": {
+        "inputs": 3,
+        "selects": 1,
+        "textareas": 0
+      }
+    }
+  },
+  {
+    "file": "templates\\exams\\exam_create.html",
+    "form_index": 1,
+    "line": 38,
+    "issues": [
+      "POST form with empty action (relies on current URL)"
+    ],
+    "details": {
+      "method": "POST",
+      "action": "",
+      "has_csrf": true,
+      "has_file_input": false,
+      "has_enctype": false,
+      "has_submit": true,
+      "submit_has_testid": true,
+      "field_counts": {
+        "inputs": 6,
+        "selects": 3,
+        "textareas": 0
+      }
+    }
+  },
+  {
+    "file": "templates\\exams\\exam_list.html",
+    "form_index": 1,
+    "line": 32,
+    "issues": [],
+    "details": {
+      "method": "GET",
+      "action": "",
+      "has_csrf": false,
+      "has_file_input": false,
+      "has_enctype": false,
+      "has_submit": true,
+      "submit_has_testid": false,
+      "field_counts": {
+        "inputs": 0,
+        "selects": 2,
+        "textareas": 0
+      }
+    }
+  },
+  {
+    "file": "templates\\exams\\result_entry.html",
+    "form_index": 1,
+    "line": 33,
+    "issues": [
+      "POST form with empty action (relies on current URL)"
+    ],
+    "details": {
+      "method": "POST",
+      "action": "",
+      "has_csrf": true,
+      "has_file_input": false,
+      "has_enctype": false,
+      "has_submit": true,
+      "submit_has_testid": false,
+      "field_counts": {
+        "inputs": 3,
+        "selects": 1,
+        "textareas": 0
+      }
+    }
+  },
+  {
+    "file": "templates\\finance\\expense_category_form.html",
+    "form_index": 1,
+    "line": 12,
+    "issues": [
+      "POST form with empty action (relies on current URL)"
+    ],
+    "details": {
+      "method": "POST",
+      "action": "",
+      "has_csrf": true,
+      "has_file_input": false,
+      "has_enctype": false,
+      "has_submit": true,
+      "submit_has_testid": false,
+      "field_counts": {
+        "inputs": 0,
+        "selects": 0,
+        "textareas": 0
+      }
+    }
+  },
+  {
+    "file": "templates\\finance\\expense_form.html",
+    "form_index": 1,
+    "line": 12,
+    "issues": [
+      "POST form with empty action (relies on current URL)"
+    ],
+    "details": {
+      "method": "POST",
+      "action": "",
+      "has_csrf": true,
+      "has_file_input": false,
+      "has_enctype": false,
+      "has_submit": true,
+      "submit_has_testid": false,
+      "field_counts": {
+        "inputs": 0,
+        "selects": 0,
+        "textareas": 0
+      }
+    }
+  },
+  {
+    "file": "templates\\finance\\installment_plan_detail.html",
+    "form_index": 1,
+    "line": 107,
+    "issues": [],
+    "details": {
+      "method": "POST",
+      "action": "{% url ",
+      "has_csrf": true,
+      "has_file_input": false,
+      "has_enctype": false,
+      "has_submit": true,
+      "submit_has_testid": false,
+      "field_counts": {
+        "inputs": 2,
+        "selects": 1,
+        "textareas": 0
+      }
+    }
+  },
+  {
+    "file": "templates\\finance\\installment_plan_form.html",
+    "form_index": 1,
+    "line": 12,
+    "issues": [
+      "POST form with empty action (relies on current URL)"
+    ],
+    "details": {
+      "method": "POST",
+      "action": "",
+      "has_csrf": true,
+      "has_file_input": false,
+      "has_enctype": false,
+      "has_submit": true,
+      "submit_has_testid": false,
+      "field_counts": {
+        "inputs": 1,
+        "selects": 1,
+        "textareas": 0
+      }
+    }
+  },
+  {
+    "file": "templates\\finance\\installment_plan_restructure.html",
+    "form_index": 1,
+    "line": 15,
+    "issues": [
+      "POST form with empty action (relies on current URL)"
+    ],
+    "details": {
+      "method": "POST",
+      "action": "",
+      "has_csrf": true,
+      "has_file_input": false,
+      "has_enctype": false,
+      "has_submit": true,
+      "submit_has_testid": false,
+      "field_counts": {
+        "inputs": 1,
+        "selects": 0,
+        "textareas": 0
+      }
+    }
+  },
+  {
+    "file": "templates\\finance\\overdue_list.html",
+    "form_index": 1,
+    "line": 55,
+    "issues": [],
+    "details": {
+      "method": "POST",
+      "action": "{% url ",
+      "has_csrf": true,
+      "has_file_input": false,
+      "has_enctype": false,
+      "has_submit": true,
+      "submit_has_testid": false,
+      "field_counts": {
+        "inputs": 3,
+        "selects": 0,
+        "textareas": 1
+      }
+    }
+  },
+  {
+    "file": "templates\\finance\\payment_form.html",
+    "form_index": 1,
+    "line": 12,
+    "issues": [
+      "POST form with empty action (relies on current URL)"
+    ],
+    "details": {
+      "method": "POST",
+      "action": "",
+      "has_csrf": true,
+      "has_file_input": false,
+      "has_enctype": false,
+      "has_submit": true,
+      "submit_has_testid": false,
+      "field_counts": {
+        "inputs": 0,
+        "selects": 0,
+        "textareas": 0
+      }
+    }
+  },
+  {
+    "file": "templates\\finance\\pending_dues.html",
+    "form_index": 1,
+    "line": 35,
+    "issues": [],
+    "details": {
+      "method": "GET",
+      "action": "",
+      "has_csrf": false,
+      "has_file_input": false,
+      "has_enctype": false,
+      "has_submit": true,
+      "submit_has_testid": false,
+      "field_counts": {
+        "inputs": 2,
+        "selects": 2,
+        "textareas": 0
+      }
+    }
+  },
+  {
+    "file": "templates\\finance\\pending_dues.html",
+    "form_index": 2,
+    "line": 80,
+    "issues": [
+      "POST form with empty action (relies on current URL)"
+    ],
+    "details": {
+      "method": "POST",
+      "action": "",
+      "has_csrf": true,
+      "has_file_input": false,
+      "has_enctype": false,
+      "has_submit": true,
+      "submit_has_testid": false,
+      "field_counts": {
+        "inputs": 2,
+        "selects": 0,
+        "textareas": 0
+      }
+    }
+  },
+  {
+    "file": "templates\\finance\\refund_form.html",
+    "form_index": 1,
+    "line": 12,
+    "issues": [
+      "POST form with empty action (relies on current URL)"
+    ],
+    "details": {
+      "method": "POST",
+      "action": "",
+      "has_csrf": true,
+      "has_file_input": false,
+      "has_enctype": false,
+      "has_submit": true,
+      "submit_has_testid": false,
+      "field_counts": {
+        "inputs": 0,
+        "selects": 1,
+        "textareas": 0
+      }
+    }
+  },
+  {
+    "file": "templates\\notifications\\bulk_send_form.html",
+    "form_index": 1,
+    "line": 14,
+    "issues": [
+      "POST form with empty action (relies on current URL)"
+    ],
+    "details": {
+      "method": "POST",
+      "action": "",
+      "has_csrf": true,
+      "has_file_input": false,
+      "has_enctype": false,
+      "has_submit": true,
+      "submit_has_testid": false,
+      "field_counts": {
+        "inputs": 1,
+        "selects": 2,
+        "textareas": 1
+      }
+    }
+  },
+  {
+    "file": "templates\\notifications\\notification_detail.html",
+    "form_index": 1,
+    "line": 28,
+    "issues": [],
+    "details": {
+      "method": "POST",
+      "action": "{% if ",
+      "has_csrf": true,
+      "has_file_input": false,
+      "has_enctype": false,
+      "has_submit": true,
+      "submit_has_testid": false,
+      "field_counts": {
+        "inputs": 1,
+        "selects": 0,
+        "textareas": 0
+      }
+    }
+  },
+  {
+    "file": "templates\\notifications\\notification_list.html",
+    "form_index": 1,
+    "line": 14,
+    "issues": [],
+    "details": {
+      "method": "POST",
+      "action": "{% if ",
+      "has_csrf": true,
+      "has_file_input": false,
+      "has_enctype": false,
+      "has_submit": true,
+      "submit_has_testid": false,
+      "field_counts": {
+        "inputs": 0,
+        "selects": 0,
+        "textareas": 0
+      }
+    }
+  },
+  {
+    "file": "templates\\notifications\\notification_list.html",
+    "form_index": 2,
+    "line": 25,
+    "issues": [],
+    "details": {
+      "method": "GET",
+      "action": "",
+      "has_csrf": false,
+      "has_file_input": false,
+      "has_enctype": false,
+      "has_submit": true,
+      "submit_has_testid": false,
+      "field_counts": {
+        "inputs": 1,
+        "selects": 1,
+        "textareas": 0
+      }
+    }
+  },
+  {
+    "file": "templates\\notifications\\template_form.html",
+    "form_index": 1,
+    "line": 25,
+    "issues": [
+      "POST form with empty action (relies on current URL)"
+    ],
+    "details": {
+      "method": "POST",
+      "action": "",
+      "has_csrf": true,
+      "has_file_input": false,
+      "has_enctype": false,
+      "has_submit": true,
+      "submit_has_testid": false,
+      "field_counts": {
+        "inputs": 0,
+        "selects": 0,
+        "textareas": 0
+      }
+    }
+  },
+  {
+    "file": "templates\\portal\\notification_list.html",
+    "form_index": 1,
+    "line": 15,
+    "issues": [],
+    "details": {
+      "method": "POST",
+      "action": "{% if role == ",
+      "has_csrf": true,
+      "has_file_input": false,
+      "has_enctype": false,
+      "has_submit": true,
+      "submit_has_testid": false,
+      "field_counts": {
+        "inputs": 0,
+        "selects": 0,
+        "textareas": 0
+      }
+    }
+  },
+  {
+    "file": "templates\\portal\\password_change.html",
+    "form_index": 1,
+    "line": 19,
+    "issues": [],
+    "details": {
+      "method": "POST",
+      "action": "{% if request.resolver_match.namespace == ",
+      "has_csrf": true,
+      "has_file_input": false,
+      "has_enctype": false,
+      "has_submit": true,
+      "submit_has_testid": false,
+      "field_counts": {
+        "inputs": 1,
+        "selects": 0,
+        "textareas": 0
+      }
+    }
+  },
+  {
+    "file": "templates\\portal\\student_profile.html",
+    "form_index": 1,
+    "line": 94,
+    "issues": [],
+    "details": {
+      "method": "POST",
+      "action": "{% url ",
+      "has_csrf": true,
+      "has_file_input": false,
+      "has_enctype": false,
+      "has_submit": true,
+      "submit_has_testid": false,
+      "field_counts": {
+        "inputs": 0,
+        "selects": 0,
+        "textareas": 0
+      }
+    }
+  },
+  {
+    "file": "templates\\public\\success_stories.html",
+    "form_index": 1,
+    "line": 78,
+    "issues": [],
+    "details": {
+      "method": "GET",
+      "action": "",
+      "has_csrf": false,
+      "has_file_input": false,
+      "has_enctype": false,
+      "has_submit": true,
+      "submit_has_testid": false,
+      "field_counts": {
+        "inputs": 0,
+        "selects": 2,
+        "textareas": 0
+      }
+    }
+  },
+  {
+    "file": "templates\\staff\\faculty_assign.html",
+    "form_index": 1,
+    "line": 46,
+    "issues": [
+      "POST form with empty action (relies on current URL)"
+    ],
+    "details": {
+      "method": "POST",
+      "action": "",
+      "has_csrf": true,
+      "has_file_input": false,
+      "has_enctype": false,
+      "has_submit": true,
+      "submit_has_testid": false,
+      "field_counts": {
+        "inputs": 0,
+        "selects": 0,
+        "textareas": 0
+      }
+    }
+  },
+  {
+    "file": "templates\\staff\\faculty_form.html",
+    "form_index": 1,
+    "line": 33,
+    "issues": [
+      "POST form with empty action (relies on current URL)"
+    ],
+    "details": {
+      "method": "POST",
+      "action": "",
+      "has_csrf": true,
+      "has_file_input": false,
+      "has_enctype": false,
+      "has_submit": true,
+      "submit_has_testid": false,
+      "field_counts": {
+        "inputs": 0,
+        "selects": 0,
+        "textareas": 0
+      }
+    }
+  },
+  {
+    "file": "templates\\students\\student_detail.html",
+    "form_index": 1,
+    "line": 708,
+    "issues": [],
+    "details": {
+      "method": "POST",
+      "action": "{% url ",
+      "has_csrf": true,
+      "has_file_input": false,
+      "has_enctype": false,
+      "has_submit": true,
+      "submit_has_testid": false,
+      "field_counts": {
+        "inputs": 0,
+        "selects": 1,
+        "textareas": 0
+      }
+    }
+  },
+  {
+    "file": "templates\\students\\student_form.html",
+    "form_index": 1,
+    "line": 101,
+    "issues": [
+      "POST form with empty action (relies on current URL)"
+    ],
+    "details": {
+      "method": "POST",
+      "action": "",
+      "has_csrf": true,
+      "has_file_input": false,
+      "has_enctype": true,
+      "has_submit": true,
+      "submit_has_testid": false,
+      "field_counts": {
+        "inputs": 0,
+        "selects": 0,
+        "textareas": 0
+      }
+    }
+  },
+  {
+    "file": "templates\\students\\student_list.html",
+    "form_index": 1,
+    "line": 25,
+    "issues": [],
+    "details": {
+      "method": "GET",
+      "action": "",
+      "has_csrf": false,
+      "has_file_input": false,
+      "has_enctype": false,
+      "has_submit": true,
+      "submit_has_testid": false,
+      "field_counts": {
+        "inputs": 1,
+        "selects": 1,
+        "textareas": 0
+      }
+    }
+  }
+]

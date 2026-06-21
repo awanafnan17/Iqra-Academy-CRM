@@ -1,0 +1,448 @@
+{% extends 'layouts/panel_base.html' %}
+{% load static %}
+{% load finance_tags %}
+{% load humanize %}
+
+{% block title %}System Overview - Iqra Academy{% endblock %}
+
+{% block content %}
+<div class="container-fluid px-0">
+    <!-- Page Header -->
+    <div class="p-4 rounded-4 mb-4 card border border-light shadow-sm animate-fade-in">
+        <div class="d-flex justify-content-between align-items-center">
+            <div>
+                <h3 class="fw-bold mb-1">System Overview</h3>
+                <p class="text-secondary mb-0">Operational performance, cash flow, and attendance metrics for Iqra Academy.</p>
+            </div>
+            <div>
+                <span class="badge bg-primary bg-opacity-10 text-primary px-3 py-2 rounded-pill fw-semibold">
+                    <i class="fa-solid fa-shield-halved me-1"></i> Admin Portal
+                </span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Metrics Cards Grid -->
+    <div class="row g-3 mb-4">
+        <!-- Confirmed Revenue -->
+        <div class="col-12 col-sm-6 col-xl-3">
+            <div class="card metric-card h-100">
+                <div class="card-body p-4">
+                    <div class="d-flex align-items-start justify-content-between mb-3">
+                        <div>
+                            <div class="metric-label">Confirmed Revenue</div>
+                            <div
+                                class="metric-value mt-2"
+                                data-target="{{ confirmed_revenue|default:0 }}"
+                                data-duration="1200"
+                                data-prefix="PKR "
+                                data-decimals="0">
+                                {{ confirmed_revenue|default:0 }}
+                            </div>
+                        </div>
+                        <div class="metric-icon">
+                            <i class="fa-solid fa-money-bill-trend-up"></i>
+                        </div>
+                    </div>
+                    <div class="metric-accent">
+                        <i class="fas fa-arrow-up me-1"></i>Active institution
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Net Cash Flow -->
+        <div class="col-12 col-sm-6 col-xl-3">
+            <div class="card metric-card h-100">
+                <div class="card-body p-4">
+                    <div class="d-flex align-items-start justify-content-between mb-3">
+                        <div>
+                            <div class="metric-label">Net Cash Flow</div>
+                            <div
+                                class="metric-value mt-2"
+                                data-target="{{ net_cash_flow|default:0 }}"
+                                data-duration="1200"
+                                data-prefix="PKR "
+                                data-decimals="0">
+                                {{ net_cash_flow|default:0 }}
+                            </div>
+                        </div>
+                        <div class="metric-icon">
+                            <i class="fa-solid fa-wallet"></i>
+                        </div>
+                    </div>
+                    <div class="metric-accent">
+                        <i class="fas fa-arrow-up me-1"></i>Active institution
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Approved Expenses -->
+        <div class="col-12 col-sm-6 col-xl-3">
+            <div class="card metric-card h-100">
+                <div class="card-body p-4">
+                    <div class="d-flex align-items-start justify-content-between mb-3">
+                        <div>
+                            <div class="metric-label">Approved Expenses</div>
+                            <div
+                                class="metric-value mt-2"
+                                data-target="{{ metrics.approved_expenses|default:0 }}"
+                                data-duration="1200"
+                                data-prefix="PKR "
+                                data-decimals="0">
+                                {{ metrics.approved_expenses|default:0 }}
+                            </div>
+                        </div>
+                        <div class="metric-icon">
+                            <i class="fa-solid fa-receipt"></i>
+                        </div>
+                    </div>
+                    <div class="metric-accent">
+                        <i class="fas fa-arrow-up me-1"></i>Active institution
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Processed Refunds -->
+        <div class="col-12 col-sm-6 col-xl-3">
+            <div class="card metric-card h-100">
+                <div class="card-body p-4">
+                    <div class="d-flex align-items-start justify-content-between mb-3">
+                        <div>
+                            <div class="metric-label">Processed Refunds</div>
+                            <div
+                                class="metric-value mt-2"
+                                data-target="{{ metrics.processed_refunds|default:0 }}"
+                                data-duration="1200"
+                                data-prefix="PKR "
+                                data-decimals="0">
+                                {{ metrics.processed_refunds|default:0 }}
+                            </div>
+                        </div>
+                        <div class="metric-icon">
+                            <i class="fa-solid fa-arrow-rotate-left"></i>
+                        </div>
+                    </div>
+                    <div class="metric-accent">
+                        <i class="fas fa-arrow-up me-1"></i>Active institution
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Active Students -->
+        <div class="col-12 col-sm-6 col-xl-3">
+            <div class="card metric-card h-100">
+                <div class="card-body p-4">
+                    <div class="d-flex align-items-start justify-content-between mb-3">
+                        <div>
+                            <div class="metric-label">Active Students</div>
+                            <div
+                                class="metric-value mt-2"
+                                data-target="{{ metrics.active_students|default:0 }}"
+                                data-duration="1200"
+                                data-decimals="0">
+                                {{ metrics.active_students|default:0 }}
+                            </div>
+                        </div>
+                        <div class="metric-icon">
+                            <i class="fa-solid fa-user-graduate"></i>
+                        </div>
+                    </div>
+                    <div class="metric-accent">
+                        <i class="fas fa-arrow-up me-1"></i>Active institution
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Low Attendance Count -->
+        <div class="col-12 col-sm-6 col-xl-3">
+            <div class="card metric-card h-100">
+                <div class="card-body p-4">
+                    <div class="d-flex align-items-start justify-content-between mb-3">
+                        <div>
+                            <div class="metric-label">Low Attendance (<70%)</div>
+                            <div
+                                class="metric-value mt-2"
+                                data-target="{{ metrics.low_attendance_count|default:0 }}"
+                                data-duration="1200"
+                                data-decimals="0">
+                                {{ metrics.low_attendance_count|default:0 }}
+                            </div>
+                        </div>
+                        <div class="metric-icon">
+                            <i class="fa-solid fa-calendar-times"></i>
+                        </div>
+                    </div>
+                    <div class="metric-accent">
+                        <i class="fas fa-arrow-up me-1"></i>Active institution
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Dropout Alerts -->
+        <div class="col-12 col-sm-6 col-xl-3">
+            <a href="{% url 'admin_panel:ai_engine:dropout_risk_dashboard' %}" class="text-decoration-none text-reset">
+                <div class="card metric-card h-100 cursor-pointer">
+                    <div class="card-body p-4">
+                        <div class="d-flex align-items-start justify-content-between mb-3">
+                            <div>
+                                <div class="metric-label">Active Dropout Alerts</div>
+                                <div
+                                    class="metric-value mt-2"
+                                    data-target="{{ metrics.dropout_alerts_count|default:0 }}"
+                                    data-duration="1200"
+                                    data-decimals="0">
+                                    {{ metrics.dropout_alerts_count|default:0 }}
+                                </div>
+                            </div>
+                            <div class="metric-icon">
+                                <i class="fa-solid fa-triangle-exclamation"></i>
+                            </div>
+                        </div>
+                        <div class="metric-accent">
+                            <i class="fas fa-arrow-up me-1"></i>Active institution
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <!-- System Academic Score -->
+        <div class="col-12 col-sm-6 col-xl-3">
+            <div class="card metric-card h-100">
+                <div class="card-body p-4">
+                    <div class="d-flex align-items-start justify-content-between mb-3">
+                        <div>
+                            <div class="metric-label">System Academic Score</div>
+                            <div
+                                class="metric-value mt-2"
+                                data-target="{{ metrics.system_academic_score|default:0 }}"
+                                data-duration="1200"
+                                data-suffix="%"
+                                data-decimals="0">
+                                {{ metrics.system_academic_score|default:0 }}
+                            </div>
+                        </div>
+                        <div class="metric-icon">
+                            <i class="fa-solid fa-graduation-cap"></i>
+                        </div>
+                    </div>
+                    <div class="metric-accent">
+                        <i class="fas fa-arrow-up me-1"></i>Active institution
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pending Admissions -->
+        <div class="col-12 col-sm-6 col-xl-3">
+            <div class="card metric-card h-100">
+                <div class="card-body p-4">
+                    <div class="d-flex align-items-start justify-content-between mb-3">
+                        <div>
+                            <div class="metric-label">Pending Admissions</div>
+                            <div
+                                class="metric-value mt-2"
+                                data-target="{{ metrics.pending_admissions_count|default:0 }}"
+                                data-duration="1200"
+                                data-decimals="0">
+                                {{ metrics.pending_admissions_count|default:0 }}
+                            </div>
+                        </div>
+                        <div class="metric-icon">
+                            <i class="fa-solid fa-file-invoice"></i>
+                        </div>
+                    </div>
+                    <div class="metric-accent">
+                        <i class="fas fa-arrow-up me-1"></i>Active institution
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Monthly Approvals -->
+        <div class="col-12 col-sm-6 col-xl-3">
+            <div class="card metric-card h-100">
+                <div class="card-body p-4">
+                    <div class="d-flex align-items-start justify-content-between mb-3">
+                        <div>
+                            <div class="metric-label">Monthly Approvals</div>
+                            <div
+                                class="metric-value mt-2"
+                                data-target="{{ metrics.monthly_approvals_count|default:0 }}"
+                                data-duration="1200"
+                                data-decimals="0">
+                                {{ metrics.monthly_approvals_count|default:0 }}
+                            </div>
+                        </div>
+                        <div class="metric-icon">
+                            <i class="fa-solid fa-circle-check"></i>
+                        </div>
+                    </div>
+                    <div class="metric-accent">
+                        <i class="fas fa-arrow-up me-1"></i>Active institution
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Analytics Dashboard Section -->
+    <div class="row g-4 mt-2">
+        <!-- Revenue Trend Line Chart -->
+        <div class="col-12 col-lg-8">
+            <div class="card p-4 animate-fade-in stagger-6 h-100">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h5 class="fw-bold mb-0">Financial Revenue Trend</h5>
+                    <span class="text-muted small font-monospace">CONFIRMED CASH FLOW</span>
+                </div>
+                <div class="chart-container chart-container-lg">
+                    <canvas id="revenueChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Payment Aging Horizontal Bar Chart -->
+        <div class="col-12 col-lg-4">
+            <div class="card p-4 animate-fade-in stagger-6 h-100">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h5 class="fw-bold mb-0">Outstanding Payment Aging</h5>
+                    <span class="badge bg-danger bg-opacity-10 text-danger rounded-pill font-monospace small">OVERDUE</span>
+                </div>
+                <div class="chart-container chart-container-lg">
+                    <canvas id="agingChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-4 mt-2">
+        <!-- Attendance Stacked Bar Chart -->
+        <div class="col-12 col-lg-6">
+            <div class="card p-4 animate-fade-in stagger-7 h-100">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h5 class="fw-bold mb-0">Attendance Logs (Daily)</h5>
+                    <span class="text-muted small font-monospace">STUDENT PRESENT / ABSENT</span>
+                </div>
+                <div class="chart-container chart-container-md">
+                    <canvas id="attendanceChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Enrollment Growth Combined Chart -->
+        <div class="col-12 col-lg-3">
+            <div class="card p-4 animate-fade-in stagger-7 h-100">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h5 class="fw-bold mb-0">Enrollment Growth</h5>
+                    <span class="text-muted small font-monospace">MONTHLY TREND</span>
+                </div>
+                <div class="chart-container chart-container-md">
+                    <canvas id="growthChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Lead Funnel Donut Chart -->
+        <div class="col-12 col-lg-3">
+            <div class="card p-4 animate-fade-in stagger-7 h-100">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h5 class="fw-bold mb-0">Lead Conversion Funnel</h5>
+                    <span class="text-muted small font-monospace">CONVERSION RATE</span>
+                </div>
+                <div class="chart-container chart-container-md">
+                    <canvas id="conversionChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- AI Alerts & Insights Summary Section -->
+    <div class="row g-4 mt-2 mb-4">
+        <div class="col-12">
+            <div class="card p-4 animate-fade-in stagger-8 border border-warning border-opacity-20 bg-warning bg-opacity-5">
+                <div class="d-flex align-items-center mb-3">
+                    <div class="me-3 text-warning">
+                        <i class="fa-solid fa-microchip-ai fa-2xl"></i>
+                    </div>
+                    <div>
+                        <h5 class="fw-bold mb-0">AI Cognitive Alert & Analytics Insights</h5>
+                        <p class="text-secondary mb-0 small">Automated risk assessments and database anomalies computed by the Iqra Academy Engine.</p>
+                    </div>
+                </div>
+                <div class="row g-3">
+                    <div class="col-12 col-md-4">
+                        <div class="p-3 rounded-3 shadow-sm border border-light d-flex align-items-center">
+                            <span class="badge bg-danger p-2 rounded-circle me-3"><i class="fa-solid fa-triangle-exclamation"></i></span>
+                            <div>
+                                <span class="text-muted small">Academic Risk</span>
+                                <h6 class="fw-bold mb-0 mt-1">{{ metrics.dropout_alerts_count }} Students at risk of dropout</h6>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-4">
+                        <div class="p-3 rounded-3 shadow-sm border border-light d-flex align-items-center">
+                            <span class="badge bg-warning p-2 rounded-circle me-3"><i class="fa-solid fa-user-xmark"></i></span>
+                            <div>
+                                <span class="text-muted small">Attendance Risk</span>
+                                <h6 class="fw-bold mb-0 mt-1">{{ metrics.low_attendance_count }} Courses flag low attendance</h6>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-4">
+                        <div class="p-3 rounded-3 shadow-sm border border-light d-flex align-items-center">
+                            <span class="badge bg-primary p-2 rounded-circle me-3"><i class="fa-solid fa-money-bill-wave"></i></span>
+                            <div>
+                                <span class="text-muted small">Financial Risk</span>
+                                <h6 class="fw-bold mb-0 mt-1">Aging balances report verified</h6>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/charts.js' %}"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const countUpElements = document.querySelectorAll(".count-up");
+    countUpElements.forEach(el => {
+        const target = parseFloat(el.getAttribute("data-count-to")) || 0;
+        const prefix = el.getAttribute("data-prefix") || "";
+        const suffix = el.getAttribute("data-suffix") || "";
+        const duration = 1500;
+        const frameRate = 60;
+        const totalFrames = Math.round(duration / (1000 / frameRate));
+        let frame = 0;
+
+        const animate = () => {
+            frame++;
+            const progress = frame / totalFrames;
+            const easeProgress = progress * (2 - progress);
+            const currentValue = Math.round(target * easeProgress);
+            const formattedValue = currentValue.toLocaleString('en-US');
+            el.textContent = prefix + formattedValue + suffix;
+
+            if (frame < totalFrames) {
+                requestAnimationFrame(animate);
+            } else {
+                el.textContent = prefix + target.toLocaleString('en-US') + suffix;
+            }
+        };
+
+        if (target > 0) {
+            animate();
+        }
+    });
+});
+</script>
+{% endblock %}

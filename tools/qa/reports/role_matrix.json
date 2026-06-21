@@ -1,0 +1,29 @@
+{
+  "roles_tested": [
+    "Admin",
+    "Principal",
+    "Registrar",
+    "Accountant",
+    "Teacher",
+    "Student",
+    "Guardian",
+    "Anonymous",
+    "Inactive"
+  ],
+  "modules_covered": [
+    "dashboard",
+    "profile",
+    "student_list",
+    "finance",
+    "notifications",
+    "automation",
+    "portals"
+  ],
+  "object_level_tests": [
+    "student-student isolation",
+    "guardian-child isolation",
+    "teacher POST bypass",
+    "registrar approval bypass"
+  ],
+  "denial_mechanism": "URL-prefix routing: /panel/admin/ vs /panel/teacher/ etc. Unauthorized roles get 404 (no matching URL), not 403."
+}

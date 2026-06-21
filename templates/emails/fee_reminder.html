@@ -1,0 +1,23 @@
+{% extends "emails/base_email.html" %}
+
+{% block subject %}{{ title }}{% endblock %}
+
+{% block content %}
+<h2 style="color: #1e3a8a; margin-top: 0;">Overdue Fee Notice</h2>
+<p>Dear {{ recipient_name }},</p>
+<p>This is a formal reminder that there is an outstanding balance on your account.</p>
+
+<div >
+    <p style="margin: 0; font-size: 15px; color: #b45309;">
+        <strong>Details:</strong> {{ content }}
+    </p>
+</div>
+
+<p>To ensure uninterrupted access to academic resources, portal access, and classes, please clear your outstanding dues as soon as possible.</p>
+
+<div style="text-align: center; margin: 30px 0;">
+    <a href="{{ portal_url }}" class="btn" style="background-color: #d97706;">View Dues & Pay Online</a>
+</div>
+
+<p>If you have already made this payment, please disregard this notice or contact the accounts department with your payment receipt.</p>
+{% endblock %}

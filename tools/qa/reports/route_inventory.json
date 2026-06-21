@@ -1,0 +1,5353 @@
+[
+  {
+    "path": "/",
+    "view": "RedirectView",
+    "url_name": "home",
+    "namespace": "",
+    "methods": [
+      "GET",
+      "POST",
+      "PUT",
+      "PATCH",
+      "DELETE"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/admin/",
+    "view": "index",
+    "url_name": ":admin:index",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/admin/login/",
+    "view": "login",
+    "url_name": ":admin:login",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/admin/logout/",
+    "view": "logout",
+    "url_name": ":admin:logout",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/admin/password_change/",
+    "view": "password_change",
+    "url_name": ":admin:password_change",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/admin/password_change/done/",
+    "view": "password_change_done",
+    "url_name": ":admin:password_change_done",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/admin/autocomplete/",
+    "view": "autocomplete_view",
+    "url_name": ":admin:autocomplete",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/admin/jsi18n/",
+    "view": "i18n_javascript",
+    "url_name": ":admin:jsi18n",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/admin/r/<int:content_type_id>/<path:object_id>/",
+    "view": "shortcut",
+    "url_name": ":admin:view_on_site",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/admin/auth/group/",
+    "view": "changelist_view",
+    "url_name": ":admin:auth_group_changelist",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/admin/auth/group/add/",
+    "view": "add_view",
+    "url_name": ":admin:auth_group_add",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/admin/auth/group/<path:object_id>/history/",
+    "view": "history_view",
+    "url_name": ":admin:auth_group_history",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/admin/auth/group/<path:object_id>/delete/",
+    "view": "delete_view",
+    "url_name": ":admin:auth_group_delete",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/admin/auth/group/<path:object_id>/change/",
+    "view": "change_view",
+    "url_name": ":admin:auth_group_change",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/admin/auth/group/<path:object_id>/",
+    "view": "RedirectView",
+    "url_name": "",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST",
+      "PUT",
+      "PATCH",
+      "DELETE"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/admin/core/auditlog/",
+    "view": "changelist_view",
+    "url_name": ":admin:core_auditlog_changelist",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/admin/core/auditlog/add/",
+    "view": "add_view",
+    "url_name": ":admin:core_auditlog_add",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/admin/core/auditlog/<path:object_id>/history/",
+    "view": "history_view",
+    "url_name": ":admin:core_auditlog_history",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/admin/core/auditlog/<path:object_id>/delete/",
+    "view": "delete_view",
+    "url_name": ":admin:core_auditlog_delete",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/admin/core/auditlog/<path:object_id>/change/",
+    "view": "change_view",
+    "url_name": ":admin:core_auditlog_change",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/admin/core/auditlog/<path:object_id>/",
+    "view": "RedirectView",
+    "url_name": "",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST",
+      "PUT",
+      "PATCH",
+      "DELETE"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/admin/accounts/customuser/<id>/password/",
+    "view": "user_change_password",
+    "url_name": ":admin:auth_user_password_change",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/admin/accounts/customuser/",
+    "view": "changelist_view",
+    "url_name": ":admin:accounts_customuser_changelist",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/admin/accounts/customuser/add/",
+    "view": "add_view",
+    "url_name": ":admin:accounts_customuser_add",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/admin/accounts/customuser/<path:object_id>/history/",
+    "view": "history_view",
+    "url_name": ":admin:accounts_customuser_history",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/admin/accounts/customuser/<path:object_id>/delete/",
+    "view": "delete_view",
+    "url_name": ":admin:accounts_customuser_delete",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/admin/accounts/customuser/<path:object_id>/change/",
+    "view": "change_view",
+    "url_name": ":admin:accounts_customuser_change",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/admin/accounts/customuser/<path:object_id>/",
+    "view": "RedirectView",
+    "url_name": "",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST",
+      "PUT",
+      "PATCH",
+      "DELETE"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/admin/accounts/userprofile/",
+    "view": "changelist_view",
+    "url_name": ":admin:accounts_userprofile_changelist",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/admin/accounts/userprofile/add/",
+    "view": "add_view",
+    "url_name": ":admin:accounts_userprofile_add",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/admin/accounts/userprofile/<path:object_id>/history/",
+    "view": "history_view",
+    "url_name": ":admin:accounts_userprofile_history",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/admin/accounts/userprofile/<path:object_id>/delete/",
+    "view": "delete_view",
+    "url_name": ":admin:accounts_userprofile_delete",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/admin/accounts/userprofile/<path:object_id>/change/",
+    "view": "change_view",
+    "url_name": ":admin:accounts_userprofile_change",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/admin/accounts/userprofile/<path:object_id>/",
+    "view": "RedirectView",
+    "url_name": "",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST",
+      "PUT",
+      "PATCH",
+      "DELETE"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/admin/academics/session/",
+    "view": "changelist_view",
+    "url_name": ":admin:academics_session_changelist",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/admin/academics/session/add/",
+    "view": "add_view",
+    "url_name": ":admin:academics_session_add",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/admin/academics/session/<path:object_id>/history/",
+    "view": "history_view",
+    "url_name": ":admin:academics_session_history",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/admin/academics/session/<path:object_id>/delete/",
+    "view": "delete_view",
+    "url_name": ":admin:academics_session_delete",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/admin/academics/session/<path:object_id>/change/",
+    "view": "change_view",
+    "url_name": ":admin:academics_session_change",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/admin/academics/session/<path:object_id>/",
+    "view": "RedirectView",
+    "url_name": "",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST",
+      "PUT",
+      "PATCH",
+      "DELETE"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/admin/academics/subject/",
+    "view": "changelist_view",
+    "url_name": ":admin:academics_subject_changelist",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/admin/academics/subject/add/",
+    "view": "add_view",
+    "url_name": ":admin:academics_subject_add",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/admin/academics/subject/<path:object_id>/history/",
+    "view": "history_view",
+    "url_name": ":admin:academics_subject_history",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/admin/academics/subject/<path:object_id>/delete/",
+    "view": "delete_view",
+    "url_name": ":admin:academics_subject_delete",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/admin/academics/subject/<path:object_id>/change/",
+    "view": "change_view",
+    "url_name": ":admin:academics_subject_change",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/admin/academics/subject/<path:object_id>/",
+    "view": "RedirectView",
+    "url_name": "",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST",
+      "PUT",
+      "PATCH",
+      "DELETE"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/admin/academics/teacherassignment/",
+    "view": "changelist_view",
+    "url_name": ":admin:academics_teacherassignment_changelist",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/admin/academics/teacherassignment/add/",
+    "view": "add_view",
+    "url_name": ":admin:academics_teacherassignment_add",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/admin/academics/teacherassignment/<path:object_id>/history/",
+    "view": "history_view",
+    "url_name": ":admin:academics_teacherassignment_history",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/admin/academics/teacherassignment/<path:object_id>/delete/",
+    "view": "delete_view",
+    "url_name": ":admin:academics_teacherassignment_delete",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/admin/academics/teacherassignment/<path:object_id>/change/",
+    "view": "change_view",
+    "url_name": ":admin:academics_teacherassignment_change",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/admin/academics/teacherassignment/<path:object_id>/",
+    "view": "RedirectView",
+    "url_name": "",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST",
+      "PUT",
+      "PATCH",
+      "DELETE"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/admin/students/student/",
+    "view": "changelist_view",
+    "url_name": ":admin:students_student_changelist",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/admin/students/student/add/",
+    "view": "add_view",
+    "url_name": ":admin:students_student_add",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/admin/students/student/<path:object_id>/history/",
+    "view": "history_view",
+    "url_name": ":admin:students_student_history",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/admin/students/student/<path:object_id>/delete/",
+    "view": "delete_view",
+    "url_name": ":admin:students_student_delete",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/admin/students/student/<path:object_id>/change/",
+    "view": "change_view",
+    "url_name": ":admin:students_student_change",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/admin/students/student/<path:object_id>/",
+    "view": "RedirectView",
+    "url_name": "",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST",
+      "PUT",
+      "PATCH",
+      "DELETE"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/admin/students/lead/",
+    "view": "changelist_view",
+    "url_name": ":admin:students_lead_changelist",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/admin/students/lead/add/",
+    "view": "add_view",
+    "url_name": ":admin:students_lead_add",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/admin/students/lead/<path:object_id>/history/",
+    "view": "history_view",
+    "url_name": ":admin:students_lead_history",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/admin/students/lead/<path:object_id>/delete/",
+    "view": "delete_view",
+    "url_name": ":admin:students_lead_delete",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/admin/students/lead/<path:object_id>/change/",
+    "view": "change_view",
+    "url_name": ":admin:students_lead_change",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/admin/students/lead/<path:object_id>/",
+    "view": "RedirectView",
+    "url_name": "",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST",
+      "PUT",
+      "PATCH",
+      "DELETE"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/admin/students/enrollment/",
+    "view": "changelist_view",
+    "url_name": ":admin:students_enrollment_changelist",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/admin/students/enrollment/add/",
+    "view": "add_view",
+    "url_name": ":admin:students_enrollment_add",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/admin/students/enrollment/<path:object_id>/history/",
+    "view": "history_view",
+    "url_name": ":admin:students_enrollment_history",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/admin/students/enrollment/<path:object_id>/delete/",
+    "view": "delete_view",
+    "url_name": ":admin:students_enrollment_delete",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/admin/students/enrollment/<path:object_id>/change/",
+    "view": "change_view",
+    "url_name": ":admin:students_enrollment_change",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/admin/students/enrollment/<path:object_id>/",
+    "view": "RedirectView",
+    "url_name": "",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST",
+      "PUT",
+      "PATCH",
+      "DELETE"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/admin/students/studentdocument/",
+    "view": "changelist_view",
+    "url_name": ":admin:students_studentdocument_changelist",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/admin/students/studentdocument/add/",
+    "view": "add_view",
+    "url_name": ":admin:students_studentdocument_add",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/admin/students/studentdocument/<path:object_id>/history/",
+    "view": "history_view",
+    "url_name": ":admin:students_studentdocument_history",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/admin/students/studentdocument/<path:object_id>/delete/",
+    "view": "delete_view",
+    "url_name": ":admin:students_studentdocument_delete",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/admin/students/studentdocument/<path:object_id>/change/",
+    "view": "change_view",
+    "url_name": ":admin:students_studentdocument_change",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/admin/students/studentdocument/<path:object_id>/",
+    "view": "RedirectView",
+    "url_name": "",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST",
+      "PUT",
+      "PATCH",
+      "DELETE"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/admin/students/guardian/",
+    "view": "changelist_view",
+    "url_name": ":admin:students_guardian_changelist",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/admin/students/guardian/add/",
+    "view": "add_view",
+    "url_name": ":admin:students_guardian_add",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/admin/students/guardian/<path:object_id>/history/",
+    "view": "history_view",
+    "url_name": ":admin:students_guardian_history",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/admin/students/guardian/<path:object_id>/delete/",
+    "view": "delete_view",
+    "url_name": ":admin:students_guardian_delete",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/admin/students/guardian/<path:object_id>/change/",
+    "view": "change_view",
+    "url_name": ":admin:students_guardian_change",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/admin/students/guardian/<path:object_id>/",
+    "view": "RedirectView",
+    "url_name": "",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST",
+      "PUT",
+      "PATCH",
+      "DELETE"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/admin/finance/payment/",
+    "view": "changelist_view",
+    "url_name": ":admin:finance_payment_changelist",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/admin/finance/payment/add/",
+    "view": "add_view",
+    "url_name": ":admin:finance_payment_add",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/admin/finance/payment/<path:object_id>/history/",
+    "view": "history_view",
+    "url_name": ":admin:finance_payment_history",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/admin/finance/payment/<path:object_id>/delete/",
+    "view": "delete_view",
+    "url_name": ":admin:finance_payment_delete",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/admin/finance/payment/<path:object_id>/change/",
+    "view": "change_view",
+    "url_name": ":admin:finance_payment_change",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/admin/finance/payment/<path:object_id>/",
+    "view": "RedirectView",
+    "url_name": "",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST",
+      "PUT",
+      "PATCH",
+      "DELETE"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/admin/finance/installmentplan/",
+    "view": "changelist_view",
+    "url_name": ":admin:finance_installmentplan_changelist",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/admin/finance/installmentplan/add/",
+    "view": "add_view",
+    "url_name": ":admin:finance_installmentplan_add",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/admin/finance/installmentplan/<path:object_id>/history/",
+    "view": "history_view",
+    "url_name": ":admin:finance_installmentplan_history",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/admin/finance/installmentplan/<path:object_id>/delete/",
+    "view": "delete_view",
+    "url_name": ":admin:finance_installmentplan_delete",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/admin/finance/installmentplan/<path:object_id>/change/",
+    "view": "change_view",
+    "url_name": ":admin:finance_installmentplan_change",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/admin/finance/installmentplan/<path:object_id>/",
+    "view": "RedirectView",
+    "url_name": "",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST",
+      "PUT",
+      "PATCH",
+      "DELETE"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/admin/finance/installment/",
+    "view": "changelist_view",
+    "url_name": ":admin:finance_installment_changelist",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/admin/finance/installment/add/",
+    "view": "add_view",
+    "url_name": ":admin:finance_installment_add",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/admin/finance/installment/<path:object_id>/history/",
+    "view": "history_view",
+    "url_name": ":admin:finance_installment_history",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/admin/finance/installment/<path:object_id>/delete/",
+    "view": "delete_view",
+    "url_name": ":admin:finance_installment_delete",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/admin/finance/installment/<path:object_id>/change/",
+    "view": "change_view",
+    "url_name": ":admin:finance_installment_change",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/admin/finance/installment/<path:object_id>/",
+    "view": "RedirectView",
+    "url_name": "",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST",
+      "PUT",
+      "PATCH",
+      "DELETE"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/admin/finance/expensecategory/",
+    "view": "changelist_view",
+    "url_name": ":admin:finance_expensecategory_changelist",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/admin/finance/expensecategory/add/",
+    "view": "add_view",
+    "url_name": ":admin:finance_expensecategory_add",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/admin/finance/expensecategory/<path:object_id>/history/",
+    "view": "history_view",
+    "url_name": ":admin:finance_expensecategory_history",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/admin/finance/expensecategory/<path:object_id>/delete/",
+    "view": "delete_view",
+    "url_name": ":admin:finance_expensecategory_delete",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/admin/finance/expensecategory/<path:object_id>/change/",
+    "view": "change_view",
+    "url_name": ":admin:finance_expensecategory_change",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/admin/finance/expensecategory/<path:object_id>/",
+    "view": "RedirectView",
+    "url_name": "",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST",
+      "PUT",
+      "PATCH",
+      "DELETE"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/admin/finance/expense/",
+    "view": "changelist_view",
+    "url_name": ":admin:finance_expense_changelist",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/admin/finance/expense/add/",
+    "view": "add_view",
+    "url_name": ":admin:finance_expense_add",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/admin/finance/expense/<path:object_id>/history/",
+    "view": "history_view",
+    "url_name": ":admin:finance_expense_history",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/admin/finance/expense/<path:object_id>/delete/",
+    "view": "delete_view",
+    "url_name": ":admin:finance_expense_delete",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/admin/finance/expense/<path:object_id>/change/",
+    "view": "change_view",
+    "url_name": ":admin:finance_expense_change",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/admin/finance/expense/<path:object_id>/",
+    "view": "RedirectView",
+    "url_name": "",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST",
+      "PUT",
+      "PATCH",
+      "DELETE"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/admin/finance/refund/",
+    "view": "changelist_view",
+    "url_name": ":admin:finance_refund_changelist",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/admin/finance/refund/add/",
+    "view": "add_view",
+    "url_name": ":admin:finance_refund_add",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/admin/finance/refund/<path:object_id>/history/",
+    "view": "history_view",
+    "url_name": ":admin:finance_refund_history",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/admin/finance/refund/<path:object_id>/delete/",
+    "view": "delete_view",
+    "url_name": ":admin:finance_refund_delete",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/admin/finance/refund/<path:object_id>/change/",
+    "view": "change_view",
+    "url_name": ":admin:finance_refund_change",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/admin/finance/refund/<path:object_id>/",
+    "view": "RedirectView",
+    "url_name": "",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST",
+      "PUT",
+      "PATCH",
+      "DELETE"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/admin/attendance/attendancerecord/",
+    "view": "changelist_view",
+    "url_name": ":admin:attendance_attendancerecord_changelist",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/admin/attendance/attendancerecord/add/",
+    "view": "add_view",
+    "url_name": ":admin:attendance_attendancerecord_add",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/admin/attendance/attendancerecord/<path:object_id>/history/",
+    "view": "history_view",
+    "url_name": ":admin:attendance_attendancerecord_history",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/admin/attendance/attendancerecord/<path:object_id>/delete/",
+    "view": "delete_view",
+    "url_name": ":admin:attendance_attendancerecord_delete",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/admin/attendance/attendancerecord/<path:object_id>/change/",
+    "view": "change_view",
+    "url_name": ":admin:attendance_attendancerecord_change",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/admin/attendance/attendancerecord/<path:object_id>/",
+    "view": "RedirectView",
+    "url_name": "",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST",
+      "PUT",
+      "PATCH",
+      "DELETE"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/admin/attendance/attendancelock/",
+    "view": "changelist_view",
+    "url_name": ":admin:attendance_attendancelock_changelist",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/admin/attendance/attendancelock/add/",
+    "view": "add_view",
+    "url_name": ":admin:attendance_attendancelock_add",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/admin/attendance/attendancelock/<path:object_id>/history/",
+    "view": "history_view",
+    "url_name": ":admin:attendance_attendancelock_history",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/admin/attendance/attendancelock/<path:object_id>/delete/",
+    "view": "delete_view",
+    "url_name": ":admin:attendance_attendancelock_delete",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/admin/attendance/attendancelock/<path:object_id>/change/",
+    "view": "change_view",
+    "url_name": ":admin:attendance_attendancelock_change",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/admin/attendance/attendancelock/<path:object_id>/",
+    "view": "RedirectView",
+    "url_name": "",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST",
+      "PUT",
+      "PATCH",
+      "DELETE"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/admin/exams/exam/",
+    "view": "changelist_view",
+    "url_name": ":admin:exams_exam_changelist",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/admin/exams/exam/add/",
+    "view": "add_view",
+    "url_name": ":admin:exams_exam_add",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/admin/exams/exam/<path:object_id>/history/",
+    "view": "history_view",
+    "url_name": ":admin:exams_exam_history",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/admin/exams/exam/<path:object_id>/delete/",
+    "view": "delete_view",
+    "url_name": ":admin:exams_exam_delete",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/admin/exams/exam/<path:object_id>/change/",
+    "view": "change_view",
+    "url_name": ":admin:exams_exam_change",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/admin/exams/exam/<path:object_id>/",
+    "view": "RedirectView",
+    "url_name": "",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST",
+      "PUT",
+      "PATCH",
+      "DELETE"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/admin/exams/examresult/",
+    "view": "changelist_view",
+    "url_name": ":admin:exams_examresult_changelist",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/admin/exams/examresult/add/",
+    "view": "add_view",
+    "url_name": ":admin:exams_examresult_add",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/admin/exams/examresult/<path:object_id>/history/",
+    "view": "history_view",
+    "url_name": ":admin:exams_examresult_history",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/admin/exams/examresult/<path:object_id>/delete/",
+    "view": "delete_view",
+    "url_name": ":admin:exams_examresult_delete",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/admin/exams/examresult/<path:object_id>/change/",
+    "view": "change_view",
+    "url_name": ":admin:exams_examresult_change",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/admin/exams/examresult/<path:object_id>/",
+    "view": "RedirectView",
+    "url_name": "",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST",
+      "PUT",
+      "PATCH",
+      "DELETE"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/admin/exams/gradeconfig/",
+    "view": "changelist_view",
+    "url_name": ":admin:exams_gradeconfig_changelist",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/admin/exams/gradeconfig/add/",
+    "view": "add_view",
+    "url_name": ":admin:exams_gradeconfig_add",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/admin/exams/gradeconfig/<path:object_id>/history/",
+    "view": "history_view",
+    "url_name": ":admin:exams_gradeconfig_history",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/admin/exams/gradeconfig/<path:object_id>/delete/",
+    "view": "delete_view",
+    "url_name": ":admin:exams_gradeconfig_delete",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/admin/exams/gradeconfig/<path:object_id>/change/",
+    "view": "change_view",
+    "url_name": ":admin:exams_gradeconfig_change",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/admin/exams/gradeconfig/<path:object_id>/",
+    "view": "RedirectView",
+    "url_name": "",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST",
+      "PUT",
+      "PATCH",
+      "DELETE"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/admin/notifications/notification/",
+    "view": "changelist_view",
+    "url_name": ":admin:notifications_notification_changelist",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/admin/notifications/notification/add/",
+    "view": "add_view",
+    "url_name": ":admin:notifications_notification_add",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/admin/notifications/notification/<path:object_id>/history/",
+    "view": "history_view",
+    "url_name": ":admin:notifications_notification_history",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/admin/notifications/notification/<path:object_id>/delete/",
+    "view": "delete_view",
+    "url_name": ":admin:notifications_notification_delete",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/admin/notifications/notification/<path:object_id>/change/",
+    "view": "change_view",
+    "url_name": ":admin:notifications_notification_change",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/admin/notifications/notification/<path:object_id>/",
+    "view": "RedirectView",
+    "url_name": "",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST",
+      "PUT",
+      "PATCH",
+      "DELETE"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/admin/notifications/notificationtemplate/",
+    "view": "changelist_view",
+    "url_name": ":admin:notifications_notificationtemplate_changelist",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/admin/notifications/notificationtemplate/add/",
+    "view": "add_view",
+    "url_name": ":admin:notifications_notificationtemplate_add",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/admin/notifications/notificationtemplate/<path:object_id>/history/",
+    "view": "history_view",
+    "url_name": ":admin:notifications_notificationtemplate_history",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/admin/notifications/notificationtemplate/<path:object_id>/delete/",
+    "view": "delete_view",
+    "url_name": ":admin:notifications_notificationtemplate_delete",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/admin/notifications/notificationtemplate/<path:object_id>/change/",
+    "view": "change_view",
+    "url_name": ":admin:notifications_notificationtemplate_change",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/admin/notifications/notificationtemplate/<path:object_id>/",
+    "view": "RedirectView",
+    "url_name": "",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST",
+      "PUT",
+      "PATCH",
+      "DELETE"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/admin/notifications/emaillog/",
+    "view": "changelist_view",
+    "url_name": ":admin:notifications_emaillog_changelist",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/admin/notifications/emaillog/add/",
+    "view": "add_view",
+    "url_name": ":admin:notifications_emaillog_add",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/admin/notifications/emaillog/<path:object_id>/history/",
+    "view": "history_view",
+    "url_name": ":admin:notifications_emaillog_history",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/admin/notifications/emaillog/<path:object_id>/delete/",
+    "view": "delete_view",
+    "url_name": ":admin:notifications_emaillog_delete",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/admin/notifications/emaillog/<path:object_id>/change/",
+    "view": "change_view",
+    "url_name": ":admin:notifications_emaillog_change",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/admin/notifications/emaillog/<path:object_id>/",
+    "view": "RedirectView",
+    "url_name": "",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST",
+      "PUT",
+      "PATCH",
+      "DELETE"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/admin/documents/comparisonjob/",
+    "view": "changelist_view",
+    "url_name": ":admin:documents_comparisonjob_changelist",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/admin/documents/comparisonjob/add/",
+    "view": "add_view",
+    "url_name": ":admin:documents_comparisonjob_add",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/admin/documents/comparisonjob/<path:object_id>/history/",
+    "view": "history_view",
+    "url_name": ":admin:documents_comparisonjob_history",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/admin/documents/comparisonjob/<path:object_id>/delete/",
+    "view": "delete_view",
+    "url_name": ":admin:documents_comparisonjob_delete",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/admin/documents/comparisonjob/<path:object_id>/change/",
+    "view": "change_view",
+    "url_name": ":admin:documents_comparisonjob_change",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/admin/documents/comparisonjob/<path:object_id>/",
+    "view": "RedirectView",
+    "url_name": "",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST",
+      "PUT",
+      "PATCH",
+      "DELETE"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/admin/documents/comparisonresult/",
+    "view": "changelist_view",
+    "url_name": ":admin:documents_comparisonresult_changelist",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/admin/documents/comparisonresult/add/",
+    "view": "add_view",
+    "url_name": ":admin:documents_comparisonresult_add",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/admin/documents/comparisonresult/<path:object_id>/history/",
+    "view": "history_view",
+    "url_name": ":admin:documents_comparisonresult_history",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/admin/documents/comparisonresult/<path:object_id>/delete/",
+    "view": "delete_view",
+    "url_name": ":admin:documents_comparisonresult_delete",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/admin/documents/comparisonresult/<path:object_id>/change/",
+    "view": "change_view",
+    "url_name": ":admin:documents_comparisonresult_change",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/admin/documents/comparisonresult/<path:object_id>/",
+    "view": "RedirectView",
+    "url_name": "",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST",
+      "PUT",
+      "PATCH",
+      "DELETE"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/admin/ai_engine/modelversion/",
+    "view": "changelist_view",
+    "url_name": ":admin:ai_engine_modelversion_changelist",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/admin/ai_engine/modelversion/add/",
+    "view": "add_view",
+    "url_name": ":admin:ai_engine_modelversion_add",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/admin/ai_engine/modelversion/<path:object_id>/history/",
+    "view": "history_view",
+    "url_name": ":admin:ai_engine_modelversion_history",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/admin/ai_engine/modelversion/<path:object_id>/delete/",
+    "view": "delete_view",
+    "url_name": ":admin:ai_engine_modelversion_delete",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/admin/ai_engine/modelversion/<path:object_id>/change/",
+    "view": "change_view",
+    "url_name": ":admin:ai_engine_modelversion_change",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/admin/ai_engine/modelversion/<path:object_id>/",
+    "view": "RedirectView",
+    "url_name": "",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST",
+      "PUT",
+      "PATCH",
+      "DELETE"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/admin/ai_engine/predictionlog/",
+    "view": "changelist_view",
+    "url_name": ":admin:ai_engine_predictionlog_changelist",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/admin/ai_engine/predictionlog/add/",
+    "view": "add_view",
+    "url_name": ":admin:ai_engine_predictionlog_add",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/admin/ai_engine/predictionlog/<path:object_id>/history/",
+    "view": "history_view",
+    "url_name": ":admin:ai_engine_predictionlog_history",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/admin/ai_engine/predictionlog/<path:object_id>/delete/",
+    "view": "delete_view",
+    "url_name": ":admin:ai_engine_predictionlog_delete",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/admin/ai_engine/predictionlog/<path:object_id>/change/",
+    "view": "change_view",
+    "url_name": ":admin:ai_engine_predictionlog_change",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/admin/ai_engine/predictionlog/<path:object_id>/",
+    "view": "RedirectView",
+    "url_name": "",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST",
+      "PUT",
+      "PATCH",
+      "DELETE"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/admin/^(?P<app_label>auth|core|accounts|academics|students|finance|attendance|exams|notifications|documents|ai_engine)/$",
+    "view": "app_index",
+    "url_name": ":admin:app_list",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/admin/(?P<url>.*)$",
+    "view": "catch_all_view",
+    "url_name": "",
+    "namespace": ":admin",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/accounts/login/",
+    "view": "LoginView",
+    "url_name": ":accounts:login",
+    "namespace": ":accounts",
+    "methods": [
+      "GET",
+      "POST",
+      "PUT"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/accounts/logout/",
+    "view": "LogoutView",
+    "url_name": ":accounts:logout",
+    "namespace": ":accounts",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/accounts/post-login/",
+    "view": "post_login_redirect",
+    "url_name": ":accounts:post_login_redirect",
+    "namespace": ":accounts",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/accounts/password/change/",
+    "view": "PasswordChangeView",
+    "url_name": ":accounts:password_change",
+    "namespace": ":accounts",
+    "methods": [
+      "GET",
+      "POST",
+      "PUT"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/accounts/password/change/done/",
+    "view": "PasswordChangeDoneView",
+    "url_name": ":accounts:password_change_done",
+    "namespace": ":accounts",
+    "methods": [
+      "GET"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/accounts/profile/",
+    "view": "profile_view",
+    "url_name": ":accounts:profile_view",
+    "namespace": ":accounts",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/accounts/profile/edit/",
+    "view": "profile_edit",
+    "url_name": ":accounts:profile_edit",
+    "namespace": ":accounts",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/panel/admin/reports/",
+    "view": "ReportsDashboardView",
+    "url_name": ":reports:dashboard",
+    "namespace": ":reports",
+    "methods": [
+      "GET"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/panel/admin/reports/pending-dues/csv/",
+    "view": "PendingDuesExportCSVView",
+    "url_name": ":reports:pending_dues_csv",
+    "namespace": ":reports",
+    "methods": [
+      "GET"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/panel/admin/reports/pending-dues/pdf/",
+    "view": "PendingDuesPDFView",
+    "url_name": ":reports:pending_dues_pdf",
+    "namespace": ":reports",
+    "methods": [
+      "GET"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/panel/admin/reports/session-results/<int:session_id>/csv/",
+    "view": "SessionResultsExportCSVView",
+    "url_name": ":reports:session_results_csv",
+    "namespace": ":reports",
+    "methods": [
+      "GET"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/panel/admin/reports/session-results/<int:session_id>/pdf/",
+    "view": "SessionResultsPDFView",
+    "url_name": ":reports:session_results_pdf",
+    "namespace": ":reports",
+    "methods": [
+      "GET"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/panel/admin/reports/student-directory/csv/",
+    "view": "StudentDirectoryExportCSVView",
+    "url_name": ":reports:student_directory_csv",
+    "namespace": ":reports",
+    "methods": [
+      "GET"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/panel/admin/reports/teacher-workload/csv/",
+    "view": "TeacherWorkloadExportCSVView",
+    "url_name": ":reports:teacher_workload_csv",
+    "namespace": ":reports",
+    "methods": [
+      "GET"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/panel/admin/reports/teacher-workload/pdf/",
+    "view": "TeacherWorkloadPDFView",
+    "url_name": ":reports:teacher_workload_pdf",
+    "namespace": ":reports",
+    "methods": [
+      "GET"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/panel/admin/reports/success/csv/",
+    "view": "SuccessReportExportCSVView",
+    "url_name": ":reports:success_csv",
+    "namespace": ":reports",
+    "methods": [
+      "GET"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/panel/admin/reports/success/pdf/",
+    "view": "SuccessReportPDFView",
+    "url_name": ":reports:success_pdf",
+    "namespace": ":reports",
+    "methods": [
+      "GET"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/panel/admin/reports/student/<int:student_id>/transcript/pdf/",
+    "view": "StudentTranscriptPDFView",
+    "url_name": ":reports:student_transcript_pdf",
+    "namespace": ":reports",
+    "methods": [
+      "GET"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/panel/admin/dashboard/",
+    "view": "admin_dashboard",
+    "url_name": ":admin_panel:dashboard",
+    "namespace": ":admin_panel",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/panel/admin/permissions/",
+    "view": "permission_matrix",
+    "url_name": ":admin_panel:permissions",
+    "namespace": ":admin_panel",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/panel/admin/session-overview/",
+    "view": "session_overview",
+    "url_name": ":admin_panel:session_overview",
+    "namespace": ":admin_panel",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/panel/admin/faculty-overview/",
+    "view": "faculty_overview",
+    "url_name": ":admin_panel:faculty_overview",
+    "namespace": ":admin_panel",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/panel/admin/timetable-overview/",
+    "view": "timetable_overview",
+    "url_name": ":admin_panel:timetable_overview",
+    "namespace": ":admin_panel",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/panel/admin/exam-overview/",
+    "view": "exam_overview",
+    "url_name": ":admin_panel:exam_overview",
+    "namespace": ":admin_panel",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/panel/admin/success/",
+    "view": "SuccessDashboardView",
+    "url_name": ":admin_panel:success_dashboard",
+    "namespace": ":admin_panel",
+    "methods": [
+      "GET"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/panel/admin/session/<int:pk>/results/",
+    "view": "session_result_summary",
+    "url_name": ":admin_panel:session_result_summary",
+    "namespace": ":admin_panel",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/panel/admin/pending-dues/",
+    "view": "PendingDuesView",
+    "url_name": ":admin_panel:pending_dues",
+    "namespace": ":admin_panel",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/panel/admin/users/",
+    "view": "user_list",
+    "url_name": ":admin_panel:users:user_list",
+    "namespace": ":admin_panel:users",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/panel/admin/users/<int:pk>/toggle-activation/",
+    "view": "user_toggle_activation",
+    "url_name": ":admin_panel:users:user_toggle_activation",
+    "namespace": ":admin_panel:users",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/panel/admin/users/<int:pk>/toggle-lock/",
+    "view": "user_toggle_lock",
+    "url_name": ":admin_panel:users:user_toggle_lock",
+    "namespace": ":admin_panel:users",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/panel/admin/users/<int:pk>/reset-password/",
+    "view": "user_reset_password",
+    "url_name": ":admin_panel:users:user_reset_password",
+    "namespace": ":admin_panel:users",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/panel/admin/users/<int:pk>/assign-role/",
+    "view": "user_assign_role",
+    "url_name": ":admin_panel:users:user_assign_role",
+    "namespace": ":admin_panel:users",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/panel/admin/users/<int:pk>/assign-session/",
+    "view": "user_assign_session",
+    "url_name": ":admin_panel:users:user_assign_session",
+    "namespace": ":admin_panel:users",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/panel/admin/timetable/",
+    "view": "timetable_list",
+    "url_name": ":admin_panel:timetable_list",
+    "namespace": ":admin_panel",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/panel/admin/timetable/create/",
+    "view": "timetable_create",
+    "url_name": ":admin_panel:timetable_create",
+    "namespace": ":admin_panel",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/panel/admin/timetable/<int:pk>/edit/",
+    "view": "timetable_edit",
+    "url_name": ":admin_panel:timetable_edit",
+    "namespace": ":admin_panel",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/panel/admin/timetable/<int:pk>/toggle-status/",
+    "view": "timetable_toggle_status",
+    "url_name": ":admin_panel:timetable_toggle_status",
+    "namespace": ":admin_panel",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/panel/admin/students/<int:pk>/reset-password/",
+    "view": "student_reset_password",
+    "url_name": ":admin_panel:student_reset_password",
+    "namespace": ":admin_panel",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/panel/admin/students/<int:pk>/create-login/",
+    "view": "student_create_login",
+    "url_name": ":admin_panel:student_create_login",
+    "namespace": ":admin_panel",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/panel/admin/add-student/",
+    "view": "student_create",
+    "url_name": ":admin_panel:add_student",
+    "namespace": ":admin_panel",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/panel/admin/manage-students/",
+    "view": "student_list",
+    "url_name": ":admin_panel:manage_students",
+    "namespace": ":admin_panel",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/panel/admin/add-session/",
+    "view": "session_create",
+    "url_name": ":admin_panel:add_session",
+    "namespace": ":admin_panel",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/panel/admin/sessions/",
+    "view": "session_overview",
+    "url_name": ":admin_panel:session_list",
+    "namespace": ":admin_panel",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/panel/admin/sessions/create/",
+    "view": "session_create",
+    "url_name": ":admin_panel:session_create",
+    "namespace": ":admin_panel",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/panel/admin/sessions/<int:pk>/",
+    "view": "session_detail",
+    "url_name": ":admin_panel:session_detail",
+    "namespace": ":admin_panel",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/panel/admin/sessions/<int:pk>/edit/",
+    "view": "session_edit",
+    "url_name": ":admin_panel:session_edit",
+    "namespace": ":admin_panel",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/panel/admin/sessions/<int:pk>/results/",
+    "view": "session_result_summary",
+    "url_name": ":admin_panel:session_result",
+    "namespace": ":admin_panel",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/panel/admin/manage-faculty/",
+    "view": "FacultyListView",
+    "url_name": ":admin_panel:staff:faculty_list",
+    "namespace": ":admin_panel:staff",
+    "methods": [
+      "GET"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/panel/admin/manage-faculty/create/",
+    "view": "FacultyCreateView",
+    "url_name": ":admin_panel:staff:faculty_create",
+    "namespace": ":admin_panel:staff",
+    "methods": [
+      "GET",
+      "POST",
+      "PUT"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/panel/admin/manage-faculty/<int:pk>/assign/",
+    "view": "FacultyAssignSessionView",
+    "url_name": ":admin_panel:staff:faculty_assign",
+    "namespace": ":admin_panel:staff",
+    "methods": [
+      "GET",
+      "POST",
+      "PUT"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/panel/admin/analytics/",
+    "view": "AdminAnalyticsView",
+    "url_name": ":admin_panel:analytics",
+    "namespace": ":admin_panel",
+    "methods": [
+      "GET"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/panel/admin/automation/alerts/",
+    "view": "AutomationAlertsView",
+    "url_name": ":admin_panel:automation_alerts",
+    "namespace": ":admin_panel",
+    "methods": [
+      "GET"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/panel/admin/automation/jobs/",
+    "view": "AutomationJobsView",
+    "url_name": ":admin_panel:automation_jobs",
+    "namespace": ":admin_panel",
+    "methods": [
+      "GET"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/panel/admin/reports-dashboard/",
+    "view": "reports_dashboard_proxy",
+    "url_name": ":admin_panel:reports_dashboard",
+    "namespace": ":admin_panel",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/panel/admin/finance/installments/<int:pk>/pay/",
+    "view": "InstallmentPayView",
+    "url_name": ":admin_panel:installment_pay",
+    "namespace": ":admin_panel",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/panel/admin/students/",
+    "view": "student_list",
+    "url_name": ":admin_panel:students:student_list",
+    "namespace": ":admin_panel:students",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/panel/admin/students/create/",
+    "view": "student_create",
+    "url_name": ":admin_panel:students:student_create",
+    "namespace": ":admin_panel:students",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/panel/admin/students/<int:pk>/",
+    "view": "student_detail",
+    "url_name": ":admin_panel:students:student_detail",
+    "namespace": ":admin_panel:students",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/panel/admin/students/<int:pk>/edit/",
+    "view": "student_edit",
+    "url_name": ":admin_panel:students:student_edit",
+    "namespace": ":admin_panel:students",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/panel/admin/students/<int:pk>/delete/",
+    "view": "student_delete",
+    "url_name": ":admin_panel:students:student_delete",
+    "namespace": ":admin_panel:students",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/panel/admin/students/<int:pk>/restore/",
+    "view": "student_restore",
+    "url_name": ":admin_panel:students:student_restore",
+    "namespace": ":admin_panel:students",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/panel/admin/students/<int:pk>/documents/",
+    "view": "student_documents",
+    "url_name": ":admin_panel:students:student_documents",
+    "namespace": ":admin_panel:students",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/panel/admin/students/<int:pk>/documents/upload/",
+    "view": "student_document_upload",
+    "url_name": ":admin_panel:students:student_document_upload",
+    "namespace": ":admin_panel:students",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/panel/admin/students/<int:pk>/guardians/",
+    "view": "student_guardians",
+    "url_name": ":admin_panel:students:student_guardians",
+    "namespace": ":admin_panel:students",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/panel/admin/students/<int:pk>/ledger/",
+    "view": "student_ledger",
+    "url_name": ":admin_panel:students:student_ledger",
+    "namespace": ":admin_panel:students",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/panel/admin/students/leads/",
+    "view": "lead_list",
+    "url_name": ":admin_panel:students:lead_list",
+    "namespace": ":admin_panel:students",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/panel/admin/students/leads/create/",
+    "view": "lead_create",
+    "url_name": ":admin_panel:students:lead_create",
+    "namespace": ":admin_panel:students",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/panel/admin/students/leads/<int:pk>/",
+    "view": "lead_detail",
+    "url_name": ":admin_panel:students:lead_detail",
+    "namespace": ":admin_panel:students",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/panel/admin/students/leads/<int:pk>/edit/",
+    "view": "lead_edit",
+    "url_name": ":admin_panel:students:lead_edit",
+    "namespace": ":admin_panel:students",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/panel/admin/students/leads/<int:pk>/convert/",
+    "view": "lead_convert",
+    "url_name": ":admin_panel:students:lead_convert",
+    "namespace": ":admin_panel:students",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/panel/admin/students/enrollments/",
+    "view": "enrollment_list",
+    "url_name": ":admin_panel:students:enrollment_list",
+    "namespace": ":admin_panel:students",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/panel/admin/students/enrollments/create/",
+    "view": "enrollment_create",
+    "url_name": ":admin_panel:students:enrollment_create",
+    "namespace": ":admin_panel:students",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/panel/admin/students/enrollments/<int:pk>/",
+    "view": "enrollment_detail",
+    "url_name": ":admin_panel:students:enrollment_detail",
+    "namespace": ":admin_panel:students",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/panel/admin/students/enrollments/<int:pk>/withdraw/",
+    "view": "enrollment_withdraw",
+    "url_name": ":admin_panel:students:enrollment_withdraw",
+    "namespace": ":admin_panel:students",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/panel/admin/students/enrollments/<int:pk>/restore/",
+    "view": "enrollment_restore",
+    "url_name": ":admin_panel:students:enrollment_restore",
+    "namespace": ":admin_panel:students",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/panel/admin/students/enrollments/<int:pk>/freeze/",
+    "view": "enrollment_freeze",
+    "url_name": ":admin_panel:students:enrollment_freeze",
+    "namespace": ":admin_panel:students",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/panel/admin/students/enrollments/<int:pk>/unfreeze/",
+    "view": "enrollment_unfreeze",
+    "url_name": ":admin_panel:students:enrollment_unfreeze",
+    "namespace": ":admin_panel:students",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/panel/admin/students/enrollments/<int:pk>/transfer/",
+    "view": "enrollment_transfer",
+    "url_name": ":admin_panel:students:enrollment_transfer",
+    "namespace": ":admin_panel:students",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/panel/admin/academics/sessions/create/",
+    "view": "session_create",
+    "url_name": ":admin_panel:academics:session_create",
+    "namespace": ":admin_panel:academics",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/panel/admin/academics/sessions/<int:pk>/",
+    "view": "session_detail",
+    "url_name": ":admin_panel:academics:session_detail",
+    "namespace": ":admin_panel:academics",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/panel/admin/academics/sessions/<int:pk>/edit/",
+    "view": "session_edit",
+    "url_name": ":admin_panel:academics:session_edit",
+    "namespace": ":admin_panel:academics",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/panel/admin/academics/sessions/<int:pk>/toggle-status/",
+    "view": "session_toggle_status",
+    "url_name": ":admin_panel:academics:session_toggle_status",
+    "namespace": ":admin_panel:academics",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/panel/admin/academics/sessions/<int:pk>/delete/",
+    "view": "session_delete",
+    "url_name": ":admin_panel:academics:session_delete",
+    "namespace": ":admin_panel:academics",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/panel/admin/academics/sessions/<int:pk>/enrollments/",
+    "view": "session_enrollments",
+    "url_name": ":admin_panel:academics:session_enrollments",
+    "namespace": ":admin_panel:academics",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/panel/admin/academics/sessions/<int:pk>/revenue/",
+    "view": "session_revenue",
+    "url_name": ":admin_panel:academics:session_revenue",
+    "namespace": ":admin_panel:academics",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/panel/admin/academics/subjects/create/",
+    "view": "subject_create",
+    "url_name": ":admin_panel:academics:subject_create",
+    "namespace": ":admin_panel:academics",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/panel/admin/academics/subjects/<int:pk>/edit/",
+    "view": "subject_edit",
+    "url_name": ":admin_panel:academics:subject_edit",
+    "namespace": ":admin_panel:academics",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/panel/admin/academics/assignments/create/",
+    "view": "assignment_create",
+    "url_name": ":admin_panel:academics:assignment_create",
+    "namespace": ":admin_panel:academics",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/panel/admin/academics/assignments/<int:pk>/edit/",
+    "view": "assignment_edit",
+    "url_name": ":admin_panel:academics:assignment_edit",
+    "namespace": ":admin_panel:academics",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/panel/admin/academics/assignments/<int:pk>/delete/",
+    "view": "assignment_delete",
+    "url_name": ":admin_panel:academics:assignment_delete",
+    "namespace": ":admin_panel:academics",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/panel/admin/attendance/",
+    "view": "attendance_overview",
+    "url_name": ":admin_panel:attendance:attendance_overview",
+    "namespace": ":admin_panel:attendance",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/panel/admin/attendance/mark/<int:session_id>/",
+    "view": "attendance_mark",
+    "url_name": ":admin_panel:attendance:attendance_mark",
+    "namespace": ":admin_panel:attendance",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/panel/admin/attendance/<int:session_id>/date/<str:date>/",
+    "view": "attendance_sheet",
+    "url_name": ":admin_panel:attendance:attendance_sheet",
+    "namespace": ":admin_panel:attendance",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/panel/admin/attendance/<int:session_id>/lock/",
+    "view": "attendance_lock",
+    "url_name": ":admin_panel:attendance:attendance_lock",
+    "namespace": ":admin_panel:attendance",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/panel/admin/attendance/<int:session_id>/unlock/",
+    "view": "attendance_unlock",
+    "url_name": ":admin_panel:attendance:attendance_unlock",
+    "namespace": ":admin_panel:attendance",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/panel/admin/attendance/<int:session_id>/analytics/",
+    "view": "attendance_analytics",
+    "url_name": ":admin_panel:attendance:attendance_analytics",
+    "namespace": ":admin_panel:attendance",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/panel/admin/attendance/low-attendance/",
+    "view": "low_attendance_report",
+    "url_name": ":admin_panel:attendance:low_attendance_report",
+    "namespace": ":admin_panel:attendance",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/panel/admin/exams/",
+    "view": "ExamListView",
+    "url_name": ":admin_panel:exams:exam_list",
+    "namespace": ":admin_panel:exams",
+    "methods": [
+      "GET"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/panel/admin/exams/create/",
+    "view": "ExamCreateView",
+    "url_name": ":admin_panel:exams:exam_create",
+    "namespace": ":admin_panel:exams",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/panel/admin/exams/<int:pk>/",
+    "view": "ExamDetailView",
+    "url_name": ":admin_panel:exams:exam_detail",
+    "namespace": ":admin_panel:exams",
+    "methods": [
+      "GET"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/panel/admin/exams/<int:pk>/edit/",
+    "view": "ExamEditView",
+    "url_name": ":admin_panel:exams:exam_edit",
+    "namespace": ":admin_panel:exams",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/panel/admin/exams/<int:pk>/review/",
+    "view": "ExamReviewView",
+    "url_name": ":admin_panel:exams:exam_review",
+    "namespace": ":admin_panel:exams",
+    "methods": [
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/panel/admin/exams/<int:pk>/publish/",
+    "view": "ExamPublishView",
+    "url_name": ":admin_panel:exams:exam_publish",
+    "namespace": ":admin_panel:exams",
+    "methods": [
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/panel/admin/exams/<int:pk>/results/entry/",
+    "view": "ExamResultEntryView",
+    "url_name": ":admin_panel:exams:exam_results_entry",
+    "namespace": ":admin_panel:exams",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/panel/admin/exams/<int:pk>/results/bulk-entry/",
+    "view": "ExamBulkResultEntryView",
+    "url_name": ":admin_panel:exams:exam_results_bulk_entry",
+    "namespace": ":admin_panel:exams",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/panel/admin/exams/<int:pk>/statistics/",
+    "view": "ExamStatisticsView",
+    "url_name": ":admin_panel:exams:exam_statistics",
+    "namespace": ":admin_panel:exams",
+    "methods": [
+      "GET"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/panel/admin/exams/grade-config/",
+    "view": "grade_config_list",
+    "url_name": ":admin_panel:exams:grade_config_list",
+    "namespace": ":admin_panel:exams",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/panel/admin/exams/grade-config/create/",
+    "view": "grade_config_create",
+    "url_name": ":admin_panel:exams:grade_config_create",
+    "namespace": ":admin_panel:exams",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/panel/admin/exams/grade-config/<int:pk>/edit/",
+    "view": "grade_config_edit",
+    "url_name": ":admin_panel:exams:grade_config_edit",
+    "namespace": ":admin_panel:exams",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/panel/admin/finance/payments/",
+    "view": "payment_list",
+    "url_name": ":admin_panel:finance:payment_list",
+    "namespace": ":admin_panel:finance",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/panel/admin/finance/payments/create/",
+    "view": "payment_create",
+    "url_name": ":admin_panel:finance:payment_create",
+    "namespace": ":admin_panel:finance",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/panel/admin/finance/payments/<int:pk>/",
+    "view": "payment_detail",
+    "url_name": ":admin_panel:finance:payment_detail",
+    "namespace": ":admin_panel:finance",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/panel/admin/finance/payments/<int:pk>/delete/",
+    "view": "payment_delete",
+    "url_name": ":admin_panel:finance:payment_delete",
+    "namespace": ":admin_panel:finance",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/panel/admin/finance/installments/<int:pk>/pay/",
+    "view": "installment_pay",
+    "url_name": ":admin_panel:finance:installment_pay",
+    "namespace": ":admin_panel:finance",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/panel/admin/finance/expenses/",
+    "view": "expense_list",
+    "url_name": ":admin_panel:finance:expense_list",
+    "namespace": ":admin_panel:finance",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/panel/admin/finance/expenses/create/",
+    "view": "expense_create",
+    "url_name": ":admin_panel:finance:expense_create",
+    "namespace": ":admin_panel:finance",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/panel/admin/finance/expenses/categories/",
+    "view": "expense_category_list",
+    "url_name": ":admin_panel:finance:expense_category_list",
+    "namespace": ":admin_panel:finance",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/panel/admin/finance/expenses/categories/create/",
+    "view": "expense_category_create",
+    "url_name": ":admin_panel:finance:expense_category_create",
+    "namespace": ":admin_panel:finance",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/panel/admin/finance/expenses/<int:pk>/",
+    "view": "expense_detail",
+    "url_name": ":admin_panel:finance:expense_detail",
+    "namespace": ":admin_panel:finance",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/panel/admin/finance/expenses/<int:pk>/approve/",
+    "view": "expense_approve",
+    "url_name": ":admin_panel:finance:expense_approve",
+    "namespace": ":admin_panel:finance",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/panel/admin/finance/expenses/<int:pk>/reject/",
+    "view": "expense_reject",
+    "url_name": ":admin_panel:finance:expense_reject",
+    "namespace": ":admin_panel:finance",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/panel/admin/finance/refunds/",
+    "view": "refund_list",
+    "url_name": ":admin_panel:finance:refund_list",
+    "namespace": ":admin_panel:finance",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/panel/admin/finance/refunds/create/",
+    "view": "refund_create",
+    "url_name": ":admin_panel:finance:refund_create",
+    "namespace": ":admin_panel:finance",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/panel/admin/finance/installments/",
+    "view": "installment_plan_list",
+    "url_name": ":admin_panel:finance:installment_plan_list",
+    "namespace": ":admin_panel:finance",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/panel/admin/finance/installments/create/",
+    "view": "installment_plan_create",
+    "url_name": ":admin_panel:finance:installment_plan_create",
+    "namespace": ":admin_panel:finance",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/panel/admin/finance/installments/<int:pk>/",
+    "view": "installment_plan_detail",
+    "url_name": ":admin_panel:finance:installment_plan_detail",
+    "namespace": ":admin_panel:finance",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/panel/admin/finance/installments/<int:pk>/restructure/",
+    "view": "installment_restructure",
+    "url_name": ":admin_panel:finance:installment_restructure",
+    "namespace": ":admin_panel:finance",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/panel/admin/finance/installments/pay/<int:pk>/",
+    "view": "installment_pay",
+    "url_name": ":admin_panel:finance:installment_pay",
+    "namespace": ":admin_panel:finance",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/panel/admin/finance/overdue/",
+    "view": "overdue_list",
+    "url_name": ":admin_panel:finance:overdue_list",
+    "namespace": ":admin_panel:finance",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/panel/admin/finance/late-fees/apply/",
+    "view": "late_fee_apply",
+    "url_name": ":admin_panel:finance:late_fee_apply",
+    "namespace": ":admin_panel:finance",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/panel/admin/finance/late-fees/waive/<int:pk>/",
+    "view": "late_fee_waive",
+    "url_name": ":admin_panel:finance:late_fee_waive",
+    "namespace": ":admin_panel:finance",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/panel/admin/finance/send-fee-reminder/",
+    "view": "send_fee_reminder",
+    "url_name": ":admin_panel:finance:send_fee_reminder",
+    "namespace": ":admin_panel:finance",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/panel/admin/notifications/",
+    "view": "NotificationListView",
+    "url_name": ":admin_panel:notifications:notification_list",
+    "namespace": ":admin_panel:notifications",
+    "methods": [
+      "GET"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/panel/admin/notifications/<int:pk>/",
+    "view": "NotificationDetailView",
+    "url_name": ":admin_panel:notifications:notification_detail",
+    "namespace": ":admin_panel:notifications",
+    "methods": [
+      "GET"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/panel/admin/notifications/mark-read/",
+    "view": "NotificationMarkReadView",
+    "url_name": ":admin_panel:notifications:notification_mark_read",
+    "namespace": ":admin_panel:notifications",
+    "methods": [
+      "POST"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/panel/admin/notifications/unread-count/",
+    "view": "UnreadCountAPIView",
+    "url_name": ":admin_panel:notifications:unread_count_api",
+    "namespace": ":admin_panel:notifications",
+    "methods": [
+      "GET"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/panel/admin/notifications/bulk-send/",
+    "view": "NotificationBulkSendView",
+    "url_name": ":admin_panel:notifications:notification_bulk_send",
+    "namespace": ":admin_panel:notifications",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/panel/admin/notifications/templates/",
+    "view": "template_list",
+    "url_name": ":admin_panel:notifications:template_list",
+    "namespace": ":admin_panel:notifications",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/panel/admin/notifications/templates/create/",
+    "view": "template_create",
+    "url_name": ":admin_panel:notifications:template_create",
+    "namespace": ":admin_panel:notifications",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/panel/admin/notifications/templates/<int:pk>/edit/",
+    "view": "template_edit",
+    "url_name": ":admin_panel:notifications:template_edit",
+    "namespace": ":admin_panel:notifications",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/panel/admin/notifications/email-logs/",
+    "view": "email_log_list",
+    "url_name": ":admin_panel:notifications:email_log_list",
+    "namespace": ":admin_panel:notifications",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/panel/admin/documents/",
+    "view": "RedirectView",
+    "url_name": "",
+    "namespace": ":admin_panel:documents",
+    "methods": [
+      "GET",
+      "POST",
+      "PUT",
+      "PATCH",
+      "DELETE"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/panel/admin/documents/jobs/",
+    "view": "pdf_comparison",
+    "url_name": ":admin_panel:documents:comparison_job_list",
+    "namespace": ":admin_panel:documents",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/panel/admin/documents/jobs/create/",
+    "view": "pdf_comparison",
+    "url_name": ":admin_panel:documents:comparison_job_create",
+    "namespace": ":admin_panel:documents",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/panel/admin/documents/jobs/<int:pk>/",
+    "view": "pdf_comparison",
+    "url_name": ":admin_panel:documents:comparison_job_detail",
+    "namespace": ":admin_panel:documents",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/panel/admin/documents/jobs/<int:pk>/results/",
+    "view": "pdf_comparison",
+    "url_name": ":admin_panel:documents:comparison_results",
+    "namespace": ":admin_panel:documents",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/panel/admin/documents/preview/export/",
+    "view": "export_preview_csv",
+    "url_name": ":admin_panel:documents:export_preview_csv",
+    "namespace": ":admin_panel:documents",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/panel/admin/ai/predictions/",
+    "view": "prediction_list",
+    "url_name": ":admin_panel:ai_engine:prediction_list",
+    "namespace": ":admin_panel:ai_engine",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/panel/admin/ai/predictions/<int:pk>/",
+    "view": "prediction_detail",
+    "url_name": ":admin_panel:ai_engine:prediction_detail",
+    "namespace": ":admin_panel:ai_engine",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/panel/admin/ai/predictions/<int:pk>/acknowledge/",
+    "view": "prediction_acknowledge",
+    "url_name": ":admin_panel:ai_engine:prediction_acknowledge",
+    "namespace": ":admin_panel:ai_engine",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/panel/admin/ai/models/",
+    "view": "model_version_list",
+    "url_name": ":admin_panel:ai_engine:model_version_list",
+    "namespace": ":admin_panel:ai_engine",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/panel/admin/ai/dropout-risk/",
+    "view": "dropout_risk_dashboard",
+    "url_name": ":admin_panel:ai_engine:dropout_risk_dashboard",
+    "namespace": ":admin_panel:ai_engine",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/panel/admin/reports/revenue/",
+    "view": "report_revenue",
+    "url_name": ":admin_panel:reports:report_revenue",
+    "namespace": ":admin_panel:reports",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/panel/admin/reports/attendance/",
+    "view": "report_attendance",
+    "url_name": ":admin_panel:reports:report_attendance",
+    "namespace": ":admin_panel:reports",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/panel/admin/reports/enrollment/",
+    "view": "report_enrollment",
+    "url_name": ":admin_panel:reports:report_enrollment",
+    "namespace": ":admin_panel:reports",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/panel/admin/reports/overdue/",
+    "view": "report_overdue",
+    "url_name": ":admin_panel:reports:report_overdue",
+    "namespace": ":admin_panel:reports",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/panel/admin/reports/export/students/",
+    "view": "export_students_csv",
+    "url_name": ":admin_panel:reports:export_students_csv",
+    "namespace": ":admin_panel:reports",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/panel/admin/reports/export/payments/",
+    "view": "export_payments_csv",
+    "url_name": ":admin_panel:reports:export_payments_csv",
+    "namespace": ":admin_panel:reports",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/panel/admin/reports/export/attendance/",
+    "view": "export_attendance_csv",
+    "url_name": ":admin_panel:reports:export_attendance_csv",
+    "namespace": ":admin_panel:reports",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/panel/admin/reports/pdf/ledger/<int:enrollment_id>/",
+    "view": "pdf_student_ledger",
+    "url_name": ":admin_panel:reports:pdf_student_ledger",
+    "namespace": ":admin_panel:reports",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/panel/admin/reports/pdf/attendance/<int:session_id>/",
+    "view": "pdf_attendance_report",
+    "url_name": ":admin_panel:reports:pdf_attendance_report",
+    "namespace": ":admin_panel:reports",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/panel/admin/audit/",
+    "view": "audit_log_list",
+    "url_name": ":admin_panel:audit:audit_log_list",
+    "namespace": ":admin_panel:audit",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/panel/admin/audit/<int:pk>/",
+    "view": "audit_log_detail",
+    "url_name": ":admin_panel:audit:audit_log_detail",
+    "namespace": ":admin_panel:audit",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/panel/admin/pdf-comparison/",
+    "view": "pdf_comparison",
+    "url_name": ":admin_panel:pdf_comparison",
+    "namespace": ":admin_panel",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/panel/admin/pdf-comparison/export/<int:job_id>/",
+    "view": "export_comparison_csv",
+    "url_name": ":admin_panel:export_comparison_csv",
+    "namespace": ":admin_panel",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/panel/admin/pdf-comparison/export-preview/",
+    "view": "export_preview_csv",
+    "url_name": ":admin_panel:export_preview_csv",
+    "namespace": ":admin_panel",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/panel/admin/admissions/",
+    "view": "AdmissionListView",
+    "url_name": ":admin_panel:admissions:admission_list",
+    "namespace": ":admin_panel:admissions",
+    "methods": [
+      "GET"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/panel/admin/admissions/<int:pk>/",
+    "view": "AdmissionDetailView",
+    "url_name": ":admin_panel:admissions:admission_detail",
+    "namespace": ":admin_panel:admissions",
+    "methods": [
+      "GET"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/panel/admin/admissions/<int:pk>/review/",
+    "view": "AdmissionReviewView",
+    "url_name": ":admin_panel:admissions:admission_review",
+    "namespace": ":admin_panel:admissions",
+    "methods": [
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/panel/admin/admissions/<int:pk>/approve/",
+    "view": "AdmissionApproveView",
+    "url_name": ":admin_panel:admissions:admission_approve",
+    "namespace": ":admin_panel:admissions",
+    "methods": [
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/panel/admin/admissions/<int:pk>/reject/",
+    "view": "AdmissionRejectView",
+    "url_name": ":admin_panel:admissions:admission_reject",
+    "namespace": ":admin_panel:admissions",
+    "methods": [
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/panel/admin/admissions/<int:pk>/convert/",
+    "view": "AdmissionConvertView",
+    "url_name": ":admin_panel:admissions:admission_convert",
+    "namespace": ":admin_panel:admissions",
+    "methods": [
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/panel/admin/admissions/summary/",
+    "view": "AdmissionSummaryView",
+    "url_name": ":admin_panel:admissions:admission_summary",
+    "namespace": ":admin_panel:admissions",
+    "methods": [
+      "GET"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/panel/admin/admissions/export/",
+    "view": "AdmissionExportCSVView",
+    "url_name": ":admin_panel:admissions:admission_export",
+    "namespace": ":admin_panel:admissions",
+    "methods": [
+      "GET"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/panel/principal/dashboard/",
+    "view": "PrincipalDashboardView",
+    "url_name": ":principal_panel:dashboard",
+    "namespace": ":principal_panel",
+    "methods": [
+      "GET"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/panel/teacher/dashboard/",
+    "view": "TeacherDashboardView",
+    "url_name": ":teacher_panel:dashboard",
+    "namespace": ":teacher_panel",
+    "methods": [
+      "GET"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/panel/teacher/my-timetable/",
+    "view": "timetable_teacher",
+    "url_name": ":teacher_panel:my_timetable",
+    "namespace": ":teacher_panel",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/panel/teacher/sessions/",
+    "view": "my_sessions",
+    "url_name": ":teacher_panel:my_sessions",
+    "namespace": ":teacher_panel",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/panel/teacher/sessions/<int:pk>/",
+    "view": "teacher_session_detail",
+    "url_name": ":teacher_panel:session_detail",
+    "namespace": ":teacher_panel",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/panel/teacher/sessions/<int:pk>/students/",
+    "view": "teacher_session_students",
+    "url_name": ":teacher_panel:session_students",
+    "namespace": ":teacher_panel",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/panel/teacher/attendance/mark/<int:session_id>/",
+    "view": "attendance_mark",
+    "url_name": ":teacher_panel:attendance_mark",
+    "namespace": ":teacher_panel",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/panel/teacher/attendance/<int:session_id>/date/<str:date>/",
+    "view": "attendance_sheet",
+    "url_name": ":teacher_panel:attendance_sheet",
+    "namespace": ":teacher_panel",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/panel/teacher/attendance/<int:session_id>/analytics/",
+    "view": "attendance_analytics",
+    "url_name": ":teacher_panel:attendance_analytics",
+    "namespace": ":teacher_panel",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/panel/teacher/exams/",
+    "view": "ExamListView",
+    "url_name": ":teacher_panel:my_exams",
+    "namespace": ":teacher_panel",
+    "methods": [
+      "GET"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/panel/teacher/exams/create/",
+    "view": "ExamCreateView",
+    "url_name": ":teacher_panel:exam_create",
+    "namespace": ":teacher_panel",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/panel/teacher/exams/<int:pk>/",
+    "view": "ExamDetailView",
+    "url_name": ":teacher_panel:exam_detail",
+    "namespace": ":teacher_panel",
+    "methods": [
+      "GET"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/panel/teacher/exams/<int:pk>/edit/",
+    "view": "ExamEditView",
+    "url_name": ":teacher_panel:exam_edit",
+    "namespace": ":teacher_panel",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/panel/teacher/exams/<int:pk>/results/entry/",
+    "view": "ExamResultEntryView",
+    "url_name": ":teacher_panel:exam_results_entry",
+    "namespace": ":teacher_panel",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/panel/teacher/exams/<int:pk>/results/",
+    "view": "ExamDetailView",
+    "url_name": ":teacher_panel:exam_results",
+    "namespace": ":teacher_panel",
+    "methods": [
+      "GET"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/panel/teacher/notifications/",
+    "view": "NotificationListView",
+    "url_name": ":teacher_panel:notification_list",
+    "namespace": ":teacher_panel",
+    "methods": [
+      "GET"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/panel/teacher/notifications/<int:pk>/",
+    "view": "NotificationDetailView",
+    "url_name": ":teacher_panel:notification_detail",
+    "namespace": ":teacher_panel",
+    "methods": [
+      "GET"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/panel/teacher/notifications/mark-read/",
+    "view": "NotificationMarkReadView",
+    "url_name": ":teacher_panel:notification_mark_read",
+    "namespace": ":teacher_panel",
+    "methods": [
+      "POST"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/panel/teacher/profile/",
+    "view": "teacher_profile_view",
+    "url_name": ":teacher_panel:profile_view",
+    "namespace": ":teacher_panel",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/panel/teacher/profile/edit/",
+    "view": "teacher_profile_edit",
+    "url_name": ":teacher_panel:profile_edit",
+    "namespace": ":teacher_panel",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/panel/accounts/dashboard/",
+    "view": "AccountantDashboardView",
+    "url_name": ":accounts_panel:dashboard",
+    "namespace": ":accounts_panel",
+    "methods": [
+      "GET"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/panel/accounts/pending-dues/",
+    "view": "PendingDuesView",
+    "url_name": ":accounts_panel:pending_dues",
+    "namespace": ":accounts_panel",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/panel/accounts/payments/",
+    "view": "payment_list",
+    "url_name": ":accounts_panel:payment_list",
+    "namespace": ":accounts_panel",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/panel/accounts/payments/create/",
+    "view": "payment_create",
+    "url_name": ":accounts_panel:payment_create",
+    "namespace": ":accounts_panel",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/panel/accounts/payments/<int:pk>/",
+    "view": "payment_detail",
+    "url_name": ":accounts_panel:payment_detail",
+    "namespace": ":accounts_panel",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/panel/accounts/expenses/",
+    "view": "expense_list",
+    "url_name": ":accounts_panel:expense_list",
+    "namespace": ":accounts_panel",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/panel/accounts/expenses/create/",
+    "view": "expense_create",
+    "url_name": ":accounts_panel:expense_create",
+    "namespace": ":accounts_panel",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/panel/accounts/expenses/<int:pk>/",
+    "view": "expense_detail",
+    "url_name": ":accounts_panel:expense_detail",
+    "namespace": ":accounts_panel",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/panel/accounts/refunds/",
+    "view": "refund_list",
+    "url_name": ":accounts_panel:refund_list",
+    "namespace": ":accounts_panel",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/panel/accounts/refunds/create/",
+    "view": "refund_create",
+    "url_name": ":accounts_panel:refund_create",
+    "namespace": ":accounts_panel",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/panel/accounts/installments/",
+    "view": "installment_plan_list",
+    "url_name": ":accounts_panel:installment_plan_list",
+    "namespace": ":accounts_panel",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/panel/accounts/installments/create/",
+    "view": "installment_plan_create",
+    "url_name": ":accounts_panel:installment_plan_create",
+    "namespace": ":accounts_panel",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/panel/accounts/installments/<int:pk>/",
+    "view": "installment_plan_detail",
+    "url_name": ":accounts_panel:installment_plan_detail",
+    "namespace": ":accounts_panel",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/panel/accounts/installments/<int:pk>/restructure/",
+    "view": "installment_restructure",
+    "url_name": ":accounts_panel:installment_restructure",
+    "namespace": ":accounts_panel",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/panel/accounts/installments/<int:pk>/pay/",
+    "view": "installment_pay",
+    "url_name": ":accounts_panel:installment_pay",
+    "namespace": ":accounts_panel",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/panel/accounts/overdue/",
+    "view": "overdue_list",
+    "url_name": ":accounts_panel:overdue_list",
+    "namespace": ":accounts_panel",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/panel/accounts/late-fees/apply/",
+    "view": "late_fee_apply",
+    "url_name": ":accounts_panel:late_fee_apply",
+    "namespace": ":accounts_panel",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/panel/accounts/late-fees/waive/",
+    "view": "late_fee_waive",
+    "url_name": ":accounts_panel:late_fee_waive",
+    "namespace": ":accounts_panel",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/panel/accounts/categories/",
+    "view": "expense_category_list",
+    "url_name": ":accounts_panel:expense_category_list",
+    "namespace": ":accounts_panel",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/panel/accounts/categories/create/",
+    "view": "expense_category_create",
+    "url_name": ":accounts_panel:expense_category_create",
+    "namespace": ":accounts_panel",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/panel/accounts/students/<int:pk>/ledger/",
+    "view": "student_ledger",
+    "url_name": ":accounts_panel:student_ledger",
+    "namespace": ":accounts_panel",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/panel/accounts/reports/",
+    "view": "AccountantReportsDashboardView",
+    "url_name": ":accounts_panel:reports_dashboard",
+    "namespace": ":accounts_panel",
+    "methods": [
+      "GET"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/panel/accounts/reports/pending-dues/csv/",
+    "view": "PendingDuesExportCSVView",
+    "url_name": ":accounts_panel:pending_dues_csv",
+    "namespace": ":accounts_panel",
+    "methods": [
+      "GET"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/panel/accounts/reports/pending-dues/pdf/",
+    "view": "PendingDuesPDFView",
+    "url_name": ":accounts_panel:pending_dues_pdf",
+    "namespace": ":accounts_panel",
+    "methods": [
+      "GET"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/panel/accounts/reports/revenue/",
+    "view": "report_revenue",
+    "url_name": ":accounts_panel:report_revenue",
+    "namespace": ":accounts_panel",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/panel/accounts/reports/overdue/",
+    "view": "report_overdue",
+    "url_name": ":accounts_panel:report_overdue",
+    "namespace": ":accounts_panel",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/panel/accounts/notifications/",
+    "view": "NotificationListView",
+    "url_name": ":accounts_panel:notification_list",
+    "namespace": ":accounts_panel",
+    "methods": [
+      "GET"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/panel/accounts/notifications/mark-read/",
+    "view": "NotificationMarkReadView",
+    "url_name": ":accounts_panel:notification_mark_read",
+    "namespace": ":accounts_panel",
+    "methods": [
+      "POST"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/panel/registrar/dashboard/",
+    "view": "RegistrarDashboardView",
+    "url_name": ":registrar_panel:dashboard",
+    "namespace": ":registrar_panel",
+    "methods": [
+      "GET"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/panel/registrar/students/",
+    "view": "student_list",
+    "url_name": ":registrar_panel:student_list",
+    "namespace": ":registrar_panel",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/panel/registrar/students/create/",
+    "view": "student_create",
+    "url_name": ":registrar_panel:student_create",
+    "namespace": ":registrar_panel",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/panel/registrar/students/<int:pk>/",
+    "view": "student_detail",
+    "url_name": ":registrar_panel:student_detail",
+    "namespace": ":registrar_panel",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/panel/registrar/students/<int:pk>/edit/",
+    "view": "student_edit",
+    "url_name": ":registrar_panel:student_edit",
+    "namespace": ":registrar_panel",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/panel/registrar/students/<int:pk>/documents/upload/",
+    "view": "student_document_upload",
+    "url_name": ":registrar_panel:student_document_upload",
+    "namespace": ":registrar_panel",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/panel/registrar/students/<int:pk>/guardians/",
+    "view": "student_guardians",
+    "url_name": ":registrar_panel:student_guardians",
+    "namespace": ":registrar_panel",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/panel/registrar/leads/",
+    "view": "lead_list",
+    "url_name": ":registrar_panel:lead_list",
+    "namespace": ":registrar_panel",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/panel/registrar/leads/create/",
+    "view": "lead_create",
+    "url_name": ":registrar_panel:lead_create",
+    "namespace": ":registrar_panel",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/panel/registrar/leads/<int:pk>/",
+    "view": "lead_detail",
+    "url_name": ":registrar_panel:lead_detail",
+    "namespace": ":registrar_panel",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/panel/registrar/leads/<int:pk>/edit/",
+    "view": "lead_edit",
+    "url_name": ":registrar_panel:lead_edit",
+    "namespace": ":registrar_panel",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/panel/registrar/leads/<int:pk>/convert/",
+    "view": "lead_convert",
+    "url_name": ":registrar_panel:lead_convert",
+    "namespace": ":registrar_panel",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/panel/registrar/enrollments/create/",
+    "view": "enrollment_create",
+    "url_name": ":registrar_panel:enrollment_create",
+    "namespace": ":registrar_panel",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/panel/registrar/enrollments/<int:pk>/",
+    "view": "enrollment_detail",
+    "url_name": ":registrar_panel:enrollment_detail",
+    "namespace": ":registrar_panel",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/panel/registrar/sessions/",
+    "view": "session_overview",
+    "url_name": ":registrar_panel:session_list",
+    "namespace": ":registrar_panel",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/panel/registrar/sessions/<int:pk>/",
+    "view": "session_detail",
+    "url_name": ":registrar_panel:session_detail",
+    "namespace": ":registrar_panel",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/panel/registrar/notifications/",
+    "view": "NotificationListView",
+    "url_name": ":registrar_panel:notification_list",
+    "namespace": ":registrar_panel",
+    "methods": [
+      "GET"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/panel/registrar/notifications/mark-read/",
+    "view": "NotificationMarkReadView",
+    "url_name": ":registrar_panel:notification_mark_read",
+    "namespace": ":registrar_panel",
+    "methods": [
+      "POST"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/panel/registrar/admissions/",
+    "view": "AdmissionListView",
+    "url_name": ":registrar_panel:admissions:admission_list",
+    "namespace": ":registrar_panel:admissions",
+    "methods": [
+      "GET"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/panel/registrar/admissions/<int:pk>/",
+    "view": "AdmissionDetailView",
+    "url_name": ":registrar_panel:admissions:admission_detail",
+    "namespace": ":registrar_panel:admissions",
+    "methods": [
+      "GET"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/panel/registrar/admissions/<int:pk>/review/",
+    "view": "AdmissionReviewView",
+    "url_name": ":registrar_panel:admissions:admission_review",
+    "namespace": ":registrar_panel:admissions",
+    "methods": [
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/panel/registrar/admissions/<int:pk>/approve/",
+    "view": "AdmissionApproveView",
+    "url_name": ":registrar_panel:admissions:admission_approve",
+    "namespace": ":registrar_panel:admissions",
+    "methods": [
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/panel/registrar/admissions/<int:pk>/reject/",
+    "view": "AdmissionRejectView",
+    "url_name": ":registrar_panel:admissions:admission_reject",
+    "namespace": ":registrar_panel:admissions",
+    "methods": [
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/panel/registrar/admissions/<int:pk>/convert/",
+    "view": "AdmissionConvertView",
+    "url_name": ":registrar_panel:admissions:admission_convert",
+    "namespace": ":registrar_panel:admissions",
+    "methods": [
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/panel/registrar/admissions/summary/",
+    "view": "AdmissionSummaryView",
+    "url_name": ":registrar_panel:admissions:admission_summary",
+    "namespace": ":registrar_panel:admissions",
+    "methods": [
+      "GET"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/panel/registrar/admissions/export/",
+    "view": "AdmissionExportCSVView",
+    "url_name": ":registrar_panel:admissions:admission_export",
+    "namespace": ":registrar_panel:admissions",
+    "methods": [
+      "GET"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/portal/student/dashboard/",
+    "view": "StudentDashboardView",
+    "url_name": ":student_portal:dashboard",
+    "namespace": ":student_portal",
+    "methods": [
+      "GET"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/portal/student/profile/",
+    "view": "StudentProfileView",
+    "url_name": ":student_portal:profile_view",
+    "namespace": ":student_portal",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/portal/student/enrollment/",
+    "view": "my_enrollment",
+    "url_name": ":student_portal:my_enrollment",
+    "namespace": ":student_portal",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/portal/student/attendance/",
+    "view": "StudentAttendanceView",
+    "url_name": ":student_portal:my_attendance",
+    "namespace": ":student_portal",
+    "methods": [
+      "GET"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/portal/student/exams/",
+    "view": "StudentExamsView",
+    "url_name": ":student_portal:my_exams",
+    "namespace": ":student_portal",
+    "methods": [
+      "GET"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/portal/student/exams/<int:pk>/",
+    "view": "exam_result_detail",
+    "url_name": ":student_portal:exam_result_detail",
+    "namespace": ":student_portal",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/portal/student/transcript/",
+    "view": "student_transcript",
+    "url_name": ":student_portal:student_transcript",
+    "namespace": ":student_portal",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/portal/student/transcript/pdf/",
+    "view": "StudentTranscriptPDFView",
+    "url_name": ":student_portal:student_transcript_pdf",
+    "namespace": ":student_portal",
+    "methods": [
+      "GET"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/portal/student/payments/",
+    "view": "StudentFeesView",
+    "url_name": ":student_portal:my_payments",
+    "namespace": ":student_portal",
+    "methods": [
+      "GET"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/portal/student/fees/",
+    "view": "StudentFeesView",
+    "url_name": ":student_portal:my_fees",
+    "namespace": ":student_portal",
+    "methods": [
+      "GET"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/portal/student/fees/<int:payment_id>/receipt/",
+    "view": "StudentFeeReceiptPDFView",
+    "url_name": ":student_portal:download_receipt",
+    "namespace": ":student_portal",
+    "methods": [
+      "GET"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/portal/student/timetable/",
+    "view": "student_timetable",
+    "url_name": ":student_portal:timetable",
+    "namespace": ":student_portal",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/portal/student/notifications/",
+    "view": "StudentNotificationListView",
+    "url_name": ":student_portal:notification_list",
+    "namespace": ":student_portal",
+    "methods": [
+      "GET"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/portal/student/notifications/<int:pk>/",
+    "view": "StudentNotificationDetailView",
+    "url_name": ":student_portal:notification_detail",
+    "namespace": ":student_portal",
+    "methods": [
+      "GET"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/portal/student/notifications/mark-read/",
+    "view": "StudentNotificationMarkReadView",
+    "url_name": ":student_portal:notification_mark_read",
+    "namespace": ":student_portal",
+    "methods": [
+      "POST"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/portal/student/password/",
+    "view": "StudentPasswordChangeView",
+    "url_name": ":student_portal:password_change",
+    "namespace": ":student_portal",
+    "methods": [
+      "GET",
+      "POST",
+      "PUT"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/portal/guardian/dashboard/",
+    "view": "GuardianDashboardView",
+    "url_name": ":guardian_portal:dashboard",
+    "namespace": ":guardian_portal",
+    "methods": [
+      "GET"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/portal/guardian/children/",
+    "view": "GuardianChildrenView",
+    "url_name": ":guardian_portal:my_children",
+    "namespace": ":guardian_portal",
+    "methods": [
+      "GET"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/portal/guardian/child/<int:student_id>/profile/",
+    "view": "GuardianChildDetailView",
+    "url_name": ":guardian_portal:child_detail",
+    "namespace": ":guardian_portal",
+    "methods": [
+      "GET"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/portal/guardian/child/<int:student_id>/attendance/",
+    "view": "GuardianChildAttendanceView",
+    "url_name": ":guardian_portal:child_attendance",
+    "namespace": ":guardian_portal",
+    "methods": [
+      "GET"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/portal/guardian/child/<int:student_id>/fees/",
+    "view": "GuardianChildFeesView",
+    "url_name": ":guardian_portal:child_payments",
+    "namespace": ":guardian_portal",
+    "methods": [
+      "GET"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/portal/guardian/child/<int:student_id>/exams/",
+    "view": "GuardianChildExamsView",
+    "url_name": ":guardian_portal:child_exams",
+    "namespace": ":guardian_portal",
+    "methods": [
+      "GET"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/portal/guardian/child/<int:student_id>/transcript/",
+    "view": "child_transcript",
+    "url_name": ":guardian_portal:child_transcript",
+    "namespace": ":guardian_portal",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/portal/guardian/child/<int:student_id>/transcript/pdf/",
+    "view": "StudentTranscriptPDFView",
+    "url_name": ":guardian_portal:child_transcript_pdf",
+    "namespace": ":guardian_portal",
+    "methods": [
+      "GET"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/portal/guardian/child/<int:student_id>/fees/<int:payment_id>/receipt/",
+    "view": "GuardianChildFeeReceiptPDFView",
+    "url_name": ":guardian_portal:download_receipt",
+    "namespace": ":guardian_portal",
+    "methods": [
+      "GET"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/portal/guardian/children/<int:student_id>/",
+    "view": "GuardianChildDetailView",
+    "url_name": ":guardian_portal:child_detail_old",
+    "namespace": ":guardian_portal",
+    "methods": [
+      "GET"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/portal/guardian/children/<int:student_id>/attendance/",
+    "view": "GuardianChildAttendanceView",
+    "url_name": ":guardian_portal:child_attendance_old",
+    "namespace": ":guardian_portal",
+    "methods": [
+      "GET"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/portal/guardian/children/<int:student_id>/payments/",
+    "view": "GuardianChildFeesView",
+    "url_name": ":guardian_portal:child_payments_old",
+    "namespace": ":guardian_portal",
+    "methods": [
+      "GET"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/portal/guardian/children/<int:student_id>/exams/",
+    "view": "GuardianChildExamsView",
+    "url_name": ":guardian_portal:child_exams_old",
+    "namespace": ":guardian_portal",
+    "methods": [
+      "GET"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/portal/guardian/notifications/",
+    "view": "GuardianNotificationListView",
+    "url_name": ":guardian_portal:notification_list",
+    "namespace": ":guardian_portal",
+    "methods": [
+      "GET"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/portal/guardian/notifications/<int:pk>/",
+    "view": "GuardianNotificationDetailView",
+    "url_name": ":guardian_portal:notification_detail",
+    "namespace": ":guardian_portal",
+    "methods": [
+      "GET"
+    ],
+    "has_parameters": true
+  },
+  {
+    "path": "/portal/guardian/notifications/mark-read/",
+    "view": "GuardianNotificationMarkReadView",
+    "url_name": ":guardian_portal:notification_mark_read",
+    "namespace": ":guardian_portal",
+    "methods": [
+      "POST"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/api/students/search/",
+    "view": "api_student_search",
+    "url_name": ":api:api_student_search",
+    "namespace": ":api",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/api/sessions/search/",
+    "view": "api_session_search",
+    "url_name": ":api:api_session_search",
+    "namespace": ":api",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/api/notifications/unread-count/",
+    "view": "api_unread_count",
+    "url_name": ":api:api_unread_count",
+    "namespace": ":api",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/api/attendance/bulk-mark/",
+    "view": "api_attendance_bulk_mark",
+    "url_name": ":api:api_attendance_bulk_mark",
+    "namespace": ":api",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/api/dashboard/stats/",
+    "view": "api_dashboard_stats",
+    "url_name": ":api:api_dashboard_stats",
+    "namespace": ":api",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/api/analytics/revenue-trend/",
+    "view": "api_revenue_trend",
+    "url_name": ":analytics:api_revenue_trend",
+    "namespace": ":analytics",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/api/analytics/attendance-trend/",
+    "view": "api_attendance_trend",
+    "url_name": ":analytics:api_attendance_trend",
+    "namespace": ":analytics",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/api/analytics/enrollment-growth/",
+    "view": "api_enrollment_growth",
+    "url_name": ":analytics:api_enrollment_growth",
+    "namespace": ":analytics",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/api/analytics/lead-funnel/",
+    "view": "api_lead_funnel",
+    "url_name": ":analytics:api_lead_funnel",
+    "namespace": ":analytics",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/api/analytics/aging-report/",
+    "view": "api_aging_report",
+    "url_name": ":analytics:api_aging_report",
+    "namespace": ":analytics",
+    "methods": [
+      "GET",
+      "POST"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/apply/",
+    "view": "PublicAdmissionFormView",
+    "url_name": ":admissions_public:apply",
+    "namespace": ":admissions_public",
+    "methods": [
+      "GET",
+      "POST",
+      "PUT"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/apply/success/",
+    "view": "PublicSuccessView",
+    "url_name": ":admissions_public:success",
+    "namespace": ":admissions_public",
+    "methods": [
+      "GET"
+    ],
+    "has_parameters": false
+  },
+  {
+    "path": "/success/",
+    "view": "PublicSuccessStoriesView",
+    "url_name": "public_success",
+    "namespace": "",
+    "methods": [
+      "GET"
+    ],
+    "has_parameters": false
+  }
+]

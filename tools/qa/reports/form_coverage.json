@@ -1,0 +1,33 @@
+{
+  "timestamp": "2026-06-20T02:44:50.945841",
+  "forms_tested": [
+    "UserProfileForm (profile)",
+    "SessionForm (academic session)",
+    "StudentCreateForm (student)",
+    "PaymentForm (payment)",
+    "ExpenseForm (expense)",
+    "NotificationTemplateForm (notification template)",
+    "ClassScheduleForm (timetable)",
+    "AdmissionApplicationForm (admission)",
+    "UserCreateForm (staff/faculty)",
+    "RefundForm (refund)"
+  ],
+  "forms_with_invalid_tests": [
+    "UserProfileForm",
+    "SessionForm",
+    "StudentCreateForm",
+    "NotificationTemplateForm",
+    "PaymentForm"
+  ],
+  "uncovered_forms_documented": [
+    "InstallmentPlanForm - requires active enrollment with payment setup",
+    "ExpenseCategoryForm - simple name/description CRUD",
+    "GuardianForm - requires existing student record",
+    "StudentDocumentForm - requires file upload",
+    "EnrollmentForm - requires session + student combination",
+    "LeadForm - admissions pipeline specific",
+    "FacultyProfileForm - edit-only, requires existing profile",
+    "FacultyAssignSessionForm - requires session + faculty combo",
+    "PasswordChangeForm - Django built-in, tested via profile"
+  ]
+}

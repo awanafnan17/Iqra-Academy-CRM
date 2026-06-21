@@ -1,0 +1,159 @@
+{
+  "role": "Teacher",
+  "mode": "enforcement",
+  "timestamp": "2026-06-20T02:50:42.235315",
+  "pages_visited": [
+    {
+      "url": "/panel/teacher/dashboard/",
+      "status": 200,
+      "load_time_ms": 237,
+      "final_url": "/panel/teacher/dashboard/",
+      "title": "Educator Control - Iqra Academy",
+      "source_url": "seed",
+      "link_source": "seed"
+    },
+    {
+      "url": "/accounts/profile/",
+      "status": 200,
+      "load_time_ms": 79,
+      "final_url": "/accounts/profile/",
+      "title": "My Profile - Iqra Academy",
+      "source_url": "/panel/teacher/dashboard/",
+      "link_source": "navbar"
+    },
+    {
+      "url": "/panel/teacher/sessions/",
+      "status": 200,
+      "load_time_ms": 87,
+      "final_url": "/panel/teacher/sessions/",
+      "title": "My Sessions - Iqra Academy",
+      "source_url": "/accounts/profile/",
+      "link_source": "sidebar"
+    },
+    {
+      "url": "/panel/teacher/exams/",
+      "status": 200,
+      "load_time_ms": 94,
+      "final_url": "/panel/teacher/exams/",
+      "title": "Exams - Iqra Academy",
+      "source_url": "/panel/teacher/sessions/",
+      "link_source": "sidebar"
+    },
+    {
+      "url": "/panel/teacher/my-timetable/",
+      "status": 200,
+      "load_time_ms": 91,
+      "final_url": "/panel/teacher/my-timetable/",
+      "title": "My Timetable - Iqra Academy",
+      "source_url": "/panel/teacher/exams/",
+      "link_source": "sidebar"
+    },
+    {
+      "url": "/panel/teacher/notifications/",
+      "status": 200,
+      "load_time_ms": 98,
+      "final_url": "/panel/teacher/notifications/",
+      "title": "Notifications - Iqra Academy",
+      "source_url": "/panel/teacher/my-timetable/",
+      "link_source": "sidebar"
+    },
+    {
+      "url": "/accounts/password/change/",
+      "status": 200,
+      "load_time_ms": 93,
+      "final_url": "/accounts/password/change/",
+      "title": "Change Password - Iqra Academy",
+      "source_url": "/panel/teacher/notifications/",
+      "link_source": "navbar"
+    },
+    {
+      "url": "/accounts/post-login/",
+      "status": 200,
+      "load_time_ms": 70,
+      "final_url": "/panel/teacher/dashboard/",
+      "title": "Educator Control - Iqra Academy",
+      "source_url": "/accounts/password/change/",
+      "link_source": "navigation"
+    },
+    {
+      "url": "/panel/teacher/exams/create/",
+      "status": 200,
+      "load_time_ms": 54,
+      "final_url": "/panel/teacher/exams/create/",
+      "title": "Create Exam - Iqra Academy",
+      "source_url": "/panel/teacher/exams/",
+      "link_source": "navigation"
+    }
+  ],
+  "errors_500": [],
+  "errors_404": [],
+  "errors_403": [],
+  "console_errors": [
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "url": "http://127.0.0.1:4082/panel/teacher/dashboard/"
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "url": "http://127.0.0.1:4082/accounts/profile/"
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "url": "http://127.0.0.1:4082/accounts/profile/"
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "url": "http://127.0.0.1:4082/panel/teacher/sessions/"
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "url": "http://127.0.0.1:4082/panel/teacher/exams/"
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "url": "http://127.0.0.1:4082/panel/teacher/my-timetable/"
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "url": "http://127.0.0.1:4082/panel/teacher/notifications/"
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "url": "http://127.0.0.1:4082/accounts/password/change/"
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "url": "http://127.0.0.1:4082/accounts/password/change/"
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "url": "http://127.0.0.1:4082/panel/teacher/dashboard/"
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "url": "http://127.0.0.1:4082/panel/teacher/exams/create/"
+    }
+  ],
+  "redirect_loops": [],
+  "slow_pages": [],
+  "empty_pages": [],
+  "redirects": [
+    {
+      "from": "/accounts/post-login/",
+      "to": "/panel/teacher/dashboard/",
+      "status": 200
+    }
+  ],
+  "all_errors": []
+}

@@ -1,0 +1,155 @@
+{% extends 'layouts/panel_base.html' %}
+{% load static %}
+
+{% block title %}Grade Configurations - Iqra Academy{% endblock %}
+
+{% block content %}
+<div class="container-fluid px-0 animate-fade-in">
+    <!-- Page Header -->
+    <div class="p-4 rounded-4 mb-4 card border border-light shadow-sm">
+        <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
+            <div>
+                <h3 class="fw-bold mb-1">
+                    <i class="fa-solid fa-graduation-cap me-2 text-primary"></i>
+                    Grade Configurations
+                </h3>
+                <p class="text-secondary mb-0">
+                    Define and configure grading boundaries and scales globally or per-session.
+                </p>
+            </div>
+            {% if can_edit %}
+            <div>
+                <a href="{% url 'admin_panel:exams:grade_config_create' %}" class="btn btn-primary px-4 py-2 rounded-3 shadow-sm" data-testid="create-grade-config-btn">
+                    <i class="fa-solid fa-plus me-2"></i> Create Grade Config
+                </a>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Alert Messages -->
+    {% if messages %}
+    <div class="row">
+        <div class="col-12">
+            {% for message in messages %}
+            <div class="alert alert-{% if message.tags == 'error' %}danger{% else %}{{ message.tags }}{% endif %} alert-dismissible fade show rounded-3 shadow-sm" role="alert">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+
+    <!-- Grade Config Table -->
+    <div class="card border border-light shadow rounded-4 stagger-1">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0" data-testid="grade-config-table">
+                <thead class="table-light">
+                    <tr>
+                        <th class="ps-4">Grade Label</th>
+                        <th>Min Percentage</th>
+                        <th>Max Percentage</th>
+                        <th>Grade Point (GPA)</th>
+                        <th>Scope / Session</th>
+                        <th>Sort Order</th>
+                        {% if can_edit %}
+                        <th class="text-end pe-4">Actions</th>
+                        {% endif %}
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for config in grade_configs %}
+                    <tr data-testid="grade-row-{{ config.pk }}">
+                        <td class="ps-4">
+                            <span class="badge bg-primary bg-opacity-10 text-primary border border-primary-subtle rounded-pill px-3 py-1 fw-bold fs-6">
+                                {{ config.grade_name }}
+                            </span>
+                        </td>
+                        <td>
+                            <span class="fw-semibold text-dark">{{ config.min_percentage }}%</span>
+                        </td>
+                        <td>
+                            <span class="fw-semibold text-dark">{{ config.max_percentage }}%</span>
+                        </td>
+                        <td>
+                            <span class="text-secondary fw-semibold">{{ config.grade_point|default:"-" }}</span>
+                        </td>
+                        <td>
+                            {% if config.session %}
+                            <span class="text-dark"><i class="fa-solid fa-school-flag text-muted me-1"></i> {{ config.session.name }}</span>
+                            {% else %}
+                            <span class="badge bg-success bg-opacity-10 text-success border border-success-subtle rounded px-2 py-1"><i class="fa-solid fa-globe me-1"></i> Global Default</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            <span class="text-muted">{{ config.sort_order }}</span>
+                        </td>
+                        {% if can_edit %}
+                        <td class="text-end pe-4">
+                            <a href="{% url 'admin_panel:exams:grade_config_edit' config.pk %}" class="btn btn-sm btn-outline-warning rounded-2 px-3" data-testid="edit-grade-config-{{ config.pk }}">
+                                <i class="fa-solid fa-pen me-1"></i> Edit
+                            </a>
+                        </td>
+                        {% endif %}
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="7" class="text-center py-5 text-muted" data-testid="grade-config-empty-state">
+                            <div class="mb-3">
+                                <i class="fa-solid fa-graduation-cap fa-3x text-light-subtle"></i>
+                            </div>
+                            <h6 class="fw-bold">No Grade Configurations Found</h6>
+                            <p class="small text-secondary mb-0">
+                                Create global or session-specific grade boundaries to start automated grading.
+                            </p>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Pagination -->
+        {% if grade_configs.has_other_pages %}
+        <div class="card-footer bg-transparent border-0 py-3">
+            <nav aria-label="Page navigation">
+                <ul class="pagination justify-content-center mb-0">
+                    {% if grade_configs.has_previous %}
+                    <li class="page-item">
+                        <a class="page-link rounded-start-3" href="?page={{ grade_configs.previous_page_number }}" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                    {% else %}
+                    <li class="page-item disabled">
+                        <span class="page-link rounded-start-3">&laquo;</span>
+                    </li>
+                    {% endif %}
+
+                    {% for num in grade_configs.paginator.page_range %}
+                    {% if grade_configs.number == num %}
+                    <li class="page-item active"><span class="page-link">{{ num }}</span></li>
+                    {% elif num > grade_configs.number|add:'-3' and num < grade_configs.number|add:'3' %}
+                    <li class="page-item"><a class="page-link" href="?page={{ num }}">{{ num }}</a></li>
+                    {% endif %}
+                    {% endfor %}
+
+                    {% if grade_configs.has_next %}
+                    <li class="page-item">
+                        <a class="page-link rounded-end-3" href="?page={{ grade_configs.next_page_number }}" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                    {% else %}
+                    <li class="page-item disabled">
+                        <span class="page-link rounded-end-3">&raquo;</span>
+                    </li>
+                    {% endif %}
+                </ul>
+            </nav>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

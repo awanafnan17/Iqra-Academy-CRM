@@ -1,0 +1,382 @@
+{% extends 'layouts/panel_base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container-fluid py-4">
+    <!-- Page Header -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h1 class="h3 mb-0 text-gray-800">Government Result PDF Comparison</h1>
+            <p class="text-muted mb-0">Cross-reference official government result PDFs against the academy student database automatically.</p>
+        </div>
+    </div>
+
+    <!-- Alert Messages -->
+    {% if messages %}
+    <div class="row">
+        <div class="col-12">
+            {% for message in messages %}
+            <div class="alert alert-{% if message.tags == 'error' %}danger{% else %}{{ message.tags }}{% endif %} alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+
+    <div class="row g-4">
+        <!-- Upload Form Card -->
+        <div class="col-lg-4">
+            <div class="card border-0 shadow-sm rounded-3 mb-4">
+                <div class="card-header bg-card border-0 py-3">
+                    <h5 class="card-title mb-0 fw-bold text-primary">Upload Official Result</h5>
+                </div>
+                <div class="card-body">
+                    <form method="post" enctype="multipart/form-data" action="{% url 'admin_panel:pdf_comparison' %}">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label for="exam_type" class="form-label fw-semibold">Exam Type</label>
+                            <select name="exam_type" id="exam_type" class="form-select" required>
+                                <option value="" disabled selected>Select Exam Type...</option>
+                                {% for exam in exam_types %}
+                                <option value="{{ exam }}">{{ exam }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="mb-4">
+                            <label for="pdf_file" class="form-label fw-semibold">Result PDF File</label>
+                            <input class="form-control" type="file" id="pdf_file" name="pdf_file" accept=".pdf" required>
+                            <div class="form-text">Upload standard government result PDF containing selected candidates.</div>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100 py-2 fw-semibold">
+                            <i class="bi bi-cpu-fill me-2"></i>Run Comparison Engine
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Recent Jobs List -->
+            <div class="card border-0 shadow-sm rounded-3">
+                <div class="card-header bg-card border-0 py-3">
+                    <h5 class="card-title mb-0 fw-bold text-secondary">Recent Comparison Jobs</h5>
+                </div>
+                <div class="card-body p-0">
+                    <div class="list-group list-group-flush">
+                        {% for job in recent_jobs %}
+                        <a href="?job_id={{ job.id }}" class="list-group-item list-group-item-action py-3 {% if selected_job.id == job.id %}active{% endif %}">
+                            <div class="d-flex w-100 justify-content-between align-items-center">
+                                <h6 class="mb-1 fw-bold">{{ job.exam_type }} Results</h6>
+                                <span class="badge {% if job.status == 'Processed' %}bg-success{% elif job.status == 'Failed' %}bg-danger{% else %}bg-warning{% endif %}">
+                                    {{ job.status }}
+                                </span>
+                            </div>
+                            <p class="mb-1 text-xs {% if selected_job.id == job.id %}text-white-50{% else %}text-muted{% endif %}">
+                                Uploaded on: {{ job.uploaded_at|date:"M d, Y H:i" }}
+                            </p>
+                            <div class="d-flex justify-content-between align-items-center mt-2 text-xs">
+                                <span>Total parsed: <strong>{{ job.total_entries }}</strong></span>
+                                <span>Matched: <strong>{{ job.matched_entries }}</strong></span>
+                            </div>
+                        </a>
+                        {% empty %}
+                        <div class="p-3 text-center text-muted">No comparison jobs uploaded yet.</div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Job Results Display -->
+        <div class="col-lg-8">
+            {% if preview %}
+            <!-- Preview Summary Stats -->
+            <div class="row g-3 mb-4">
+                <div class="col-md-4 col-xl-2">
+                    <div class="card border-0 bg-primary text-white shadow-sm rounded-3 p-3">
+                        <div class="text-xs text-uppercase opacity-75">Total Extracted</div>
+                        <div class="h4 fw-bold mb-0">{{ preview.summary.total }}</div>
+                    </div>
+                </div>
+                <div class="col-md-4 col-xl-2">
+                    <div class="card border-0 bg-success text-white shadow-sm rounded-3 p-3">
+                        <div class="text-xs text-uppercase opacity-75">Confirmed</div>
+                        <div class="h4 fw-bold mb-0">{{ preview.summary.confirmed }}</div>
+                    </div>
+                </div>
+                <div class="col-md-4 col-xl-2">
+                    <div class="card border-0 bg-info text-white shadow-sm rounded-3 p-3">
+                        <div class="text-xs text-uppercase opacity-75">Possible</div>
+                        <div class="h4 fw-bold mb-0">{{ preview.summary.possible }}</div>
+                    </div>
+                </div>
+                <div class="col-md-4 col-xl-2">
+                    <div class="card border-0 bg-warning text-white shadow-sm rounded-3 p-3">
+                        <div class="text-xs text-uppercase opacity-75">Partial Match</div>
+                        <div class="h4 fw-bold mb-0">{% widthratio preview.summary.name_only|add:preview.summary.father_only 1 1 %}</div>
+                    </div>
+                </div>
+                <div class="col-md-4 col-xl-2">
+                    <div class="card border-0 bg-danger text-white shadow-sm rounded-3 p-3">
+                        <div class="text-xs text-uppercase opacity-75">Ambiguous</div>
+                        <div class="h4 fw-bold mb-0">{{ preview.summary.ambiguous }}</div>
+                    </div>
+                </div>
+                <div class="col-md-4 col-xl-2">
+                    <div class="card border-0 bg-secondary text-white shadow-sm rounded-3 p-3">
+                        <div class="text-xs text-uppercase opacity-75">Unmatched</div>
+                        <div class="h4 fw-bold mb-0">{{ preview.summary.unmatched }}</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Search & Filters -->
+            <div class="card border-0 shadow-sm rounded-3 mb-4">
+                <div class="card-body">
+                    <form method="get" action="{% url 'admin_panel:pdf_comparison' %}" class="row g-3 align-items-center">
+                        <div class="col-md-4">
+                            <div class="input-group">
+                                <span class="input-group-text bg-light border-end-0"><i class="bi bi-search"></i></span>
+                                <input type="text" name="q" value="{{ q }}" class="form-control border-start-0 bg-light" placeholder="Search candidate/student details...">
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <select name="status" class="form-select bg-light">
+                                <option value="">All Match Statuses</option>
+                                <option value="CONFIRMED_MATCH" {% if status_filter == 'CONFIRMED_MATCH' %}selected{% endif %}>Confirmed Match</option>
+                                <option value="POSSIBLE_MATCH" {% if status_filter == 'POSSIBLE_MATCH' %}selected{% endif %}>Possible Match</option>
+                                <option value="NAME_ONLY_PARTIAL" {% if status_filter == 'NAME_ONLY_PARTIAL' %}selected{% endif %}>Name-Only Partial</option>
+                                <option value="FATHER_ONLY_PARTIAL" {% if status_filter == 'FATHER_ONLY_PARTIAL' %}selected{% endif %}>Father-Only Partial</option>
+                                <option value="AMBIGUOUS_MATCH" {% if status_filter == 'AMBIGUOUS_MATCH' %}selected{% endif %}>Ambiguous Match</option>
+                                <option value="UNMATCHED" {% if status_filter == 'UNMATCHED' %}selected{% endif %}>Unmatched</option>
+                            </select>
+                        </div>
+                        <div class="col-md-4 d-flex gap-2">
+                            <button type="submit" class="btn btn-primary px-3 fw-semibold">Filters</button>
+                            <a href="{% url 'admin_panel:pdf_comparison' %}" class="btn btn-outline-secondary">Reset</a>
+                            <a href="?clear=1" class="btn btn-danger ms-auto"><i class="bi bi-trash-fill"></i> Clear</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Preview Table -->
+            <div class="card border-0 shadow-sm rounded-3 mb-4">
+                <div class="card-header bg-card border-0 py-3 d-flex justify-content-between align-items-center">
+                    <div>
+                        <h5 class="card-title mb-0 fw-bold text-primary">Preview Matches — {{ preview.filename }}</h5>
+                        <p class="text-xs text-muted mb-0">Format: {{ preview.exam_type }} | Temporary Preview Mode</p>
+                    </div>
+                    <a href="{% url 'admin_panel:export_preview_csv' %}" class="btn btn-success btn-sm fw-semibold">
+                        <i class="bi bi-file-earmark-spreadsheet-fill me-1"></i>Export CSV
+                    </a>
+                </div>
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle mb-0">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Extracted Candidate (PDF)</th>
+                                    <th>Extracted Metadata</th>
+                                    <th class="text-center">Status</th>
+                                    <th>CRM Student details</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for res in preview_results %}
+                                <tr>
+                                    <td>
+                                        <div class="fw-bold text-primary text-sm">{{ res.extracted_record.candidate_name }}</div>
+                                        <div class="text-xs text-muted">Father: {{ res.extracted_record.father_name|default:"(Missing)" }}</div>
+                                    </td>
+                                    <td>
+                                        <div class="text-xs">
+                                            {% if res.extracted_record.roll_no %}<div>Roll: <code>{{ res.extracted_record.roll_no }}</code></div>{% endif %}
+                                            {% if res.extracted_record.merit_no %}<div>Merit: <strong>{{ res.extracted_record.merit_no }}</strong></div>{% endif %}
+                                            {% if res.extracted_record.application_no %}<div>App/Diary: <code>{{ res.extracted_record.application_no }}</code></div>{% endif %}
+                                            {% if res.extracted_record.domicile %}<div>Domicile: {{ res.extracted_record.domicile }}</div>{% endif %}
+                                            <div class="text-muted opacity-75 text-xxs">Page: {{ res.extracted_record.page_number }}</div>
+                                        </div>
+                                    </td>
+                                    <td class="text-center">
+                                        {% if res.status == 'CONFIRMED_MATCH' %}
+                                            <span class="badge bg-success-subtle text-success border border-success-subtle px-2 py-1">Confirmed Match</span>
+                                        {% elif res.status == 'POSSIBLE_MATCH' %}
+                                            <span class="badge bg-info-subtle text-info border border-info-subtle px-2 py-1">Possible Match</span>
+                                        {% elif res.status == 'NAME_ONLY_PARTIAL' %}
+                                            <span class="badge bg-warning-subtle text-warning border border-warning-subtle px-2 py-1">Name-Only Partial</span>
+                                        {% elif res.status == 'FATHER_ONLY_PARTIAL' %}
+                                            <span class="badge bg-warning-subtle text-warning border border-warning-subtle px-2 py-1">Father-Only Partial</span>
+                                        {% elif res.status == 'AMBIGUOUS_MATCH' %}
+                                            <span class="badge bg-danger-subtle text-danger border border-danger-subtle px-2 py-1">Ambiguous Match</span>
+                                        {% else %}
+                                            <span class="badge bg-secondary-subtle text-secondary border border-secondary-subtle px-2 py-1">Unmatched</span>
+                                        {% endif %}
+                                        <div class="text-xs text-muted mt-1 fw-bold">{{ res.confidence|floatformat:1 }}% confidence</div>
+                                    </td>
+                                    <td>
+                                        {% if res.student_info %}
+                                            <div class="p-2 border rounded bg-light" style="min-width: 250px;">
+                                                <div class="d-flex justify-content-between align-items-center mb-1">
+                                                    <span class="text-xs text-secondary fw-semibold">ID: {{ res.student_info.id }}</span>
+                                                    <span class="badge bg-primary-subtle text-primary text-xxs">{{ res.student_info.status }}</span>
+                                                </div>
+                                                <div class="fw-bold text-dark text-xs mb-1">{{ res.student_info.full_name }}</div>
+                                                <div class="text-xxs text-muted mb-1">Father/Guardian: {{ res.student_info.father_name|default:"-" }}</div>
+                                                
+                                                <div class="row g-1 text-xxs border-top pt-1 mt-1">
+                                                    <div class="col-6">CNIC: <strong>{{ res.student_info.cnic|default:"-" }}</strong></div>
+                                                    <div class="col-6">Roll: <strong>{{ res.student_info.roll_number|default:"-" }}</strong></div>
+                                                    <div class="col-6">Session: <strong>{{ res.student_info.session_name }}</strong></div>
+                                                    <div class="col-6">Batch: <strong>{{ res.student_info.batch_number|default:"-" }}</strong></div>
+                                                    <div class="col-12">Contact: <strong>{{ res.student_info.phone|default:"-" }}</strong></div>
+                                                </div>
+                                                <div class="text-end mt-1">
+                                                    <a href="{{ res.student_info.profile_url }}" target="_blank" class="text-xxs text-decoration-none fw-bold"><i class="bi bi-person-fill"></i> View Profile</a>
+                                                </div>
+                                            </div>
+                                        {% else %}
+                                            <span class="text-xs text-muted">No student record details</span>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                                {% empty %}
+                                <tr>
+                                    <td colspan="4" class="text-center py-4 text-muted">No preview candidates match the search criteria.</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            {% elif selected_job %}
+            <!-- Summary Stats -->
+            <div class="row g-3 mb-4">
+                <div class="col-md-4">
+                    <div class="card border-0 bg-primary text-white shadow-sm rounded-3 p-3">
+                        <div class="text-xs text-uppercase opacity-75">Exam Format</div>
+                        <div class="h3 fw-bold mb-0">{{ selected_job.exam_type }}</div>
+                        <div class="text-xs mt-2">Status: <strong>{{ selected_job.status }}</strong></div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card border-0 bg-info text-white shadow-sm rounded-3 p-3">
+                        <div class="text-xs text-uppercase opacity-75">Total Extracted Entries</div>
+                        <div class="h3 fw-bold mb-0">{{ selected_job.total_entries }}</div>
+                        <div class="text-xs mt-2">Parsed lines of text</div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card border-0 bg-success text-white shadow-sm rounded-3 p-3">
+                        <div class="text-xs text-uppercase opacity-75">Academy Matches Found</div>
+                        <div class="h3 fw-bold mb-0">{{ selected_job.matched_entries }}</div>
+                        <div class="text-xs mt-2">Added to achievements & flagged</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Matches Table -->
+            <div class="card border-0 shadow-sm rounded-3 mb-4">
+                <div class="card-header bg-card border-0 py-3 d-flex justify-content-between align-items-center">
+                    <h5 class="card-title mb-0 fw-bold text-primary">Matched Students</h5>
+                    {% if matched_results %}
+                    <a href="{% url 'admin_panel:export_comparison_csv' selected_job.id %}" class="btn btn-outline-success btn-sm fw-semibold">
+                        <i class="bi bi-file-earmark-spreadsheet-fill me-1"></i>Export CSV
+                    </a>
+                    {% endif %}
+                </div>
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle mb-0">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Extracted Name (PDF)</th>
+                                    <th>Student Match</th>
+                                    <th>Current Session</th>
+                                    <th>Extracted Roll</th>
+                                    <th class="text-center">Confidence</th>
+                                    <th class="text-center">Match Type</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for res in matched_results %}
+                                <tr>
+                                    <td class="fw-semibold text-primary">{{ res.extracted_name }}</td>
+                                    <td>
+                                        <div class="fw-bold">{{ res.student_name }}</div>
+                                    </td>
+                                    <td><span class="text-muted text-sm">{{ res.session }}</span></td>
+                                    <td><code>{{ res.roll }}</code></td>
+                                    <td class="text-center">
+                                        <div class="fw-bold {% if res.confidence >= 99.0 %}text-success{% else %}text-warning{% endif %}">
+                                            {{ res.confidence|floatformat:2 }}%
+                                        </div>
+                                    </td>
+                                    <td class="text-center">
+                                        {% if res.is_exact %}
+                                        <span class="badge bg-success-subtle text-success border border-success-subtle px-3">Exact Match</span>
+                                        {% else %}
+                                        <span class="badge bg-warning-subtle text-warning border border-warning-subtle px-3">Fuzzy Match</span>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                                {% empty %}
+                                <tr>
+                                    <td colspan="6" class="text-center py-4 text-muted">No academy student matches found for this job.</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Unmatched Entries Table -->
+            <div class="card border-0 shadow-sm rounded-3">
+                <div class="card-header bg-card border-0 py-3">
+                    <h5 class="card-title mb-0 fw-bold text-warning">Unmatched PDF Entries</h5>
+                </div>
+                <div class="card-body p-0">
+                    <div class="table-responsive" style="max-height: 400px; overflow-y: auto;">
+                        <table class="table table-hover align-middle mb-0">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Extracted Name</th>
+                                    <th>Extracted Roll</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for res in unmatched_results %}
+                                <tr>
+                                    <td>{{ res.extracted_name }}</td>
+                                    <td><code>{{ res.roll }}</code></td>
+                                    <td><span class="text-muted text-sm">No match in database</span></td>
+                                </tr>
+                                {% empty %}
+                                <tr>
+                                    <td colspan="3" class="text-center py-4 text-muted">All extracted entries were matched!</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            {% else %}
+            <!-- Blank State -->
+            <div class="card border-0 shadow-sm rounded-3 py-5 text-center">
+                <div class="card-body py-5">
+                    <i class="bi bi-file-earmark-pdf-fill text-muted display-1 mb-4 d-block"></i>
+                    <h4 class="fw-bold">No Comparison Selected</h4>
+                    <p class="text-muted max-width-md mx-auto mb-4">Select a previous comparison job from the list or upload a new result PDF to run matching.</p>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

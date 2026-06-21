@@ -1,0 +1,176 @@
+{% extends "layouts/panel_base.html" %}
+
+{% block title %}{{ page_title }}{% endblock %}
+
+{% block content %}
+<div class="container-fluid py-4">
+
+    <!-- Page Header -->
+    <div class="page-header animate-fade-in">
+        <div class="page-header-left">
+            <h3 class="fw-bold mb-1 text-primary">
+                <i class="fas fa-chart-bar me-2 text-muted"></i>
+                {{ session.name|default:"Unnamed Session" }}
+            </h3>
+            <p class="text-secondary mb-0">Result Summary & Rankings</p>
+        </div>
+        <div class="page-header-actions">
+            <a href="{% url 'admin_panel:session_overview' %}" class="btn btn-outline-primary shadow-sm">
+                <i class="fas fa-arrow-left me-2"></i>Back to Sessions
+            </a>
+        </div>
+    </div>
+
+  <div class="row g-4 mb-4">
+    <!-- Class Average -->
+    <div class="col-md-4">
+      <div class="card metric-card h-100">
+        <div class="card-body p-4 text-center">
+          <div class="metric-label">Class Average</div>
+          <div class="metric-value mt-1 text-primary"
+               data-target="{{ class_average|default:0.00 }}"
+               data-duration="1200"
+               data-decimals="2"
+               data-suffix="%">
+            {{ class_average|default:"0.00" }}%
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Pass Rate -->
+    <div class="col-md-4">
+      <div class="card metric-card h-100">
+        <div class="card-body p-4 text-center">
+          <div class="metric-label">Pass Rate</div>
+          <div class="metric-value mt-1 text-success"
+               data-target="{{ pass_rate|default:0.00 }}"
+               data-duration="1200"
+               data-decimals="2"
+               data-suffix="%">
+            {{ pass_rate|default:"0.00" }}%
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Students Evaluated -->
+    <div class="col-md-4">
+      <div class="card metric-card h-100">
+        <div class="card-body p-4 text-center">
+          <div class="metric-label">Students Evaluated</div>
+          <div class="metric-value mt-1 text-info"
+               data-target="{{ total_students|default:0 }}"
+               data-duration="1200"
+               data-decimals="0">
+            {{ total_students|default:"0" }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row g-4">
+    <!-- Top Performers -->
+    <div class="col-lg-12 mb-4">
+      <h5 class="fw-bold mb-3"><i class="fas fa-trophy me-2 text-warning"></i>Top Performers</h5>
+      <div class="row g-3">
+        {% for tp in top_performers %}
+        <div class="col-md-4">
+          <div class="card p-3 text-center position-relative overflow-hidden">
+             {% if tp.rank == 1 %}
+            <div class="position-absolute top-0 end-0 bg-warning text-black px-3 py-1 rounded-start fw-bold small">1st</div>
+            {% elif tp.rank == 2 %}
+            <div class="position-absolute top-0 end-0 bg-secondary text-white px-3 py-1 rounded-start fw-bold small">2nd</div>
+            {% elif tp.rank == 3 %}
+            <div class="position-absolute top-0 end-0 bg-elevated px-3 py-1 rounded-start fw-bold small border">3rd</div>
+            {% endif %}
+
+            <div class="fw-bold fs-5 mt-2 text-primary-c">{{ tp.student_name|default:"Unnamed" }}</div>
+            <div class="text-muted small mb-2">Roll: {{ tp.roll_number|default:"N/A" }}</div>
+            <div class="fs-4 fw-bold text-success">{{ tp.overall_percentage|default:"0.00" }}%</div>
+          </div>
+        </div>
+        {% empty %}
+        <div class="col-12">
+          <div class="card p-4 text-center text-muted">
+            No performers data available.
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+
+    <!-- Complete Ranking List -->
+    <div class="col-lg-12">
+      <div class="card p-0">
+        <div class="card-header">
+          <h6 class="mb-0 fw-bold"><i class="fas fa-list-ol me-2"></i>Complete Class Ranking</h6>
+        </div>
+        <div class="table-wrapper">
+          <table class="table mb-0 align-middle">
+            <thead>
+              <tr>
+                <th class="ps-4">Rank</th>
+                <th>Roll No</th>
+                <th>Student Name</th>
+                <th>Total Marks</th>
+                <th>Percentage</th>
+                <th>Status</th>
+                <th>Transcript</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for s in students %}
+              <tr>
+                <td class="ps-4 fw-bold">#{{ s.rank|default:"-" }}</td>
+                <td>{{ s.roll_number|default:"N/A" }}</td>
+                <td class="fw-semibold text-primary-c">{{ s.student_name|default:"Unnamed" }}</td>
+                <td>{{ s.total_obtained|default:"0" }} / {{ s.total_max|default:"0" }}</td>
+                <td>
+                  <div class="d-flex align-items-center">
+                    <span class="me-2">{{ s.overall_percentage|default:"0.00" }}%</span>
+                    <div class="progress flex-grow-1 progress-height-sm">
+                      <div class="progress-bar {% if s.overall_percentage >= 80 %}bg-success{% elif s.overall_percentage >= 50 %}bg-warning{% else %}bg-danger{% endif %}" role="progressbar" data-progress="{{ s.overall_percentage|default:'0' }}"></div>
+                    </div>
+                  </div>
+                </td>
+                <td>
+                  {% if s.overall_result == "Pass" %}
+                  <span class="badge bg-success">Pass</span>
+                  {% else %}
+                  <span class="badge bg-danger">Fail</span>
+                  {% endif %}
+                </td>
+                <td>
+                  <a href="{% url 'admin_panel:reports_dashboard' %}" class="btn btn-sm btn-outline-primary">
+                    <i class="fas fa-file-alt me-1"></i>Reports
+                  </a>
+                </td>
+              </tr>
+              {% empty %}
+              <tr>
+                <td colspan="7" class="text-center py-4 text-muted">No results recorded for this session.</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+{% endblock %}
+
+{% block extra_js %}
+{{ block.super }}
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // Strip double-dashes from select placeholders to ensure premium look
+        document.querySelectorAll("select option").forEach(opt => {
+            if (opt.textContent.includes("--")) {
+                opt.textContent = opt.textContent.replace(/-+/g, "").trim();
+            }
+        });
+    });
+</script>
+{% endblock %}

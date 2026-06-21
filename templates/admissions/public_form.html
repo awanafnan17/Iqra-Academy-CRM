@@ -1,0 +1,190 @@
+{% extends "layouts/base.html" %}
+{% load static %}
+
+{% block title %}Apply Online - Iqra Academy{% endblock %}
+
+{% block extra_css %}
+<style>
+    .apply-container {
+        max-width: 800px;
+        margin: 50px auto;
+        padding: 20px;
+    }
+    .logo-header {
+        text-align: center;
+        margin-bottom: 30px;
+    }
+    .logo-header h1 {
+        font-size: 2.5rem;
+        font-weight: 800;
+        background: linear-gradient(to right, var(--accent-primary), var(--accent-soft));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+    .section-title {
+        border-bottom: 1px solid var(--border-soft);
+        padding-bottom: 10px;
+        margin-bottom: 20px;
+        color: var(--accent-primary);
+        font-size: 1.25rem;
+        font-weight: 600;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="apply-container">
+    <div class="logo-header animate-fade-in">
+        <img src="{% static 'images/logo.png' %}" alt="Iqra Academy Logo" class="mb-3 animate-fade-in" style="max-height: 80px; width: auto; object-fit: contain;">
+        <h1>IQRA ACADEMY</h1>
+        <p class="text-secondary">Online Student Admission Portal</p>
+    </div>
+
+    <div class="card p-4 p-md-5 animate-fade-in stagger-1">
+        <h3 class="fw-bold mb-4 text-center text-primary-c">Admission Application Form</h3>
+
+        {% if form.non_field_errors %}
+            <div class="alert alert-danger rounded-3">
+                {% for error in form.non_field_errors %}
+                    <p class="mb-0">{{ error }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        <form method="post" enctype="multipart/form-data" id="admissionForm">
+            {% csrf_token %}
+
+            <!-- Personal Info -->
+            <div class="section-title"><i class="fa-solid fa-user me-2"></i> Personal Information</div>
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <label class="form-label" for="id_full_name">Full Name <span class="text-danger">*</span></label>
+                    {{ form.full_name }}
+                    {% if form.full_name.errors %}<div class="text-danger small mt-1">{{ form.full_name.errors.0 }}</div>{% endif %}
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label" for="id_father_name">Father's Name <span class="text-danger">*</span></label>
+                    {{ form.father_name }}
+                    {% if form.father_name.errors %}<div class="text-danger small mt-1">{{ form.father_name.errors.0 }}</div>{% endif %}
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label" for="id_email">Email Address <span class="text-danger">*</span></label>
+                    {{ form.email }}
+                    {% if form.email.errors %}<div class="text-danger small mt-1">{{ form.email.errors.0 }}</div>{% endif %}
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label" for="id_phone">Phone Number <span class="text-danger">*</span></label>
+                    {{ form.phone }}
+                    {% if form.phone.errors %}<div class="text-danger small mt-1">{{ form.phone.errors.0 }}</div>{% endif %}
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label" for="id_date_of_birth">Date of Birth <span class="text-danger">*</span></label>
+                    {{ form.date_of_birth }}
+                    {% if form.date_of_birth.errors %}<div class="text-danger small mt-1">{{ form.date_of_birth.errors.0 }}</div>{% endif %}
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label" for="id_cnic">CNIC / B-Form Number</label>
+                    {{ form.cnic }}
+                    {% if form.cnic.errors %}<div class="text-danger small mt-1">{{ form.cnic.errors.0 }}</div>{% endif %}
+                </div>
+                <div class="col-12">
+                    <label class="form-label" for="id_address">Postal Address</label>
+                    {{ form.address }}
+                    {% if form.address.errors %}<div class="text-danger small mt-1">{{ form.address.errors.0 }}</div>{% endif %}
+                </div>
+            </div>
+
+            <!-- Academic Preferences -->
+            <div class="section-title mt-4"><i class="fa-solid fa-graduation-cap me-2"></i> Academic Preferences</div>
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <label class="form-label" for="id_desired_session">Desired Session <span class="text-danger">*</span></label>
+                    {{ form.desired_session }}
+                    {% if form.desired_session.errors %}<div class="text-danger small mt-1">{{ form.desired_session.errors.0 }}</div>{% endif %}
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label" for="id_exam_type">Exam Category <span class="text-danger">*</span></label>
+                    {{ form.exam_type }}
+                    {% if form.exam_type.errors %}<div class="text-danger small mt-1">{{ form.exam_type.errors.0 }}</div>{% endif %}
+                </div>
+            </div>
+
+            <!-- Document Uploads -->
+            <div class="section-title mt-4"><i class="fa-solid fa-cloud-arrow-up me-2"></i> Supporting Documents</div>
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <label class="form-label" for="id_cnic_file">CNIC / B-Form</label>
+                    {{ form.cnic_file }}
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label" for="id_photo_file">Profile Photograph</label>
+                    {{ form.photo_file }}
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label" for="id_academic_certificate_file">Academic Certificate / Transcript</label>
+                    {{ form.academic_certificate_file }}
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label" for="id_other_file">Other Supporting File</label>
+                    {{ form.other_file }}
+                </div>
+            </div>
+
+            <div class="mt-5 text-center">
+                <button type="submit" class="btn btn-primary w-100 w-md-auto px-5" id="submitBtn">
+                    <span id="btnText"><i class="fa-solid fa-paper-plane me-2"></i> Submit Application</span>
+                    <span id="btnSpinner" class="spinner-border spinner-border-sm d-none" role="status"></span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // Form submit spinner
+        const form = document.getElementById('admissionForm');
+        if (form) {
+            form.addEventListener('submit', function() {
+                document.getElementById('submitBtn').disabled = true;
+                document.getElementById('btnText').classList.add('d-none');
+                document.getElementById('btnSpinner').classList.remove('d-none');
+            });
+        }
+
+        // Standardize form classes
+        const inputs = document.querySelectorAll('#admissionForm input, #admissionForm textarea');
+        inputs.forEach(el => {
+            if (el.type !== 'checkbox' && el.type !== 'radio' && el.type !== 'file') {
+                el.classList.add('form-control');
+            }
+
+            // Replace foreign placeholders
+            if (el.placeholder) {
+                let ph = el.placeholder;
+                ph = ph.replace(/John\s+Doe/gi, "Fatima Malik");
+                ph = ph.replace(/Jane\s+Doe/gi, "Ahmed Raza");
+                ph = ph.replace(/New\s+York/gi, "Islamabad");
+                ph = ph.replace(/123\s+Main\s+St/gi, "House 45, Sector F-7, Islamabad");
+                ph = ph.replace(/123-456-7890/gi, "0300-1234567");
+                el.placeholder = ph;
+            }
+        });
+
+        const selects = document.querySelectorAll('#admissionForm select');
+        selects.forEach(el => {
+            el.classList.add('form-select');
+
+            // Strip double dashes from options dynamically
+            el.querySelectorAll('option').forEach(opt => {
+                if (opt.textContent.includes('--')) {
+                    opt.textContent = opt.textContent.replace(/\-\-\s*/g, '').trim();
+                }
+            });
+        });
+    });
+</script>
+{% endblock %}

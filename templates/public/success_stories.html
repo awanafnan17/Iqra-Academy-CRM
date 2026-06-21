@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hall of Fame - Verified Student Selections | Iqra Academy</title>
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <!-- Consolidated design system -->
+    <link href="/static/css/design-system.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f7fafc;
+            color: #2d3748;
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+        }
+        .marketing-header {
+            background: linear-gradient(135deg, #1a365d 0%, #2b6cb0 100%);
+            color: #ffffff;
+            padding: 80px 0;
+            margin-bottom: 50px;
+            border-bottom: 5px solid #ecc94b;
+        }
+        .filter-card {
+            background: #ffffff;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e2e8f0;
+            padding: 24px;
+            margin-top: -80px;
+            margin-bottom: 40px;
+            position: relative;
+            z-index: 10;
+        }
+        .story-card {
+            background: #ffffff;
+            border-radius: 16px;
+            border: 1px solid #e2e8f0;
+            transition: all 0.3s ease;
+            height: 100%;
+        }
+        .story-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 20px rgba(0, 0, 0, 0.08);
+            border-color: #ecc94b;
+        }
+        .testimonial-block {
+            font-style: italic;
+            border-left: 3px solid #ecc94b;
+            padding-left: 15px;
+            margin-top: 15px;
+            color: #4a5568;
+        }
+        .trophy-badge {
+            background: rgba(236, 201, 75, 0.15);
+            color: #b7791f;
+            border: 1px solid rgba(236, 201, 75, 0.4);
+            font-weight: 700;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header Block -->
+    <header class="marketing-header text-center">
+        <div class="container">
+            <h1 class="display-4 fw-bold">Our Hall of Fame</h1>
+            <p class="lead mb-0 text-white-50">Verified selections of our students in CSS, PMS, PPSC, FPSC & government services.</p>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="container">
+        <!-- Filter Card -->
+        <div class="filter-card">
+            <form method="GET" action="" class="row g-3 align-items-end">
+                <div class="col-12 col-md-5">
+                    <label for="exam_type" class="form-label fw-semibold text-secondary">Filter by Examination</label>
+                    <select name="exam_type" id="exam_type" class="form-select rounded-pill">
+                        <option value="">All Exams</option>
+                        {% for type in exam_types %}
+                            <option value="{{ type }}" {% if type == selected_exam_type %}selected{% endif %}>{{ type }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-12 col-md-5">
+                    <label for="year" class="form-label fw-semibold text-secondary">Filter by Year</label>
+                    <select name="year" id="year" class="form-select rounded-pill">
+                        <option value="">All Years</option>
+                        {% for y in years %}
+                            <option value="{{ y }}" {% if y|stringformat:"s" == selected_year %}selected{% endif %}>{{ y }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-12 col-md-2 d-grid">
+                    <button type="submit" class="btn btn-primary rounded-pill py-2">
+                        <i class="fa-solid fa-filter me-1"></i> Apply Filters
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Selections Grid -->
+        <div class="row g-4 mb-5">
+            {% for item in achievements_data %}
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="story-card p-4 d-flex flex-column justify-content-between">
+                    <div>
+                        <div class="d-flex justify-content-between align-items-start mb-3">
+                            <span class="badge rounded-pill px-3 py-2 trophy-badge">
+                                <i class="fa-solid fa-trophy me-1"></i> Selected in {{ item.achievement.exam_type }}
+                            </span>
+                            <span class="fw-bold text-secondary font-monospace">{{ item.achievement.year }}</span>
+                        </div>
+
+                        <h4 class="fw-bold text-primary mb-1">{{ item.achievement.student.full_name }}</h4>
+                        <p class="text-muted small mb-3">Session: <strong>{{ item.session_name }}</strong></p>
+
+                        {% if item.achievement.rank %}
+                        <div class="mb-2">
+                            <span class="text-secondary small">Rank Obtained:</span>
+                            <span class="badge bg-primary rounded-3 font-monospace fw-bold ms-1">{{ item.achievement.rank }}</span>
+                        </div>
+                        {% endif %}
+
+                        {% if item.achievement.testimonial %}
+                        <div class="testimonial-block">
+                            <i class="fa-solid fa-quote-left text-muted me-1 small"></i>
+                            {{ item.achievement.testimonial }}
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <div class="col-12">
+                <div class="text-center py-5 bg-card rounded-4 border border-light shadow-sm">
+                    <i class="fa-solid fa-circle-info fa-3x text-muted mb-3"></i>
+                    <h4 class="fw-bold">No Selections Match Your Filters</h4>
+                    <p class="text-secondary">Try adjusting your filter options to view other historical student achievements.</p>
+                    <a href="?" class="btn btn-outline-primary rounded-pill px-4 mt-2">Clear Filters</a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white-50 py-4 mt-auto border-top border-secondary border-opacity-25">
+        <div class="container text-center">
+            <p class="mb-0">&copy; 2026 Iqra Academy Success Tracking. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

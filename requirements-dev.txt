@@ -1,0 +1,15 @@
+# Development and testing dependencies
+# Install with: pip install -r requirements-dev.txt
+
+-r requirements.txt
+
+# Browser testing
+playwright>=1.40
+
+# Test framework
+pytest>=7.0
+pytest-django>=4.5
+pytest-playwright>=0.4
+
+# Playwright browser installation:
+# After pip install, run: python -m playwright install chromium

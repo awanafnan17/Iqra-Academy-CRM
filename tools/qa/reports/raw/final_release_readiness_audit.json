@@ -1,0 +1,100 @@
+[
+  {
+    "id": "RR-001",
+    "description": "Admissions mutation GET hardening",
+    "status": "CLOSED_VERIFIED",
+    "batch": "Batch 1A",
+    "verified_by_tests": "apps.core.test_hardening.SystemHardeningTests.test_mutation_get_requests_rejected"
+  },
+  {
+    "id": "RR-002",
+    "description": "Academics stubs implementation",
+    "status": "CLOSED_VERIFIED",
+    "batch": "Batch 1B-1",
+    "verified_by_tests": "apps.academics.tests.AcademicsCRUDTests"
+  },
+  {
+    "id": "RR-003",
+    "description": "Attendance stubs implementation",
+    "status": "CLOSED_VERIFIED",
+    "batch": "Batch 1B-3A",
+    "verified_by_tests": "apps.attendance.tests.AttendanceWorkflowTests"
+  },
+  {
+    "id": "RR-004",
+    "description": "Exams grade config stubs implementation",
+    "status": "CLOSED_VERIFIED",
+    "batch": "Batch 2C",
+    "verified_by_tests": "apps.exams.tests.ExamsModuleTests.test_grade_config_list_loads_for_admin_and_principal"
+  },
+  {
+    "id": "RR-005",
+    "description": "AI Engine stubs implementation",
+    "status": "CLOSED_VERIFIED",
+    "batch": "Batch 2E",
+    "verified_by_tests": "apps.ai_engine.tests.AIEngineTests"
+  },
+  {
+    "id": "RR-006",
+    "description": "Audit log stubs implementation",
+    "status": "CLOSED_VERIFIED",
+    "batch": "Batch 2D",
+    "verified_by_tests": "apps.core.test_audit_ui.AuditLogUITests"
+  },
+  {
+    "id": "RR-007",
+    "description": "PDF comparison trailing slash middleware issue",
+    "status": "CLOSED_VERIFIED",
+    "batch": "Batch 2A",
+    "verified_by_tests": "apps.core.test_hardening.SystemHardeningTests.test_registrar_pdf_comparison_trailing_slash_normalization"
+  },
+  {
+    "id": "RR-008",
+    "description": "Double-mounted reports namespace path conflict",
+    "status": "CLOSED_VERIFIED",
+    "batch": "Batch 2A",
+    "verified_by_tests": "apps.reports.tests.ReportingEngineTests.test_admin_and_principal_can_access_reports_dashboard"
+  },
+  {
+    "id": "RR-009",
+    "description": "Hardcoded PDF comparison URLs in templates",
+    "status": "CLOSED_VERIFIED",
+    "batch": "Batch 2A",
+    "verified_by_tests": "apps.core.test_navigation.NavigationIntegrationTests.test_admin_sidebar_and_dashboard_links"
+  },
+  {
+    "id": "RR-010",
+    "description": "Success Report PDF N+1 performance bottleneck",
+    "status": "CLOSED_VERIFIED",
+    "batch": "Batch 2B",
+    "verified_by_tests": "apps.reports.tests.ReportingEngineTests.test_success_report_pdf_performance_and_access"
+  },
+  {
+    "id": "RR-011",
+    "description": "Teacher Workload PDF N+1 performance bottleneck",
+    "status": "CLOSED_VERIFIED",
+    "batch": "Batch 2B",
+    "verified_by_tests": "apps.reports.tests.ReportingEngineTests.test_teacher_workload_pdf_performance_and_access"
+  },
+  {
+    "id": "RR-012",
+    "description": "Student list pagination",
+    "status": "CLOSED_VERIFIED",
+    "batch": "Batch 1B-2",
+    "verified_by_tests": "apps.students.test_repairs.RepairBatch1RegressionTests.test_student_list_pagination"
+  },
+  {
+    "id": "RR-013",
+    "description": "Student create session choice dropdown",
+    "status": "CLOSED_VERIFIED",
+    "batch": "Batch 1B-2",
+    "verified_by_tests": "apps.students.test_repairs.RepairBatch1RegressionTests.test_student_create_session_dropdown"
+  },
+  {
+    "id": "RR-014",
+    "description": "Registrar transcript access permission checks",
+    "status": "CLOSED_VERIFIED",
+    "batch": "Batch 2A",
+    "verified_by_tests": "apps.core.test_hardening.SystemHardeningTests.test_registrar_transcript_pdf_access"
+  }
+]

@@ -1,0 +1,37 @@
+{% extends "layouts/base.html" %}
+
+{% block title %}Application Submitted - Iqra Academy{% endblock %}
+
+{% block extra_css %}
+<style>
+    .card-center {
+        max-width: 600px;
+        margin: 80px auto;
+    }
+    .success-icon {
+        font-size: 5rem;
+        color: var(--accent-primary);
+        margin-bottom: 20px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container px-3">
+    <div class="card card-center p-5 text-center animate-fade-in">
+        <div class="success-icon">
+            <i class="fa-solid fa-circle-check"></i>
+        </div>
+        <h2 class="fw-bold mb-3 text-primary-c">Application Submitted Successfully!</h2>
+        <p class="text-secondary mb-4 leading-relaxed">
+            Thank you for applying to Iqra Academy. Your application has been logged into our system and is pending review by our registrar team.
+        </p>
+        <p class="text-secondary mb-4 leading-relaxed">
+            We have sent a verification details log to your email. Please check your inbox (and spam folder) for updates.
+        </p>
+        <div class="mt-4">
+            <a href="/" class="btn btn-primary px-4 py-2">Visit Our Portal</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

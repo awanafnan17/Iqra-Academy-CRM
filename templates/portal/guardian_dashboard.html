@@ -1,0 +1,148 @@
+{% extends 'layouts/portal_base.html' %}
+{% load finance_tags %}
+
+{% block title %}Guardian Desk - Iqra Academy{% endblock %}
+
+{% block content %}
+<div class="container-fluid px-0">
+    <!-- Page Header -->
+    <div class="page-header animate-fade-in">
+        <div class="page-header-left">
+            <h3 class="fw-bold mb-1 text-primary">Guardian Desk</h3>
+            <p class="text-secondary mb-0">Overview of children's academic performance, grades, and fee ledger profiles in Iqra Academy.</p>
+        </div>
+        <div class="page-header-actions">
+            <span class="badge bg-primary px-3 py-2 rounded-pill fw-semibold">
+                <i class="fa-solid fa-user-shield me-1"></i> Guardian Portal
+            </span>
+        </div>
+    </div>
+
+    <!-- Metrics Cards Grid -->
+    <div class="row g-4">
+        <!-- Linked Children Count -->
+        <div class="col-12 col-md-4">
+            <div class="card metric-card h-100 animate-fade-in stagger-1">
+                <div class="card-body p-4 d-flex align-items-center">
+                    <div class="metric-icon me-3">
+                        <i class="fa-solid fa-children"></i>
+                    </div>
+                    <div>
+                        <div class="metric-label">Children Linked</div>
+                        <div class="metric-value mt-1"
+                             data-target="{{ metrics.children_count|default:0 }}"
+                             data-duration="1200"
+                             data-decimals="0">
+                            {{ metrics.children_count }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Total Outstanding Balance -->
+        <div class="col-12 col-md-4">
+            <div class="card metric-card h-100 animate-fade-in stagger-2 {% if metrics.total_outstanding_balance > 0 %}card-state-danger{% endif %}">
+                <div class="card-body p-4 d-flex align-items-center">
+                    <div class="metric-icon me-3">
+                        <i class="fa-solid fa-credit-card"></i>
+                    </div>
+                    <div>
+                        <div class="metric-label">Total Outstanding</div>
+                        <div class="metric-value mt-1 {% if metrics.total_outstanding_balance > 0 %}text-danger{% else %}text-success{% endif %}"
+                             data-target="{{ metrics.total_outstanding_balance|default:0 }}"
+                             data-duration="1200"
+                             data-prefix="PKR "
+                             data-decimals="0">
+                            {{ metrics.total_outstanding_balance|format_currency }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Unread Notifications -->
+        <div class="col-12 col-md-4">
+            <div class="card metric-card h-100 animate-fade-in stagger-3">
+                <div class="card-body p-4 d-flex align-items-center">
+                    <div class="metric-icon me-3">
+                        <i class="fa-solid fa-bell"></i>
+                    </div>
+                    <div>
+                        <div class="metric-label">Unread Notifications</div>
+                        <div class="metric-value mt-1"
+                             data-target="{{ metrics.unread_notifications|default:0 }}"
+                             data-duration="1200"
+                             data-decimals="0">
+                            {{ metrics.unread_notifications }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Children Overview Section -->
+    <div class="row mt-4 g-4">
+        {% for child in metrics.children %}
+            <div class="col-12 col-xl-6">
+                <div class="card p-0 animate-fade-in stagger-4">
+                    <div class="p-4 border-bottom border-soft d-flex justify-content-between align-items-sm-center align-items-start flex-column flex-sm-row gap-3">
+                        <div>
+                            <h5 class="fw-bold text-primary mb-1"><i class="fa-solid fa-user-graduate me-2"></i>{{ child.student_name }}</h5>
+                            <small class="text-secondary">Session: {{ child.session_name }}</small>
+                        </div>
+                        <div class="d-flex flex-wrap gap-2">
+                            {% if child.attendance_percentage < 70 %}
+                                <span class="badge bg-danger"><i class="fa-solid fa-triangle-exclamation me-1"></i>Attendance: {{ child.attendance_percentage }}% (Low)</span>
+                            {% else %}
+                                <span class="badge bg-success">Attendance: {{ child.attendance_percentage }}%</span>
+                            {% endif %}
+                            <span class="badge bg-danger">Fee Owed: {{ child.outstanding_balance|format_currency }}</span>
+                        </div>
+                    </div>
+
+                    <!-- Grades Sub-table -->
+                    <div class="p-4 pb-2">
+                        <h6 class="fw-semibold mb-0 text-secondary small uppercase-spacing"><i class="fa-solid fa-scroll me-1 text-muted"></i>Academic Performance</h6>
+                    </div>
+                    <div class="table-wrapper">
+                        <table class="table align-middle mb-0">
+                            <thead>
+                                <tr>
+                                    <th class="ps-4">Subject</th>
+                                    <th>Exam Name</th>
+                                    <th>Score</th>
+                                    <th class="pe-4">Grade</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for grade in child.grades %}
+                                    <tr>
+                                        <td class="ps-4 text-primary-c"><strong>{{ grade.exam__subject__name }}</strong></td>
+                                        <td>{{ grade.exam__name }}</td>
+                                        <td><span class="badge bg-primary">{{ grade.score }}</span></td>
+                                        <td class="pe-4"><span class="badge bg-success">{{ grade.grade }}</span></td>
+                                    </tr>
+                                {% empty %}
+                                    <tr>
+                                        <td colspan="4" class="text-center text-secondary py-4 ps-4 pe-4">No exam results reported.</td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        {% empty %}
+            <div class="col-12">
+                <div class="card p-5 text-center text-secondary animate-fade-in">
+                    <i class="fa-solid fa-users-slash fa-3x mb-3 text-muted"></i>
+                    <h5>No Linked Children Registered</h5>
+                    <p class="mb-0">Contact the Iqra Academy administrator to link your child's profile to your parent account.</p>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

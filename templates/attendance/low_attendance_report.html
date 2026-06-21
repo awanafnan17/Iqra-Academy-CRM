@@ -1,0 +1,165 @@
+{% extends "layouts/panel_base.html" %}
+{% load static %}
+
+{% block title %}Low Attendance Report - Iqra Academy{% endblock %}
+
+{% block content %}
+<div class="container-fluid py-4">
+    <!-- Header Card -->
+    <div class="card p-4 border border-light shadow-sm rounded-4 mb-4 animate-fade-in">
+        <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3">
+            <div class="d-flex align-items-center">
+                <a href="{% url 'admin_panel:attendance:attendance_overview' %}" class="btn btn-outline-primary btn-sm rounded-circle me-3 btn-back-circle">
+                    <i class="fa-solid fa-arrow-left"></i>
+                </a>
+                <div>
+                    <h4 class="fw-bold mb-1"><i class="fa-solid fa-triangle-exclamation text-danger me-2"></i>Low Attendance Report</h4>
+                    <p class="text-secondary mb-0">Identify students with attendance rates below the threshold across sessions.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Filter Form Bar -->
+    <div class="card p-4 border border-light shadow-sm rounded-4 mb-4 animate-fade-in stagger-1">
+        <form method="get" class="row g-3 align-items-end">
+            <!-- Threshold filter -->
+            <div class="col-12 col-md-4">
+                <label for="threshold-input" class="form-label small fw-semibold text-secondary">Attendance Threshold (%)</label>
+                <div class="input-group">
+                    <input type="number" step="1" min="1" max="100" id="threshold-input" name="threshold" class="form-control rounded-3" value="{{ threshold|floatformat:0 }}">
+                    <span class="input-group-text bg-light">%</span>
+                </div>
+            </div>
+
+            <!-- Session filter -->
+            <div class="col-12 col-md-5">
+                <label for="session-select" class="form-label small fw-semibold text-secondary">Session</label>
+                <select id="session-select" name="session_id" class="form-select rounded-3">
+                    <option value="">All Active Sessions</option>
+                    {% for sess in active_sessions %}
+                        <option value="{{ sess.pk }}" {% if selected_session.pk == sess.pk %}selected{% endif %}>{{ sess.name }} ({{ sess.code }})</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <!-- Action buttons -->
+            <div class="col-12 col-md-3 d-flex gap-2">
+                <button type="submit" class="btn btn-primary w-100 rounded-3">
+                    <i class="fa-solid fa-filter me-2"></i>Filter
+                </button>
+                <a href="?" class="btn btn-outline-secondary w-100 rounded-3">
+                    <i class="fa-solid fa-arrows-rotate me-2"></i>Reset
+                </a>
+            </div>
+        </form>
+    </div>
+
+    <!-- Roster Grid -->
+    <div class="card border border-light shadow-sm rounded-4 animate-fade-in stagger-2">
+        <div class="p-3.5 border-bottom card-header bg-light rounded-top-4">
+            <h6 class="mb-0 fw-bold"><i class="fa-solid fa-user-slash me-2"></i>Flagged Students</h6>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <thead class="bg-light-subtle">
+                    <tr>
+                        <th class="ps-4" style="width: 120px;">Roll No</th>
+                        <th>Student Name</th>
+                        <th>Session</th>
+                        <th style="width: 180px;">Attendance Rate</th>
+                        <th style="width: 150px;">Marked Days</th>
+                        <th class="pe-4 text-end" style="width: 150px;">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in report_page %}
+                        <tr>
+                            <td class="ps-4 fw-semibold">{{ item.student.roll_number|default:"N/A" }}</td>
+                            <td>
+                                <div class="fw-bold text-dark">{{ item.student.full_name }}</div>
+                                <div class="text-muted small">{{ item.student.email|default:"" }}</div>
+                            </td>
+                            <td>{{ item.session.name }} ({{ item.session.code }})</td>
+                            <td>
+                                <div class="d-flex align-items-center gap-2">
+                                    <span class="badge bg-danger-subtle text-danger border border-danger-subtle px-2.5 py-1 rounded-pill fw-bold">{{ item.attendance_percentage }}%</span>
+                                    <div class="progress rounded-pill flex-grow-1" style="height: 6px; min-width: 60px;">
+                                        <div class="progress-bar bg-danger rounded-pill" role="progressbar" style="width: {{ item.attendance_percentage }}%"></div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>{{ item.total_days }} days</td>
+                            <td class="pe-4 text-end">
+                                <a href="{% url 'admin_panel:students:student_detail' item.student.pk %}" class="btn btn-sm btn-outline-primary rounded-3">
+                                    <i class="fa-solid fa-eye me-1"></i>Profile
+                                </a>
+                            </td>
+                        </tr>
+                    {% empty %}
+                        <tr>
+                            <td colspan="6" class="text-center py-5 text-muted">
+                                <i class="fa-solid fa-circle-check fa-2x text-success mb-3"></i>
+                                <h6 class="fw-bold text-dark">All Students Compliant</h6>
+                                <p class="mb-0 small text-secondary">No students found with attendance rates below {{ threshold }}%.</p>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Pagination -->
+        {% if report_page.has_other_pages %}
+            <div class="card-footer bg-white border-top py-3 d-flex justify-content-between align-items-center">
+                <span class="small text-secondary">Showing page {{ report_page.number }} of {{ report_page.paginator.num_pages }}</span>
+                <nav aria-label="Page navigation">
+                    <ul class="pagination pagination-sm mb-0">
+                        {% if report_page.has_previous %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ report_page.previous_page_number }}{% if threshold %}&threshold={{ threshold }}{% endif %}{% if selected_session %}&session_id={{ selected_session.pk }}{% endif %}" aria-label="Previous">
+                                    <span aria-hidden="true">&laquo;</span>
+                                </a>
+                            </li>
+                        {% else %}
+                            <li class="page-item disabled"><span class="page-link">&laquo;</span></li>
+                        {% endif %}
+                        
+                        {% for num in report_page.paginator.page_range %}
+                            {% if report_page.number == num %}
+                                <li class="page-item active"><span class="page-link">{{ num }}</span></li>
+                            {% elif num > report_page.number|add:'-3' and num < report_page.number|add:'3' %}
+                                <li class="page-item">
+                                    <a class="page-link" href="?page={{ num }}{% if threshold %}&threshold={{ threshold }}{% endif %}{% if selected_session %}&session_id={{ selected_session.pk }}{% endif %}">{{ num }}</a>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+                        
+                        {% if report_page.has_next %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ report_page.next_page_number }}{% if threshold %}&threshold={{ threshold }}{% endif %}{% if selected_session %}&session_id={{ selected_session.pk }}{% endif %}" aria-label="Next">
+                                    <span aria-hidden="true">&raquo;</span>
+                                </a>
+                            </li>
+                        {% else %}
+                            <li class="page-item disabled"><span class="page-link">&raquo;</span></li>
+                        {% endif %}
+                    </ul>
+                </nav>
+            </div>
+        {% endif %}
+    </div>
+</div>
+
+<style>
+body.crm-app .btn-back-circle {
+    width: 38px;
+    height: 38px;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+</style>
+{% endblock %}

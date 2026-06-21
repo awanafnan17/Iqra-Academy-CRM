@@ -1,0 +1,54 @@
+[
+  {
+    "command": "C:\\Python312\\python.exe manage.py test tools.qa.test_detector_canaries --settings=config.settings.test --verbosity=2",
+    "start_time": "2026-06-21T04:37:56.559048",
+    "end_time": "2026-06-21T04:38:10.185753",
+    "exit_code": 0,
+    "stdout_path": "tools/qa/reports/raw/test_detector_canaries_stdout.log",
+    "stderr_path": "tools/qa/reports/raw/test_detector_canaries_stderr.log",
+    "parsed_pass_count": 9,
+    "parsed_fail_count": 0,
+    "parsed_error_count": 0,
+    "visual_findings_count": 0,
+    "visual_expected_findings_count": 0,
+    "visual_finding_ids": [],
+    "visual_discovery_status": "N/A",
+    "final_status_contribution": "PASS"
+  },
+  {
+    "command": "C:\\Python312\\python.exe manage.py test tools.qa.test_behavioral_discovery --settings=config.settings.test --verbosity=2",
+    "start_time": "2026-06-21T04:38:10.187753",
+    "end_time": "2026-06-21T04:38:35.235391",
+    "exit_code": 0,
+    "stdout_path": "tools/qa/reports/raw/test_behavioral_discovery_stdout.log",
+    "stderr_path": "tools/qa/reports/raw/test_behavioral_discovery_stderr.log",
+    "parsed_pass_count": 2,
+    "parsed_fail_count": 0,
+    "parsed_error_count": 0,
+    "visual_findings_count": 0,
+    "visual_expected_findings_count": 0,
+    "visual_finding_ids": [],
+    "visual_discovery_status": "N/A",
+    "final_status_contribution": "PASS"
+  },
+  {
+    "command": "C:\\Python312\\python.exe manage.py test tools.qa.test_visual_matrix --settings=config.settings.test --verbosity=2",
+    "start_time": "2026-06-21T04:38:35.238299",
+    "end_time": "2026-06-21T04:40:54.080512",
+    "exit_code": 0,
+    "stdout_path": "tools/qa/reports/raw/test_visual_matrix_stdout.log",
+    "stderr_path": "tools/qa/reports/raw/test_visual_matrix_stderr.log",
+    "parsed_pass_count": 2,
+    "parsed_fail_count": 0,
+    "parsed_error_count": 0,
+    "visual_findings_count": 0,
+    "visual_expected_findings_count": 14,
+    "visual_finding_ids": [
+      "VIS-001",
+      "VIS-002",
+      "VIS-003"
+    ],
+    "visual_discovery_status": "PASS_WITH_FINDINGS",
+    "final_status_contribution": "PASS_WITH_FINDINGS"
+  }
+]

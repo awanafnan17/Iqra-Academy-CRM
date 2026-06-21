@@ -1,0 +1,219 @@
+{% extends 'layouts/panel_base.html' %}
+{% load static %}
+
+{% block title %}{% if session %}Edit Session - {{ session.name }}{% else %}Create Session{% endif %} - Iqra Academy{% endblock %}
+
+{% block content %}
+<div class="container-fluid px-0 form-container">
+    <!-- Page Header -->
+    <div class="p-4 rounded-4 mb-4 card border border-light shadow-sm animate-fade-in">
+        <div class="d-flex justify-content-between align-items-center">
+            <div>
+                <h3 class="fw-bold mb-1">{% if session %}Edit Session{% else %}New Academic Session{% endif %}</h3>
+                <p class="text-secondary mb-0">Configure session parameters, fees, late policies, and automated roll prefixes.</p>
+            </div>
+            <div>
+                <a href="{% url 'admin_panel:session_overview' %}" class="btn btn-outline-secondary px-3 py-2 rounded-3 border-light-subtle">
+                    <i class="fa-solid fa-arrow-left me-2"></i> Cancel
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Form -->
+    <div class="card p-4 border border-light shadow rounded-4 animate-fade-in stagger-1">
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            {% if form.non_field_errors %}
+                <div class="alert alert-danger rounded-3 mb-3" role="alert">
+                    {% for error in form.non_field_errors %}
+                        <div><i class="fas fa-triangle-exclamation me-2"></i>{{ error }}</div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            <!-- Section 1: Session Parameters -->
+            <h5 class="fw-bold border-bottom pb-2 mb-3">
+                <i class="fa-solid fa-graduation-cap text-primary me-2"></i> Session Information
+            </h5>
+            <div class="row g-3 mb-4">
+                <div class="col-12 col-md-6">
+                    <label class="form-label fw-semibold text-secondary">Session / Course Name</label>
+                    {{ form.name }}
+                    {% if form.name.errors %}
+                        <div class="text-danger small mt-1">{{ form.name.errors.0 }}</div>
+                    {% endif %}
+                </div>
+                <div class="col-12 col-md-6">
+                    <label class="form-label fw-semibold text-secondary">Short Code (uniqueness enforced)</label>
+                    {{ form.code }}
+                    {% if form.code.errors %}
+                        <div class="text-danger small mt-1">{{ form.code.errors.0 }}</div>
+                    {% endif %}
+                </div>
+                <div class="col-12 col-md-6">
+                    <label class="form-label fw-semibold text-secondary">Roll Number Prefix</label>
+                    {{ form.roll_prefix }}
+                    {% if form.roll_prefix.errors %}
+                        <div class="text-danger small mt-1">{{ form.roll_prefix.errors.0 }}</div>
+                    {% endif %}
+                </div>
+                <div class="col-12 col-md-6">
+                    <label class="form-label fw-semibold text-secondary">Session Billing Type</label>
+                    {{ form.session_type }}
+                    {% if form.session_type.errors %}
+                        <div class="text-danger small mt-1">{{ form.session_type.errors.0 }}</div>
+                    {% endif %}
+                </div>
+                <div class="col-12 col-md-6">
+                    <label class="form-label fw-semibold text-secondary">Session Category</label>
+                    {{ form.session_category }}
+                    {% if form.session_category.errors %}
+                        <div class="text-danger small mt-1">{{ form.session_category.errors.0 }}</div>
+                    {% endif %}
+                </div>
+                <div class="col-12 col-md-6">
+                    <label class="form-label fw-semibold text-secondary">Academic Year</label>
+                    {{ form.academic_year }}
+                    {% if form.academic_year.errors %}
+                        <div class="text-danger small mt-1">{{ form.academic_year.errors.0 }}</div>
+                    {% endif %}
+                </div>
+                <div class="col-12 col-md-6">
+                    <label class="form-label fw-semibold text-secondary">Batch Number / Identifier</label>
+                    {{ form.batch_number }}
+                    {% if form.batch_number.errors %}
+                        <div class="text-danger small mt-1">{{ form.batch_number.errors.0 }}</div>
+                    {% endif %}
+                </div>
+                <div class="col-12 col-md-6">
+                    <label class="form-label fw-semibold text-secondary">Start Date</label>
+                    {{ form.start_date }}
+                    {% if form.start_date.errors %}
+                        <div class="text-danger small mt-1">{{ form.start_date.errors.0 }}</div>
+                    {% endif %}
+                </div>
+                <div class="col-12 col-md-6">
+                    <label class="form-label fw-semibold text-secondary">End Date</label>
+                    {{ form.end_date }}
+                    {% if form.end_date.errors %}
+                        <div class="text-danger small mt-1">{{ form.end_date.errors.0 }}</div>
+                    {% endif %}
+                </div>
+                <div class="col-12 col-md-6">
+                    <label class="form-label fw-semibold text-secondary">Student Seat Limit</label>
+                    {{ form.max_students }}
+                    {% if form.max_students.errors %}
+                        <div class="text-danger small mt-1">{{ form.max_students.errors.0 }}</div>
+                    {% endif %}
+                </div>
+                <div class="col-12 col-md-6">
+                    <label class="form-label fw-semibold text-secondary">Maximum ERP Seat Capacity</label>
+                    {{ form.max_capacity }}
+                    {% if form.max_capacity.errors %}
+                        <div class="text-danger small mt-1">{{ form.max_capacity.errors.0 }}</div>
+                    {% endif %}
+                </div>
+                <div class="col-12 col-md-6">
+                    <label class="form-label fw-semibold text-secondary">Status</label>
+                    {{ form.status }}
+                    {% if form.status.errors %}
+                        <div class="text-danger small mt-1">{{ form.status.errors.0 }}</div>
+                    {% endif %}
+                </div>
+                <div class="col-12 col-md-6 d-flex align-items-center">
+                    <div class="form-check mt-4">
+                        {{ form.is_admission_open }}
+                        <label class="form-check-label fw-semibold text-secondary ms-2" for="{{ form.is_admission_open.id_for_label }}">
+                            Admission Open for Registration
+                        </label>
+                    </div>
+                    {% if form.is_admission_open.errors %}
+                        <div class="text-danger small mt-1">{{ form.is_admission_open.errors.0 }}</div>
+                    {% endif %}
+                </div>
+                <div class="col-12">
+                    <label class="form-label fw-semibold text-secondary">Course Description</label>
+                    {{ form.description }}
+                    {% if form.description.errors %}
+                        <div class="text-danger small mt-1">{{ form.description.errors.0 }}</div>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Section 2: Fee Structure -->
+            <h5 class="fw-bold border-bottom pb-2 mb-3">
+                <i class="fa-solid fa-money-bill-wave text-primary me-2"></i> Base Fee Structure
+            </h5>
+            <div class="row g-3 mb-4">
+                <div class="col-12 col-md-6">
+                    <label class="form-label fw-semibold text-secondary">Base Tuition Fee (PKR)</label>
+                    {{ form.fee }}
+                    {% if form.fee.errors %}
+                        <div class="text-danger small mt-1">{{ form.fee.errors.0 }}</div>
+                    {% endif %}
+                </div>
+                <div class="col-12 col-md-6">
+                    <label class="form-label fw-semibold text-secondary">One-time Registration Fee (PKR)</label>
+                    {{ form.registration_fee }}
+                    {% if form.registration_fee.errors %}
+                        <div class="text-danger small mt-1">{{ form.registration_fee.errors.0 }}</div>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Section 3: Late Penalty & Due Day Policies -->
+            <h5 class="fw-bold border-bottom pb-2 mb-3">
+                <i class="fa-solid fa-clock-rotate-left text-primary me-2"></i> Late Fee Penalty Settings
+            </h5>
+            <div class="row g-3 mb-4">
+                <div class="col-12 col-md-6 col-lg-3">
+                    <label class="form-label fw-semibold text-secondary">Late Fee Amount (PKR)</label>
+                    {{ form.late_fee_amount }}
+                    {% if form.late_fee_amount.errors %}
+                        <div class="text-danger small mt-1">{{ form.late_fee_amount.errors.0 }}</div>
+                    {% endif %}
+                </div>
+                <div class="col-12 col-md-6 col-lg-3">
+                    <label class="form-label fw-semibold text-secondary">Grace Period (Days)</label>
+                    {{ form.late_fee_grace_days }}
+                    {% if form.late_fee_grace_days.errors %}
+                        <div class="text-danger small mt-1">{{ form.late_fee_grace_days.errors.0 }}</div>
+                    {% endif %}
+                </div>
+                <div class="col-12 col-md-6 col-lg-3">
+                    <label class="form-label fw-semibold text-secondary">Maximum Penalty (PKR)</label>
+                    {{ form.late_fee_maximum }}
+                    {% if form.late_fee_maximum.errors %}
+                        <div class="text-danger small mt-1">{{ form.late_fee_maximum.errors.0 }}</div>
+                    {% endif %}
+                </div>
+                <div class="col-12 col-md-6 col-lg-3">
+                    <label class="form-label fw-semibold text-secondary">Monthly Due Day (1-28)</label>
+                    {{ form.due_day }}
+                    {% if form.due_day.errors %}
+                        <div class="text-danger small mt-1">{{ form.due_day.errors.0 }}</div>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Form Actions -->
+            <div class="d-flex justify-content-end gap-2 border-top pt-3">
+                <a href="{% url 'admin_panel:session_overview' %}" class="btn btn-secondary px-4 py-2 rounded-3 border-light-subtle">
+                    Cancel
+                </a>
+                <button type="submit" class="btn btn-primary px-4 py-2 rounded-3">
+                    <i class="fa-solid fa-floppy-disk me-2"></i> Save Session Configuration
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<style>
+body.crm-app .form-container {
+    max-width: 900px;
+}
+</style>
+{% endblock %}

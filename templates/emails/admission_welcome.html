@@ -1,0 +1,29 @@
+{% extends "emails/base_email.html" %}
+
+{% block subject %}Welcome to Iqra Academy!{% endblock %}
+
+{% block content %}
+<h2 style="color: #1e3a8a; margin-top: 0;">Welcome to Iqra Academy!</h2>
+<p>Dear {{ applicant_name }},</p>
+<p>Congratulations! Your admission profile is complete, and you are officially enrolled as a student at Iqra Academy.</p>
+<p>Here are your enrollment details:</p>
+<table style="width: 100%; border-collapse: collapse; margin: 20px 0;">
+    <tr>
+        <td style="padding: 10px; border: 1px solid #e2e8f0; font-weight: 600;">Student Name:</td>
+        <td style="padding: 10px; border: 1px solid #e2e8f0;">{{ applicant_name }}</td>
+    </tr>
+    <tr>
+        <td style="padding: 10px; border: 1px solid #e2e8f0; font-weight: 600;">Roll Number:</td>
+        <td style="padding: 10px; border: 1px solid #e2e8f0; font-family: monospace; font-weight: bold; color: #1e3a8a;">{{ roll_number }}</td>
+    </tr>
+    <tr>
+        <td style="padding: 10px; border: 1px solid #e2e8f0; font-weight: 600;">Session:</td>
+        <td style="padding: 10px; border: 1px solid #e2e8f0;">{{ session_name }}</td>
+    </tr>
+</table>
+<p>You can now log in to the Student Portal to check your schedule, attendance, exams, and ledger.</p>
+<div style="text-align: center; margin: 30px 0;">
+    <a href="{{ portal_url }}" style="display: inline-block; background-color: #1e3a8a; color: #ffffff; padding: 12px 24px; border-radius: 6px; text-decoration: none; font-weight: 600;">Go to Student Portal</a>
+</div>
+<p>We are excited to have you on board. Welcome to the Iqra Academy family!</p>
+{% endblock %}

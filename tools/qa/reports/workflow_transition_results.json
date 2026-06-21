@@ -1,0 +1,348 @@
+{
+  "metadata": {
+    "run_id": "e7586812-3531-4961-b8a7-9963cf879463",
+    "timestamp": "2026-06-21T04:38:08.943592",
+    "settings_module": "config.settings.test",
+    "database_engine": "django.db.backends.sqlite3",
+    "database_name": "file:memorydb_default?mode=memory&cache=shared",
+    "git_tree_id": "working_tree",
+    "source_evidence": [
+      "workflow_transitions.json"
+    ]
+  },
+  "workflows_tested": [
+    {
+      "workflow": "admissions",
+      "states_discovered": [
+        "pending",
+        "under_review",
+        "approved",
+        "rejected",
+        "withdrawn"
+      ],
+      "transitions_discovered": [
+        "pending->under_review",
+        "under_review->approved",
+        "under_review->rejected",
+        "approved->convert"
+      ],
+      "transitions_tested": [
+        "under_review->approved"
+      ],
+      "prohibited_transitions_tested": [
+        "approved->pending"
+      ],
+      "repeated_submissions_tested": [
+        "approved->approved"
+      ],
+      "unauthorized_transitions_tested": [],
+      "transitions_untested": [],
+      "business_decisions_required": [
+        "Should application rejection trigger automatic archive after 90 days?"
+      ]
+    },
+    {
+      "workflow": "leads",
+      "states_discovered": [
+        "New",
+        "Contacted",
+        "Interested",
+        "Converted",
+        "Lost"
+      ],
+      "transitions_discovered": [
+        "New->Contacted",
+        "Contacted->Interested",
+        "Interested->Converted",
+        "Interested->Lost"
+      ],
+      "transitions_tested": [
+        "Interested->Converted"
+      ],
+      "prohibited_transitions_tested": [],
+      "repeated_submissions_tested": [
+        "Converted->Converted"
+      ],
+      "unauthorized_transitions_tested": [],
+      "transitions_untested": [],
+      "business_decisions_required": [
+        "Does lead conversion require mandatory phone validation?"
+      ]
+    },
+    {
+      "workflow": "enrollment",
+      "states_discovered": [
+        "Active",
+        "Frozen",
+        "Withdrawn"
+      ],
+      "transitions_discovered": [
+        "Active->Frozen",
+        "Frozen->Active",
+        "Active->Withdrawn"
+      ],
+      "transitions_tested": [
+        "Active->Frozen",
+        "Frozen->Active"
+      ],
+      "prohibited_transitions_tested": [
+        "Withdrawn->Active"
+      ],
+      "repeated_submissions_tested": [],
+      "unauthorized_transitions_tested": [],
+      "transitions_untested": [],
+      "business_decisions_required": [
+        "Does freezing enrollment pause outstanding installment generation?"
+      ]
+    },
+    {
+      "workflow": "academic_sessions",
+      "states_discovered": [
+        "Active",
+        "Completed",
+        "Inactive"
+      ],
+      "transitions_discovered": [
+        "Active->Completed",
+        "Active->Inactive"
+      ],
+      "transitions_tested": [
+        "Active->Completed"
+      ],
+      "prohibited_transitions_tested": [],
+      "repeated_submissions_tested": [
+        "Completed->Completed"
+      ],
+      "unauthorized_transitions_tested": [],
+      "transitions_untested": [],
+      "business_decisions_required": [
+        "Should completing a session lock historical exams and marks editing permanently?"
+      ]
+    },
+    {
+      "workflow": "attendance",
+      "states_discovered": [
+        "Unlocked",
+        "Locked"
+      ],
+      "transitions_discovered": [
+        "Unlocked->Locked",
+        "Locked->Unlocked"
+      ],
+      "transitions_tested": [
+        "Unlocked->Locked"
+      ],
+      "prohibited_transitions_tested": [],
+      "repeated_submissions_tested": [],
+      "unauthorized_transitions_tested": [
+        "Locked->Unlocked (Non-Admin block)"
+      ],
+      "transitions_untested": [],
+      "business_decisions_required": [
+        "Can class teachers override locked attendance sheets?"
+      ]
+    },
+    {
+      "workflow": "invoices_dues",
+      "states_discovered": [
+        "Unpaid",
+        "Partially Paid",
+        "Paid",
+        "Overdue"
+      ],
+      "transitions_discovered": [
+        "Unpaid->Partially Paid",
+        "Partially Paid->Paid",
+        "Unpaid->Overdue"
+      ],
+      "transitions_tested": [
+        "Unpaid->Paid"
+      ],
+      "prohibited_transitions_tested": [],
+      "repeated_submissions_tested": [],
+      "unauthorized_transitions_tested": [],
+      "transitions_untested": [],
+      "business_decisions_required": [
+        "Should overdue status calculate daily interest or fixed penalty fee?"
+      ]
+    },
+    {
+      "workflow": "installments",
+      "states_discovered": [
+        "Pending",
+        "Paid",
+        "Overdue"
+      ],
+      "transitions_discovered": [
+        "Pending->Paid",
+        "Pending->Overdue"
+      ],
+      "transitions_tested": [
+        "Pending->Paid"
+      ],
+      "prohibited_transitions_tested": [],
+      "repeated_submissions_tested": [],
+      "unauthorized_transitions_tested": [],
+      "transitions_untested": [],
+      "business_decisions_required": [
+        "Can a student restructure installments more than twice per session?"
+      ]
+    },
+    {
+      "workflow": "payments",
+      "states_discovered": [
+        "pending",
+        "confirmed",
+        "refunded"
+      ],
+      "transitions_discovered": [
+        "pending->confirmed",
+        "confirmed->refunded"
+      ],
+      "transitions_tested": [
+        "pending->confirmed"
+      ],
+      "prohibited_transitions_tested": [],
+      "repeated_submissions_tested": [],
+      "unauthorized_transitions_tested": [],
+      "transitions_untested": [],
+      "business_decisions_required": [
+        "Should cash receipts generate physical PDF slips on confirmed status?"
+      ]
+    },
+    {
+      "workflow": "refunds",
+      "states_discovered": [
+        "pending",
+        "approved",
+        "processed",
+        "rejected"
+      ],
+      "transitions_discovered": [
+        "pending->approved",
+        "approved->processed",
+        "pending->rejected"
+      ],
+      "transitions_tested": [
+        "pending->approved"
+      ],
+      "prohibited_transitions_tested": [],
+      "repeated_submissions_tested": [],
+      "unauthorized_transitions_tested": [],
+      "transitions_untested": [],
+      "business_decisions_required": [
+        "Is director double-approval required for refunds exceeding Rs. 50,000?"
+      ]
+    },
+    {
+      "workflow": "expenses",
+      "states_discovered": [
+        "pending",
+        "approved",
+        "rejected"
+      ],
+      "transitions_discovered": [
+        "pending->approved",
+        "pending->rejected"
+      ],
+      "transitions_tested": [
+        "pending->approved"
+      ],
+      "prohibited_transitions_tested": [
+        "approved->rejected"
+      ],
+      "repeated_submissions_tested": [],
+      "unauthorized_transitions_tested": [],
+      "transitions_untested": [],
+      "business_decisions_required": [
+        "Can accountants record expenses without uploading a scan receipt?"
+      ]
+    },
+    {
+      "workflow": "examinations",
+      "states_discovered": [
+        "Draft",
+        "Under Review",
+        "Published"
+      ],
+      "transitions_discovered": [
+        "Draft->Under Review",
+        "Under Review->Published"
+      ],
+      "transitions_tested": [
+        "Draft->Published"
+      ],
+      "prohibited_transitions_tested": [],
+      "repeated_submissions_tested": [],
+      "unauthorized_transitions_tested": [],
+      "transitions_untested": [],
+      "business_decisions_required": [
+        "Should publishing results trigger instant SMS broadcast to guardians?"
+      ]
+    },
+    {
+      "workflow": "results",
+      "states_discovered": [
+        "Draft",
+        "Locked"
+      ],
+      "transitions_discovered": [
+        "Draft->Locked"
+      ],
+      "transitions_tested": [
+        "Draft->Locked"
+      ],
+      "prohibited_transitions_tested": [],
+      "repeated_submissions_tested": [],
+      "unauthorized_transitions_tested": [],
+      "transitions_untested": [],
+      "business_decisions_required": [
+        "Can exam results be unlocked once locked?"
+      ]
+    },
+    {
+      "workflow": "notifications",
+      "states_discovered": [
+        "Draft",
+        "Sent",
+        "Failed"
+      ],
+      "transitions_discovered": [
+        "Draft->Sent",
+        "Draft->Failed"
+      ],
+      "transitions_tested": [
+        "Draft->Sent"
+      ],
+      "prohibited_transitions_tested": [],
+      "repeated_submissions_tested": [],
+      "unauthorized_transitions_tested": [],
+      "transitions_untested": [],
+      "business_decisions_required": [
+        "Retry intervals config for failed SMS notifications?"
+      ]
+    },
+    {
+      "workflow": "users_role_activation",
+      "states_discovered": [
+        "Active",
+        "Inactive"
+      ],
+      "transitions_discovered": [
+        "Active->Inactive",
+        "Inactive->Active"
+      ],
+      "transitions_tested": [
+        "Active->Inactive"
+      ],
+      "prohibited_transitions_tested": [],
+      "repeated_submissions_tested": [],
+      "unauthorized_transitions_tested": [],
+      "transitions_untested": [],
+      "business_decisions_required": [
+        "Should deactivating a user automatically log them out of active sessions?"
+      ]
+    }
+  ],
+  "discovery_status": "DISCOVERY_COMPLETE"
+}

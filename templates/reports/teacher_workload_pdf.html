@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Faculty Workload Report</title>
+    <style>
+        @page {
+            size: letter;
+            margin: 1.5cm;
+            margin-bottom: 2cm;
+        }
+        body {
+            font-family: 'Helvetica', 'Arial', sans-serif;
+            color: #2d3748;
+            font-size: 9pt;
+            line-height: 1.4;
+        }
+        #footer {
+            position: fixed;
+            bottom: -1cm;
+            left: 0;
+            right: 0;
+            height: 1cm;
+            border-top: 1px solid #e2e8f0;
+            padding-top: 5px;
+        }
+        #footer table {
+            width: 100%;
+            border: none;
+        }
+        #footer td {
+            border: none;
+            font-size: 8pt;
+            color: #718096;
+            padding: 0;
+        }
+        .header-table {
+            width: 100%;
+            margin-bottom: 25px;
+            border-bottom: 2px solid #2b6cb0;
+            padding-bottom: 10px;
+        }
+        .header-table td {
+            vertical-align: top;
+            border: none;
+        }
+        .brand-title {
+            font-size: 22pt;
+            font-weight: bold;
+            color: #1a365d;
+            margin: 0;
+        }
+        .brand-subtitle {
+            font-size: 10pt;
+            color: #4a5568;
+            margin: 2px 0 0 0;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+        .report-meta {
+            text-align: right;
+            font-size: 9pt;
+            color: #4a5568;
+        }
+        .report-title {
+            font-size: 14pt;
+            font-weight: bold;
+            color: #2b6cb0;
+            margin-top: 10px;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+        }
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+        .data-table th {
+            background-color: #2b6cb0;
+            color: #ffffff;
+            font-weight: bold;
+            text-align: left;
+            padding: 8px 10px;
+            font-size: 9pt;
+            border: 1px solid #2b6cb0;
+        }
+        .data-table td {
+            padding: 8px 10px;
+            border-bottom: 1px solid #e2e8f0;
+            font-size: 8.5pt;
+            vertical-align: top;
+        }
+        .data-table tr:nth-child(even) td {
+            background-color: #f7fafc;
+        }
+        .text-center {
+            text-align: center;
+        }
+        .tag-list {
+            margin: 0;
+            padding: 0 0 0 12px;
+        }
+        .tag-list li {
+            margin-bottom: 2px;
+        }
+    </style>
+</head>
+<body>
+    <div id="footer">
+        <table>
+            <tr>
+                <td>Iqra Academy CRM - Academic Operations Admin Report</td>
+                <td style="text-align: right;">Page <pdf:pagenumber /> of <pdf:pagecount /></td>
+            </tr>
+        </table>
+    </div>
+
+    <table class="header-table">
+        <tr>
+            <td>
+                <div class="brand-title">Iqra Academy CRM</div>
+                <div class="brand-subtitle">Academic Operations System</div>
+            </td>
+            <td class="report-meta">
+                <strong>Generated:</strong> {{ generated_at|date:"Y-m-d H:i" }}<br>
+                <strong>Focus:</strong> Active Faculty
+            </td>
+        </tr>
+    </table>
+
+    <div class="report-title">{{ report_title }}</div>
+
+    <table class="data-table">
+        <thead>
+            <tr>
+                <th style="width: 25%;">Teacher Name</th>
+                <th style="width: 15%;">Designation</th>
+                <th style="width: 15%;">Department</th>
+                <th style="width: 20%;">Active Sessions</th>
+                <th style="width: 15%;">Active Subjects</th>
+                <th style="width: 10%; text-align: center;">Active Load</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for tw in teacher_workloads %}
+            <tr>
+                <td><strong>{{ tw.name }}</strong></td>
+                <td>{{ tw.designation|default:"Faculty Member" }}</td>
+                <td>{{ tw.department|default:"Academics" }}</td>
+                <td>
+                    {% if tw.sessions %}
+                        <ul class="tag-list">
+                            {% for s in tw.sessions %}
+                                <li>{{ s }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% else %}
+                        <em class="text-secondary">None</em>
+                    {% endif %}
+                </td>
+                <td>
+                    {% if tw.subjects %}
+                        <ul class="tag-list">
+                            {% for sub in tw.subjects %}
+                                <li>{{ sub }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% else %}
+                        <em class="text-secondary">None</em>
+                    {% endif %}
+                </td>
+                <td class="text-center"><strong>{{ tw.total_assignments }}</strong></td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="6" class="text-center" style="padding: 20px; " class="text-secondary">
+                    No active faculty records found.
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

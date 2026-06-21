@@ -1,0 +1,48 @@
+{% extends 'layouts/panel_base.html' %}
+
+{% block title %}{{ notification.title }} - Iqra Academy{% endblock %}
+
+{% block content %}
+<div class="container-fluid px-0">
+    <!-- Page Header / Back Link -->
+    <div class="mb-4">
+        <a href="{% if '/portal/student/' in request.path %}{% url 'student_portal:notification_list' %}{% elif '/portal/guardian/' in request.path %}{% url 'guardian_portal:notification_list' %}{% elif '/panel/teacher/' in request.path %}{% url 'teacher_panel:notification_list' %}{% elif '/panel/accounts/' in request.path %}{% url 'accounts_panel:notification_list' %}{% elif '/panel/registrar/' in request.path %}{% url 'registrar_panel:notification_list' %}{% else %}{% url 'admin_panel:notifications:notification_list' %}{% endif %}" class="btn btn-secondary rounded-pill">
+            <i class="fa-solid fa-arrow-left me-2"></i> Back to Notifications
+        </a>
+    </div>
+
+    <!-- Notification Card -->
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-10 col-lg-8">
+            <div class="card p-4 animate-fade-in">
+                <div class="d-flex justify-content-between align-items-start border-bottom border-soft pb-3 mb-3">
+                    <div>
+                        <h4 class="fw-bold mb-1 text-primary">{{ notification.title }}</h4>
+                        <div class="d-flex gap-2 align-items-center mt-2">
+                            <span class="badge {% if not notification.is_read %}bg-danger{% elif notification.category|lower == 'alert' or notification.category|lower == 'attendance' %}bg-warning{% elif notification.category|lower == 'general' %}bg-primary{% else %}bg-secondary{% endif %}">{{ notification.category }}</span>
+                            <span class="text-secondary small">{{ notification.created_at|date:"F d, Y - H:i" }}</span>
+                        </div>
+                    </div>
+                    <div>
+                        {% if not notification.is_read %}
+                            <form method="post" action="{% if '/portal/student/' in request.path %}{% url 'student_portal:notification_mark_read' %}{% elif '/portal/guardian/' in request.path %}{% url 'guardian_portal:notification_mark_read' %}{% elif '/panel/teacher/' in request.path %}{% url 'teacher_panel:notification_mark_read' %}{% elif '/panel/accounts/' in request.path %}{% url 'accounts_panel:notification_mark_read' %}{% elif '/panel/registrar/' in request.path %}{% url 'registrar_panel:notification_mark_read' %}{% else %}{% url 'admin_panel:notifications:notification_mark_read' %}{% endif %}">
+                                {% csrf_token %}
+                                <input type="hidden" name="notification_id" value="{{ notification.id }}">
+                                <button type="submit" class="btn btn-outline-success btn-sm rounded-pill">
+                                    <i class="fa-solid fa-check me-1"></i> Mark as Read
+                                </button>
+                            </form>
+                        {% else %}
+                            <span class="badge bg-success"><i class="fa-solid fa-check-double me-1"></i> Read</span>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="py-2 leading-relaxed text-secondary">
+                    {{ notification.content|linebreaks }}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

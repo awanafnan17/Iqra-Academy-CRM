@@ -1,0 +1,207 @@
+{% extends 'layouts/base.html' %}
+{% load static %}
+{% load portal_tags %}
+
+{% block body_class %}portal-variant{% endblock %}
+
+{% block main_layout %}
+<div class="app-wrapper">
+    <!-- Simplified Sidebar -->
+    <aside class="sidebar" id="sidebar" aria-label="Main navigation">
+        <!-- Brand -->
+        <a href="#" class="sidebar-brand d-flex align-items-center gap-2">
+            <div class="sidebar-brand-logo">
+                <img src="{% static 'images/logo.png' %}" alt="Logo" style="height: 36px; width: auto; object-fit: contain;">
+            </div>
+            <div class="sidebar-brand-text">
+                <span class="sidebar-brand-name">Iqra Academy</span>
+                <span class="sidebar-brand-sub">Portal</span>
+            </div>
+        </a>
+
+        <!-- Navigation -->
+        <nav class="sidebar-nav">
+            {% if request.user.student_record %}
+                <!-- Student Menu -->
+                <div class="sidebar-section">Academic Menu</div>
+                <a href="{% url 'student_portal:dashboard' %}" class="sidebar-link">
+                    <span class="sidebar-icon"><i class="fa-solid fa-chart-pie"></i></span>
+                    Dashboard
+                </a>
+                <a href="{% url 'student_portal:profile_view' %}" class="sidebar-link">
+                    <span class="sidebar-icon"><i class="fa-regular fa-user"></i></span>
+                    My Profile
+                </a>
+                <a href="{% url 'student_portal:my_attendance' %}" class="sidebar-link">
+                    <span class="sidebar-icon"><i class="fa-solid fa-calendar-check"></i></span>
+                    My Attendance
+                </a>
+                <a href="{% url 'student_portal:my_fees' %}" class="sidebar-link">
+                    <span class="sidebar-icon"><i class="fa-solid fa-credit-card"></i></span>
+                    My Fees
+                </a>
+                <a href="{% url 'student_portal:my_exams' %}" class="sidebar-link">
+                    <span class="sidebar-icon"><i class="fa-solid fa-file-signature"></i></span>
+                    My Exams
+                </a>
+                <a href="{% url 'student_portal:timetable' %}" class="sidebar-link">
+                    <span class="sidebar-icon"><i class="fa-solid fa-calendar-week"></i></span>
+                    My Timetable
+                </a>
+                <a href="{% url 'student_portal:student_transcript' %}" class="sidebar-link">
+                    <span class="sidebar-icon"><i class="fa-solid fa-file-invoice"></i></span>
+                    My Transcript
+                </a>
+                <a href="{% url 'student_portal:notification_list' %}" class="sidebar-link">
+                    <span class="sidebar-icon"><i class="fa-solid fa-bell"></i></span>
+                    Notifications
+                </a>
+                <a href="{% url 'student_portal:password_change' %}" class="sidebar-link">
+                    <span class="sidebar-icon"><i class="fa-solid fa-key"></i></span>
+                    Change Password
+                </a>
+            {% else %}
+                <!-- Guardian Menu -->
+                <div class="sidebar-section">Guardian Menu</div>
+                <a href="{% url 'guardian_portal:dashboard' %}" class="sidebar-link">
+                    <span class="sidebar-icon"><i class="fa-solid fa-chart-pie"></i></span>
+                    Dashboard
+                </a>
+                <a href="{% url 'guardian_portal:my_children' %}" class="sidebar-link">
+                    <span class="sidebar-icon"><i class="fa-solid fa-children"></i></span>
+                    My Children
+                </a>
+
+                <!-- Linked Children Submenu -->
+                {% get_guardian_children as guardian_children %}
+                {% if guardian_children %}
+                    <div class="sidebar-section">Children Records</div>
+                    {% for child in guardian_children %}
+                        <div class="sidebar-section text-secondary font-monospace">{{ child.full_name|truncatechars:18 }}</div>
+                        <a href="{% url 'guardian_portal:child_detail' student_id=child.id %}" class="sidebar-link ps-4">
+                            <span class="sidebar-icon"><i class="fa-regular fa-user"></i></span>
+                            Profile
+                        </a>
+                        <a href="{% url 'guardian_portal:child_attendance' student_id=child.id %}" class="sidebar-link ps-4">
+                            <span class="sidebar-icon"><i class="fa-solid fa-calendar-check"></i></span>
+                            Attendance
+                        </a>
+                        <a href="{% url 'guardian_portal:child_payments' student_id=child.id %}" class="sidebar-link ps-4">
+                            <span class="sidebar-icon"><i class="fa-solid fa-credit-card"></i></span>
+                            Fees
+                        </a>
+                        <a href="{% url 'guardian_portal:child_exams' student_id=child.id %}" class="sidebar-link ps-4">
+                            <span class="sidebar-icon"><i class="fa-solid fa-file-signature"></i></span>
+                            Exams
+                        </a>
+                        <a href="{% url 'guardian_portal:child_transcript' student_id=child.id %}" class="sidebar-link ps-4">
+                            <span class="sidebar-icon"><i class="fa-solid fa-file-invoice"></i></span>
+                            Transcript
+                        </a>
+                    {% endfor %}
+                {% endif %}
+
+                <div class="sidebar-section">General</div>
+                <a href="{% url 'guardian_portal:notification_list' %}" class="sidebar-link">
+                    <span class="sidebar-icon"><i class="fa-solid fa-bell"></i></span>
+                    Notifications
+                </a>
+            {% endif %}
+        </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content" id="mainContent">
+        <!-- Simplified Top Navbar -->
+        <nav class="navbar" id="navbar" aria-label="Top navigation">
+            <div class="d-flex align-items-center">
+                <!-- Mobile Sidebar Toggle -->
+                <button
+                  id="sidebarToggle"
+                  class="sidebar-toggle-btn d-lg-none me-3"
+                  aria-label="Toggle sidebar">
+                  <i class="fas fa-bars"></i>
+                </button>
+                <span class="page-title">
+                    {% if request.user.student_record %}
+                        Iqra Academy Student Portal
+                    {% else %}
+                        Iqra Academy Guardian Portal
+                    {% endif %}
+                </span>
+            </div>
+
+            <div class="navbar-right">
+                <!-- Theme Toggle Button -->
+                <button
+                  id="themeToggle"
+                  class="theme-toggle me-3"
+                  aria-label="Toggle theme"
+                  title="Toggle dark/light mode">
+                  <i class="fas fa-moon" id="themeIcon"></i>
+                </button>
+                <!-- Notification Bell -->
+                <div class="position-relative me-3">
+                    {% get_unread_notifications_count as unread_count %}
+                    <a href="{% if request.user.student_record %}{% url 'student_portal:notification_list' %}{% else %}{% url 'guardian_portal:notification_list' %}{% endif %}" class="text-secondary position-relative text-decoration-none">
+                        <i class="fa-regular fa-bell fa-lg"></i>
+                        {% if unread_count > 0 %}
+                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                {{ unread_count }}
+                            </span>
+                        {% endif %}
+                    </a>
+                </div>
+
+                <!-- User Meta (Student or Guardian) -->
+                <div class="d-flex align-items-center gap-2 border-start border-secondary-subtle ps-3">
+                    <div class="navbar-avatar avatar avatar-sm">
+                        {% if request.user.student_record %}
+                            {{ request.user.student_record.full_name|slice:":2"|upper }}
+                        {% else %}
+                            {{ request.user.display_name|slice:":2"|upper }}
+                        {% endif %}
+                    </div>
+                    <div class="d-none d-md-flex flex-column text-start">
+                        <span class="text-primary-c fw-bold small" data-testid="navbar-user-name">
+                            {% if request.user.student_record %}
+                                {{ request.user.student_record.full_name }}
+                            {% else %}
+                                {{ request.user.display_name }}
+                            {% endif %}
+                        </span>
+                        {% if request.user.student_record %}
+                            <span class="text-muted fw-bold text-xs">
+                                Roll#: {{ request.user.student_record.roll_number|default:"No Roll#" }}
+                            </span>
+                        {% else %}
+                            <span class="text-muted fw-bold text-xs">
+                                Guardian Account
+                            </span>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <!-- Logout Button -->
+                <a href="{% url 'accounts:logout' %}" class="btn btn-outline-danger btn-sm rounded-pill ms-2 px-3">
+                    <i class="fa-solid fa-right-from-bracket me-1"></i> Logout
+                </a>
+            </div>
+        </nav>
+
+        <!-- Main Content Area -->
+        <div class="page-content">
+            <div class="portal-page">
+                {% block content %}{% endblock %}
+            </div>
+        </div>
+    </main>
+{% endblock %}
+
+{% block extra_css %}
+{% endblock %}
+
+{% block extra_js %}
+    <script src="{% static 'js/sidebar.js' %}"></script>
+{% endblock %}
+

@@ -1,0 +1,118 @@
+{% extends 'layouts/panel_base.html' %}
+{% load static %}
+
+{% block title %}{% if subject %}Edit Subject{% else %}Add Subject{% endif %} - Iqra Academy{% endblock %}
+
+{% block content %}
+<div class="container-fluid px-0 form-container">
+    <!-- Page Header -->
+    <div class="p-4 rounded-4 mb-4 card border border-light shadow-sm animate-fade-in">
+        <div class="d-flex align-items-center">
+            <a href="{% url 'admin_panel:session_overview' %}" class="btn btn-outline-primary btn-sm rounded-circle me-3 btn-back-circle">
+                <i class="fa-solid fa-arrow-left"></i>
+            </a>
+            <div>
+                <h3 class="fw-bold mb-1">{% if subject %}Edit Subject{% else %}Create Subject{% endif %}</h3>
+                <p class="text-secondary mb-0">Define subject criteria. Global subjects are accessible across all active batches.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Alert Box for Non-Field Errors -->
+    {% if form.non_field_errors %}
+        <div class="alert alert-danger border-danger-subtle rounded-4 p-3 mb-4 shadow-sm animate-fade-in stagger-1 d-flex align-items-start">
+            <i class="fa-solid fa-circle-exclamation fa-lg text-danger me-3 mt-1"></i>
+            <div>
+                <h6 class="fw-bold text-danger mb-1">Validation Error Detected</h6>
+                <ul class="mb-0 ps-3">
+                    {% for error in form.non_field_errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    {% endif %}
+
+    <!-- Form Section -->
+    <div class="card p-4 border border-light shadow rounded-4 animate-fade-in stagger-2">
+        <form method="post" class="needs-validation" novalidate>
+            {% csrf_token %}
+
+            <div class="row g-4">
+                <!-- Name -->
+                <div class="col-12 col-md-6">
+                    <label for="{{ form.name.id_for_label }}" class="form-label small fw-semibold text-secondary">Subject Name</label>
+                    {{ form.name }}
+                    {% if form.name.errors %}
+                        <div class="text-danger small mt-1">{{ form.name.errors|join:", " }}</div>
+                    {% endif %}
+                </div>
+
+                <!-- Code -->
+                <div class="col-12 col-md-6">
+                    <label for="{{ form.code.id_for_label }}" class="form-label small fw-semibold text-secondary">Subject Code</label>
+                    {{ form.code }}
+                    {% if form.code.errors %}
+                        <div class="text-danger small mt-1">{{ form.code.errors|join:", " }}</div>
+                    {% endif %}
+                </div>
+
+                <!-- Session -->
+                <div class="col-12 col-md-6">
+                    <label for="{{ form.session.id_for_label }}" class="form-label small fw-semibold text-secondary">Session (Leave blank for global subject)</label>
+                    {{ form.session }}
+                    {% if form.session.errors %}
+                        <div class="text-danger small mt-1">{{ form.session.errors|join:", " }}</div>
+                    {% endif %}
+                </div>
+
+                <!-- Is Active -->
+                <div class="col-12 col-md-6 d-flex align-items-center mt-auto">
+                    <div class="form-check form-switch p-0 switch-margin">
+                        {{ form.is_active }}
+                        <label class="form-check-label small fw-semibold text-secondary ms-2" for="{{ form.is_active.id_for_label }}">Offering Active</label>
+                    </div>
+                    {% if form.is_active.errors %}
+                        <div class="text-danger small mt-1">{{ form.is_active.errors|join:", " }}</div>
+                    {% endif %}
+                </div>
+
+                <!-- Description -->
+                <div class="col-12">
+                    <label for="{{ form.description.id_for_label }}" class="form-label small fw-semibold text-secondary">Description</label>
+                    {{ form.description }}
+                    {% if form.description.errors %}
+                        <div class="text-danger small mt-1">{{ form.description.errors|join:", " }}</div>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Submit Action -->
+            <div class="mt-4 pt-3 border-top d-flex justify-content-end gap-2">
+                <a href="{% url 'admin_panel:session_overview' %}" class="btn btn-secondary rounded-3 px-4">Cancel</a>
+                <button type="submit" class="btn btn-primary rounded-3 px-4">
+                    <i class="fa-solid fa-check me-2"></i> Save Subject
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<style>
+body.crm-app .form-container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+body.crm-app .btn-back-circle {
+    width: 38px;
+    height: 38px;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+body.crm-app .switch-margin {
+    margin-left: 2rem;
+}
+</style>
+{% endblock %}

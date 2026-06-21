@@ -1,0 +1,312 @@
+{
+  "role": "Student",
+  "mode": "enforcement",
+  "timestamp": "2026-06-20T02:50:11.958283",
+  "pages_visited": [
+    {
+      "url": "/portal/student/dashboard/",
+      "status": 200,
+      "load_time_ms": 129,
+      "final_url": "/portal/student/dashboard/",
+      "title": "My Portal - Iqra Academy",
+      "source_url": "seed",
+      "link_source": "seed"
+    },
+    {
+      "url": "/accounts/profile/",
+      "status": 200,
+      "load_time_ms": 73,
+      "final_url": "/accounts/profile/",
+      "title": "My Profile - Iqra Academy",
+      "source_url": "seed",
+      "link_source": "seed"
+    },
+    {
+      "url": "/portal/student/profile/",
+      "status": 200,
+      "load_time_ms": 61,
+      "final_url": "/portal/student/profile/",
+      "title": "My Profile - Iqra Academy",
+      "source_url": "/portal/student/dashboard/",
+      "link_source": "sidebar"
+    },
+    {
+      "url": "/portal/student/attendance/",
+      "status": 200,
+      "load_time_ms": 59,
+      "final_url": "/portal/student/attendance/",
+      "title": "My Attendance - Iqra Academy",
+      "source_url": "/portal/student/profile/",
+      "link_source": "sidebar"
+    },
+    {
+      "url": "/portal/student/fees/",
+      "status": 200,
+      "load_time_ms": 72,
+      "final_url": "/portal/student/fees/",
+      "title": "My Fee Ledger - Iqra Academy",
+      "source_url": "/portal/student/attendance/",
+      "link_source": "sidebar"
+    },
+    {
+      "url": "/portal/student/exams/",
+      "status": 200,
+      "load_time_ms": 54,
+      "final_url": "/portal/student/exams/",
+      "title": "My Exams & Grades - Iqra Academy",
+      "source_url": "/portal/student/fees/",
+      "link_source": "sidebar"
+    },
+    {
+      "url": "/portal/student/timetable/",
+      "status": 200,
+      "load_time_ms": 43,
+      "final_url": "/portal/student/timetable/",
+      "title": "My Class Timetable - Iqra Academy",
+      "source_url": "/portal/student/exams/",
+      "link_source": "sidebar"
+    },
+    {
+      "url": "/portal/student/transcript/",
+      "status": 200,
+      "load_time_ms": 90,
+      "final_url": "/portal/student/transcript/",
+      "title": "Academic Transcript | Iqra Academy",
+      "source_url": "/portal/student/timetable/",
+      "link_source": "sidebar"
+    },
+    {
+      "url": "/portal/student/notifications/",
+      "status": 200,
+      "load_time_ms": 60,
+      "final_url": "/portal/student/notifications/",
+      "title": "My Notifications - Iqra Academy",
+      "source_url": "/portal/student/transcript/",
+      "link_source": "sidebar"
+    },
+    {
+      "url": "/portal/student/password/",
+      "status": 200,
+      "load_time_ms": 79,
+      "final_url": "/portal/student/password/",
+      "title": "Change Password - IICE",
+      "source_url": "/portal/student/notifications/",
+      "link_source": "sidebar"
+    },
+    {
+      "url": "/portal/student/enrollment/",
+      "status": 200,
+      "load_time_ms": 70,
+      "final_url": "/portal/student/profile/",
+      "title": "My Profile - Iqra Academy",
+      "source_url": "/accounts/profile/",
+      "link_source": "sidebar"
+    },
+    {
+      "url": "/portal/student/payments/",
+      "status": 200,
+      "load_time_ms": 45,
+      "final_url": "/portal/student/payments/",
+      "title": "My Fee Ledger - Iqra Academy",
+      "source_url": "/accounts/profile/",
+      "link_source": "sidebar"
+    },
+    {
+      "url": "/accounts/password/change/",
+      "status": 200,
+      "load_time_ms": 89,
+      "final_url": "/accounts/password/change/",
+      "title": "Change Password - Iqra Academy",
+      "source_url": "/accounts/profile/",
+      "link_source": "navbar"
+    },
+    {
+      "url": "/accounts/post-login/",
+      "status": 200,
+      "load_time_ms": 76,
+      "final_url": "/portal/student/dashboard/",
+      "title": "My Portal - Iqra Academy",
+      "source_url": "/accounts/password/change/",
+      "link_source": "navigation"
+    },
+    {
+      "url": "/portal/student/notifications/?category=General",
+      "status": 200,
+      "load_time_ms": 81,
+      "final_url": "/portal/student/notifications/",
+      "title": "My Notifications - Iqra Academy",
+      "source_url": "/portal/student/notifications/",
+      "link_source": "navigation"
+    },
+    {
+      "url": "/portal/student/notifications/?category=LateFee",
+      "status": 200,
+      "load_time_ms": 59,
+      "final_url": "/portal/student/notifications/",
+      "title": "My Notifications - Iqra Academy",
+      "source_url": "/portal/student/notifications/?category=General",
+      "link_source": "navigation"
+    },
+    {
+      "url": "/portal/student/notifications/?category=NewEntry",
+      "status": 200,
+      "load_time_ms": 56,
+      "final_url": "/portal/student/notifications/",
+      "title": "My Notifications - Iqra Academy",
+      "source_url": "/portal/student/notifications/?category=LateFee",
+      "link_source": "navigation"
+    },
+    {
+      "url": "/portal/student/notifications/?category=Deletion",
+      "status": 200,
+      "load_time_ms": 53,
+      "final_url": "/portal/student/notifications/",
+      "title": "My Notifications - Iqra Academy",
+      "source_url": "/portal/student/notifications/?category=NewEntry",
+      "link_source": "navigation"
+    },
+    {
+      "url": "/portal/student/notifications/?category=Payment",
+      "status": 200,
+      "load_time_ms": 53,
+      "final_url": "/portal/student/notifications/",
+      "title": "My Notifications - Iqra Academy",
+      "source_url": "/portal/student/notifications/?category=Deletion",
+      "link_source": "navigation"
+    },
+    {
+      "url": "/portal/student/notifications/?category=Attendance",
+      "status": 200,
+      "load_time_ms": 39,
+      "final_url": "/portal/student/notifications/",
+      "title": "My Notifications - Iqra Academy",
+      "source_url": "/portal/student/notifications/?category=Payment",
+      "link_source": "navigation"
+    },
+    {
+      "url": "/portal/student/notifications/?category=ExamResult",
+      "status": 200,
+      "load_time_ms": 58,
+      "final_url": "/portal/student/notifications/",
+      "title": "My Notifications - Iqra Academy",
+      "source_url": "/portal/student/notifications/?category=Attendance",
+      "link_source": "navigation"
+    },
+    {
+      "url": "/portal/student/notifications/?category=MonthlyRenewal",
+      "status": 200,
+      "load_time_ms": 53,
+      "final_url": "/portal/student/notifications/",
+      "title": "My Notifications - Iqra Academy",
+      "source_url": "/portal/student/notifications/?category=ExamResult",
+      "link_source": "navigation"
+    },
+    {
+      "url": "/portal/student/notifications/?category=System",
+      "status": 200,
+      "load_time_ms": 69,
+      "final_url": "/portal/student/notifications/",
+      "title": "My Notifications - Iqra Academy",
+      "source_url": "/portal/student/notifications/?category=MonthlyRenewal",
+      "link_source": "navigation"
+    }
+  ],
+  "errors_500": [],
+  "errors_404": [],
+  "errors_403": [],
+  "console_errors": [
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "url": "http://127.0.0.1:4082/accounts/profile/"
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "url": "http://127.0.0.1:4082/accounts/profile/"
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "url": "http://127.0.0.1:4082/accounts/password/change/"
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "url": "http://127.0.0.1:4082/accounts/password/change/"
+    }
+  ],
+  "redirect_loops": [],
+  "slow_pages": [],
+  "empty_pages": [],
+  "redirects": [
+    {
+      "from": "/portal/student/enrollment/",
+      "to": "/portal/student/profile/",
+      "status": 200
+    },
+    {
+      "from": "/accounts/post-login/",
+      "to": "/portal/student/dashboard/",
+      "status": 200
+    },
+    {
+      "from": "/portal/student/notifications/?category=General",
+      "to": "/portal/student/notifications/",
+      "status": 200
+    },
+    {
+      "from": "/portal/student/notifications/?category=LateFee",
+      "to": "/portal/student/notifications/",
+      "status": 200
+    },
+    {
+      "from": "/portal/student/notifications/?category=NewEntry",
+      "to": "/portal/student/notifications/",
+      "status": 200
+    },
+    {
+      "from": "/portal/student/notifications/?category=Deletion",
+      "to": "/portal/student/notifications/",
+      "status": 200
+    },
+    {
+      "from": "/portal/student/notifications/?category=Payment",
+      "to": "/portal/student/notifications/",
+      "status": 200
+    },
+    {
+      "from": "/portal/student/notifications/?category=Attendance",
+      "to": "/portal/student/notifications/",
+      "status": 200
+    },
+    {
+      "from": "/portal/student/notifications/?category=ExamResult",
+      "to": "/portal/student/notifications/",
+      "status": 200
+    },
+    {
+      "from": "/portal/student/notifications/?category=MonthlyRenewal",
+      "to": "/portal/student/notifications/",
+      "status": 200
+    },
+    {
+      "from": "/portal/student/notifications/?category=System",
+      "to": "/portal/student/notifications/",
+      "status": 200
+    }
+  ],
+  "all_errors": [
+    {
+      "url": "/portal/student/transcript/pdf/",
+      "source_url": "/portal/student/exams/",
+      "link_source": "navigation",
+      "status": 0,
+      "expected_status": 200,
+      "error": "Page.goto: Download is starting\nCall log:\n  - navigating to \"http://127.0.0.1:4082/portal/student/transcript/pdf/\", waiting until \"domcontentloaded\"\n",
+      "role": "Student",
+      "severity": "Critical",
+      "category": "exception"
+    }
+  ]
+}

@@ -1,0 +1,303 @@
+{% extends 'layouts/panel_base.html' %}
+{% load static %}
+
+{% block title %}Success Tracking & Selections - Iqra Academy{% endblock %}
+
+{% block content %}
+<div class="container-fluid px-0">
+    <!-- Page Header -->
+    <div class="p-4 rounded-4 mb-4 card border border-light shadow-sm animate-fade-in">
+        <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
+            <div>
+                <h3 class="fw-bold mb-1">Success Tracking & Achievement System</h3>
+                <p class="text-secondary mb-0">Monitor verified student selections and competitive exam performance metrics.</p>
+            </div>
+            <div class="d-flex gap-2">
+                <a href="{% url 'reports:success_pdf' %}" target="_blank" class="btn btn-outline-danger px-3 py-2 rounded-3">
+                    <i class="fa-solid fa-file-pdf me-1"></i> Export PDF Report
+                </a>
+                <a href="{% url 'reports:success_csv' %}" class="btn btn-outline-success px-3 py-2 rounded-3">
+                    <i class="fa-solid fa-file-csv me-1"></i> Export CSV Report
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Summary Metrics Cards Grid -->
+    <div class="row g-4">
+        <!-- Total Selections -->
+        <div class="col-12 col-md-6 col-lg-4">
+            <div class="card metric-card h-100 animate-fade-in stagger-1">
+                <div class="card-body p-4">
+                    <div class="d-flex align-items-start justify-content-between mb-3">
+                        <div>
+                            <div class="metric-label">Total Selections (All Time)</div>
+                            <div
+                                class="metric-value mt-2"
+                                data-target="{{ metrics.total_selections|default:0 }}"
+                                data-duration="1200"
+                                data-decimals="0">
+                                {{ metrics.total_selections|default:0 }}
+                            </div>
+                        </div>
+                        <div class="metric-icon">
+                            <i class="fa-solid fa-trophy"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Selections This Year -->
+        <div class="col-12 col-md-6 col-lg-4">
+            <div class="card metric-card h-100 animate-fade-in stagger-2">
+                <div class="card-body p-4">
+                    <div class="d-flex align-items-start justify-content-between mb-3">
+                        <div>
+                            <div class="metric-label">Selections (Current Year)</div>
+                            <div
+                                class="metric-value mt-2"
+                                data-target="{{ metrics.selections_this_year|default:0 }}"
+                                data-duration="1200"
+                                data-decimals="0">
+                                {{ metrics.selections_this_year|default:0 }}
+                            </div>
+                        </div>
+                        <div class="metric-icon">
+                            <i class="fa-solid fa-calendar-check"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Average Success Rate across Active Sessions -->
+        <div class="col-12 col-lg-4">
+            <div class="card metric-card h-100 animate-fade-in stagger-3">
+                <div class="card-body p-4">
+                    <div class="d-flex align-items-start justify-content-between mb-3">
+                        <div>
+                            <div class="metric-label">Active Session Success Rate</div>
+                            <div
+                                class="metric-value mt-2"
+                                data-target="{% if metrics.sessions_metrics %}{% with first_s=metrics.sessions_metrics|first %}{{ first_s.success_rate }}{% endwith %}{% else %}0{% endif %}"
+                                data-duration="1200"
+                                data-suffix="%"
+                                data-decimals="1">
+                                {% if metrics.sessions_metrics %}
+                                    {% with first_s=metrics.sessions_metrics|first %}
+                                        {{ first_s.success_rate }}%
+                                    {% endwith %}
+                                {% else %}
+                                    0.0%
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="metric-icon">
+                            <i class="fa-solid fa-percentage"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Charts Row -->
+    <div class="row g-4 mt-2">
+        <!-- Line Chart: Selections by Year -->
+        <div class="col-12 col-lg-8">
+            <div class="card p-4 animate-fade-in stagger-4 h-100 border border-light shadow-sm">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h5 class="fw-bold mb-0">Selections Growth Timeline</h5>
+                    <span class="text-muted small font-monospace">YEARLY TREND</span>
+                </div>
+                <div class="chart-container chart-container-md">
+                    <canvas id="selectionsTimelineChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bar Chart: Exam Type Distribution -->
+        <div class="col-12 col-lg-4">
+            <div class="card p-4 animate-fade-in stagger-4 h-100 border border-light shadow-sm">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h5 class="fw-bold mb-0">Exam Type Distribution</h5>
+                    <span class="text-muted small font-monospace">CATEGORIES</span>
+                </div>
+                <div class="chart-container chart-container-md">
+                    <canvas id="examDistributionChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-4 mt-2 mb-4">
+        <!-- Session Success Rates -->
+        <div class="col-12 col-lg-6">
+            <div class="card p-4 animate-fade-in stagger-5 h-100 border border-light shadow-sm">
+                <h5 class="fw-bold mb-3 border-bottom pb-2">
+                    <i class="fa-solid fa-graduation-cap me-2"></i>Active Session Success Rates
+                </h5>
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle">
+                        <thead>
+                            <tr>
+                                <th>Session</th>
+                                <th class="text-center">Enrolled Students</th>
+                                <th class="text-center">Selections</th>
+                                <th class="text-center">Success Rate</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for item in metrics.sessions_metrics %}
+                            <tr>
+                                <td class="fw-semibold">{{ item.session_name }}</td>
+                                <td class="text-center">{{ item.total_students }}</td>
+                                <td class="text-center">
+                                    <span class="badge bg-success bg-opacity-10 text-success rounded-pill px-2 py-1">
+                                        {{ item.success_count }} selected
+                                    </span>
+                                </td>
+                                <td class="text-center">
+                                    <div class="d-flex align-items-center justify-content-center gap-2">
+                                        <span class="fw-bold text-primary">{{ item.success_rate }}%</span>
+                                        <div class="progress progress-width-60px height-6px">
+                                            <div class="progress-bar bg-success" role="progressbar" data-progress="{{ item.success_rate }}" aria-valuenow="{{ item.success_rate }}" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            {% empty %}
+                            <tr>
+                                <td colspan="4" class="text-center text-muted py-4">No active session data recorded.</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Top 5 Recent Selected Students -->
+        <div class="col-12 col-lg-6">
+            <div class="card p-4 animate-fade-in stagger-5 h-100 border border-light shadow-sm">
+                <h5 class="fw-bold mb-3 border-bottom pb-2">
+                    <i class="fa-solid fa-user-check me-2"></i>Recent Student Selections
+                </h5>
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle">
+                        <thead>
+                            <tr>
+                                <th>Student</th>
+                                <th>Session</th>
+                                <th class="text-center">Exam Type</th>
+                                <th class="text-center">Year</th>
+                                <th class="text-center">Rank</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for item in metrics.recent_selections %}
+                            <tr>
+                                <td>
+                                    <div class="fw-semibold">{{ item.student_name }}</div>
+                                    <small class="text-secondary font-monospace">Roll: {{ item.roll_number }}</small>
+                                </td>
+                                <td class="small">{{ item.session_name }}</td>
+                                <td class="text-center">
+                                    <span class="badge bg-warning text-primary border border-warning px-2 py-1 rounded-pill fw-bold">
+                                        {{ item.exam_type }}
+                                    </span>
+                                </td>
+                                <td class="text-center font-monospace">{{ item.year }}</td>
+                                <td class="text-center fw-bold">{{ item.rank|default:"-" }}</td>
+                            </tr>
+                            {% empty %}
+                            <tr>
+                                <td colspan="5" class="text-center text-muted py-4">No recent student selections found.</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // Timeline Chart: Selections by Year
+        const timelineCtx = document.getElementById("selectionsTimelineChart").getContext("2d");
+        const timelineData = {
+            labels: [{% for item in metrics.selections_by_year %}"{{ item.year }}",{% endfor %}],
+            datasets: [{
+                label: "Student Selections",
+                data: [{% for item in metrics.selections_by_year %}{{ item.count }},{% endfor %}],
+                borderColor: "#3182ce",
+                backgroundColor: "rgba(49, 130, 206, 0.1)",
+                borderWidth: 3,
+                fill: true,
+                tension: 0.3,
+                pointBackgroundColor: "#3182ce",
+                pointBorderColor: "#ffffff",
+                pointHoverRadius: 6,
+            }]
+        };
+        new Chart(timelineCtx, {
+            type: "line",
+            data: timelineData,
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: { stepSize: 1 }
+                    }
+                }
+            }
+        });
+
+        // Distribution Chart: Exam Type Distribution
+        const distributionCtx = document.getElementById("examDistributionChart").getContext("2d");
+        const distributionData = {
+            labels: [{% for item in metrics.exam_metrics %}"{{ item.exam_type }}",{% endfor %}],
+            datasets: [{
+                label: "Selections",
+                data: [{% for item in metrics.exam_metrics %}{{ item.count }},{% endfor %}],
+                backgroundColor: [
+                    "#319795", // CSS Teal
+                    "#805ad5", // PMS Purple
+                    "#dd6b20", // PPSC Orange
+                    "#3182ce", // FPSC Blue
+                    "#718096"  // OTHER Gray
+                ],
+                borderWidth: 0,
+                borderRadius: 5,
+            }]
+        };
+        new Chart(distributionCtx, {
+            type: "bar",
+            data: distributionData,
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: { stepSize: 1 }
+                    }
+                }
+            }
+        });
+    });
+</script>
+{% endblock %}

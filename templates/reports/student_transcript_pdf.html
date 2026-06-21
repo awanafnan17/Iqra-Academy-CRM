@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Official Student Transcript</title>
+    <style>
+        @page {
+            size: letter;
+            margin: 1.5cm;
+            margin-bottom: 2cm;
+        }
+        body {
+            font-family: 'Helvetica', 'Arial', sans-serif;
+            color: #2d3748;
+            font-size: 9pt;
+            line-height: 1.4;
+        }
+        #footer {
+            position: fixed;
+            bottom: -1cm;
+            left: 0;
+            right: 0;
+            height: 1cm;
+            border-top: 1px solid #e2e8f0;
+            padding-top: 5px;
+        }
+        #footer table {
+            width: 100%;
+            border: none;
+        }
+        #footer td {
+            border: none;
+            font-size: 8pt;
+            color: #718096;
+            padding: 0;
+        }
+        .header-table {
+            width: 100%;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #2b6cb0;
+            padding-bottom: 10px;
+        }
+        .header-table td {
+            vertical-align: top;
+            border: none;
+        }
+        .brand-title {
+            font-size: 22pt;
+            font-weight: bold;
+            color: #1a365d;
+            margin: 0;
+        }
+        .brand-subtitle {
+            font-size: 10pt;
+            color: #4a5568;
+            margin: 2px 0 0 0;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+        .report-meta {
+            text-align: right;
+            font-size: 9pt;
+            color: #4a5568;
+        }
+        .report-title {
+            font-size: 14pt;
+            font-weight: bold;
+            color: #2b6cb0;
+            margin-top: 5px;
+            margin-bottom: 15px;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .profile-container {
+            border: 1px solid #cbd5e0;
+            border-radius: 4px;
+            padding: 12px;
+            margin-bottom: 20px;
+            background-color: #f8fafc;
+        }
+        .profile-table {
+            width: 100%;
+            border: none;
+        }
+        .profile-table td {
+            padding: 4px 6px;
+            vertical-align: top;
+            font-size: 9.5pt;
+            border: none;
+        }
+        .profile-label {
+            font-weight: bold;
+            color: #4a5568;
+            width: 20%;
+        }
+        .profile-value {
+            color: #2d3748;
+            width: 30%;
+        }
+        .score-box {
+            background-color: #ebf8ff;
+            border: 1px solid #bee3f8;
+            padding: 12px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .score-value {
+            font-size: 20pt;
+            font-weight: bold;
+            color: #2b6cb0;
+            margin-top: 5px;
+        }
+        .score-label {
+            font-size: 9pt;
+            color: #4a5568;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+        .data-table th {
+            background-color: #2b6cb0;
+            color: #ffffff;
+            font-weight: bold;
+            text-align: left;
+            padding: 8px 10px;
+            font-size: 9pt;
+            border: 1px solid #2b6cb0;
+        }
+        .data-table td {
+            padding: 8px 10px;
+            border-bottom: 1px solid #e2e8f0;
+            font-size: 8.5pt;
+        }
+        .data-table tr:nth-child(even) td {
+            background-color: #f7fafc;
+        }
+        .text-center {
+            text-align: center;
+        }
+        .text-right {
+            text-align: right;
+        }
+        .footer-signature {
+            margin-top: 50px;
+            width: 100%;
+            border: none;
+        }
+        .footer-signature td {
+            width: 50%;
+            font-size: 9pt;
+            text-align: center;
+            vertical-align: bottom;
+            border: none;
+        }
+        .signature-line {
+            width: 150px;
+            border-bottom: 1px solid #718096;
+            margin: 0 auto 5px auto;
+        }
+    </style>
+</head>
+<body>
+    <div id="footer">
+        <table>
+            <tr>
+                <td>Iqra Academy CRM - Official Transcript of Record</td>
+                <td style="text-align: right;">Page <pdf:pagenumber /> of <pdf:pagecount /></td>
+            </tr>
+        </table>
+    </div>
+
+    <table class="header-table">
+        <tr>
+            <td>
+                <div class="brand-title">Iqra Academy CRM</div>
+                <div class="brand-subtitle">Academic Operations System</div>
+            </td>
+            <td class="report-meta">
+                <strong>Transcript Issued:</strong> {{ generated_at|date:"Y-m-d H:i" }}<br>
+                <strong>Status:</strong> Official Record
+            </td>
+        </tr>
+    </table>
+
+    <div class="report-title">Official Academic Transcript</div>
+
+    <div class="profile-container">
+        <table class="profile-table">
+            <tr>
+                <td class="profile-label">Student Name:</td>
+                <td class="profile-value">
+                    {{ student.full_name }}
+                    {% if student.student_achievements.exists %}
+                        (Selected: {% for ach in student.student_achievements.all %}{{ ach.exam_type }} {{ ach.year }}{% if not forloop.last %}, {% endif %}{% endfor %})
+                    {% endif %}
+                </td>
+                <td class="profile-label">Roll Number:</td>
+                <td class="profile-value">{{ student.roll_number|default:"-" }}</td>
+            </tr>
+            <tr>
+                <td class="profile-label">Father's Name:</td>
+                <td class="profile-value">{{ student.father_name|default:"-" }}</td>
+                <td class="profile-label">Active Session:</td>
+                <td class="profile-value">{{ session_name }}</td>
+            </tr>
+            <tr>
+                <td class="profile-label">CNIC / B-Form:</td>
+                <td class="profile-value">{{ student.cnic|default:"-" }}</td>
+                <td class="profile-label">Academic Year:</td>
+                <td class="profile-value">{{ active_enrollment.session.academic_year|default:"-" }}</td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="score-box">
+        <div class="score-label">Overall Academic Performance Index Score</div>
+        <div class="score-value">{{ overall_score }}</div>
+    </div>
+
+    <table class="data-table">
+        <thead>
+            <tr>
+                <th style="width: 15%;" class="text-center">Exam Date</th>
+                <th style="width: 30%;">Exam Name</th>
+                <th style="width: 20%;">Subject</th>
+                <th style="width: 15%; text-align: right;">Marks Obtained</th>
+                <th style="width: 10%;" class="text-center">Grade</th>
+                <th style="width: 10%;" class="text-center">Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for r in results %}
+            <tr>
+                <td class="text-center">{{ r.exam.exam_date|date:"Y-m-d"|default:"-" }}</td>
+                <td>{{ r.exam.name }}</td>
+                <td>{{ r.exam.subject.name|default:"General" }}</td>
+                <td class="text-right">
+                    {% if r.is_absent %}
+                        -
+                    {% else %}
+                        {{ r.marks_obtained }}/{{ r.exam.total_marks }} ({{ r.percentage|floatformat:1 }}%)
+                    {% endif %}
+                </td>
+                <td class="text-center"><strong>{{ r.grade|default:"-" }}</strong></td>
+                <td class="text-center">
+                    {% if r.is_absent %}
+                        Absent
+                    {% else %}
+                        Passed
+                    {% endif %}
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="6" class="text-center" style="padding: 20px; " class="text-secondary">
+                    No academic examination results recorded on file.
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <table class="footer-signature">
+        <tr>
+            <td>
+                <div class="signature-line"></div>
+                <strong>Registrar Office</strong>
+            </td>
+            <td>
+                <div class="signature-line"></div>
+                <strong>Principal / Director</strong>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>

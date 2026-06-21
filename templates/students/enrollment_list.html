@@ -1,0 +1,77 @@
+{% extends 'layouts/panel_base.html' %}
+{% load static %}
+{% load student_tags %}
+
+{% block title %}{{ page_title }} - Iqra Academy{% endblock %}
+
+{% block content %}
+<div class="container-fluid px-0">
+    <!-- Page Header -->
+    <div class="p-4 rounded-4 mb-4 card border border-light shadow-sm animate-fade-in">
+        <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
+            <div>
+                <h3 class="fw-bold mb-1">{{ page_title }}</h3>
+                <p class="text-secondary mb-0">Overview of all active and inactive student enrollments across sessions.</p>
+            </div>
+            <div>
+                {% if request.user.is_superuser or request.user.groups.all.0.name in 'Admin,Registrar' or request.user.groups.all.1.name in 'Admin,Registrar' %}
+                <a href="{% student_url 'enrollment_create' %}" class="btn btn-primary px-4 py-2 rounded-3 shadow-sm">
+                    <i class="fa-solid fa-plus me-2"></i> Create Enrollment
+                </a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <!-- Enrollment List -->
+    <div class="card border border-light shadow rounded-4 animate-fade-in stagger-2">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <thead class="table-light">
+                    <tr>
+                        <th class="ps-4">Student</th>
+                        <th>Session</th>
+                        <th>Registration Date</th>
+                        <th>Status</th>
+                        <th class="text-end pe-4">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for enrollment in enrollments %}
+                    <tr>
+                        <td class="ps-4">
+                            <div class="fw-semibold text-primary">{{ enrollment.student.full_name }}</div>
+                            <small class="text-secondary">Roll Number: {{ enrollment.student.roll_number|default:"Not Generated" }}</small>
+                        </td>
+                        <td>{{ enrollment.session.name }}</td>
+                        <td>{{ enrollment.registration_date|date:"d M, Y" }}</td>
+                        <td>
+                            {% if enrollment.status == 'Active' %}
+                            <span class="badge bg-success bg-opacity-10 text-success border border-success-subtle rounded-pill px-3 py-1">Active</span>
+                            {% elif enrollment.status == 'Withdrawn' %}
+                            <span class="badge bg-danger bg-opacity-10 text-danger border border-danger-subtle rounded-pill px-3 py-1">Withdrawn</span>
+                            {% else %}
+                            <span class="badge bg-secondary bg-opacity-10 text-secondary border px-3 py-1 rounded-pill">{{ enrollment.status }}</span>
+                            {% endif %}
+                        </td>
+                        <td class="text-end pe-4">
+                            <a href="{% student_url 'enrollment_detail' enrollment.pk %}" class="btn btn-sm btn-outline-primary rounded-2 px-3">
+                                <i class="fa-solid fa-eye me-1"></i> Details
+                            </a>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="5" class="text-center py-5 text-muted">
+                            <i class="fa-solid fa-graduation-cap fa-3x text-light-subtle mb-3"></i>
+                            <h6 class="fw-bold">No Enrollments Found</h6>
+                            <p class="small text-secondary mb-0">Enroll students in academic sessions to manage their records.</p>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,1350 @@
+{% extends 'layouts/panel_base.html' %}
+{% load static %}
+{% load finance_tags %}
+{% load student_tags %}
+
+{% block title %}{{ student.full_name }} - Profile - Iqra Academy{% endblock %}
+
+{% block content %}
+{# Standalone CSRF for AJAX calls #}
+<input type="hidden"
+       id="globalCsrfToken"
+       value="{{ csrf_token }}">
+
+<div class="container-fluid px-0">
+    <!-- Page Header -->
+    <div class="p-4 rounded-4 mb-4 card border border-soft shadow-sm animate-fade-in">
+        <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
+            <div class="d-flex align-items-center">
+                {% if student.profile_photo %}
+                <img src="{{ student.profile_photo.url }}"
+                     alt="{{ student.full_name }}"
+                     class="rounded-circle border me-3 profile-avatar-lg">
+                {% else %}
+                <div class="navbar-avatar me-3 bg-primary text-white fw-bold profile-avatar-lg">
+                    {{ student.full_name|slice:":2"|upper }}
+                </div>
+                {% endif %}
+                <div>
+                    <div class="d-flex align-items-center gap-2 flex-wrap">
+                        <h3 class="fw-bold mb-0 text-primary">{{ student.full_name }}</h3>
+                        {% if enrollment %}
+                            <span class="badge bg-secondary bg-opacity-10 text-secondary">
+                                {{ enrollment.session.get_session_category_display }}
+                            </span>
+                        {% endif %}
+                        {% if achievements %}
+                            {% for ach in achievements %}
+                                <span class="badge bg-warning border border-warning px-3 py-1 rounded-pill fw-bold">
+                                    <i class="fa-solid fa-trophy text-warning me-1"></i> Selected in {{ ach.exam_type }} {{ ach.year }}
+                                </span>
+                            {% empty %}
+ <tr><td colspan="100%" class="text-muted text-center py-3">No achievements recorded yet.</td></tr>
+ {% endfor %}
+                        {% endif %}
+                    </div>
+                    <p class="text-secondary mb-0">Roll Number: <strong>{{ student.roll_number|default:"Not Enrolled" }}</strong></p>
+                </div>
+            </div>
+            <div class="d-flex gap-2">
+                <a href="{% student_url 'manage_students' %}" class="btn btn-outline-primary px-3 py-2 rounded-3">
+                    <i class="fa-solid fa-arrow-left me-1"></i> Back to Directory
+                </a>
+                {% if request.user.is_superuser or request.user.groups.all.0.name in 'Admin,Registrar' or request.user.groups.all.1.name in 'Admin,Registrar' %}
+                <a href="{% student_url 'student_edit' student.pk %}" class="btn btn-warning px-3 py-2 rounded-3">
+                    <i class="fa-solid fa-pen-to-square me-1"></i> Edit Details
+                </a>
+                {% endif %}
+                {% if request.user.is_superuser or request.user.groups.all.0.name in 'Admin,Registrar,Principal' or request.user.groups.all.1.name in 'Admin,Registrar,Principal' %}
+                <a href="{% student_url 'student_documents' student.pk %}" class="btn btn-outline-info px-3 py-2 rounded-3">
+                    <i class="fa-solid fa-file-invoice me-1"></i> Manage Documents
+                </a>
+                {% endif %}
+                {% if not enrollment %}
+                {% if request.user.is_superuser or request.user.groups.all.0.name in 'Admin,Registrar' or request.user.groups.all.1.name in 'Admin,Registrar' %}
+                <a href="{% student_url 'enrollment_create' %}?student={{ student.pk }}" class="btn btn-success px-3 py-2 rounded-3">
+                    <i class="fa-solid fa-graduation-cap me-1"></i> Enroll Student
+                </a>
+                {% endif %}
+                {% endif %}
+                {% if request.user.is_superuser or request.user.groups.all.0.name == 'Admin' or request.user.groups.all.1.name == 'Admin' or request.user.groups.all.0.name == 'Principal' or request.user.groups.all.1.name == 'Principal' %}
+                <a href="{% url 'reports:student_transcript_pdf' student.pk %}" target="_blank" class="btn btn-outline-danger px-3 py-2 rounded-3">
+                    <i class="fa-solid fa-file-pdf me-1"></i> Transcript PDF
+                </a>
+                {% if enrollment %}
+                <button type="button" class="btn btn-warning px-3 py-2 rounded-3" data-bs-toggle="modal" data-bs-target="#transferModal">
+                    <i class="fa-solid fa-right-left me-1"></i> Transfer Session
+                </button>
+                {% endif %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation Pills Tabs -->
+    <ul class="nav nav-pills nav-fill mb-4 p-1 bg-elevated rounded-3 shadow-sm border border-soft" id="studentDetailTabs" role="tablist">
+        <li class="nav-item" role="presentation">
+            <button class="nav-link active py-2 rounded-3 fw-semibold" id="profile-tab" data-bs-toggle="pill" data-bs-target="#tab-profile" type="button" role="tab">
+                <i class="fa-solid fa-id-card me-1"></i> Profile
+            </button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link py-2 rounded-3 fw-semibold" id="attendance-tab" data-bs-toggle="pill" data-bs-target="#tab-attendance" type="button" role="tab">
+                <i class="fa-solid fa-calendar-check me-1"></i> Attendance
+            </button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link py-2 rounded-3 fw-semibold" id="finance-tab" data-bs-toggle="pill" data-bs-target="#tab-finance" type="button" role="tab">
+                <i class="fa-solid fa-wallet me-1"></i> Finance
+            </button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link py-2 rounded-3 fw-semibold" id="exams-tab" data-bs-toggle="pill" data-bs-target="#tab-exams" type="button" role="tab">
+                <i class="fa-solid fa-file-signature"></i> Exams
+            </button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link py-2 rounded-3 fw-semibold" id="performance-tab" data-bs-toggle="pill" data-bs-target="#tab-performance" type="button" role="tab">
+                <i class="fa-solid fa-chart-line me-1"></i> Academic Performance
+            </button>
+        </li>
+    </ul>
+
+    <!-- Tabs Content -->
+    <div class="tab-content" id="studentDetailTabsContent">
+
+        <!-- PROFILE TAB -->
+        <div class="tab-pane fade show active animate-fade-in" id="tab-profile" role="tabpanel">
+            <div class="row g-4">
+                <div class="col-12 col-md-5 col-lg-4">
+                    <div class="card p-4 border border-soft shadow rounded-4 h-100">
+                        <h5 class="fw-bold border-bottom pb-2 mb-3">
+                            <i class="fa-solid fa-user-tag text-primary me-2"></i> Personal details
+                        </h5>
+                        <div class="mb-3">
+                            <span class="text-secondary small d-block">Father / Guardian Name</span>
+                            <span class="fw-semibold">{{ student.father_name|default:"-" }}</span>
+                        </div>
+                        <div class="mb-3">
+                            <span class="text-secondary small d-block">CNIC / B-Form Number</span>
+                            <span class="fw-semibold">{{ student.cnic|default:"-" }}</span>
+                            {% if request.user.is_superuser or request.user.groups.all.0.name in 'Admin,Registrar,Principal' or request.user.groups.all.1.name in 'Admin,Registrar,Principal' %}
+                                {% if cnic_doc %}
+                                    <div class="mt-1">
+                                        <a href="{{ cnic_doc.file.url }}" target="_blank" class="btn btn-xs btn-outline-info py-1 px-2 small rounded-3 mt-1" style="font-size: 0.75rem;">
+                                            <i class="fa-solid fa-id-card me-1"></i> View CNIC Photo
+                                        </a>
+                                    </div>
+                                {% endif %}
+                            {% endif %}
+                        </div>
+                        <div class="mb-3">
+                            <span class="text-secondary small d-block">Contact Number</span>
+                            <span class="fw-semibold">{{ student.phone|default:"-" }}</span>
+                        </div>
+                        <div class="mb-3">
+                            <span class="text-secondary small d-block">Email Address</span>
+                            <span class="fw-semibold">{{ student.email|default:"-" }}</span>
+                        </div>
+                        <div class="mb-3">
+                            <span class="text-secondary small d-block">Date of Birth</span>
+                            <span class="fw-semibold">{{ student.date_of_birth|date:"d M, Y"|default:"-" }}</span>
+                        </div>
+                        <div class="mb-3">
+                            <span class="text-secondary small d-block">Gender</span>
+                            <span class="fw-semibold">{{ student.gender }}</span>
+                        </div>
+                        <div class="mb-0">
+                            <span class="text-secondary small d-block">Current Status</span>
+                            {% if student.status == "Active" %}
+                                <span class="badge bg-success bg-opacity-10 text-success border border-success-subtle rounded-pill px-3 py-1 mt-1">Active</span>
+                            {% else %}
+                                <span class="badge bg-secondary bg-opacity-10 text-secondary border px-3 py-1 rounded-pill mt-1">{{ student.status }}</span>
+                            {% endif %}
+                        </div>
+                        {% if achievements %}
+                            <hr class="my-3 border-light-subtle">
+                            <h6 class="fw-bold mb-2">
+                                <i class="fa-solid fa-trophy text-warning me-2"></i> Achievements
+                            </h6>
+                            <ul class="list-unstyled mb-0 ps-0">
+                                {% for ach in achievements %}
+                                    <li class="mb-1 small">
+                                        <span class="badge bg-warning font-monospace me-1">{{ ach.exam_type }}</span>
+                                        <strong>{{ ach.year }}</strong>{% if ach.rank %} - Rank: {{ ach.rank }}{% endif %}
+                                    </li>
+                                {% empty %}
+ <tr><td colspan="100%" class="text-muted text-center py-3">No achievements recorded yet.</td></tr>
+ {% endfor %}
+                            </ul>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="col-12 col-md-7 col-lg-8">
+                    <div class="card p-4 border border-soft shadow rounded-4 h-100">
+                        <h5 class="fw-bold border-bottom pb-2 mb-3">
+                            <i class="fa-solid fa-graduation-cap text-primary me-2"></i> Academic Operations Info
+                        </h5>
+                        {% if enrollment %}
+                            <div class="mb-3">
+                                <span class="text-secondary small d-block">Active Course Session</span>
+                                <h5 class="fw-bold mt-1">{{ enrollment.session.name|default:"-" }}</h5>
+                                <p class="text-muted small mb-0">Enrolled on {{ enrollment.registration_date|date:"d M, Y"|default:"-" }}</p>
+                            </div>
+                            <div class="mb-3">
+                                <span class="text-secondary small d-block">Academic Year / Batch</span>
+                                <span class="fw-semibold">{{ enrollment.session.academic_year|default:"Not specified" }}</span>
+                                {% if enrollment.session.batch_number %}
+                                    <span class="badge bg-primary bg-opacity-10 text-primary ms-2">{{ enrollment.session.batch_number }}</span>
+                                {% endif %}
+                            </div>
+                        {% else %}
+                            <div class="text-center py-5 text-muted">
+                                <i class="fa-solid fa-graduation-cap fa-3x mb-3 text-light-subtle"></i>
+                                <h5 class="fw-bold">No Academic Enrollment</h5>
+                                <p class="small text-secondary mb-3">This student is not currently enrolled in any active course sessions.</p>
+                                {% if request.user.is_superuser or request.user.groups.all.0.name in 'Admin,Registrar' or request.user.groups.all.1.name in 'Admin,Registrar' %}
+                                <a href="{% student_url 'enrollment_create' %}?student={{ student.pk }}" class="btn btn-success rounded-pill px-4">
+                                    <i class="fa-solid fa-plus me-1"></i> Enroll Now
+                                </a>
+                                {% endif %}
+                            </div>
+                        {% endif %}
+
+                        <hr class="my-4 border-light-subtle">
+
+                        <h5 class="fw-bold border-bottom pb-2 mb-3">
+                            <i class="fa-solid fa-map-location-dot text-primary me-2"></i> Addresses & Background
+                        </h5>
+                        <div class="mb-3">
+                            <span class="text-secondary small d-block">Last Degree / School</span>
+                            <span class="small d-block fw-semibold">{{ student.last_degree|default:"-" }}</span>
+                            <span class="text-muted small">{{ student.last_institution|default:"-" }}</span>
+                        </div>
+                        <div class="mb-3">
+                            <span class="text-secondary small d-block">Temporary Address</span>
+                            <span class="small">{{ student.address_temporary|default:"-" }}</span>
+                        </div>
+                        <div class="mb-0">
+                            <span class="text-secondary small d-block">Permanent Address</span>
+                            <span class="small">{{ student.address_permanent|default:"-" }}</span>
+                        </div>
+
+                        <hr class="my-4 border-light-subtle">
+
+                        <h5 class="fw-bold border-bottom pb-2 mb-3">
+                            <i class="fas fa-key text-warning me-2"></i> Portal Access
+                        </h5>
+                        {% if student.portal_user %}
+                        <div class="row g-3 align-items-center">
+                            <div class="col-md-3">
+                                <div class="text-muted small mb-1">Username</div>
+                                <div class="fw-semibold font-monospace bg-elevated border border-soft rounded px-2 py-1 d-inline-block">
+                                    {{ student.portal_user.username }}
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="text-muted small mb-1">Email</div>
+                                <div class="fw-semibold small">
+                                    {{ student.portal_user.email|default:"Not set" }}
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="text-muted small mb-1">Status</div>
+                                {% if student.portal_user.is_active %}
+                                    <span class="badge bg-success">Active</span>
+                                {% else %}
+                                    <span class="badge bg-danger">Inactive</span>
+                                {% endif %}
+                            </div>
+                            <div class="col-md-3 text-end">
+                                {% if request.user.is_superuser or request.user.groups.all.0.name == 'Admin' or request.user.groups.all.1.name == 'Admin' or request.user.groups.all.0.name == 'Principal' or request.user.groups.all.1.name == 'Principal' %}
+                                <a href="{% student_url 'student_reset_password' student.pk %}" class="btn btn-sm btn-outline-warning px-3">
+                                    <i class="fas fa-key me-1"></i>Reset Password
+                                </a>
+                                {% endif %}
+                            </div>
+                        </div>
+                        {% else %}
+                        <div class="d-flex align-items-center justify-content-between">
+                            <p class="text-muted mb-0">
+                                <i class="fas fa-info-circle me-1"></i>
+                                No portal account linked to this student.
+                            </p>
+                            {% if request.user.is_superuser or request.user.groups.all.0.name == 'Admin' or request.user.groups.all.1.name == 'Admin' or request.user.groups.all.0.name == 'Principal' or request.user.groups.all.1.name == 'Principal' %}
+                            <a href="{% student_url 'student_create_login' student.pk %}" class="btn btn-sm btn-primary px-3">
+                                <i class="fas fa-user-plus me-1"></i>
+                                Create Portal Login
+                            </a>
+                            {% endif %}
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ATTENDANCE TAB -->
+        <div class="tab-pane fade animate-fade-in" id="tab-attendance" role="tabpanel">
+            {% if enrollment %}
+                <div class="row g-4">
+                    <!-- Donut Chart Card -->
+                    <div class="col-12 col-md-5 col-lg-4">
+                        <div class="card p-4 border border-soft shadow rounded-4 h-100">
+                            <h5 class="fw-bold border-bottom pb-2 mb-3">
+                                <i class="fa-solid fa-chart-pie text-primary me-2"></i> Distribution
+                            </h5>
+                            <div class="chart-container-donut">
+                                <canvas id="attendanceDonutChart"
+                                        data-present="{{ attendance_counts.Present|default:0 }}"
+                                        data-absent="{{ attendance_counts.Absent|default:0 }}"
+                                        data-late="{{ attendance_counts.Late|default:0 }}"
+                                        data-excused="{{ attendance_counts.Excused|default:0 }}"></canvas>
+                            </div>
+                            <div class="text-center mt-3">
+                                <span class="fw-bold small">Overall Rate: {{ attendance_percentage|default:"100.00" }}%</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Records List -->
+                    <div class="col-12 col-md-7 col-lg-8">
+                        <div class="card p-4 border border-soft shadow rounded-4 h-100">
+                            <h5 class="fw-bold border-bottom pb-2 mb-3">
+                                <i class="fa-solid fa-calendar-days text-primary me-2"></i> Attendance Log History
+                            </h5>
+                            <div class="table-responsive border rounded-3 mb-0 table-scroll-container">
+                                <table class="table table-hover align-middle mb-0 text-nowrap small">
+                                    <thead class="sticky-top">
+                                        <tr>
+                                            <th class="ps-3">Date</th>
+                                            <th>Status</th>
+                                            <th class="pe-3">Remarks</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for rec in attendance_records %}
+                                            <tr>
+                                                <td class="ps-3 font-monospace">{{ rec.date|date:"Y-m-d" }}</td>
+                                                <td>
+                                                    {% if rec.status == "Present" %}
+                                                        <span class="badge bg-success bg-opacity-10 text-success rounded-pill px-2 py-1">Present</span>
+                                                    {% elif rec.status == "Late" %}
+                                                        <span class="badge bg-warning bg-opacity-10 text-warning rounded-pill px-2 py-1">Late</span>
+                                                    {% elif rec.status == "Absent" %}
+                                                        <span class="badge bg-danger bg-opacity-10 text-danger rounded-pill px-2 py-1">Absent</span>
+                                                    {% else %}
+                                                        <span class="badge bg-secondary bg-opacity-10 text-secondary rounded-pill px-2 py-1">{{ rec.status }}</span>
+                                                    {% endif %}
+                                                </td>
+                                                <td class="pe-3 text-secondary">{{ rec.remarks|default:"-" }}</td>
+                                            </tr>
+                                        {% empty %}
+                                            <tr>
+                                                <td colspan="3" class="text-center py-4 text-muted">No attendance logs registered for this session.</td>
+                                            </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% else %}
+                <div class="card text-center py-5">
+                    <i class="fa-solid fa-calendar-times text-muted mb-3 fa-3x"></i>
+                    <h5 class="fw-bold">No Active Enrollment</h5>
+                    <p class="text-secondary small">Cannot load attendance analytics without active session.</p>
+                </div>
+            {% endif %}
+        </div>
+
+        <!-- FINANCE TAB -->
+        <div class="tab-pane fade animate-fade-in" id="tab-finance" role="tabpanel">
+            {% if enrollment and ledger %}
+                <div class="card p-4 border border-soft shadow rounded-4 mb-4">
+                    <h5 class="fw-bold border-bottom pb-2 mb-3">
+                        <i class="fa-solid fa-wallet text-primary me-2"></i> Fee Ledger Summary
+                    </h5>
+                    <div class="row g-3">
+                        <div class="col-6 col-md-3">
+                            <div class="p-3 border rounded-3 bg-elevated">
+                                <span class="text-secondary small d-block">Total Payable</span>
+                                <h6 class="fw-bold mb-0 mt-1">{{ ledger.total_payable|format_currency }}</h6>
+                            </div>
+                        </div>
+                        <div class="col-6 col-md-3">
+                            <div class="p-3 border rounded-3 bg-elevated">
+                                <span class="text-secondary small d-block">Paid Tuition</span>
+                                <h6 class="fw-bold text-success mb-0 mt-1">{{ ledger.total_paid|format_currency }}</h6>
+                            </div>
+                        </div>
+                        <div class="col-6 col-md-3">
+                            <div class="p-3 border rounded-3 bg-elevated">
+                                <span class="text-secondary small d-block">Refunded Fees</span>
+                                <h6 class="fw-bold text-warning mb-0 mt-1">{{ ledger.total_refunded|format_currency }}</h6>
+                            </div>
+                        </div>
+                        <div class="col-6 col-md-3">
+                            <div class="p-3 border rounded-3 {% if ledger.outstanding_balance > 0 %}bg-danger bg-opacity-10 border-danger-subtle{% else %}bg-success bg-opacity-10 border-success-subtle{% endif %}">
+                                <span class="text-secondary small d-block">Outstanding Dues</span>
+                                <h6 class="fw-bold {% if ledger.outstanding_balance > 0 %}text-danger{% else %}text-success{% endif %} mb-0 mt-1">{{ ledger.outstanding_balance|format_currency }}</h6>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+<!-- CSRF Token for AJAX (standalone, outside form) -->
+<div style="display:none">{% csrf_token %}</div>
+
+<!-- Fee Summary Card -->
+<div class="card p-4 mb-4">
+  <div class="d-flex justify-content-between
+              align-items-center mb-3">
+    <h6 class="fw-bold mb-0">
+      <i class="fas fa-money-bill-wave me-2
+         text-success"></i>
+      Fee & Installments
+    </h6>
+  </div>
+
+  <!-- Summary Stats -->
+  <div class="row g-3 mb-4">
+    <div class="col-6 col-md-3">
+      <div class="rounded-3 p-3 text-center fee-box-success">
+        <div class="text-muted small">Total Fee</div>
+        <div class="fw-bold">
+          PKR {{ fee_summary.total_amount|default:"0"|floatformat:0 }}
+        </div>
+      </div>
+    </div>
+    <div class="col-6 col-md-3">
+      <div class="rounded-3 p-3 text-center fee-box-success">
+        <div class="text-muted small">Paid</div>
+        <div class="fw-bold text-success">
+          PKR {{ fee_summary.total_paid|default:"0"|floatformat:0 }}
+        </div>
+      </div>
+    </div>
+    <div class="col-6 col-md-3">
+      <div class="rounded-3 p-3 text-center {% if fee_summary.total_outstanding > 0 %}fee-box-danger{% else %}fee-box-success{% endif %}">
+        <div class="text-muted small">Outstanding</div>
+        <div class="fw-bold
+          {% if fee_summary.total_outstanding > 0 %}
+          text-danger
+          {% else %}
+          text-success
+          {% endif %}">
+          PKR {{ fee_summary.total_outstanding|default:"0"|floatformat:0 }}
+        </div>
+      </div>
+    </div>
+    <div class="col-6 col-md-3">
+      <div class="rounded-3 p-3 text-center fee-box-primary">
+        <div class="text-muted small">Complete</div>
+        <div class="fw-bold text-primary">
+          {{ fee_summary.completion_percentage|default:"0" }}%
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Progress Bar -->
+  <div class="progress mb-4 progress-height-sm">
+    <div class="progress-bar bg-success"
+         role="progressbar"
+         data-progress="{{ fee_summary.completion_percentage|default:0 }}"
+         aria-valuenow="{{ fee_summary.completion_percentage|default:0 }}"
+         aria-valuemin="0"
+         aria-valuemax="100">
+    </div>
+  </div>
+
+  <!-- Installments Table -->
+  {% if fee_summary.installments %}
+  <div class="table-responsive">
+    <table class="table table-sm align-middle mb-0">
+      <thead>
+        <tr>
+          <th class="ps-3">#</th>
+          <th>Due Date</th>
+          <th>Amount</th>
+          <th>Paid</th>
+          <th>Remaining</th>
+          <th>Status</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for inst in fee_summary.installments %}
+        <tr>
+          <td class="ps-3 fw-semibold text-muted">
+            {{ inst.installment_number }}
+          </td>
+          <td>
+            {{ inst.due_date|date:"d M Y"|default:"-" }}
+          </td>
+          <td>
+            PKR {{ inst.amount|floatformat:0 }}
+          </td>
+          <td class="text-success">
+            PKR {{ inst.paid_amount|floatformat:0 }}
+          </td>
+          <td class="{% if inst.amount > inst.paid_amount %}text-danger{% else %}text-success{% endif %}">
+            PKR {{ inst.amount|add:0|floatformat:0 }}
+          </td>
+          <td>
+            {% if inst.status == "paid" %}
+              <span class="badge bg-success">Paid</span>
+            {% elif inst.status == "overdue" %}
+              <span class="badge bg-danger">Overdue</span>
+            {% elif inst.status == "waived" %}
+              <span class="badge bg-secondary">Waived</span>
+            {% else %}
+              <span class="badge bg-warning">
+                Pending
+              </span>
+            {% endif %}
+          </td>
+          <td>
+            {% if inst.status != "paid" and inst.status != "waived" %}
+            <button
+                type="button"
+                class="btn btn-sm btn-success px-3 pay-btn"
+                data-inst-id="{{ inst.pk }}"
+                data-inst-amount="{{ inst.amount|default:0|floatformat:0 }}"
+                data-inst-paid="{{ inst.paid_amount|default:0|floatformat:0 }}"
+                data-inst-number="{{ inst.installment_number|default:1 }}"
+                data-pay-url="{% finance_url 'installment_pay' inst.pk %}">
+                <i class="fas fa-dollar-sign me-1"></i>Pay
+            </button>
+            {% else %}
+            <span class="text-muted small">-</span>
+            {% endif %}
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% else %}
+  <div class="text-center py-4 text-muted">
+    <i class="fas fa-info-circle fa-2x mb-2
+       d-block opacity-40"></i>
+    <div>No fee plan configured for this enrollment.</div>
+    <small>
+      Edit the student to add fee installments.
+    </small>
+  </div>
+  {% endif %}
+</div>
+
+
+
+                <div class="card p-4 border border-soft shadow rounded-4">
+                    <h5 class="fw-bold mb-3">Transaction History</h5>
+                    <div class="table-responsive border rounded-3 mb-0">
+                        <table class="table table-hover align-middle mb-0 text-nowrap small">
+                            <thead>
+                                <tr>
+                                    <th class="ps-3">Date</th>
+                                    <th>Amount</th>
+                                    <th>Method</th>
+                                    <th>Receipt No.</th>
+                                    <th>Purpose</th>
+                                    <th class="pe-3">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for payment in payments %}
+                                <tr>
+                                    <td class="ps-3">{{ payment.date|date:"d M, Y" }}</td>
+                                    <td class="fw-bold">{{ payment.amount|format_currency }}</td>
+                                    <td>{{ payment.method|upper }}</td>
+                                    <td>#{{ payment.receipt|default:"-" }}</td>
+                                    <td>
+                                        {% if payment.is_late_fee %}
+                                            <span class="text-danger"><i class="fa-solid fa-clock me-1"></i> Late Penalty</span>
+                                        {% else %}
+                                            <span>Tuition Fee</span>
+                                        {% endif %}
+                                    </td>
+                                    <td class="pe-3">
+                                        <span class="badge bg-success bg-opacity-10 text-success border border-success-subtle rounded-pill">Confirmed</span>
+                                    </td>
+                                </tr>
+                                {% empty %}
+                                <tr>
+                                    <td colspan="6" class="text-center py-4 text-muted">No confirmed transactions found.</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            {% else %}
+                <div class="card text-center py-5">
+                    <i class="fa-solid fa-credit-card text-muted mb-3 fa-3x"></i>
+                    <h5 class="fw-bold">No Active Enrollment</h5>
+                    <p class="text-secondary small">Cannot load financial ledgers without active session.</p>
+                </div>
+            {% endif %}
+        </div>
+
+        <!-- EXAMS TAB -->
+        <div class="tab-pane fade animate-fade-in" id="tab-exams" role="tabpanel">
+            {% if enrollment %}
+                <div class="row g-4">
+                    <!-- Line Chart Card -->
+                    <div class="col-12 col-md-5 col-lg-4">
+                        <div class="card p-4 border border-soft shadow rounded-4 h-100">
+                            <h5 class="fw-bold border-bottom pb-2 mb-3">
+                                <i class="fa-solid fa-chart-line text-primary me-2"></i> Progress Trend
+                            </h5>
+                            <div class="chart-container-lg">
+                                <canvas id="examProgressChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Results List -->
+                    <div class="col-12 col-md-7 col-lg-8">
+                        <div class="card p-4 border border-soft shadow rounded-4 h-100">
+                            <h5 class="fw-bold border-bottom pb-2 mb-3">
+                                <i class="fa-solid fa-file-signature text-primary me-2"></i> Assessment & Exam Results
+                            </h5>
+                            <div class="table-responsive border rounded-3 mb-0 table-scroll-container">
+                                <table class="table table-hover align-middle mb-0 text-nowrap small" id="examResultsTable">
+                                    <thead class="sticky-top">
+                                        <tr>
+                                            <th class="ps-3">Exam Name</th>
+                                            <th>Subject</th>
+                                            <th>Marks Obtained</th>
+                                            <th>Percentage</th>
+                                            <th>Grade</th>
+                                            <th class="pe-3">Remarks</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for res in exam_results %}
+                                            <tr>
+                                                <td class="ps-3 fw-bold">{{ res.exam.name }}</td>
+                                                <td>{{ res.exam.subject.name|default:"Global" }}</td>
+                                                <td>{{ res.marks_obtained }} / {{ res.exam.total_marks }}</td>
+                                                <td class="font-monospace text-primary fw-semibold">{{ res.percentage }}%</td>
+                                                <td>
+                                                    <span class="badge bg-primary bg-opacity-10 text-primary font-monospace">{{ res.grade|default:"-" }}</span>
+                                                </td>
+                                                <td class="pe-3 text-secondary">{{ res.remarks|default:"-" }}</td>
+                                            </tr>
+                                        {% empty %}
+                                            <tr>
+                                                <td colspan="6" class="text-center py-4 text-muted">No exam results published for this student.</td>
+                                            </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% else %}
+                <div class="card text-center py-5">
+                    <i class="fa-solid fa-file-signature text-muted mb-3 fa-3x"></i>
+                    <h5 class="fw-bold">No Active Enrollment</h5>
+                    <p class="text-secondary small">Cannot load academic exam performance without active session.</p>
+                </div>
+            {% endif %}
+        </div>
+
+        <!-- PERFORMANCE TAB -->
+        <div class="tab-pane fade animate-fade-in" id="tab-performance" role="tabpanel">
+            {% if enrollment %}
+                <div class="row g-4">
+                    <!-- Gauge Score -->
+                    <div class="col-12 col-md-5 col-lg-4">
+                        <div class="card p-4 border border-soft shadow rounded-4 text-center d-flex flex-column justify-content-center align-items-center h-100">
+                            <span class="text-secondary small fw-medium mb-2">Academic Performance Score</span>
+                            {% with final_score=academic_score|default:"0.00"|add:"0" %}
+                            <div class="d-flex align-items-center justify-content-center bg-primary bg-opacity-10 text-primary rounded-circle mb-3 shadow-sm performance-score-circle">
+                                <h2 class="fw-bold mb-0 font-monospace">{{ final_score }}%</h2>
+                            </div>
+                            <span class="badge {% if final_score >= 80 %}bg-success{% elif final_score >= 60 %}bg-warning{% else %}bg-danger{% endif %} bg-opacity-10 {% if final_score >= 80 %}text-success{% elif final_score >= 60 %}text-warning{% else %}text-danger{% endif %} px-3 py-2 rounded-pill fw-semibold">
+                                <i class="fa-solid {% if final_score >= 80 %}fa-trophy{% elif final_score >= 60 %}fa-medal{% else %}fa-exclamation-triangle{% endif %} me-1"></i>
+                                {% if final_score >= 80 %}Excellent{% elif final_score >= 60 %}Satisfactory{% else %}Risk Flagged{% endif %}
+                            </span>
+                            {% endwith %}
+                            {% if gpa is not None %}
+                            <div class="mt-3 pt-3 border-top w-100 text-center">
+                                <span class="text-secondary small fw-medium">Weighted GPA</span>
+                                <h4 class="fw-bold text-success mt-1 mb-0">{{ gpa }}</h4>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <!-- Components breakdown -->
+                    <div class="col-12 col-md-7 col-lg-8">
+                        <div class="card p-4 border border-soft shadow rounded-4 h-100">
+                            <h5 class="fw-bold border-bottom pb-2 mb-3">
+                                <i class="fa-solid fa-list-check text-primary me-2"></i> Scoring Components (Weighted)
+                            </h5>
+
+                            <!-- Component 1: Attendance -->
+                            <div class="mb-4">
+                                <div class="d-flex justify-content-between align-items-center mb-1">
+                                    <span class="fw-semibold small">Attendance (30% weight)</span>
+                                    <span class="font-monospace text-secondary small">{{ attendance_percentage|default:"100.00" }}%</span>
+                                </div>
+                                <div class="progress progress-height-md">
+                                    <div class="progress-bar bg-success" role="progressbar" data-progress="{{ attendance_percentage|default:'100.00' }}"></div>
+                                </div>
+                                <span class="text-muted small d-block mt-1">Calculates attendance rate in the active course.</span>
+                            </div>
+
+                            <!-- Component 2: Exams -->
+                            <div class="mb-4">
+                                <div class="d-flex justify-content-between align-items-center mb-1">
+                                    <span class="fw-semibold small">Exams & Tests Average (50% weight)</span>
+                                    <span class="font-monospace text-secondary small" id="avgExamLabel">100.00%</span>
+                                </div>
+                                <div class="progress progress-height-md">
+                                    <div class="progress-bar bg-primary" role="progressbar" id="avgExamBar" data-progress="100"></div>
+                                </div>
+                                <span class="text-muted small d-block mt-1">Computes simple average across all published assessments.</span>
+                            </div>
+
+                            <!-- Component 3: Finance compliance -->
+                            <div class="mb-0">
+                                <div class="d-flex justify-content-between align-items-center mb-1">
+                                    <span class="fw-semibold small">Fee Compliance (20% weight)</span>
+                                    <span class="font-monospace text-secondary small" id="feeComplianceLabel">100.00%</span>
+                                </div>
+                                <div class="progress progress-height-md">
+                                    <div class="progress-bar bg-info" role="progressbar" id="feeComplianceBar" data-progress="{{ fee_summary.completion_percentage|default:'100.00' }}"></div>
+                                </div>
+                                <span class="text-muted small d-block mt-1">Paid tuition divided by total payable tuition.</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% else %}
+                <div class="card text-center py-5">
+                    <i class="fa-solid fa-chart-line text-muted mb-3 fa-3x"></i>
+                    <h5 class="fw-bold">No Active Enrollment</h5>
+                    <p class="text-secondary small">Cannot compile academic operation score metrics without active session.</p>
+                </div>
+            {% endif %}
+        </div>
+
+    </div>
+</div>
+
+<!-- TRANSFER MODAL -->
+{% if enrollment %}
+<div class="modal fade" id="transferModal" tabindex="-1" aria-labelledby="transferModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 shadow-lg rounded-4">
+            <form method="POST" action="{% url 'admin_panel:students:enrollment_transfer' enrollment.id %}">
+                {% csrf_token %}
+                <div class="modal-header border-0 p-4">
+                    <h5 class="modal-title fw-bold" id="transferModalLabel">Transfer Session</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body p-4">
+                    <p class="text-secondary small mb-3">
+                        Transfer <strong>{{ student.full_name }}</strong> to a different session. This will withdraw the student from their current session and register them in the selected target session. Their roll number will be regenerated automatically.
+                    </p>
+                    <div class="mb-3">
+                        <span class="text-secondary small d-block">Current Session</span>
+                        <span class="fw-bold">{{ enrollment.session.name|default:"-" }}</span>
+                    </div>
+                    <div class="mb-0">
+                        <label for="new_session_id" class="form-label small fw-semibold text-secondary">Target Session</label>
+                        <select class="form-select rounded-3" id="new_session_id" name="new_session_id" required>
+                            <option value="" disabled selected>Select Target Session</option>
+                            {% for sess in active_sessions %}
+                                <option value="{{ sess.id }}">{{ sess.name }} ({{ sess.get_session_category_display }})</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer border-0 p-4 pt-0">
+                    <button type="button" class="btn btn-outline-secondary rounded-pill px-4" data-bs-toggle="modal" data-bs-target="#transferModal">Cancel</button>
+                    <button type="submit" class="btn btn-warning rounded-pill px-4 fw-semibold shadow-sm">
+                        <i class="fa-solid fa-right-left me-1"></i> Transfer Student
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+<!-- SCRIPT INITIALIZATIONS -->
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // Attendance Donut Chart
+        const attCanvas = document.getElementById("attendanceDonutChart");
+        if (attCanvas) {
+            const ctx = attCanvas.getContext("2d");
+            const present = parseInt(attCanvas.getAttribute("data-present")) || 0;
+            const absent = parseInt(attCanvas.getAttribute("data-absent")) || 0;
+            const late = parseInt(attCanvas.getAttribute("data-late")) || 0;
+            const excused = parseInt(attCanvas.getAttribute("data-excused")) || 0;
+
+            // Get colors dynamically from the document style tokens to prevent hardcoded colors
+            const style = getComputedStyle(document.documentElement);
+            const successColor = style.getPropertyValue('--success').trim() || '#10b981';
+            const dangerColor = style.getPropertyValue('--danger').trim() || '#ef4444';
+            const warningColor = style.getPropertyValue('--warning').trim() || '#f59e0b';
+            const infoColor = style.getPropertyValue('--info').trim() || '#3b82f6';
+            const mutedColor = style.getPropertyValue('--text-muted').trim() || 'rgba(108,117,125,0.1)';
+
+            // Render donut only if there is data, else show dummy
+            const dataVals = (present + absent + late + excused === 0) ? [1, 0, 0, 0] : [present, absent, late, excused];
+            const bgColors = (present + absent + late + excused === 0)
+                ? [mutedColor]
+                : [successColor, dangerColor, warningColor, infoColor];
+            const labels = (present + absent + late + excused === 0) ? ["No Logs"] : ["Present", "Absent", "Late", "Excused"];
+
+            new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        data: dataVals,
+                        backgroundColor: bgColors,
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                boxWidth: 12,
+                                padding: 10,
+                                font: {
+                                    size: 11
+                                }
+                            }
+                        }
+                    },
+                    cutout: '65%'
+                }
+            });
+        }
+
+        // Exam Progress Chart (Line)
+        const examCanvas = document.getElementById("examProgressChart");
+        if (examCanvas) {
+            const ctx = examCanvas.getContext("2d");
+
+            // Gather exam labels and percentages dynamically from the table rows to ensure chronological sorting
+            const labels = [];
+            const dataVals = [];
+
+            const rows = document.querySelectorAll("#examResultsTable tbody tr");
+            rows.forEach(row => {
+                const nameCol = row.querySelector("td:first-child");
+                const pctCol = row.querySelector("td:nth-child(4)");
+                if (nameCol && pctCol) {
+                    const name = nameCol.textContent.trim();
+                    const pct = parseFloat(pctCol.textContent.replace("%", "").trim());
+                    if (name && !isNaN(pct)) {
+                        labels.push(name);
+                        dataVals.push(pct);
+                    }
+                }
+            });
+
+            // Fallback for empty state
+            const finalLabels = (labels.length === 0) ? ["No Exams"] : labels;
+            const finalData = (labels.length === 0) ? [100] : dataVals;
+
+            const style = getComputedStyle(document.documentElement);
+            const goldColor = style.getPropertyValue('--accent-primary').trim() || '#C9A227';
+            const goldGlow = style.getPropertyValue('--accent-glow-sm').trim() || 'rgba(201, 162, 39, 0.12)';
+            const cardBg = style.getPropertyValue('--bg-card').trim() || '#111720';
+
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: finalLabels,
+                    datasets: [{
+                        label: 'Score Percentage',
+                        data: finalData,
+                        fill: true,
+                        backgroundColor: goldGlow,
+                        borderColor: goldColor,
+                        borderWidth: 2,
+                        tension: 0.3,
+                        pointBackgroundColor: goldColor,
+                        pointBorderColor: cardBg,
+                        pointBorderWidth: 2,
+                        pointRadius: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        y: {
+                            min: 0,
+                            max: 100,
+                            ticks: {
+                                callback: function(value) {
+                                    return value + "%";
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
+            // Update average exam score in Component breakdown tab
+            if (dataVals.length > 0) {
+                const avg = dataVals.reduce((a, b) => a + b, 0) / dataVals.length;
+                const roundedAvg = avg.toFixed(2);
+                const bar = document.getElementById("avgExamBar");
+                const label = document.getElementById("avgExamLabel");
+                if (bar && label) {
+                    bar.style.width = roundedAvg + "%";
+                    label.textContent = roundedAvg + "%";
+                }
+            }
+        }
+
+    });
+</script>
+
+<div class="modal fade" id="sharedPayModal" tabindex="-1"
+     data-bs-backdrop="static" data-bs-keyboard="false"
+     aria-labelledby="sharedPayLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 shadow-lg">
+            <div class="modal-header modal-header-success border-0 rounded-top-3">
+                <h6 class="modal-title fw-bold" id="sharedPayLabel">
+                    <i class="fas fa-money-bill-wave me-2"></i>
+                    Record Payment
+                    <span id="spInstNum" class="ms-1 small opacity-75"></span>
+                </h6>
+                <button type="button" class="btn-close"
+                        id="spCloseBtn" aria-label="Close"></button>
+            </div>
+            <div class="modal-body px-4 pt-4 pb-2">
+                <div class="rounded-3 p-3 mb-3 text-center fee-box-success">
+                    <div class="row g-0">
+                        <div class="col-4">
+                            <div class="text-muted small">Total</div>
+                            <div class="fw-bold small" id="spTotal"></div>
+                        </div>
+                        <div class="col-4">
+                            <div class="text-muted small">Paid</div>
+                            <div class="fw-bold small text-success"
+                                 id="spPaid"></div>
+                        </div>
+                        <div class="col-4">
+                            <div class="text-muted small">Due</div>
+                            <div class="fw-bold small text-danger"
+                                 id="spDue"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label fw-semibold">
+                        Amount (PKR) <span class="text-danger">*</span>
+                    </label>
+                    <input type="number" class="form-control form-control-lg"
+                           id="spAmount" placeholder="Enter amount"
+                           min="1" step="1" autocomplete="off">
+                    <div class="form-text" id="spMaxHint"></div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label fw-semibold">Date</label>
+                    <input type="date" class="form-control" id="spDate">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label fw-semibold">Method</label>
+                    <select class="form-select" id="spMethod">
+                        <option value="Cash">Cash</option>
+                        <option value="Bank Transfer">Bank Transfer</option>
+                        <option value="Online">Online Transfer</option>
+                        <option value="Cheque">Cheque</option>
+                        <option value="EasyPaisa">EasyPaisa</option>
+                        <option value="JazzCash">JazzCash</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label fw-semibold">
+                        Reference
+                        <span class="text-muted fw-normal small">(optional)</span>
+                    </label>
+                    <input type="text" class="form-control" id="spRef"
+                           placeholder="e.g. TRX-12345" autocomplete="off">
+                </div>
+                <div id="spError"
+                     class="alert alert-danger py-2 small d-none"></div>
+            </div>
+            <div class="modal-footer border-0 px-4 pb-4 pt-2">
+                <button type="button"
+                        class="btn btn-outline-secondary px-4"
+                        id="spCancelBtn">Cancel</button>
+                <button type="button"
+                        class="btn btn-success px-5 fw-semibold"
+                        id="spConfirmBtn">
+                    <i class="fas fa-check me-1"></i>Confirm Payment
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<style>
+/* Force modal above all layout stacking contexts */
+#sharedPayModal { z-index: 1070 !important; }
+.modal-backdrop { z-index: 1060 !important; }
+
+/* Custom layout overrides for student profile view */
+body.crm-app .profile-avatar-lg {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    font-size: 2rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+body.crm-app .chart-container-donut {
+    height: 250px;
+    position: relative;
+}
+body.crm-app .chart-container-lg {
+    height: 250px;
+    position: relative;
+}
+body.crm-app .table-scroll-container {
+    max-height: 350px;
+}
+body.crm-app .fee-box-success {
+    background: var(--success-bg);
+    border: 1px solid var(--success-border);
+}
+body.crm-app .fee-box-danger {
+    background: var(--danger-bg);
+    border: 1px solid var(--danger-border);
+}
+body.crm-app .fee-box-primary {
+    background: var(--accent-glow-sm);
+    border: 1px solid var(--border-accent);
+}
+body.crm-app .progress-height-sm {
+    height: 8px;
+}
+body.crm-app .progress-height-md {
+    height: 10px;
+}
+body.crm-app .performance-score-circle {
+    width: 130px;
+    height: 130px;
+    font-size: 2.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+body.crm-app .shared-pay-toast {
+    z-index: 99999;
+    min-width: 260px;
+    max-width: 380px;
+    animation: spFadeIn .3s ease;
+}
+body.crm-app .modal-header-success {
+    background: var(--success-bg);
+    border-bottom: 1px solid var(--success-border) !important;
+    color: var(--success) !important;
+}
+</style>
+<script>
+(function () {
+    'use strict';
+
+    var _payUrl  = null;
+    var _bsModal = null;
+
+    /* ── helpers ─────────────────────────────────── */
+    function el(id)  { return document.getElementById(id); }
+
+    function pkr(n) {
+        return 'PKR ' + (parseFloat(n) || 0)
+            .toLocaleString('en-PK',
+                {maximumFractionDigits: 0});
+    }
+
+    function todayISO() {
+        var d = new Date();
+        return d.getFullYear() + '-' +
+            String(d.getMonth() + 1).padStart(2, '0') + '-' +
+            String(d.getDate()).padStart(2, '0');
+    }
+
+    function getCsrf() {
+        var t = el('globalCsrfToken');
+        if (t && t.value) return t.value;
+        var i = document.querySelector(
+            'input[name="csrfmiddlewaretoken"]');
+        if (i) return i.value;
+        var m = document.cookie.match(/csrftoken=([^;]+)/);
+        return m ? m[1] : '';
+    }
+
+    function showErr(msg) {
+        var e = el('spError');
+        if (e) { e.textContent = msg;
+                 e.classList.remove('d-none'); }
+    }
+
+    function hideErr() {
+        var e = el('spError');
+        if (e) e.classList.add('d-none');
+    }
+
+    function toast(msg, type) {
+        var t = document.createElement('div');
+        t.className =
+            'alert alert-' + (type || 'success') +
+            ' position-fixed bottom-0 end-0 m-4 shadow-lg rounded-3 ' +
+            'd-flex align-items-center gap-2 shared-pay-toast';
+        t.innerHTML =
+            '<i class="fas fa-check-circle flex-shrink-0"></i>' +
+            '<span>' + msg + '</span>';
+        document.body.appendChild(t);
+        setTimeout(function () {
+            if (t.parentNode) t.parentNode.removeChild(t);
+        }, 3500);
+    }
+
+    /* ── boot ────────────────────────────────────── */
+    document.addEventListener('DOMContentLoaded', function () {
+
+        /* 1. Teleport modal to <body> — breaks it out of
+              any CSS stacking context (transform, filter,
+              will-change) that traps it behind the backdrop */
+        setTimeout(function() {
+            var modal = el('sharedPayModal');
+            if (modal && modal.parentNode !== document.body) {
+                document.body.appendChild(modal);
+                console.log('Modal teleported to body');
+            }
+        }, 100);
+
+        /* 2. Bootstrap modal instance */
+        var modal = el('sharedPayModal');
+        if (typeof bootstrap !== 'undefined' && modal) {
+            _bsModal = new bootstrap.Modal(modal, {
+                backdrop: 'static',
+                keyboard: false
+            });
+        }
+
+        /* 3. Wire close buttons */
+        function closeModal() {
+            if (_bsModal) _bsModal.hide();
+        }
+        var cb = el('spCloseBtn');
+        var cc = el('spCancelBtn');
+        if (cb) cb.addEventListener('click', closeModal);
+        if (cc) cc.addEventListener('click', closeModal);
+
+        /* 4. Wire each Pay button on the page */
+        document.querySelectorAll('.pay-btn')
+            .forEach(function (btn) {
+                btn.addEventListener('click', function () {
+                    openPayModal(
+                        btn.dataset.payUrl,
+                        btn.dataset.instAmount,
+                        btn.dataset.instPaid,
+                        btn.dataset.instNumber
+                    );
+                });
+            });
+
+        /* 5. Wire Confirm button */
+        var cfm = el('spConfirmBtn');
+        if (cfm) cfm.addEventListener('click', submitPay);
+    });
+
+    /* ── open modal ──────────────────────────────── */
+    function openPayModal(payUrl, total, paid, instNum) {
+        _payUrl = payUrl;
+
+        var tot = parseFloat(total) || 0;
+        var pid = parseFloat(paid)  || 0;
+        var due = Math.max(0, tot - pid);
+
+        el('spInstNum').textContent =
+            instNum ? ' — Installment #' + instNum : '';
+        el('spTotal').textContent = pkr(tot);
+        el('spPaid').textContent  = pkr(pid);
+        el('spDue').textContent   = pkr(due);
+
+        var amtEl = el('spAmount');
+        amtEl.value = due > 0 ? due : '';
+        amtEl.max   = due > 0 ? due : tot;
+        el('spMaxHint').textContent = 'Maximum: ' + pkr(due > 0 ? due : tot);
+
+        el('spDate').value   = todayISO();
+        el('spMethod').value = 'Cash';
+        el('spRef').value    = '';
+        hideErr();
+
+        var btn = el('spConfirmBtn');
+        btn.disabled  = false;
+        btn.innerHTML = '<i class="fas fa-check me-1"></i>Confirm Payment';
+
+        if (_bsModal) {
+            _bsModal.show();
+        } else {
+            /* Bootstrap not ready — show manually */
+            var m = el('sharedPayModal');
+            m.style.display = 'block';
+            m.classList.add('show');
+            document.body.classList.add('modal-open');
+            var bd = document.createElement('div');
+            bd.className = 'modal-backdrop fade show';
+            bd.id = 'spBackdrop';
+            document.body.appendChild(bd);
+        }
+
+        /* Focus amount input after animation */
+        setTimeout(function () {
+            var a = el('spAmount');
+            if (a) { a.focus(); a.select(); }
+        }, 350);
+    }
+
+    /* ── submit payment ──────────────────────────── */
+    function submitPay() {
+        var amtEl = el('spAmount');
+        var amt   = parseFloat(amtEl.value);
+
+        if (!amt || amt <= 0 || isNaN(amt)) {
+            amtEl.classList.add('is-invalid');
+            showErr('Please enter a valid amount greater than 0.');
+            amtEl.focus();
+            return;
+        }
+        amtEl.classList.remove('is-invalid');
+        hideErr();
+
+        var csrf = getCsrf();
+        if (!csrf) {
+            showErr(
+                'Security token not found. ' +
+                'Please refresh the page and try again.'
+            );
+            return;
+        }
+
+        if (!_payUrl) {
+            showErr('Payment URL missing. Please refresh.');
+            return;
+        }
+
+        /* Disable button */
+        var btn = el('spConfirmBtn');
+        btn.disabled  = true;
+        btn.innerHTML =
+            '<span class="spinner-border spinner-border-sm me-2"' +
+            ' role="status"></span>Processing...';
+
+        /* Build payload */
+        var payload = new URLSearchParams();
+        payload.append('amount',           amtEl.value);
+        payload.append('payment_date',     el('spDate').value || todayISO());
+        payload.append('payment_method',   el('spMethod').value || 'Cash');
+        payload.append('reference_number', el('spRef').value  || '');
+
+        fetch(_payUrl, {
+            method:  'POST',
+            headers: {
+                'Content-Type':     'application/x-www-form-urlencoded',
+                'X-CSRFToken':      csrf,
+                'X-Requested-With': 'XMLHttpRequest'
+            },
+            body: payload.toString()
+        })
+        .then(function (r) {
+            /* Redirect = success (some views redirect on success) */
+            if (r.redirected || r.status === 302) {
+                return { success: true };
+            }
+            var ct = r.headers.get('Content-Type') || '';
+            if (ct.indexOf('application/json') >= 0) {
+                return r.json();
+            }
+            /* HTML 200 — treat as success */
+            if (r.ok) return { success: true };
+            /* Error */
+            return r.text().then(function (txt) {
+                throw new Error('Server error ' + r.status);
+            });
+        })
+        .then(function (data) {
+            if (data && data.success) {
+                /* Close modal */
+                if (_bsModal) _bsModal.hide();
+                else {
+                    var m = el('sharedPayModal');
+                    if (m) {
+                        m.style.display = 'none';
+                        m.classList.remove('show');
+                    }
+                    var bd = el('spBackdrop');
+                    if (bd) bd.parentNode.removeChild(bd);
+                    document.body.classList.remove('modal-open');
+                }
+                toast('Payment of ' + pkr(amt) +
+                    ' recorded successfully.', 'success');
+                /* Reload to reflect updated status */
+                setTimeout(function () {
+                    window.location.reload();
+                }, 1600);
+            } else {
+                btn.disabled  = false;
+                btn.innerHTML =
+                    '<i class="fas fa-check me-1"></i>Confirm Payment';
+                showErr(
+                    (data && data.message)
+                        ? data.message
+                        : 'Payment failed. Please try again.'
+                );
+            }
+        })
+        .catch(function (err) {
+            btn.disabled  = false;
+            btn.innerHTML =
+                '<i class="fas fa-check me-1"></i>Confirm Payment';
+            console.error('Payment submission error:', err);
+            showErr('Connection error: ' + err.message);
+        });
+    }
+
+    /* ── animation ───────────────────────────────── */
+    var styleEl = document.createElement('style');
+    styleEl.textContent =
+        '@keyframes spFadeIn {' +
+        'from{opacity:0;transform:translateY(8px)}' +
+        'to{opacity:1;transform:translateY(0)}}';
+    document.head.appendChild(styleEl);
+
+}());
+</script>
+{% endblock extra_js %}

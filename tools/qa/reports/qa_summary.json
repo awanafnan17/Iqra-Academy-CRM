@@ -1,0 +1,72 @@
+{
+  "timestamp": "2026-06-19T22:59:36.567660",
+  "total_passed": 77,
+  "total_failed": 0,
+  "total_errors": 0,
+  "suites": [
+    {
+      "suite": "Profile Identity Propagation",
+      "file": "C:\\Users\\Afnan Awan\\Downloads\\iqra academy CRM\\tools\\qa\\test_profile_identity.py",
+      "passed": 3,
+      "failed": 0,
+      "errors": 0,
+      "returncode": 0
+    },
+    {
+      "suite": "Mutation Propagation",
+      "file": "C:\\Users\\Afnan Awan\\Downloads\\iqra academy CRM\\tools\\qa\\test_mutation_propagation.py",
+      "passed": 4,
+      "failed": 0,
+      "errors": 0,
+      "returncode": 0
+    },
+    {
+      "suite": "Consistency Invariants",
+      "file": "C:\\Users\\Afnan Awan\\Downloads\\iqra academy CRM\\tools\\qa\\test_consistency_invariants.py",
+      "passed": 12,
+      "failed": 0,
+      "errors": 0,
+      "returncode": 0
+    },
+    {
+      "suite": "Stale Data / Cache",
+      "file": "C:\\Users\\Afnan Awan\\Downloads\\iqra academy CRM\\tools\\qa\\test_stale_data.py",
+      "passed": 5,
+      "failed": 0,
+      "errors": 0,
+      "returncode": 0
+    },
+    {
+      "suite": "Object-Level Authorization",
+      "file": "C:\\Users\\Afnan Awan\\Downloads\\iqra academy CRM\\tools\\qa\\test_authorization.py",
+      "passed": 18,
+      "failed": 0,
+      "errors": 0,
+      "returncode": 0
+    },
+    {
+      "suite": "Form Persistence",
+      "file": "C:\\Users\\Afnan Awan\\Downloads\\iqra academy CRM\\tools\\qa\\test_form_persistence.py",
+      "passed": 10,
+      "failed": 0,
+      "errors": 0,
+      "returncode": 0
+    },
+    {
+      "suite": "Business Invariants",
+      "file": "C:\\Users\\Afnan Awan\\Downloads\\iqra academy CRM\\tools\\qa\\test_business_invariants.py",
+      "passed": 17,
+      "failed": 0,
+      "errors": 0,
+      "returncode": 0
+    },
+    {
+      "suite": "Browser Crawl (Multi-Role)",
+      "file": "C:\\Users\\Afnan Awan\\Downloads\\iqra academy CRM\\tools\\qa\\test_browser_crawl.py",
+      "passed": 8,
+      "failed": 0,
+      "errors": 0,
+      "returncode": 0
+    }
+  ]
+}

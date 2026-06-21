@@ -1,0 +1,94 @@
+{% extends 'layouts/panel_base.html' %}
+{% load static %}
+{% load student_tags %}
+
+{% block title %}{{ page_title }} - Iqra Academy{% endblock %}
+
+{% block content %}
+<div class="container-fluid px-0">
+    <div class="p-4 rounded-4 mb-4 card border border-light shadow-sm animate-fade-in">
+        <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
+            <div>
+                <h3 class="fw-bold mb-1">{{ page_title }}</h3>
+                <p class="text-secondary mb-0">Add new guardians or link existing parent profiles to {{ student.full_name }}.</p>
+            </div>
+            <div>
+                <a href="{% student_url 'student_detail' student.pk %}" class="btn btn-outline-primary px-3 py-2 rounded-3">
+                    <i class="fa-solid fa-arrow-left me-1"></i> Back to Profile
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-4">
+        <!-- New Guardian Form -->
+        <div class="col-md-7">
+            <div class="card p-4 border border-soft shadow rounded-4 h-100">
+                <h5 class="fw-bold border-bottom pb-2 mb-3">
+                    <i class="fa-solid fa-user-plus text-primary me-2"></i> Register New Guardian
+                </h5>
+                <form method="post" id="guardianNewForm">
+                    {% csrf_token %}
+                    <input type="hidden" name="action" value="add_new">
+                    <div class="row">
+                        {% for field in form %}
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label text-secondary small fw-semibold" for="{{ field.id_for_label }}">{{ field.label }}</label>
+                            {{ field }}
+                            {% if field.errors %}
+                            <div class="text-danger small mt-1">{{ field.errors.0 }}</div>
+                            {% endif %}
+                        </div>
+                        {% endfor %}
+                    </div>
+                    <button type="submit" class="btn btn-primary px-4 py-2 rounded-3 shadow-sm mt-2">
+                        <i class="fa-solid fa-floppy-disk me-1"></i> Add Guardian
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Link Existing Guardian -->
+        <div class="col-md-5">
+            <div class="card p-4 border border-soft shadow rounded-4 h-100">
+                <h5 class="fw-bold border-bottom pb-2 mb-3">
+                    <i class="fa-solid fa-link text-primary me-2"></i> Link Existing Parent Profile
+                </h5>
+                <form method="post" id="guardianLinkForm">
+                    {% csrf_token %}
+                    <input type="hidden" name="action" value="link_existing">
+                    <div class="mb-3">
+                        <label class="form-label text-secondary small fw-semibold" for="guardian_id">Select Parent/Guardian</label>
+                        <select class="form-select" id="guardian_id" name="guardian_id" required>
+                            <option value="" disabled selected>-- Select Guardian --</option>
+                            {% for guardian in available_guardians %}
+                            <option value="{{ guardian.id }}">{{ guardian.full_name }} ({{ guardian.relationship }} of {{ guardian.student.full_name }})</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-outline-primary w-100 rounded-3 py-2 mt-2">
+                        <i class="fa-solid fa-link me-1"></i> Link Account
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const inputs = document.querySelectorAll('#guardianNewForm input, #guardianNewForm textarea');
+        inputs.forEach(el => {
+            if (el.type !== 'checkbox' && el.type !== 'radio' && el.type !== 'file') {
+                el.classList.add('form-control');
+            }
+        });
+        const selects = document.querySelectorAll('#guardianNewForm select');
+        selects.forEach(el => {
+            el.classList.add('form-select');
+        });
+    });
+</script>
+{% endblock %}
