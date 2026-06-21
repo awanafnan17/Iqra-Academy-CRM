@@ -99,13 +99,8 @@ def student_list(request):
     return render(request, "students/student_list.html", context)
 
 
-@login_required
+@role_required("Admin", "Registrar")
 def student_create(request):
-    if not request.user.groups.filter(
-        name__in=["Admin", "Registrar"]
-    ).exists():
-        raise Http404
-
     from apps.students.forms import StudentCreateForm
 
     if request.method == "POST":
@@ -256,19 +251,12 @@ def student_create(request):
     )
 
 
-@login_required
+@role_required("Admin", "Principal", "Registrar", "Teacher", "Accountant")
 def student_detail(request, pk):
     from decimal import Decimal
     from django.db.models import Count as DCount, Sum as DSum
 
     student = get_object_or_404(Student, pk=pk)
-
-    if not request.user.groups.filter(
-        name__in=["Admin", "Principal", "Registrar",
-                  "Teacher", "Accountant"]
-    ).exists():
-        from django.http import Http404
-        raise Http404
 
     # --- Safe defaults (ALWAYS set before any DB call) ---
     enrollment = None
@@ -935,13 +923,9 @@ def enrollment_transfer(request, pk):
             messages.error(request, "No target session selected.")
     return redirect(reverse("admin_panel:students:student_detail", args=[enrollment.student_id]))
 
-@login_required
+@role_required("Admin")
 def student_reset_password(request, pk):
     from apps.students.models import Student
-    if not request.user.groups.filter(
-        name__in=["Admin"]
-    ).exists():
-        raise Http404
     student = get_object_or_404(Student, pk=pk)
 
     if not hasattr(student, "portal_user") or not student.portal_user:
@@ -971,14 +955,10 @@ def student_reset_password(request, pk):
         "admin_panel:students:student_detail", pk=pk
     )
 
-@login_required
+@role_required("Admin")
 def student_create_login(request, pk):
     from apps.students.models import Student
     from django.contrib.auth import get_user_model
-    if not request.user.groups.filter(
-        name__in=["Admin"]
-    ).exists():
-        raise Http404
     student = get_object_or_404(Student, pk=pk)
 
     if hasattr(student, "portal_user") and student.portal_user:

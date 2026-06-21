@@ -261,7 +261,7 @@ class RoleAuthorizationMatrixTest(TestCase):
     def test_direct_post_bypass_create(self):
         """Teacher POSTing to admin URL gets denial (404/302/403)."""
         self._login("Teacher")
-        resp = self.client.post("/panel/admin/add-student/", {
+        resp = self.client.post("/panel/admin/students/create/", {
             "full_name": "Bypass Student",
             "status": "Active",
         })

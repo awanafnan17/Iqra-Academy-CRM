@@ -57,7 +57,7 @@ def attendance_overview(request):
     
     today_str = datetime.date.today().isoformat()
     
-    if request.user.groups.filter(name="Admin").exists():
+    if request.user.is_superuser or request.user.groups.filter(name="Admin").exists():
         role = "Admin"
     elif request.user.groups.filter(name="Principal").exists():
         role = "Principal"
@@ -157,7 +157,7 @@ def attendance_mark(request, session_id):
         back_url = reverse("admin_panel:attendance:attendance_overview")
         sheet_url = reverse("admin_panel:attendance:attendance_sheet", kwargs={"session_id": session.pk, "date": date.isoformat()})
 
-    if request.user.groups.filter(name="Admin").exists():
+    if request.user.is_superuser or request.user.groups.filter(name="Admin").exists():
         role = "Admin"
     elif request.user.groups.filter(name="Principal").exists():
         role = "Principal"
@@ -204,7 +204,7 @@ def attendance_sheet(request, session_id, date):
         back_url = reverse("admin_panel:attendance:attendance_overview")
         edit_url = reverse("admin_panel:attendance:attendance_mark", kwargs={"session_id": session.pk}) + f"?date={date}"
 
-    if request.user.groups.filter(name="Admin").exists():
+    if request.user.is_superuser or request.user.groups.filter(name="Admin").exists():
         role = "Admin"
     elif request.user.groups.filter(name="Principal").exists():
         role = "Principal"

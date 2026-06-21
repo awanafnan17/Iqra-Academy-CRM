@@ -1,12 +1,12 @@
 {
   "role": "Accountant",
-  "mode": "enforcement",
-  "timestamp": "2026-06-20T02:46:49.904603",
+  "mode": "discovery",
+  "timestamp": "2026-06-22T01:11:53.549511",
   "pages_visited": [
     {
       "url": "/panel/accounts/dashboard/",
       "status": 200,
-      "load_time_ms": 98,
+      "load_time_ms": 131,
       "final_url": "/panel/accounts/dashboard/",
       "title": "Financial Ledger - Iqra Academy",
       "source_url": "seed",
@@ -15,7 +15,7 @@
     {
       "url": "/accounts/profile/",
       "status": 200,
-      "load_time_ms": 55,
+      "load_time_ms": 50,
       "final_url": "/accounts/profile/",
       "title": "My Profile - Iqra Academy",
       "source_url": "/panel/accounts/dashboard/",
@@ -33,7 +33,7 @@
     {
       "url": "/panel/accounts/installments/",
       "status": 200,
-      "load_time_ms": 71,
+      "load_time_ms": 79,
       "final_url": "/panel/accounts/installments/",
       "title": "Installment Plans | Finance",
       "source_url": "/panel/accounts/payments/",
@@ -42,7 +42,7 @@
     {
       "url": "/panel/accounts/overdue/",
       "status": 200,
-      "load_time_ms": 73,
+      "load_time_ms": 67,
       "final_url": "/panel/accounts/overdue/",
       "title": "Overdue Enrollments | Finance",
       "source_url": "/panel/accounts/installments/",
@@ -51,7 +51,7 @@
     {
       "url": "/panel/accounts/refunds/",
       "status": 200,
-      "load_time_ms": 70,
+      "load_time_ms": 49,
       "final_url": "/panel/accounts/refunds/",
       "title": "Refunds | Finance",
       "source_url": "/panel/accounts/overdue/",
@@ -60,7 +60,7 @@
     {
       "url": "/panel/accounts/pending-dues/",
       "status": 200,
-      "load_time_ms": 112,
+      "load_time_ms": 93,
       "final_url": "/panel/accounts/pending-dues/",
       "title": "Pending Dues - Iqra Academy",
       "source_url": "/panel/accounts/refunds/",
@@ -69,16 +69,16 @@
     {
       "url": "/panel/accounts/reports/",
       "status": 200,
-      "load_time_ms": 91,
+      "load_time_ms": 90,
       "final_url": "/panel/accounts/reports/",
-      "title": "Reporting & Export Center - IICE",
+      "title": "Reporting & Export Center - Iqra Academy",
       "source_url": "/panel/accounts/pending-dues/",
       "link_source": "sidebar"
     },
     {
       "url": "/panel/accounts/expenses/",
       "status": 200,
-      "load_time_ms": 98,
+      "load_time_ms": 43,
       "final_url": "/panel/accounts/expenses/",
       "title": "Expenses | Finance",
       "source_url": "/panel/accounts/reports/",
@@ -87,7 +87,7 @@
     {
       "url": "/panel/accounts/notifications/",
       "status": 200,
-      "load_time_ms": 80,
+      "load_time_ms": 52,
       "final_url": "/panel/accounts/notifications/",
       "title": "Notifications - Iqra Academy",
       "source_url": "/panel/accounts/expenses/",
@@ -96,7 +96,7 @@
     {
       "url": "/accounts/password/change/",
       "status": 200,
-      "load_time_ms": 55,
+      "load_time_ms": 87,
       "final_url": "/accounts/password/change/",
       "title": "Change Password - Iqra Academy",
       "source_url": "/panel/accounts/notifications/",
@@ -105,7 +105,7 @@
     {
       "url": "/accounts/post-login/",
       "status": 200,
-      "load_time_ms": 75,
+      "load_time_ms": 49,
       "final_url": "/panel/accounts/dashboard/",
       "title": "Financial Ledger - Iqra Academy",
       "source_url": "/accounts/password/change/",
@@ -114,7 +114,7 @@
     {
       "url": "/panel/accounts/payments/create/",
       "status": 200,
-      "load_time_ms": 56,
+      "load_time_ms": 59,
       "final_url": "/panel/accounts/payments/create/",
       "title": "Record Payment | Finance",
       "source_url": "/panel/accounts/payments/",
@@ -123,7 +123,7 @@
     {
       "url": "/panel/accounts/installments/create/",
       "status": 200,
-      "load_time_ms": 67,
+      "load_time_ms": 61,
       "final_url": "/panel/accounts/installments/create/",
       "title": "New Installment Plan | Finance",
       "source_url": "/panel/accounts/installments/",
@@ -132,7 +132,7 @@
     {
       "url": "/panel/accounts/refunds/create/",
       "status": 200,
-      "load_time_ms": 75,
+      "load_time_ms": 81,
       "final_url": "/panel/accounts/refunds/create/",
       "title": "Process Refund | Finance",
       "source_url": "/panel/accounts/refunds/",
@@ -141,7 +141,7 @@
     {
       "url": "/panel/accounts/categories/",
       "status": 200,
-      "load_time_ms": 147,
+      "load_time_ms": 65,
       "final_url": "/panel/accounts/categories/",
       "title": "Expense Categories | Finance",
       "source_url": "/panel/accounts/expenses/",
@@ -150,7 +150,7 @@
     {
       "url": "/panel/accounts/expenses/create/",
       "status": 200,
-      "load_time_ms": 45,
+      "load_time_ms": 47,
       "final_url": "/panel/accounts/expenses/create/",
       "title": "Record Expense | Finance",
       "source_url": "/panel/accounts/expenses/",
@@ -159,7 +159,7 @@
     {
       "url": "/panel/accounts/categories/create/",
       "status": 200,
-      "load_time_ms": 61,
+      "load_time_ms": 67,
       "final_url": "/panel/accounts/categories/create/",
       "title": "New Expense Category | Finance",
       "source_url": "/panel/accounts/categories/",
@@ -173,82 +173,82 @@
     {
       "type": "error",
       "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
-      "url": "http://127.0.0.1:4082/panel/accounts/dashboard/"
+      "url": "http://127.0.0.1:42729/panel/accounts/dashboard/"
     },
     {
       "type": "error",
       "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
-      "url": "http://127.0.0.1:4082/panel/accounts/dashboard/"
+      "url": "http://127.0.0.1:42729/panel/accounts/dashboard/"
     },
     {
       "type": "error",
       "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
-      "url": "http://127.0.0.1:4082/accounts/profile/"
+      "url": "http://127.0.0.1:42729/accounts/profile/"
     },
     {
       "type": "error",
       "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
-      "url": "http://127.0.0.1:4082/accounts/profile/"
+      "url": "http://127.0.0.1:42729/accounts/profile/"
     },
     {
       "type": "error",
       "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
-      "url": "http://127.0.0.1:4082/panel/accounts/payments/"
+      "url": "http://127.0.0.1:42729/panel/accounts/payments/"
     },
     {
       "type": "error",
       "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
-      "url": "http://127.0.0.1:4082/panel/accounts/installments/"
+      "url": "http://127.0.0.1:42729/panel/accounts/installments/"
     },
     {
       "type": "error",
       "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
-      "url": "http://127.0.0.1:4082/panel/accounts/overdue/"
+      "url": "http://127.0.0.1:42729/panel/accounts/overdue/"
     },
     {
       "type": "error",
       "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
-      "url": "http://127.0.0.1:4082/panel/accounts/refunds/"
+      "url": "http://127.0.0.1:42729/panel/accounts/refunds/"
     },
     {
       "type": "error",
       "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
-      "url": "http://127.0.0.1:4082/panel/accounts/pending-dues/"
+      "url": "http://127.0.0.1:42729/panel/accounts/pending-dues/"
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 400 (Bad Request)",
+      "url": "http://127.0.0.1:42729/panel/accounts/reports/"
     },
     {
       "type": "error",
       "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
-      "url": "http://127.0.0.1:4082/panel/accounts/reports/"
+      "url": "http://127.0.0.1:42729/panel/accounts/expenses/"
     },
     {
       "type": "error",
       "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
-      "url": "http://127.0.0.1:4082/panel/accounts/expenses/"
+      "url": "http://127.0.0.1:42729/panel/accounts/notifications/"
     },
     {
       "type": "error",
       "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
-      "url": "http://127.0.0.1:4082/panel/accounts/notifications/"
+      "url": "http://127.0.0.1:42729/accounts/password/change/"
     },
     {
       "type": "error",
       "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
-      "url": "http://127.0.0.1:4082/accounts/password/change/"
+      "url": "http://127.0.0.1:42729/accounts/password/change/"
     },
     {
       "type": "error",
       "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
-      "url": "http://127.0.0.1:4082/accounts/password/change/"
+      "url": "http://127.0.0.1:42729/panel/accounts/dashboard/"
     },
     {
       "type": "error",
       "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
-      "url": "http://127.0.0.1:4082/panel/accounts/dashboard/"
-    },
-    {
-      "type": "error",
-      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
-      "url": "http://127.0.0.1:4082/panel/accounts/categories/"
+      "url": "http://127.0.0.1:42729/panel/accounts/categories/"
     }
   ],
   "redirect_loops": [],
@@ -268,7 +268,7 @@
       "link_source": "navigation",
       "status": 0,
       "expected_status": 200,
-      "error": "Page.goto: Download is starting\nCall log:\n  - navigating to \"http://127.0.0.1:4082/panel/accounts/reports/pending-dues/pdf/\", waiting until \"domcontentloaded\"\n",
+      "error": "Page.goto: Download is starting\nCall log:\n  - navigating to \"http://127.0.0.1:42729/panel/accounts/reports/pending-dues/pdf/\", waiting until \"domcontentloaded\"\n",
       "role": "Accountant",
       "severity": "Critical",
       "category": "exception"
@@ -279,7 +279,7 @@
       "link_source": "navigation",
       "status": 0,
       "expected_status": 200,
-      "error": "Page.goto: Download is starting\nCall log:\n  - navigating to \"http://127.0.0.1:4082/panel/accounts/reports/pending-dues/csv/\", waiting until \"domcontentloaded\"\n",
+      "error": "Page.goto: Download is starting\nCall log:\n  - navigating to \"http://127.0.0.1:42729/panel/accounts/reports/pending-dues/csv/\", waiting until \"domcontentloaded\"\n",
       "role": "Accountant",
       "severity": "Critical",
       "category": "exception"

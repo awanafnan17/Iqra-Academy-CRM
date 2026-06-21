@@ -158,3 +158,83 @@ class GranularPermissionTests(TestCase):
         # Verify the permission actually updated in DB
         teacher_fin_create = RolePermission.objects.get(role_name="Teacher", module_name="finance")
         self.assertTrue(teacher_fin_create.can_create)
+
+
+class SuperuserHardeningTests(TestCase):
+    def setUp(self):
+        super().setUp()
+        self.User = get_user_model()
+        # Create a superuser who belongs to NO Django groups (empty groups)
+        self.superuser = self.User.objects.create_superuser(
+            username="superuser_test@example.com",
+            email="superuser_test@example.com",
+            password="password"
+        )
+        # Create a session since attendance/finance/dashboard might query sessions
+        self.session = Session.objects.create(
+            name="Test Session Hardening",
+            status="Active",
+            fee=Decimal("5000.00"),
+            registration_fee=Decimal("500.00"),
+            start_date=timezone.localdate(),
+            end_date=timezone.localdate() + datetime.timedelta(days=30),
+        )
+        self.student = Student.objects.create(full_name="Fatima Khan")
+        self.enrollment = Enrollment.objects.create(
+            student=self.student,
+            session=self.session,
+            status="Active",
+        )
+        # Seed default permissions
+        seed_default_permissions()
+
+    def test_superuser_dashboard_routing(self):
+        """Superuser with no groups is routed to AdminDashboardView (200), not Principal."""
+        self.client.force_login(self.superuser)
+        url = reverse("admin_panel:dashboard")
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+        self.assertIn("dashboard/admin.html", [t.name for t in response.templates])
+
+    def test_superuser_bulk_notification_send(self):
+        """Superuser with no groups can load the bulk notification send form."""
+        self.client.force_login(self.superuser)
+        url = reverse("admin_panel:notifications:notification_bulk_send")
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+
+    def test_superuser_installment_pay_permission(self):
+        """Superuser with no groups gets past the 403 permission check on installment payment."""
+        from apps.finance.models import Installment, InstallmentPlan
+        plan = InstallmentPlan.objects.create(
+            enrollment=self.enrollment,
+            total_amount=Decimal("1000.00"),
+            number_of_installments=1,
+            is_active=True,
+        )
+        inst = Installment.objects.create(
+            plan=plan,
+            installment_number=1,
+            amount=Decimal("1000.00"),
+            due_date=timezone.localdate(),
+            status="pending",
+        )
+        self.client.force_login(self.superuser)
+        url = reverse("admin_panel:installment_pay", kwargs={"pk": inst.pk})
+        data = {
+            "amount": "1000.00",
+            "payment_date": timezone.localdate().isoformat(),
+            "payment_method": "Cash",
+            "reference_number": "REF123",
+        }
+        response = self.client.post(url, data=data)
+        self.assertNotEqual(response.status_code, 403)
+
+    def test_superuser_attendance_role_classification(self):
+        """Superuser with no groups is classified as role Admin, not Teacher, in attendance views."""
+        self.client.force_login(self.superuser)
+        url = reverse("admin_panel:attendance:attendance_overview")
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.context["role"], "Admin")
+

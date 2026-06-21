@@ -134,7 +134,7 @@ class GuardianDashboardView(BaseDashboardView):
 @role_required("Admin", "Principal")
 def admin_dashboard(request, *args, **kwargs):
     """Router for the shared admin panel dashboard URL."""
-    if request.user.groups.filter(name="Admin").exists():
+    if request.user.is_superuser or request.user.groups.filter(name="Admin").exists():
         return AdminDashboardView.as_view()(request, *args, **kwargs)
     return PrincipalDashboardView.as_view()(request, *args, **kwargs)
 

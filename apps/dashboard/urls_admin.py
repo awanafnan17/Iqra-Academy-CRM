@@ -8,6 +8,7 @@ in individual app URL files.
 """
 
 from django.urls import include, path
+from django.views.generic import RedirectView
 
 from apps.dashboard import views
 from apps.finance import views as finance_views

@@ -1,13 +1,13 @@
 {
   "role": "Anonymous",
-  "mode": "enforcement",
-  "timestamp": "2026-06-20T02:48:49.919633",
+  "mode": "discovery",
+  "timestamp": "2026-06-22T01:13:28.632659",
   "pages_visited": [
     {
       "url": "/",
-      "status": 404,
-      "final_url": "/",
-      "title": "Page Not Found - IICE",
+      "status": 200,
+      "final_url": "/accounts/login/",
+      "title": "Sign In - Iqra Academy CRM",
       "source_url": "seed",
       "link_source": "seed"
     },
@@ -15,7 +15,7 @@
       "url": "/accounts/login/",
       "status": 200,
       "final_url": "/accounts/login/",
-      "title": "Sign In - IICE ERP",
+      "title": "Sign In - Iqra Academy CRM",
       "source_url": "seed",
       "link_source": "seed"
     },
@@ -23,7 +23,7 @@
       "url": "/accounts/register/",
       "status": 404,
       "final_url": "/accounts/register/",
-      "title": "Page Not Found - IICE",
+      "title": "Page Not Found - Iqra Academy",
       "source_url": "seed",
       "link_source": "seed"
     }

@@ -1,12 +1,12 @@
 {
   "role": "Guardian",
-  "mode": "enforcement",
-  "timestamp": "2026-06-20T02:48:50.545222",
+  "mode": "discovery",
+  "timestamp": "2026-06-22T01:13:30.058456",
   "pages_visited": [
     {
       "url": "/portal/guardian/dashboard/",
       "status": 200,
-      "load_time_ms": 132,
+      "load_time_ms": 96,
       "final_url": "/portal/guardian/dashboard/",
       "title": "Guardian Desk - Iqra Academy",
       "source_url": "seed",
@@ -15,7 +15,7 @@
     {
       "url": "/accounts/profile/",
       "status": 200,
-      "load_time_ms": 63,
+      "load_time_ms": 72,
       "final_url": "/accounts/profile/",
       "title": "My Profile - Iqra Academy",
       "source_url": "seed",
@@ -24,7 +24,7 @@
     {
       "url": "/portal/guardian/children/",
       "status": 200,
-      "load_time_ms": 53,
+      "load_time_ms": 71,
       "final_url": "/portal/guardian/children/",
       "title": "My Children - Iqra Academy",
       "source_url": "/accounts/profile/",
@@ -33,7 +33,7 @@
     {
       "url": "/portal/guardian/child/4/profile/",
       "status": 200,
-      "load_time_ms": 47,
+      "load_time_ms": 43,
       "final_url": "/portal/guardian/child/4/profile/",
       "title": "Child Profile - Iqra Academy",
       "source_url": "/portal/guardian/children/",
@@ -42,7 +42,7 @@
     {
       "url": "/portal/guardian/child/4/attendance/",
       "status": 200,
-      "load_time_ms": 74,
+      "load_time_ms": 64,
       "final_url": "/portal/guardian/child/4/attendance/",
       "title": "Attendance - TestStudent QA - Iqra Academy",
       "source_url": "/portal/guardian/child/4/profile/",
@@ -51,7 +51,7 @@
     {
       "url": "/portal/guardian/child/4/fees/",
       "status": 200,
-      "load_time_ms": 61,
+      "load_time_ms": 51,
       "final_url": "/portal/guardian/child/4/fees/",
       "title": "'s Fee Ledger - Iqra Academy",
       "source_url": "/portal/guardian/child/4/attendance/",
@@ -60,7 +60,7 @@
     {
       "url": "/portal/guardian/child/4/exams/",
       "status": 200,
-      "load_time_ms": 55,
+      "load_time_ms": 49,
       "final_url": "/portal/guardian/child/4/exams/",
       "title": "'s Exams & Grades - Iqra Academy",
       "source_url": "/portal/guardian/child/4/fees/",
@@ -69,7 +69,7 @@
     {
       "url": "/portal/guardian/child/4/transcript/",
       "status": 200,
-      "load_time_ms": 122,
+      "load_time_ms": 97,
       "final_url": "/portal/guardian/child/4/transcript/",
       "title": "Academic Transcript | Iqra Academy",
       "source_url": "/portal/guardian/child/4/exams/",
@@ -78,7 +78,7 @@
     {
       "url": "/portal/guardian/notifications/",
       "status": 200,
-      "load_time_ms": 46,
+      "load_time_ms": 58,
       "final_url": "/portal/guardian/notifications/",
       "title": "My Notifications - Iqra Academy",
       "source_url": "/portal/guardian/child/4/transcript/",
@@ -87,7 +87,7 @@
     {
       "url": "/accounts/password/change/",
       "status": 200,
-      "load_time_ms": 95,
+      "load_time_ms": 58,
       "final_url": "/accounts/password/change/",
       "title": "Change Password - Iqra Academy",
       "source_url": "/accounts/profile/",
@@ -96,7 +96,7 @@
     {
       "url": "/accounts/post-login/",
       "status": 200,
-      "load_time_ms": 54,
+      "load_time_ms": 71,
       "final_url": "/portal/guardian/dashboard/",
       "title": "Guardian Desk - Iqra Academy",
       "source_url": "/accounts/password/change/",
@@ -105,7 +105,7 @@
     {
       "url": "/portal/guardian/notifications/?category=General",
       "status": 200,
-      "load_time_ms": 79,
+      "load_time_ms": 95,
       "final_url": "/portal/guardian/notifications/",
       "title": "My Notifications - Iqra Academy",
       "source_url": "/portal/guardian/notifications/",
@@ -114,7 +114,7 @@
     {
       "url": "/portal/guardian/notifications/?category=LateFee",
       "status": 200,
-      "load_time_ms": 49,
+      "load_time_ms": 54,
       "final_url": "/portal/guardian/notifications/",
       "title": "My Notifications - Iqra Academy",
       "source_url": "/portal/guardian/notifications/?category=General",
@@ -123,7 +123,7 @@
     {
       "url": "/portal/guardian/notifications/?category=NewEntry",
       "status": 200,
-      "load_time_ms": 49,
+      "load_time_ms": 51,
       "final_url": "/portal/guardian/notifications/",
       "title": "My Notifications - Iqra Academy",
       "source_url": "/portal/guardian/notifications/?category=LateFee",
@@ -132,7 +132,7 @@
     {
       "url": "/portal/guardian/notifications/?category=Deletion",
       "status": 200,
-      "load_time_ms": 56,
+      "load_time_ms": 41,
       "final_url": "/portal/guardian/notifications/",
       "title": "My Notifications - Iqra Academy",
       "source_url": "/portal/guardian/notifications/?category=NewEntry",
@@ -141,7 +141,7 @@
     {
       "url": "/portal/guardian/notifications/?category=Payment",
       "status": 200,
-      "load_time_ms": 66,
+      "load_time_ms": 53,
       "final_url": "/portal/guardian/notifications/",
       "title": "My Notifications - Iqra Academy",
       "source_url": "/portal/guardian/notifications/?category=Deletion",
@@ -150,7 +150,7 @@
     {
       "url": "/portal/guardian/notifications/?category=Attendance",
       "status": 200,
-      "load_time_ms": 65,
+      "load_time_ms": 41,
       "final_url": "/portal/guardian/notifications/",
       "title": "My Notifications - Iqra Academy",
       "source_url": "/portal/guardian/notifications/?category=Payment",
@@ -159,7 +159,7 @@
     {
       "url": "/portal/guardian/notifications/?category=ExamResult",
       "status": 200,
-      "load_time_ms": 56,
+      "load_time_ms": 54,
       "final_url": "/portal/guardian/notifications/",
       "title": "My Notifications - Iqra Academy",
       "source_url": "/portal/guardian/notifications/?category=Attendance",
@@ -168,7 +168,7 @@
     {
       "url": "/portal/guardian/notifications/?category=MonthlyRenewal",
       "status": 200,
-      "load_time_ms": 72,
+      "load_time_ms": 40,
       "final_url": "/portal/guardian/notifications/",
       "title": "My Notifications - Iqra Academy",
       "source_url": "/portal/guardian/notifications/?category=ExamResult",
@@ -177,7 +177,7 @@
     {
       "url": "/portal/guardian/notifications/?category=System",
       "status": 200,
-      "load_time_ms": 119,
+      "load_time_ms": 86,
       "final_url": "/portal/guardian/notifications/",
       "title": "My Notifications - Iqra Academy",
       "source_url": "/portal/guardian/notifications/?category=MonthlyRenewal",
@@ -191,22 +191,22 @@
     {
       "type": "error",
       "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
-      "url": "http://127.0.0.1:4082/accounts/profile/"
+      "url": "http://127.0.0.1:42729/accounts/profile/"
     },
     {
       "type": "error",
       "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
-      "url": "http://127.0.0.1:4082/accounts/profile/"
+      "url": "http://127.0.0.1:42729/accounts/profile/"
     },
     {
       "type": "error",
       "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
-      "url": "http://127.0.0.1:4082/accounts/password/change/"
+      "url": "http://127.0.0.1:42729/accounts/password/change/"
     },
     {
       "type": "error",
       "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
-      "url": "http://127.0.0.1:4082/accounts/password/change/"
+      "url": "http://127.0.0.1:42729/accounts/password/change/"
     }
   ],
   "redirect_loops": [],
@@ -271,7 +271,7 @@
       "link_source": "navigation",
       "status": 0,
       "expected_status": 200,
-      "error": "Page.goto: Download is starting\nCall log:\n  - navigating to \"http://127.0.0.1:4082/portal/guardian/child/4/transcript/pdf/\", waiting until \"domcontentloaded\"\n",
+      "error": "Page.goto: Download is starting\nCall log:\n  - navigating to \"http://127.0.0.1:42729/portal/guardian/child/4/transcript/pdf/\", waiting until \"domcontentloaded\"\n",
       "role": "Guardian",
       "severity": "Critical",
       "category": "exception"

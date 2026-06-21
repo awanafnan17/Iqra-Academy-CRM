@@ -201,7 +201,7 @@ class NotificationBulkSendView(View):
         return render(request, "notifications/bulk_send_form.html")
 
     def dispatch(self, request, *args, **kwargs):
-        if not request.user.is_authenticated or not request.user.groups.filter(name="Admin").exists():
+        if not request.user.is_authenticated or not (request.user.is_superuser or request.user.groups.filter(name="Admin").exists()):
             username = request.user.username if request.user.is_authenticated else "Anonymous"
             logger.warning(f"Unauthorized bulk send access attempt by user {username}")
             raise Http404("Access denied.")

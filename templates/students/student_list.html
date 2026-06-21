@@ -15,7 +15,7 @@
             </div>
             <div>
                 {% if request.user.is_superuser or request.user.groups.all.0.name == 'Admin' or request.user.groups.all.1.name == 'Admin' or request.user.groups.all.0.name == 'Registrar' or request.user.groups.all.1.name == 'Registrar' %}
-                <a href="{% student_url 'add_student' %}" class="btn btn-primary px-4 py-2 rounded-3 shadow-sm">
+                <a href="{% student_url 'student_create' %}" class="btn btn-primary px-4 py-2 rounded-3 shadow-sm">
                     <i class="fa-solid fa-plus me-2"></i> Register New Student
                 </a>
                 {% endif %}

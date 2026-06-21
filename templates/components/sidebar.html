@@ -35,7 +35,7 @@
             </a>
 
             <div class="sidebar-section">Academic Management</div>
-            <a href="{% url 'admin_panel:add_student' %}" class="sidebar-link {% if '/add-student/' in path %}active{% endif %}">
+            <a href="{% url 'admin_panel:students:student_create' %}" class="sidebar-link {% if '/students/create/' in path %}active{% endif %}">
                 <span class="sidebar-icon"><i class="fa-solid fa-user-plus"></i></span>
                 Add Student
             </a>

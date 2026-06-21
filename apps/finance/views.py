@@ -129,9 +129,9 @@ class InstallmentPayView(View):
 
     def post(self, request, pk):
         # Permission check
-        if not request.user.groups.filter(
+        if not (request.user.is_superuser or request.user.groups.filter(
             name__in=["Admin", "Accountant", "Principal"]
-        ).exists():
+        ).exists()):
             return JsonResponse(
                 {"success": False,
                  "message": "Permission denied"},

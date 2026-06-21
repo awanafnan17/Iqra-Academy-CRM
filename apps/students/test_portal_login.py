@@ -49,7 +49,7 @@ class StudentPortalLoginTests(TestCase):
     def test_student_create_view_post_creates_student(self):
         """POST to student create redirects and creates student."""
         response = self.client.post(
-            "/panel/admin/add-student/",
+            "/panel/admin/students/create/",
             data={
                 "full_name": "Fatima Khan",
                 "phone": "03211234567",
