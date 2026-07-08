@@ -45,9 +45,10 @@ class FacultyCreateView(LoginRequiredMixin, CreateView):
                 # Auto-assign standard username prefix logic
                 user.save()
 
-                # Assign to Teacher group
-                teacher_group, _ = Group.objects.get_or_create(name="Teacher")
-                user.groups.add(teacher_group)
+                # Assign selected role group
+                selected_role = form.cleaned_data.get("role")
+                role_group, _ = Group.objects.get_or_create(name=selected_role)
+                user.groups.add(role_group)
 
                 # Create profile
                 profile = form.save(commit=False)

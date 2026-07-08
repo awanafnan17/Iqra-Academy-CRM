@@ -2,6 +2,7 @@ from django import forms
 from django.contrib.auth import get_user_model
 from apps.staff.models import FacultyProfile
 from apps.academics.models import Session
+from apps.core.models import RolePermission
 
 User = get_user_model()
 
@@ -25,6 +26,11 @@ class UserCreateForm(forms.ModelForm):
 
 
 class FacultyProfileForm(forms.ModelForm):
+    role = forms.ChoiceField(
+        choices=[("", "Select Role")] + [(role[0], f"{role[1]} Role") for role in RolePermission.ROLE_CHOICES],
+        required=True,
+        widget=forms.Select(attrs={"class": "form-select"})
+    )
     designation = forms.CharField(max_length=100, widget=forms.TextInput(attrs={"class": "form-control"}))
     department = forms.CharField(max_length=100, widget=forms.TextInput(attrs={"class": "form-control"}))
     is_active = forms.BooleanField(required=False, widget=forms.CheckboxInput(attrs={"class": "form-check-input"}))

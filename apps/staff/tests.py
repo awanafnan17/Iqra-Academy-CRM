@@ -116,6 +116,7 @@ class FacultyModuleTests(TestCase):
             "email": "ahmedhassan@test.com",
             "password": "ahmedpassword",
             # FacultyProfileForm data
+            "role": "Teacher",
             "designation": "Assistant Professor",
             "department": "Computer Science",
             "is_active": "on",
@@ -134,6 +135,49 @@ class FacultyModuleTests(TestCase):
         new_profile = FacultyProfile.objects.get(user=new_user)
         self.assertEqual(new_profile.designation, "Assistant Professor")
         self.assertEqual(new_profile.department, "Computer Science")
+
+    def test_faculty_create_role_validation(self):
+        """FacultyCreateView shows validation error if role is not selected."""
+        url = reverse("admin_panel:staff:faculty_create")
+        self.client.force_login(self.admin_user)
+        
+        post_data = {
+            "first_name": "Ahmed",
+            "last_name": "Doe",
+            "email": "ahmedvalidation@test.com",
+            "password": "ahmedpassword",
+            "role": "",  # Empty role
+            "designation": "Assistant Professor",
+            "department": "Computer Science",
+            "is_active": "on",
+        }
+        
+        response = self.client.post(url, data=post_data)
+        self.assertEqual(response.status_code, 200)  # Form returns 200 on validation failure
+        self.assertFormError(response, "form", "role", "This field is required.")
+
+    def test_faculty_create_accountant_role(self):
+        """FacultyCreateView creates user with Accountant role successfully."""
+        url = reverse("admin_panel:staff:faculty_create")
+        self.client.force_login(self.admin_user)
+        
+        post_data = {
+            "first_name": "Accountant",
+            "last_name": "User",
+            "email": "accountant_faculty@test.com",
+            "password": "accountantpass",
+            "role": "Accountant",
+            "designation": "Senior Accountant",
+            "department": "Finance",
+            "is_active": "on",
+        }
+        
+        response = self.client.post(url, data=post_data)
+        self.assertEqual(response.status_code, 302)
+        
+        new_user = User.objects.get(email="accountant_faculty@test.com")
+        self.assertTrue(new_user.groups.filter(name="Accountant").exists())
+        self.assertFalse(new_user.groups.filter(name="Teacher").exists())
 
     def test_faculty_assign_view_permissions_and_processing(self):
         """FacultyAssignSessionView allows Admin/Principal to allocate sessions."""

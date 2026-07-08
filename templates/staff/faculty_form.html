@@ -74,6 +74,13 @@
             </h5>
             <div class="row g-3 mb-4">
                 <div class="col-12 col-md-6">
+                    <label class="form-label fw-semibold text-secondary">Role / Access Type</label>
+                    {{ form.role }}
+                    {% if form.role.errors %}
+                        <div class="text-danger small mt-1">{{ form.role.errors.0 }}</div>
+                    {% endif %}
+                </div>
+                <div class="col-12 col-md-6">
                     <label class="form-label fw-semibold text-secondary">Designation</label>
                     {{ form.designation }}
                     {% if form.designation.errors %}
