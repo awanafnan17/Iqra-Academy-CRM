@@ -40,13 +40,14 @@ def user_list(request):
     if role_filter:
         users = users.filter(groups__name=role_filter)
 
-    groups = Group.objects.all()
+    from apps.core.models import RolePermission
+    roles = [(role[0], f"{role[1]} Role") for role in RolePermission.ROLE_CHOICES]
     sessions = Session.objects.filter(status="Active")
     subjects = Subject.objects.filter(is_active=True)
 
     context = {
         "users": users,
-        "groups": groups,
+        "roles": roles,
         "sessions": sessions,
         "subjects": subjects,
         "search_query": search_query,
@@ -138,6 +139,9 @@ def user_reset_password(request, pk):
     except Exception as e:
         messages.error(request, str(e))
 
+    referer = request.META.get("HTTP_REFERER", "")
+    if referer and "edit" in referer:
+        return redirect(reverse("admin_panel:users:user_edit", args=[user.pk]))
     return redirect(reverse("admin_panel:users:user_list"))
 
 
@@ -196,3 +200,139 @@ def user_assign_session(request, pk):
         messages.error(request, str(e))
 
     return redirect(reverse("admin_panel:users:user_list"))
+
+
+@permission_required("users", "edit")
+def user_create(request):
+    """Admin-only view to create a new user account with dynamic group/profile setup."""
+    from django.db import transaction
+    from apps.accounts.forms import AdminUserCreateForm
+    from apps.staff.models import FacultyProfile
+
+    if request.method == "POST":
+        form = AdminUserCreateForm(request.POST)
+        if form.is_valid():
+            try:
+                with transaction.atomic():
+                    user = form.save(commit=False)
+                    user.set_password(form.cleaned_data["password"])
+                    user.save()
+
+                    role = form.cleaned_data.get("role")
+                    group, _ = Group.objects.get_or_create(name=role)
+                    user.groups.add(group)
+
+                    if role == "Teacher":
+                        FacultyProfile.objects.create(
+                            user=user,
+                            designation=form.cleaned_data.get("designation"),
+                            department=form.cleaned_data.get("department"),
+                            is_active=user.is_active
+                        )
+
+                    ip = _get_client_ip(request)
+                    ua = request.META.get("HTTP_USER_AGENT", "")
+                    UserService.audit_on_commit(
+                        user=request.user,
+                        action="create",
+                        model_name="accounts.CustomUser",
+                        object_id=user.pk,
+                        changes={
+                            "email": user.email,
+                            "username": user.username,
+                            "role": role,
+                            "is_active": user.is_active
+                        },
+                        ip_address=ip,
+                        user_agent=ua
+                    )
+
+                messages.success(request, f"User account '{user.email}' has been created successfully.")
+                return redirect(reverse("admin_panel:users:user_list"))
+            except Exception as e:
+                messages.error(request, f"Failed to create user: {str(e)}")
+    else:
+        form = AdminUserCreateForm()
+
+    context = {
+        "form": form,
+        "role": "Admin",
+    }
+    return render(request, "accounts/user_create.html", context)
+
+
+@permission_required("users", "edit")
+def user_edit(request, pk):
+    """Admin-only view to edit an existing user account and update role/profile structures."""
+    from django.db import transaction
+    from apps.accounts.forms import AdminUserEditForm
+    from apps.staff.models import FacultyProfile
+    from apps.core.models import RolePermission
+
+    user = get_object_or_404(CustomUser, pk=pk)
+
+    if request.method == "POST":
+        form = AdminUserEditForm(request.POST, instance=user)
+        if form.is_valid():
+            try:
+                with transaction.atomic():
+                    updated_user = form.save()
+                    new_role = form.cleaned_data.get("role")
+                    
+                    canonical_roles = [r[0] for r in RolePermission.ROLE_CHOICES]
+                    current_groups = list(user.groups.all())
+
+                    for g in current_groups:
+                        if g.name in canonical_roles and g.name != new_role:
+                            user.groups.remove(g)
+
+                    new_group, _ = Group.objects.get_or_create(name=new_role)
+                    if new_group not in user.groups.all():
+                        user.groups.add(new_group)
+
+                    if new_role == "Teacher":
+                        profile, created = FacultyProfile.objects.get_or_create(
+                            user=updated_user,
+                            defaults={
+                                "designation": form.cleaned_data.get("designation"),
+                                "department": form.cleaned_data.get("department"),
+                                "is_active": updated_user.is_active
+                            }
+                        )
+                        if not created:
+                            profile.designation = form.cleaned_data.get("designation")
+                            profile.department = form.cleaned_data.get("department")
+                            profile.is_active = updated_user.is_active
+                            profile.save()
+                    else:
+                        FacultyProfile.objects.filter(user=updated_user).delete()
+
+                    ip = _get_client_ip(request)
+                    ua = request.META.get("HTTP_USER_AGENT", "")
+                    UserService.audit_on_commit(
+                        user=request.user,
+                        action="update",
+                        model_name="accounts.CustomUser",
+                        object_id=updated_user.pk,
+                        changes={
+                            "email": updated_user.email,
+                            "role": new_role,
+                            "is_active": updated_user.is_active
+                        },
+                        ip_address=ip,
+                        user_agent=ua
+                    )
+
+                messages.success(request, f"User account '{updated_user.email}' has been updated successfully.")
+                return redirect(reverse("admin_panel:users:user_list"))
+            except Exception as e:
+                messages.error(request, f"Failed to update user: {str(e)}")
+    else:
+        form = AdminUserEditForm(instance=user)
+
+    context = {
+        "form": form,
+        "edit_user": user,
+        "role": "Admin",
+    }
+    return render(request, "accounts/user_edit.html", context)

@@ -12,9 +12,14 @@
                 <h3 class="fw-bold mb-1 text-primary">User Management</h3>
                 <p class="text-secondary mb-0">List, filter, lock, assign roles, and allocate teaching sessions for system users.</p>
             </div>
-            <span class="badge bg-primary px-3 py-2 fw-bold">
-                USER MANAGEMENT ACTIVE
-            </span>
+            <div class="d-flex align-items-center gap-2">
+                <span class="badge bg-primary px-3 py-2 fw-bold">
+                    USER MANAGEMENT ACTIVE
+                </span>
+                <a href="{% url 'admin_panel:users:user_create' %}" class="btn btn-primary px-3 py-2 rounded-3 fw-semibold">
+                    <i class="fa-solid fa-plus me-1"></i> Add User
+                </a>
+            </div>
         </div>
     </div>
 
@@ -53,8 +58,8 @@
                 <label for="roleFilterSelect" class="form-label">Filter by Role</label>
                 <select id="roleFilterSelect" name="role" class="form-select">
                     <option value="">All Roles</option>
-                    {% for grp in groups %}
-                        <option value="{{ grp.name }}" {% if selected_role == grp.name %}selected{% endif %}>{{ grp.name }}</option>
+                    {% for val, label in roles %}
+                        <option value="{{ val }}" {% if selected_role == val %}selected{% endif %}>{{ label }}</option>
                     {% endfor %}
                 </select>
             </div>
@@ -109,13 +114,17 @@
 
                             <!-- Role/Groups -->
                             <td>
-                                {% for grp in u.groups.all %}
-                                    <span class="badge bg-primary">
-                                        {{ grp.name }}
-                                    </span>
-                                {% empty %}
-                                    <span class="text-muted small">-</span>
-                                {% endfor %}
+                                {% if u.groups.all %}
+                                    {% for grp in u.groups.all %}
+                                        <span class="badge bg-primary">
+                                            {{ grp.name }} Role
+                                        </span>{% if not forloop.last %}, {% endif %}
+                                    {% endfor %}
+                                {% elif u.is_superuser %}
+                                    <span class="badge bg-primary">Admin Role</span>
+                                {% else %}
+                                    <span class="badge bg-secondary text-muted small">No Role Assigned</span>
+                                {% endif %}
                             </td>
 
                             <!-- Status / Lockout -->
@@ -164,76 +173,9 @@
 
                             <!-- Actions -->
                             <td class="text-end">
-                                <div class="dropdown">
-                                    <button class="btn btn-sm btn-outline-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                        Manage
-                                    </button>
-                                    <ul class="dropdown-menu dropdown-menu-end shadow border-0 p-2">
-                                        <!-- Reset Password -->
-                                        <li>
-                                            <button type="button" class="dropdown-item rounded-2 small text-primary-c"
-                                                    data-bs-toggle="modal" data-bs-target="#resetPasswordModal"
-                                                    data-email="{{ u.email }}"
-                                                    data-action="{% url 'admin_panel:users:user_reset_password' u.pk %}">
-                                                <i class="fa-solid fa-key me-2 text-primary"></i> Reset Password
-                                            </button>
-                                        </li>
-                                        <!-- Assign Role -->
-                                        {% if u.pk != request.user.pk %}
-                                            <li>
-                                                <button type="button" class="dropdown-item rounded-2 small text-primary-c"
-                                                        data-bs-toggle="modal" data-bs-target="#assignRoleModal"
-                                                        data-email="{{ u.email }}"
-                                                        data-role="{{ u.groups.first.name|default:'' }}"
-                                                        data-action="{% url 'admin_panel:users:user_assign_role' u.pk %}">
-                                                    <i class="fa-solid fa-user-tag me-2 text-warning"></i> Assign Role
-                                                </button>
-                                            </li>
-                                        {% endif %}
-                                        <!-- Assign Session (Teachers only) -->
-                                        {% if u.groups.first.name == "Teacher" %}
-                                            <li>
-                                                <button type="button" class="dropdown-item rounded-2 small text-primary-c"
-                                                        data-bs-toggle="modal" data-bs-target="#assignSessionModal"
-                                                        data-email="{{ u.email }}"
-                                                        data-action="{% url 'admin_panel:users:user_assign_session' u.pk %}">
-                                                    <i class="fa-solid fa-chalkboard-user me-2 text-info"></i> Assign Session
-                                                </button>
-                                            </li>
-                                        {% endif %}
-                                        <div class="dropdown-divider"></div>
-                                        <!-- Toggle Activation -->
-                                        {% if u.pk != request.user.pk %}
-                                            <li>
-                                                <form method="POST" action="{% url 'admin_panel:users:user_toggle_activation' u.pk %}" class="d-inline">
-                                                    {% csrf_token %}
-                                                    <input type="hidden" name="active" value="{% if u.is_active %}false{% else %}true{% endif %}">
-                                                    <button type="submit" class="dropdown-item rounded-2 small {% if u.is_active %}text-danger{% else %}text-success{% endif %}">
-                                                        {% if u.is_active %}
-                                                            <i class="fa-solid fa-user-slash me-2"></i> Deactivate
-                                                        {% else %}
-                                                            <i class="fa-solid fa-user-check me-2"></i> Activate
-                                                        {% endif %}
-                                                    </button>
-                                                </form>
-                                            </li>
-                                            <!-- Toggle Lockout -->
-                                            <li>
-                                                <form method="POST" action="{% url 'admin_panel:users:user_toggle_lock' u.pk %}" class="d-inline">
-                                                    {% csrf_token %}
-                                                    <input type="hidden" name="lock" value="{% if u.is_locked_out %}false{% else %}true{% endif %}">
-                                                    <button type="submit" class="dropdown-item rounded-2 small text-secondary">
-                                                        {% if u.is_locked_out %}
-                                                            <i class="fa-solid fa-lock-open me-2"></i> Unlock Account
-                                                        {% else %}
-                                                            <i class="fa-solid fa-lock me-2"></i> Lock Account
-                                                        {% endif %}
-                                                    </button>
-                                                </form>
-                                            </li>
-                                        {% endif %}
-                                    </ul>
-                                </div>
+                                <a href="{% url 'admin_panel:users:user_edit' u.pk %}" class="btn btn-sm btn-outline-primary">
+                                    Manage
+                                </a>
                             </td>
                         </tr>
                     {% empty %}

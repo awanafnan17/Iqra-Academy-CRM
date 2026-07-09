@@ -10,6 +10,8 @@ app_name = "users"
 
 urlpatterns = [
     path("", views_admin.user_list, name="user_list"),
+    path("create/", views_admin.user_create, name="user_create"),
+    path("<int:pk>/edit/", views_admin.user_edit, name="user_edit"),
     path("<int:pk>/toggle-activation/", views_admin.user_toggle_activation, name="user_toggle_activation"),
     path("<int:pk>/toggle-lock/", views_admin.user_toggle_lock, name="user_toggle_lock"),
     path("<int:pk>/reset-password/", views_admin.user_reset_password, name="user_reset_password"),

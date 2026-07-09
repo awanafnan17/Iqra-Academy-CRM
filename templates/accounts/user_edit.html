@@ -1,0 +1,204 @@
+{% extends 'layouts/panel_base.html' %}
+{% load static %}
+
+{% block title %}Manage User - Iqra Academy{% endblock %}
+
+{% block content %}
+<div class="container-fluid px-0 animate-fade-in">
+    <!-- Page Header -->
+    <div class="p-4 rounded-4 mb-4 card border border-soft shadow-sm">
+        <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
+            <div>
+                <h3 class="fw-bold mb-1 text-primary">Manage User</h3>
+                <p class="text-secondary mb-0">View and update user account details, role access, status, and security actions.</p>
+            </div>
+            <a href="{% url 'admin_panel:users:user_list' %}" class="btn btn-secondary px-3 py-2 rounded-3 fw-semibold">
+                <i class="fa-solid fa-arrow-left me-1"></i> Back to List
+            </a>
+        </div>
+    </div>
+
+    <!-- Django Messages System -->
+    {% if messages %}
+        <div class="messages mb-4">
+            {% for message in messages %}
+                <div class="alert alert-{% if message.tags == 'error' %}danger{% else %}{{ message.tags }}{% endif %} alert-dismissible fade show rounded-3 shadow-sm border-0" role="alert">
+                    <div class="d-flex align-items-center gap-2">
+                        {% if message.tags == 'success' %}
+                            <i class="fa-solid fa-circle-check text-success"></i>
+                        {% elif message.tags == 'error' %}
+                            <i class="fa-solid fa-circle-xmark text-danger"></i>
+                        {% else %}
+                            <i class="fa-solid fa-circle-info text-info"></i>
+                        {% endif %}
+                        <span>{{ message }}</span>
+                    </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <div class="row g-4">
+        <!-- Left Column: User Account Information & Details -->
+        <div class="col-lg-8">
+            <form method="POST" class="needs-validation" novalidate>
+                {% csrf_token %}
+
+                <!-- Section A: Account Information -->
+                <div class="card p-4 border border-light shadow rounded-4 mb-4">
+                    <h5 class="fw-bold text-primary-c mb-4 border-bottom border-soft pb-2">
+                        <i class="fa-solid fa-user-circle me-2 text-primary"></i>Account Information
+                    </h5>
+                    
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label for="id_first_name" class="form-label fw-semibold text-secondary">First Name <span class="text-danger">*</span></label>
+                            {{ form.first_name }}
+                            {% if form.first_name.errors %}
+                                <div class="text-danger small mt-1">{{ form.first_name.errors.0 }}</div>
+                            {% endif %}
+                        </div>
+
+                        <div class="col-md-6">
+                            <label for="id_last_name" class="form-label fw-semibold text-secondary">Last Name <span class="text-danger">*</span></label>
+                            {{ form.last_name }}
+                            {% if form.last_name.errors %}
+                                <div class="text-danger small mt-1">{{ form.last_name.errors.0 }}</div>
+                            {% endif %}
+                        </div>
+
+                        <div class="col-md-6">
+                            <label for="id_username" class="form-label fw-semibold text-secondary">Username <span class="text-danger">*</span></label>
+                            {{ form.username }}
+                            {% if form.username.errors %}
+                                <div class="text-danger small mt-1">{{ form.username.errors.0 }}</div>
+                            {% endif %}
+                        </div>
+
+                        <div class="col-md-6">
+                            <label for="id_email" class="form-label fw-semibold text-secondary">Email Address <span class="text-danger">*</span></label>
+                            {{ form.email }}
+                            {% if form.email.errors %}
+                                <div class="text-danger small mt-1">{{ form.email.errors.0 }}</div>
+                            {% endif %}
+                        </div>
+
+                        <div class="col-md-6">
+                            <label for="id_phone" class="form-label fw-semibold text-secondary">Phone Number</label>
+                            {{ form.phone }}
+                            {% if form.phone.errors %}
+                                <div class="text-danger small mt-1">{{ form.phone.errors.0 }}</div>
+                            {% endif %}
+                        </div>
+
+                        <div class="col-md-6 d-flex align-items-center mt-4 pt-2">
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" id="id_is_active" name="is_active" {% if form.is_active.value %}checked{% endif %}>
+                                <label class="form-check-label fw-semibold text-secondary ms-2" for="id_is_active">Active Status</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Section C: Professional / Profile Details (Conditionally Displayed for Teacher) -->
+                <div class="card p-4 border border-light shadow rounded-4 mb-4" id="teacher-fields-section" style="display: none;">
+                    <h5 class="fw-bold text-primary-c mb-4 border-bottom border-soft pb-2">
+                        <i class="fa-solid fa-briefcase me-2 text-primary"></i>Professional & Profile Details
+                    </h5>
+                    
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label for="id_designation" class="form-label fw-semibold text-secondary">Designation <span class="text-danger">*</span></label>
+                            {{ form.designation }}
+                            {% if form.designation.errors %}
+                                <div class="text-danger small mt-1">{{ form.designation.errors.0 }}</div>
+                            {% endif %}
+                        </div>
+
+                        <div class="col-md-6">
+                            <label for="id_department" class="form-label fw-semibold text-secondary">Department / Scope <span class="text-danger">*</span></label>
+                            {{ form.department }}
+                            {% if form.department.errors %}
+                                <div class="text-danger small mt-1">{{ form.department.errors.0 }}</div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Hidden submit button triggered by the sidebar button -->
+                <button type="submit" id="main-form-submit-btn" class="d-none"></button>
+            </form>
+
+            <!-- Reset Password Section -->
+            <div class="card p-4 border border-light shadow rounded-4 mb-4">
+                <h5 class="fw-bold text-primary-c mb-4 border-bottom border-soft pb-2">
+                    <i class="fa-solid fa-key me-2 text-primary"></i>Reset Password
+                </h5>
+                
+                <form method="POST" action="{% url 'admin_panel:users:user_reset_password' edit_user.pk %}">
+                    {% csrf_token %}
+                    <div class="row g-3 align-items-end">
+                        <div class="col-md-8">
+                            <label for="new_password" class="form-label fw-semibold text-secondary">New Password</label>
+                            <input type="password" id="new_password" name="new_password" class="form-control" placeholder="Enter new password (min. 6 characters)" required>
+                        </div>
+                        <div class="col-md-4">
+                            <button type="submit" class="btn btn-warning w-100 py-2 rounded-3 fw-bold text-dark">
+                                <i class="fa-solid fa-sync me-1"></i> Reset Password
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Right Column: Role Assignment & Save Actions -->
+        <div class="col-lg-4">
+            <!-- Section B: Role & Access -->
+            <div class="card p-4 border border-light shadow rounded-4 mb-4">
+                <h5 class="fw-bold text-primary-c mb-4 border-bottom border-soft pb-2">
+                    <i class="fa-solid fa-shield-halved me-2 text-primary"></i>Role & Access
+                </h5>
+
+                <div class="mb-4">
+                    <label for="id_role" class="form-label fw-semibold text-secondary">Role / Access Type <span class="text-danger">*</span></label>
+                    <div class="mb-1">{{ form.role }}</div>
+                    {% if form.role.errors %}
+                        <div class="text-danger small mt-1">{{ form.role.errors.0 }}</div>
+                    {% endif %}
+                </div>
+
+                <div class="d-flex flex-column gap-2 mt-4">
+                    <button type="button" class="btn btn-primary w-100 py-2 rounded-3 fw-bold" onclick="document.getElementById('main-form-submit-btn').click();">
+                        <i class="fa-solid fa-circle-check me-1"></i> Save Changes
+                    </button>
+                    <a href="{% url 'admin_panel:users:user_list' %}" class="btn btn-secondary w-100 py-2 rounded-3 text-center">
+                        Cancel
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const roleSelect = document.getElementById("id_role");
+        const teacherFields = document.getElementById("teacher-fields-section");
+
+        function toggleTeacherFields() {
+            if (roleSelect && roleSelect.value === "Teacher") {
+                teacherFields.style.display = "block";
+            } else {
+                teacherFields.style.display = "none";
+            }
+        }
+
+        if (roleSelect && teacherFields) {
+            roleSelect.addEventListener("change", toggleTeacherFields);
+            toggleTeacherFields();
+        }
+    });
+</script>
+{% endblock %}

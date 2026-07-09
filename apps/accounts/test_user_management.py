@@ -294,3 +294,207 @@ class UserManagementTestCase(TestCase):
         self.assertEqual(self.admin_user.phone, "03001234567")
         self.assertEqual(self.admin_user.cnic, "38403-1234567-1")
 
+    def test_user_create_view_permissions(self):
+        """Admin can access user create page, non-admin cannot."""
+        url = reverse("admin_panel:users:user_create")
+
+        # Unauthenticated
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 302)
+
+        # Non-admin (Student)
+        self.client.login(email="student@test.com", password="Password123")
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 404)
+        self.client.logout()
+
+        # Admin
+        self.client.login(email="admin@test.com", password="Password123")
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+
+    def test_user_edit_view_permissions(self):
+        """Admin can access user edit page, non-admin cannot."""
+        url = reverse("admin_panel:users:user_edit", args=[self.teacher_user.pk])
+
+        # Unauthenticated
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 302)
+
+        # Non-admin (Student)
+        self.client.login(email="student@test.com", password="Password123")
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 404)
+        self.client.logout()
+
+        # Admin
+        self.client.login(email="admin@test.com", password="Password123")
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+
+    def test_user_create_validation_error(self):
+        """Add User rejects duplicate username/email, mismatched passwords, missing role."""
+        self.client.login(email="admin@test.com", password="Password123")
+        url = reverse("admin_panel:users:user_create")
+
+        # Mismatched passwords
+        response = self.client.post(url, {
+            "first_name": "New",
+            "last_name": "User",
+            "email": "newuser@test.com",
+            "password": "Password123",
+            "confirm_password": "Password1234",
+            "role": "Teacher",
+            "designation": "Lecturer",
+            "department": "CS",
+            "is_active": True,
+        })
+        self.assertEqual(response.status_code, 200)
+        self.assertFormError(response, "form", "confirm_password", "Passwords do not match.")
+
+        # Missing role
+        response = self.client.post(url, {
+            "first_name": "New",
+            "last_name": "User",
+            "email": "newuser@test.com",
+            "password": "Password123",
+            "confirm_password": "Password123",
+            "role": "",
+            "is_active": True,
+        })
+        self.assertEqual(response.status_code, 200)
+        self.assertFormError(response, "form", "role", "This field is required.")
+
+        # Duplicate email/username
+        response = self.client.post(url, {
+            "first_name": "New",
+            "last_name": "User",
+            "username": "teacher_test",  # Duplicate username
+            "email": "teacher@test.com",  # Duplicate email
+            "password": "Password123",
+            "confirm_password": "Password123",
+            "role": "Teacher",
+            "designation": "Lecturer",
+            "department": "CS",
+            "is_active": True,
+        })
+        self.assertEqual(response.status_code, 200)
+        self.assertFormError(response, "form", "username", "Username is already taken.")
+        self.assertFormError(response, "form", "email", "Email is already registered.")
+
+    def test_user_create_teacher_success(self):
+        """Creating a user with Teacher Role creates FacultyProfile."""
+        self.client.login(email="admin@test.com", password="Password123")
+        url = reverse("admin_panel:users:user_create")
+
+        with self.captureOnCommitCallbacks(execute=True):
+            response = self.client.post(url, {
+                "first_name": "Teacher",
+                "last_name": "Two",
+                "username": "teacher2",
+                "email": "teacher2@test.com",
+                "password": "Password123",
+                "confirm_password": "Password123",
+                "role": "Teacher",
+                "designation": "Professor",
+                "department": "Mathematics",
+                "is_active": True,
+            })
+        self.assertEqual(response.status_code, 302)
+        
+        # Verify CustomUser and group
+        user = CustomUser.objects.get(email="teacher2@test.com")
+        self.assertEqual(user.groups.count(), 1)
+        self.assertEqual(user.groups.first().name, "Teacher")
+        
+        # Verify FacultyProfile
+        self.assertTrue(hasattr(user, "faculty_profile"))
+        self.assertEqual(user.faculty_profile.designation, "Professor")
+        self.assertEqual(user.faculty_profile.department, "Mathematics")
+
+    def test_user_create_accountant_success(self):
+        """Creating a user with Accountant Role does not create FacultyProfile."""
+        self.client.login(email="admin@test.com", password="Password123")
+        url = reverse("admin_panel:users:user_create")
+
+        response = self.client.post(url, {
+            "first_name": "Accountant",
+            "last_name": "Two",
+            "username": "accountant2",
+            "email": "accountant2@test.com",
+            "password": "Password123",
+            "confirm_password": "Password123",
+            "role": "Accountant",
+            "is_active": True,
+        })
+        self.assertEqual(response.status_code, 302)
+
+        user = CustomUser.objects.get(email="accountant2@test.com")
+        self.assertEqual(user.groups.count(), 1)
+        self.assertEqual(user.groups.first().name, "Accountant")
+        self.assertFalse(hasattr(user, "faculty_profile"))
+
+    def test_user_edit_save(self):
+        """Editing user details saves correctly."""
+        self.client.login(email="admin@test.com", password="Password123")
+        url = reverse("admin_panel:users:user_edit", args=[self.teacher_user.pk])
+
+        response = self.client.post(url, {
+            "first_name": "TeacherUpdated",
+            "last_name": "UserUpdated",
+            "username": "teacher_test",
+            "email": "teacher@test.com",
+            "phone": "03339999999",
+            "role": "Teacher",
+            "designation": "Assistant Professor",
+            "department": "Physics",
+            "is_active": True,
+        })
+        self.assertEqual(response.status_code, 302)
+
+        self.teacher_user.refresh_from_db()
+        self.assertEqual(self.teacher_user.first_name, "TeacherUpdated")
+        self.assertEqual(self.teacher_user.last_name, "UserUpdated")
+        self.assertEqual(self.teacher_user.phone, "03339999999")
+        self.assertEqual(self.teacher_user.faculty_profile.designation, "Assistant Professor")
+        self.assertEqual(self.teacher_user.faculty_profile.department, "Physics")
+
+    def test_user_edit_role_change(self):
+        """Editing user role updates group membership cleanly."""
+        self.client.login(email="admin@test.com", password="Password123")
+        url = reverse("admin_panel:users:user_edit", args=[self.teacher_user.pk])
+
+        # Assign Accountant group to teacher_user
+        response = self.client.post(url, {
+            "first_name": "Teacher",
+            "last_name": "User",
+            "username": "teacher_test",
+            "email": "teacher@test.com",
+            "role": "Accountant",
+            "is_active": True,
+        })
+        self.assertEqual(response.status_code, 302)
+
+        self.teacher_user.refresh_from_db()
+        self.assertEqual(self.teacher_user.groups.count(), 1)
+        self.assertEqual(self.teacher_user.groups.first().name, "Accountant")
+        # FacultyProfile should be deleted
+        self.assertFalse(hasattr(self.teacher_user, "faculty_profile"))
+
+    def test_user_list_role_filter(self):
+        """Role filter works correctly and displays all canonical roles."""
+        self.client.login(email="admin@test.com", password="Password123")
+        url = reverse("admin_panel:users:user_list")
+
+        # Filter by Teacher
+        response = self.client.get(url + "?role=Teacher")
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "teacher@test.com")
+        self.assertNotContains(response, "student@test.com")
+
+        # Filter by Student
+        response = self.client.get(url + "?role=Student")
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "student@test.com")
+        self.assertNotContains(response, "teacher@test.com")
+
