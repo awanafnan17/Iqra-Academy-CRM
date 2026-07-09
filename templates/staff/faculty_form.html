@@ -85,8 +85,8 @@
                 </div>
                 {% endif %}
 
-                <!-- Profile Picture Upload -->
-                <div class="col-12 col-md-6">
+                <!-- Profile Picture Upload (Full Width) -->
+                <div class="col-12">
                     <label class="form-label fw-semibold text-secondary">Profile Picture</label>
                     {{ form.profile_picture }}
                     {% if form.profile_picture.errors %}
@@ -96,6 +96,7 @@
                 </div>
 
                 {% if not is_edit %}
+                <!-- Role / Access Type (col-md-6) -->
                 <div class="col-12 col-md-6">
                     <label class="form-label fw-semibold text-secondary">Role / Access Type</label>
                     {{ form.role }}
@@ -105,20 +106,25 @@
                 </div>
                 {% endif %}
 
-                <div class="col-12 col-md-6">
+                <!-- Designation -->
+                <div class="col-12 {% if not is_edit %}col-md-6{% endif %}">
                     <label class="form-label fw-semibold text-secondary">Designation</label>
                     {{ form.designation }}
                     {% if form.designation.errors %}
                         <div class="text-danger small mt-1">{{ form.designation.errors.0 }}</div>
                     {% endif %}
                 </div>
-                <div class="col-12 col-md-6">
+
+                <!-- Department / Scope (Full Width) -->
+                <div class="col-12">
                     <label class="form-label fw-semibold text-secondary">Department / Scope</label>
                     {{ form.department }}
                     {% if form.department.errors %}
                         <div class="text-danger small mt-1">{{ form.department.errors.0 }}</div>
                     {% endif %}
                 </div>
+
+                <!-- Active Status -->
                 <div class="col-12">
                     <div class="form-check form-switch mt-2">
                         {{ form.is_active }}
