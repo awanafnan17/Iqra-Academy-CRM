@@ -55,7 +55,11 @@
                         <td class="ps-4">
                             <div class="d-flex align-items-center">
                                 <div class="avatar me-3">
-                                    {{ faculty.user.first_name|slice:":1"|upper }}{{ faculty.user.last_name|slice:":1"|upper }}
+                                    {% if faculty.profile_picture %}
+                                        <img src="{{ faculty.profile_picture.url }}" alt="{{ faculty.user.get_full_name }}" class="rounded-circle" style="width: 100%; height: 100%; object-fit: cover;">
+                                    {% else %}
+                                        {{ faculty.user.first_name|slice:":1"|upper }}{{ faculty.user.last_name|slice:":1"|upper }}
+                                    {% endif %}
                                 </div>
                                 <div>
                                     <span class="fw-bold d-block">{{ faculty.user.get_full_name|default:faculty.user.username }}</span>
@@ -92,6 +96,11 @@
                             {% endif %}
                         </td>
                         <td class="text-end pe-4">
+                            {% if request.user.is_superuser or request.user.groups.all.0.name == 'Admin' or request.user.groups.all.1.name == 'Admin' %}
+                            <a href="{% url 'admin_panel:staff:faculty_edit' faculty.pk %}" class="btn btn-sm btn-outline-warning rounded-2 px-3 me-1">
+                                <i class="fa-solid fa-user-pen me-1"></i> Edit Profile
+                            </a>
+                            {% endif %}
                             <a href="{% url 'admin_panel:staff:faculty_assign' faculty.pk %}" class="btn btn-sm btn-outline-primary rounded-2 px-3">
                                 <i class="fa-solid fa-chalkboard-user me-1"></i> Assign Sessions
                             </a>

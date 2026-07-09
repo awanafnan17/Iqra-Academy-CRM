@@ -17,8 +17,8 @@
     <div class="p-4 rounded-4 mb-4 card border border-light shadow-sm animate-fade-in">
         <div class="d-flex justify-content-between align-items-center">
             <div>
-                <h3 class="fw-bold mb-1 text-primary">Register Faculty</h3>
-                <p class="text-secondary mb-0">Create a new teacher/faculty user account and profile.</p>
+                <h3 class="fw-bold mb-1 text-primary">{% if is_edit %}Edit Faculty Profile{% else %}Register Faculty{% endif %}</h3>
+                <p class="text-secondary mb-0">{% if is_edit %}Update faculty profile details and profile picture.{% else %}Create a new teacher/faculty user account and profile.{% endif %}</p>
             </div>
             <div>
                 <a href="{% url 'admin_panel:staff:faculty_list' %}" class="btn btn-outline-secondary px-3 py-2 rounded-3">
@@ -30,9 +30,10 @@
 
     <!-- Form Container -->
     <div class="card p-4 border border-light shadow rounded-4 animate-fade-in stagger-1">
-        <form method="post" class="needs-validation" novalidate>
+        <form method="post" enctype="multipart/form-data" class="needs-validation" novalidate>
             {% csrf_token %}
 
+            {% if not is_edit %}
             <!-- User Form Section -->
             <h5 class="fw-bold border-bottom pb-2 mb-3">
                 <i class="fa-solid fa-user-lock text-primary me-2"></i> Account Credentials
@@ -67,12 +68,34 @@
                     {% endif %}
                 </div>
             </div>
+            {% endif %}
 
             <!-- Profile Form Section -->
             <h5 class="fw-bold border-bottom pb-2 mb-3">
                 <i class="fa-solid fa-briefcase text-primary me-2"></i> Professional Details
             </h5>
             <div class="row g-3 mb-4">
+                <!-- Profile Picture Preview (Edit mode only) -->
+                {% if is_edit and form.instance.profile_picture %}
+                <div class="col-12 d-flex align-items-center gap-3 mb-2">
+                    <img src="{{ form.instance.profile_picture.url }}" alt="Profile Picture" class="rounded-circle border border-secondary shadow-sm" style="width: 72px; height: 72px; object-fit: cover;">
+                    <div>
+                        <span class="text-secondary small d-block">Current Profile Picture</span>
+                    </div>
+                </div>
+                {% endif %}
+
+                <!-- Profile Picture Upload -->
+                <div class="col-12 col-md-6">
+                    <label class="form-label fw-semibold text-secondary">Profile Picture</label>
+                    {{ form.profile_picture }}
+                    {% if form.profile_picture.errors %}
+                        <div class="text-danger small mt-1">{{ form.profile_picture.errors.0 }}</div>
+                    {% endif %}
+                    <div class="form-text text-muted small mt-1">JPG, PNG, or WEBP. Max 2 MB.</div>
+                </div>
+
+                {% if not is_edit %}
                 <div class="col-12 col-md-6">
                     <label class="form-label fw-semibold text-secondary">Role / Access Type</label>
                     {{ form.role }}
@@ -80,6 +103,8 @@
                         <div class="text-danger small mt-1">{{ form.role.errors.0 }}</div>
                     {% endif %}
                 </div>
+                {% endif %}
+
                 <div class="col-12 col-md-6">
                     <label class="form-label fw-semibold text-secondary">Designation</label>
                     {{ form.designation }}
@@ -110,7 +135,7 @@
                     Cancel
                 </a>
                 <button type="submit" class="btn btn-primary px-4 py-2 rounded-3">
-                    <i class="fa-solid fa-check me-2"></i> Register Profile
+                    <i class="fa-solid fa-check me-2"></i> {% if is_edit %}Save Changes{% else %}Register Profile{% endif %}
                 </button>
             </div>
         </form>

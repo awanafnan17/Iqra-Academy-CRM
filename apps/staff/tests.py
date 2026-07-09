@@ -207,3 +207,185 @@ class FacultyModuleTests(TestCase):
         self.assertEqual(sessions.count(), 2)
         self.assertIn(self.session_cs, sessions)
         self.assertIn(self.session_math, sessions)
+
+    def test_faculty_create_without_image_works(self):
+        """Verify faculty profile can be registered without any profile picture."""
+        url = reverse("admin_panel:staff:faculty_create")
+        self.client.force_login(self.admin_user)
+        post_data = {
+            "first_name": "Test",
+            "last_name": "NoImage",
+            "email": "noimage@test.com",
+            "password": "noimagepassword",
+            "role": "Teacher",
+            "designation": "Lecturer",
+            "department": "Physics",
+            "is_active": "on",
+        }
+        response = self.client.post(url, data=post_data)
+        self.assertEqual(response.status_code, 302)
+        new_profile = FacultyProfile.objects.get(user__email="noimage@test.com")
+        self.assertFalse(new_profile.profile_picture)
+
+    def test_faculty_create_valid_image_accepted(self):
+        """Verify faculty registration accepts a valid small image (JPG/PNG/WEBP)."""
+        from django.core.files.uploadedfile import SimpleUploadedFile
+        valid_png = (
+            b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x01\x00\x00\x00\x01\x08\x06\x00\x00\x00\x1f\x15c4\x00\x00\x00\r'
+            b'IDATx\x9cc`\x00\x00\x00\x02\x00\x01H\xaf\xa4q\x00\x00\x00\x00IEND\xaeB`\x82'
+        )
+        avatar = SimpleUploadedFile("test_avatar.png", valid_png, content_type="image/png")
+        url = reverse("admin_panel:staff:faculty_create")
+        self.client.force_login(self.admin_user)
+        post_data = {
+            "first_name": "Test",
+            "last_name": "WithImage",
+            "email": "withimage@test.com",
+            "password": "withimagepassword",
+            "role": "Teacher",
+            "designation": "Lecturer",
+            "department": "Chemistry",
+            "is_active": "on",
+            "profile_picture": avatar,
+        }
+        response = self.client.post(url, data=post_data)
+        self.assertEqual(response.status_code, 302)
+        new_profile = FacultyProfile.objects.get(user__email="withimage@test.com")
+        self.assertTrue(new_profile.profile_picture)
+        self.assertTrue(new_profile.profile_picture.name.endswith(".png"))
+
+    def test_faculty_create_invalid_extension_rejected(self):
+        """Verify uploading files with invalid extensions (e.g., .txt) is rejected."""
+        from django.core.files.uploadedfile import SimpleUploadedFile
+        fake_file = SimpleUploadedFile("bad_file.txt", b"some plain text contents", content_type="text/plain")
+        url = reverse("admin_panel:staff:faculty_create")
+        self.client.force_login(self.admin_user)
+        post_data = {
+            "first_name": "Test",
+            "last_name": "BadExt",
+            "email": "badext@test.com",
+            "password": "badextpassword",
+            "role": "Teacher",
+            "designation": "Lecturer",
+            "department": "Chemistry",
+            "is_active": "on",
+            "profile_picture": fake_file,
+        }
+        response = self.client.post(url, data=post_data)
+        self.assertEqual(response.status_code, 200)
+        self.assertFormError(response, "form", "profile_picture", "Invalid file type. Allowed types: JPG, PNG, WEBP.")
+
+    def test_faculty_create_svg_or_exe_rejected(self):
+        """Verify SVG and executable files with valid extension names are rejected via content validation."""
+        from django.core.files.uploadedfile import SimpleUploadedFile
+        svg_content = b"<svg xmlns='http://www.w3.org/2000/svg'><circle r='10'/></svg>"
+        fake_png = SimpleUploadedFile("bad_image.png", svg_content, content_type="image/png")
+        url = reverse("admin_panel:staff:faculty_create")
+        self.client.force_login(self.admin_user)
+        post_data = {
+            "first_name": "Test",
+            "last_name": "FakePng",
+            "email": "fakepng@test.com",
+            "password": "fakepngpassword",
+            "role": "Teacher",
+            "designation": "Lecturer",
+            "department": "Chemistry",
+            "is_active": "on",
+            "profile_picture": fake_png,
+        }
+        response = self.client.post(url, data=post_data)
+        self.assertEqual(response.status_code, 200)
+        self.assertFormError(response, "form", "profile_picture", "Uploaded file is not a valid image.")
+
+    def test_faculty_create_file_size_exceeds_rejected(self):
+        """Verify file uploads larger than 2MB are rejected."""
+        from django.core.files.uploadedfile import SimpleUploadedFile
+        large_file = SimpleUploadedFile("huge.png", b"a" * (2 * 1024 * 1024 + 10), content_type="image/png")
+        url = reverse("admin_panel:staff:faculty_create")
+        self.client.force_login(self.admin_user)
+        post_data = {
+            "first_name": "Test",
+            "last_name": "HugeFile",
+            "email": "hugefile@test.com",
+            "password": "hugefilepassword",
+            "role": "Teacher",
+            "designation": "Lecturer",
+            "department": "Chemistry",
+            "is_active": "on",
+            "profile_picture": large_file,
+        }
+        response = self.client.post(url, data=post_data)
+        self.assertEqual(response.status_code, 200)
+        self.assertFormError(response, "form", "profile_picture", "File size must not exceed 2 MB.")
+
+    def test_faculty_list_renders_image_or_placeholder(self):
+        """Verify that the faculty directory renders either profile picture URL or placeholder."""
+        url = reverse("admin_panel:staff:faculty_list")
+        self.client.force_login(self.admin_user)
+        
+        # Test placeholder fallback
+        self.faculty_profile.profile_picture = None
+        self.faculty_profile.save()
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "T")
+        
+        # Test image url rendering
+        from django.core.files.uploadedfile import SimpleUploadedFile
+        valid_png = (
+            b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x01\x00\x00\x00\x01\x08\x06\x00\x00\x00\x1f\x15c4\x00\x00\x00\r'
+            b'IDATx\x9cc`\x00\x00\x00\x02\x00\x01H\xaf\xa4q\x00\x00\x00\x00IEND\xaeB`\x82'
+        )
+        self.faculty_profile.profile_picture = SimpleUploadedFile("my_avatar.png", valid_png, content_type="image/png")
+        self.faculty_profile.save()
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, self.faculty_profile.profile_picture.url)
+
+    def test_faculty_edit_page_loads_for_admin_only(self):
+        """Verify the dedicated faculty update page permits Admin and blocks Principal/Teacher."""
+        url = reverse("admin_panel:staff:faculty_edit", args=[self.faculty_profile.pk])
+        
+        # Admin gets 200
+        self.client.force_login(self.admin_user)
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, "staff/faculty_form.html")
+        self.assertTrue(response.context.get("is_edit"))
+
+        # Principal gets 404
+        self.client.force_login(self.principal_user)
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 404)
+
+        # Teacher gets 404
+        self.client.force_login(self.teacher_user)
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 404)
+
+    def test_faculty_edit_updates_fields_and_image(self):
+        """Verify faculty edit page updates profile data and supports profile picture updates."""
+        from django.core.files.uploadedfile import SimpleUploadedFile
+        valid_png = (
+            b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x01\x00\x00\x00\x01\x08\x06\x00\x00\x00\x1f\x15c4\x00\x00\x00\r'
+            b'IDATx\x9cc`\x00\x00\x00\x02\x00\x01H\xaf\xa4q\x00\x00\x00\x00IEND\xaeB`\x82'
+        )
+        new_avatar = SimpleUploadedFile("updated_avatar.png", valid_png, content_type="image/png")
+        url = reverse("admin_panel:staff:faculty_edit", args=[self.faculty_profile.pk])
+        self.client.force_login(self.admin_user)
+        
+        post_data = {
+            "designation": "Associate Professor",
+            "department": "Biochemistry",
+            "is_active": "on",
+            "profile_picture": new_avatar,
+        }
+        
+        response = self.client.post(url, data=post_data)
+        self.assertEqual(response.status_code, 302)
+        
+        self.faculty_profile.refresh_from_db()
+        self.assertEqual(self.faculty_profile.designation, "Associate Professor")
+        self.assertEqual(self.faculty_profile.department, "Biochemistry")
+        self.assertTrue(self.faculty_profile.profile_picture)
+        self.assertTrue(self.faculty_profile.profile_picture.name.endswith(".png"))

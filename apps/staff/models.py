@@ -30,6 +30,12 @@ class FacultyProfile(TimestampMixin, AuditMixin, models.Model):
         default=True,
         help_text="Designates whether this faculty member is active."
     )
+    profile_picture = models.ImageField(
+        upload_to="faculty/profile_pictures/",
+        blank=True,
+        null=True,
+        help_text="Faculty profile picture. Allowed: JPG, PNG, WEBP. Max 2 MB."
+    )
 
     class Meta:
         verbose_name = "Faculty Profile"

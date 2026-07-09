@@ -9,7 +9,7 @@ from django.utils.decorators import method_decorator
 
 from apps.core.decorators import role_required
 from apps.staff.models import FacultyProfile
-from apps.staff.forms import UserCreateForm, FacultyProfileForm, FacultyAssignSessionForm
+from apps.staff.forms import UserCreateForm, FacultyProfileForm, FacultyProfileUpdateForm, FacultyAssignSessionForm
 
 User = get_user_model()
 
@@ -65,3 +65,17 @@ class FacultyAssignSessionView(LoginRequiredMixin, UpdateView):
     template_name = "staff/faculty_assign.html"
     form_class = FacultyAssignSessionForm
     success_url = reverse_lazy("admin_panel:staff:faculty_list")
+
+
+@method_decorator(role_required("Admin"), name="dispatch")
+class FacultyUpdateView(LoginRequiredMixin, UpdateView):
+    model = FacultyProfile
+    template_name = "staff/faculty_form.html"
+    form_class = FacultyProfileUpdateForm
+    success_url = reverse_lazy("admin_panel:staff:faculty_list")
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["is_edit"] = True
+        return context
+
